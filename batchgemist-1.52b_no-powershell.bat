@@ -201,8 +201,8 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:schooltv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//div/@data-mid,date:=replace(//dd[span[@property='datePublished']],'(\d+)-(\d+)-(\d+)','$1$2$3')" --output-format^=cmd^"') DO %%A
 	GOTO NPO_meta
-) ELSE IF NOT "%url:willemwever.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//script/extract(.,'prid: \"(.+^)\"',1)[.]" --output-format^=cmd^"') DO %%A
+) ELSE IF NOT "%url:willemwever.kro-ncrv.nl=%"=="%url%" (
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//@data-video-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO_meta
 ) ELSE IF NOT "%url:nos.nl/livestream=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "name:=concat(//h1,replace('%date%','.+?(\d+)-(\d+)-(\d+)',' - Livestream ($1$2$3)')),pjson:=serialize-json({'stream':string(//@data-stream)})" -d "{$pjson}" "http://www-ipv4.nos.nl/livestream/resolve/" -f "{'data':substring-before($json/url,'p&callback'),'input-format':'json'}" -f "$json" --xquery "json:=[{'format':'meta','url':substring-before($url,'?')},tail(tokenize($raw,'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.'),extract(.,'(.+m3u8)',1))}],let $a:=($json()[format='meta']/format,for $x in $json()[format!='meta']/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
