@@ -584,7 +584,7 @@ ECHO   [Benodigdheden]
 ECHO     - xidel.exe (http://videlibri.sourceforge.net/xidel.html#downloads)
 ECHO       Xidel is het hart van BatchGemist en is verantwoordelijk voor het ontleden van zo'n beetje
 ECHO       alle gegevens.
-ECHO       Download Xidel (versie 0.9.4 of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
+ECHO       Download Xidel (versie 0.9.6 of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
 ECHO       batchscript, of wijzig de programma-map in dit script onder ":Check".
 ECHO     - ffmpeg.exe (http://ffmpeg.zeranoe.com/builds)
 ECHO       Met de gegenereerde videolink als invoer zorgt FFMpeg ervoor dat de video effici‰nt wordt
@@ -599,22 +599,22 @@ ECHO.
 ECHO   [Ondersteunde websites]
 ECHO     npo.nl                eenvandaag.nl         omropfryslan.nl           rtvutrecht.nl
 ECHO     gemi.st               101.tv                rtvnoord.nl               omroepgelderland.nl
-ECHO     2doc.nl                                     rtvdrenthe.nl             omroepwest.nl
+ECHO     2doc.nl               rtlxl.nl              rtvdrenthe.nl             omroepwest.nl
 ECHO     anderetijden.nl       rtl.nl                rtvnh.nl                  rijnmond.nl
-ECHO     schooltv.nl           rtlxl.nl              omroepflevoland.nl        omroepzeeland.nl
-ECHO     willemwever.nl        rtlnieuws.nl          rtvoost.nl                omroepbrabant.nl
+ECHO     schooltv.nl           rtlnieuws.nl          omroepflevoland.nl        omroepzeeland.nl
+ECHO     willemwever.nl        rtlz.nl               rtvoost.nl                omroepbrabant.nl
 ECHO     nos.nl                kijk.nl               at5.nl                    l1.nl
 ECHO.
 ECHO.
 PAUSE
 ECHO.
-ECHO     telegraaf.nl              comedycentral.nl
-ECHO     nickelodeon.nl            nl.funnyclips.cc
-ECHO     ketnet.be                 mtv.nl
-ECHO     disney.nl                 foxsports.nl
-ECHO     cartoonnetwork.nl         tweakers.net
-ECHO     24kitchen.nl              collegerama.tudelft.nl
-ECHO     dumpert.nl
+ECHO     telegraaf.nl          dumpert.nl            autojunk.nl
+ECHO     vtm.be                comedycentral.nl      tweakers.net
+ECHO     nickelodeon.nl        nl.funnyclips.cc
+ECHO     ketnet.be             mtv.nl
+ECHO     disney.nl             foxtv.nl
+ECHO     cartoonnetwork.nl     foxsports.nl
+ECHO     24kitchen.nl          abhd.nl
 ECHO.
 ECHO   [Gebruik]
 ECHO     Surf naar ‚‚n van de ondersteunde websites en kopieer de programmalink van een gewenst
