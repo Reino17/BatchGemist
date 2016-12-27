@@ -219,7 +219,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -f "(//@data-src)[1]" -e "prid:=//script/extract(.,'prid: \"(.+^)\"',1)[.]" --output-format^=cmd^"') DO %%A
 	GOTO NPOLive_meta
 ) ELSE IF NOT "%url:www.101.tv=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "if (//p/iframe) then _url:=replace(//p/iframe/@src,'.+/(.+)','https://youtu.be/$1') else doc(concat('http://media.bnn.nl/video/',extract($url,'.+/(.+)',1),'/bnntv')) ! (name:=concat('101TV - ',//title),_url:=//file)" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "if (//p/iframe) then v_url:=replace(//p/iframe/@src,'.+/(.+)','https://youtu.be/$1') else doc(concat('http://media.bnn.nl/video/',extract($url,'.+/(.+)',1),'/bnntv')) ! (name:=concat('101TV - ',//title),v_url:=//file)" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
 	FOR /F %%A IN ("%url%") DO SET "uuid=%%~nA"
 	GOTO rtlXL
@@ -240,9 +240,9 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:www.omropfryslan.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "if (contains($url,'live')) then let $a:=json(doc(//script/extract(.,'playlist: \"(.+^)\"',1)[.]))(2)/(sources)() return (name:=concat(substring-before(//meta[@itemprop='name']/@content,'TV'),replace('%date%','.+?(\d+)-(\d+)-(\d+)','- Livestream ($1$2$3)')),json:=[doc($a[type='rtmp']/file)//video/{'format':concat('rtsp-',@system-bitrate idiv 1000),'url':concat(replace(//@base,'rtmp','rtsp'),@src)},let $b:=$a[type='hls']/file return ({'format':'meta','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$b),extract(.,'(.+m3u8)',1))})],formats:=join($json()/format,', '),best:=$json()[last()]/format) else let $a:=replace(//meta[@property='article:published_time']/@content,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $b:=//script/json(extract(.,'(\{\"sources\".+?)\)',1,'s')[.]) return if (count($b)=1) then (name:=concat('Omrop Fryslân - ',if (contains($url,'utstjoering')) then substring-before(//meta[@itemprop='name']/@content,' fan') else replace($b//idstring,'&quot;',''''''),$a),json:=[$b/(sources)()/{'format':replace(label,'(\d+).','mp4-$1'),'url':file}],formats:=join($json()/format,', '),best:=$json()[last()]/format) else (json:=[$b/{position()||'e':{'name':concat('Omrop Fryslân - ',replace(.//idstring,'&quot;',''''''),$a),'formats':(sources)()/{'format':replace(label,'(\d+).','mp4-$1'),'url':file}}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvnoord.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "if (contains($url,'livetv')) then (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Noord - Livestream ($1$2$3)'),let $a:=doc(doc(doc(//iframe/@src)//@src)/extract(.,'\"playlist\": \"(.+^)\",',1))//@file return json:=[{'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}],formats:=join($json()/format,', '),best:=$json()[last()]/format) else let $a:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $b:=//div[@data-button='player-still-overlay icon-play'] return if (count($b)=1) then (name:=if (//meta[@property='og:type']/@content='video:episode') then concat('RTV Noord - ',//div[@class='media-details']/h3,replace(//@data-media,'.+?/(\d+).{3}(\d{2})(\d{2}).+',' ($3$2$1)')) else concat('RTV Noord - ',replace($b/@title,'[&quot;&apos;]',''''''),$a),_url:=$b/@data-media) else (json:=[$b ! {position()||'e':{'name':concat('RTV Noord - ',replace(@title,'[&quot;&apos;]',''''''),$a),'url':@data-media}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "if (contains($url,'livetv')) then (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Noord - Livestream ($1$2$3)'),let $a:=doc(doc(doc(//iframe/@src)//@src)/extract(.,'\"playlist\": \"(.+^)\",',1))//@file return json:=[{'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}],formats:=join($json()/format,', '),best:=$json()[last()]/format) else let $a:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $b:=//div[@data-button='player-still-overlay icon-play'] return if (count($b)=1) then (name:=if (//meta[@property='og:type']/@content='video:episode') then concat('RTV Noord - ',//div[@class='media-details']/h3,replace(//@data-media,'.+?/(\d+).{3}(\d{2})(\d{2}).+',' ($3$2$1)')) else concat('RTV Noord - ',replace($b/@title,'[&quot;&apos;]',''''''),$a),v_url:=$b/@data-media) else (json:=[$b ! {position()||'e':{'name':concat('RTV Noord - ',replace(@title,'[&quot;&apos;]',''''''),$a),'url':@data-media}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvdrenthe.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=//meta[@property='og:type']/@content return let $b:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $c:=//div[@data-button='player-still-overlay icon-play'] return if (count($c)=1) then if ($a) then (name:=if ($a='video:episode') then concat('RTV Drenthe - ',//div[@class='media-details']/h3,replace(//@data-media,'.+?(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')) else concat('RTV Drenthe - ',replace($c/@title,'[&quot;&apos;]',''''''),$b),_url:=$c/@data-media) else (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Drenthe - Livestream ($1$2$3)'),_url:=concat(resolve-uri('.',//@data-media),extract(unparsed-text(//@data-media),'(.+m3u8)',1))) else (json:=[$c ! {position()||'e':{'name':concat('RTV Drenthe - ',replace(@title,'[&quot;&apos;]',''''''),$b),'url':@data-media}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=//meta[@property='og:type']/@content return let $b:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $c:=//div[@data-button='player-still-overlay icon-play'] return if (count($c)=1) then if ($a) then (name:=if ($a='video:episode') then concat('RTV Drenthe - ',//div[@class='media-details']/h3,replace(//@data-media,'.+?(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')) else concat('RTV Drenthe - ',replace($c/@title,'[&quot;&apos;]',''''''),$b),v_url:=$c/@data-media) else (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Drenthe - Livestream ($1$2$3)'),v_url:=concat(resolve-uri('.',//@data-media),extract(unparsed-text(//@data-media),'(.+m3u8)',1))) else (json:=[$c ! {position()||'e':{'name':concat('RTV Drenthe - ',replace(@title,'[&quot;&apos;]',''''''),$b),'url':@data-media}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvnh.nl/live/tv=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV NH - Livestream ($1$2$3)'),let $a:=json(replace(replace(//script/extract(.,'sources: (.+),\s+\]',1,'s')[.],',\s+\}','}'),'rtmp','rtsp')||']')() return json:=[$a[type!='hls']/{'format':replace(file,'(.+?):.+(.)','$1-$2'),'url':file},{'format':'meta','url':$a[type='hls']/file},tail(tokenize(unparsed-text($a[type='hls']/file),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a[type='hls']/file),extract(.,'(.+m3u8)',1))}],let $b:=($json()[contains(format,'rtsp')]/format,$json()[format='meta']/format,for $x in $json()[format castable as double]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])" --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvnh.nl=%"=="%url%" (
@@ -263,13 +263,13 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//script/extract(.,'\"prid\": \"(.+^)\"',1)[.]" --output-format^=cmd^"') DO %%A
 	GOTO NPOLive_meta
 ) ELSE IF NOT "%url:www.rtvutrecht.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "if (count(//div[contains(@id,'videoplayer')])=1) then let $a:=//script/extract(.,'(http.+mp4)',1)[.] return (name:=concat('RTV Utrecht - ',if (contains($url,'gemist')) then substring-before(//h2[@class='h2-large-met-grijs border-top'][1],' -') else replace(if (//p[@class='margin-bottom-5 fragment-bijschrift']/text()) then //p[@class='margin-bottom-5 fragment-bijschrift'] else //meta[@name='og:title']/@content,'[&quot;&apos;]',''''''),replace($a,'.+(\d{4})/(\d{2})/(\d{2}).+',' ($3$2$1)')),_url:=$a) else (json:=[for $x at $i in //div[contains(@id,'videoplayer')]/@id return {$i||'e':let $a:=//script[contains(.,$x)]/extract(.,'(http.+mp4)',1)[.] return {'name':concat('RTV Utrecht - ',replace(//p[@class='margin-bottom-5 fragment-bijschrift'][$i],'[&quot;&apos;]',''''''),replace($a,'.+(\d{4})/(\d{2})/(\d{2}).+',' ($3$2$1)')),'url':$a}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "if (count(//div[contains(@id,'videoplayer')])=1) then let $a:=//script/extract(.,'(http.+mp4)',1)[.] return (name:=concat('RTV Utrecht - ',if (contains($url,'gemist')) then substring-before(//h2[@class='h2-large-met-grijs border-top'][1],' -') else replace(if (//p[@class='margin-bottom-5 fragment-bijschrift']/text()) then //p[@class='margin-bottom-5 fragment-bijschrift'] else //meta[@name='og:title']/@content,'[&quot;&apos;]',''''''),replace($a,'.+(\d{4})/(\d{2})/(\d{2}).+',' ($3$2$1)')),v_url:=$a) else (json:=[for $x at $i in //div[contains(@id,'videoplayer')]/@id return {$i||'e':let $a:=//script[contains(.,$x)]/extract(.,'(http.+mp4)',1)[.] return {'name':concat('RTV Utrecht - ',replace(//p[@class='margin-bottom-5 fragment-bijschrift'][$i],'[&quot;&apos;]',''''''),replace($a,'.+(\d{4})/(\d{2})/(\d{2}).+',' ($3$2$1)')),'url':$a}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.omroepgelderland.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=//meta[@property='og:type']/@content return let $b:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $c:=//div[@data-button='player-still-overlay icon-play'] return if (count($c)=1) then if ($a) then (name:=if ($a='video:episode') then concat('Omroep Gelderland - ',(//h3)[1],replace(//@data-media,'.+?(\d+)/(\d+)/\d{4}(\d+).+',' ($3$2$1)')) else concat('Omroep Gelderland - ',replace($c/@title,'[&quot;&apos;]',''''''),$b),_url:=$c/@data-media) else (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','Omroep Gelderland - Livestream ($1$2$3)'),url:=extract(unparsed-text(//@data-media),'(.+m3u8)',1)) else (json:=[for $x at $i in $c return {$i||'e':{'name':concat('Omroep Gelderland - ',replace($x/@title,'[&quot;&apos;]',''''''),$a),'url':$x/@data-media}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=//meta[@property='og:type']/@content return let $b:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $c:=//div[@data-button='player-still-overlay icon-play'] return if (count($c)=1) then if ($a) then (name:=if ($a='video:episode') then concat('Omroep Gelderland - ',(//h3)[1],replace(//@data-media,'.+?(\d+)/(\d+)/\d{4}(\d+).+',' ($3$2$1)')) else concat('Omroep Gelderland - ',replace($c/@title,'[&quot;&apos;]',''''''),$b),v_url:=$c/@data-media) else (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','Omroep Gelderland - Livestream ($1$2$3)'),url:=extract(unparsed-text(//@data-media),'(.+m3u8)',1)) else (json:=[for $x at $i in $c return {$i||'e':{'name':concat('Omroep Gelderland - ',replace($x/@title,'[&quot;&apos;]',''''''),$a),'url':$x/@data-media}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.omroepwest.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=//meta[@property='og:type']/@content return if (count(//@data-script)=1) then json(extract(unparsed-text(//@data-script),'var opts = (.+);',1))/(if ($a) then (name:=if ($a='video:episode') then replace(clipData/title,'(\d+)-(\d+)-(\d+).+- (.+)','Omroep West - $4 ($3$2$1)') else concat('Omroep West - ',replace(clipData/title,'[&quot;&apos;]',''''''),replace(clipData/publisheddate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),let $b:=publicationData/defaultMediaAssetPath return json:=[clipData/(assets)()/{'format':concat('mp4-',bandwidth),'url':concat($b,src)}]) else (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','Omroep West - Livestream ($1$2$3)'),let $b:=clipData/(assets)(1)/concat('http:',src) return json:=[{'format':'meta','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$b),extract(.,'(.+m3u8)',1))}]),let $c:=($json()[format='meta']/format,for $x in $json()[format!='meta']/format order by $x return $x) return (formats:=join($c,', '),best:=$c[last()])) else (json:=[//@data-script ! {position()||'e':json(extract(unparsed-text(.),'var opts = (.+);',1))/{'name':concat('Omroep West - ',replace(clipData/title,'[&quot;&apos;]',''''''),replace(clipData/publisheddate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':let $b:=publicationData/defaultMediaAssetPath return [clipData/(assets)()/{'format':concat('mp4-',bandwidth),'url':concat($b,src)}]}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rijnmond.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=//meta[@property='og:type']/@content return if (count(//@data-script)=1) then json(extract(unparsed-text(//@data-script),'var opts = (.+);',1))/(if ($a) then (name:=concat('RTV Rijnmond - ',if ($a='video:episode') then substring-before(clipData/title,' -') else replace(clipData/title,'[&quot;&apos;]',''''''),replace(clipData/publisheddate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),let $b:=publicationData/defaultMediaAssetPath return json:=[clipData/(assets)()/{'format':concat('mp4-',bandwidth),'url':concat($b,src)}],let $c:=for $x in $json()/format order by $x return $x return (formats:=join($c,', '),best:=$c[last()])) else (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Rijnmond - Livestream ($1$2$3)'),let $b:=clipData/(assets)(1)/concat('http:',src) return _url:=concat(resolve-uri('.',$b),extract(unparsed-text($b),'(.+m3u8)',1)))) else (json:=[//@data-script ! {position()||'e':json(extract(unparsed-text(.),'var opts = (.+);',1))/{'name':concat('RTV Rijnmond - ',replace(clipData/title,'[&quot;&apos;]',''''''),replace(clipData/publisheddate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':let $b:=publicationData/defaultMediaAssetPath return [clipData/(assets)()/{'format':concat('mp4-',bandwidth),'url':concat($b,src)}]}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=//meta[@property='og:type']/@content return if (count(//@data-script)=1) then json(extract(unparsed-text(//@data-script),'var opts = (.+);',1))/(if ($a) then (name:=concat('RTV Rijnmond - ',if ($a='video:episode') then substring-before(clipData/title,' -') else replace(clipData/title,'[&quot;&apos;]',''''''),replace(clipData/publisheddate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),let $b:=publicationData/defaultMediaAssetPath return json:=[clipData/(assets)()/{'format':concat('mp4-',bandwidth),'url':concat($b,src)}],let $c:=for $x in $json()/format order by $x return $x return (formats:=join($c,', '),best:=$c[last()])) else (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Rijnmond - Livestream ($1$2$3)'),let $b:=clipData/(assets)(1)/concat('http:',src) return v_url:=concat(resolve-uri('.',$b),extract(unparsed-text($b),'(.+m3u8)',1)))) else (json:=[//@data-script ! {position()||'e':json(extract(unparsed-text(.),'var opts = (.+);',1))/{'name':concat('RTV Rijnmond - ',replace(clipData/title,'[&quot;&apos;]',''''''),replace(clipData/publisheddate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':let $b:=publicationData/defaultMediaAssetPath return [clipData/(assets)()/{'format':concat('mp4-',bandwidth),'url':concat($b,src)}]}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.omroepzeeland.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "name:=if (contains($url,'streams')) then replace('%date%','.+?(\d+)-(\d+)-(\d+)','Omroep Zeeland - Livestream ($1$2$3)') else concat('Omroep Zeeland - ',//meta[@property='og:title']/@content,replace(//div[@class='field field-post-date'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)'))" -f "if (//script[contains(@src,'bbvms')]) then //script[contains(@src,'bbvms')]/@src else concat('http://omroepzeeland.bbvms.com/p/OmroepZeelandDefault/c/',//@data-bbwid,'.js')" --xquery "json(extract($raw,'var opts = (.+);',1))/(let $a:=publicationData/defaultMediaAssetPath return json:=[if (contains($url,'livetv')) then (clipData/(assets)()[mediatype='MP4_MAIN']/{'format':concat('rtmp-',bandwidth),'url':src},for $x in clipData/(assets)()[mediatype='MP4_IPOD']/src return tail(tokenize(unparsed-text($x),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$x),extract(.,'(.+m3u8)',1))}) else clipData/(assets)()/{'format':concat(replace(src,'.+\.(.+)','$1-'),bandwidth),'url':concat($a,src)}],let $b:=(for $x in $json()[contains(format,'rtmp')]/format order by $x return $x,for $x in $json()[not(contains(format,'rtmp'))]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()]))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.omroepbrabant.nl=%"=="%url%" (
@@ -282,7 +282,7 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:www.telegraaf.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "name:=concat('Telegraaf - ',//h2,replace(//script/extract(.,'getPubDate.+?(\d+)',1,'s')[.],'(\d{4})(\d{2})(\d{2})',' ($3$2$1)'))" -f "//iframe/@src" -f "//script/extract(.,'playlist: \"(.+^)\"',1)[.]" --xquery "json:=$json//locations/[let $a:=(adaptive)(2)/src return ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}),(progressive)()/{'format':concat('mp4-',height),'url':.//src}],let $b:=(for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as double]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:vtm.be=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=concat(//meta[@property='og:site_name']/@content,if (//meta[@itemprop='articleProgram']) then concat(' - ',//meta[@itemprop='articleProgram']/@content) else ()) return let $b:=[{'1e':{'name':replace(concat($a,' - ',//meta[@property='og:title']/@content,replace((//@datetime[1],//meta[@property='article:published_time']/@content),'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'[&quot;&apos;]',''''''),'url'://source/@src}},//script/json(extract(.,'vmmaplayer=(.+);',1)[.])/{position()+1||'e':{'name':concat($a,' - ',title,replace(videoUrl,'.+?(\d+)/(\d+)/(\d+).+',' ($3$2$1)')),'url':videoUrl}}] return if ($b()('2e')) then (json:=$b,videos:=join($json()(),', ')) else $b()('1e') ! (name:=name,_url:=url)" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "let $a:=concat(//meta[@property='og:site_name']/@content,if (//meta[@itemprop='articleProgram']) then concat(' - ',//meta[@itemprop='articleProgram']/@content) else ()) return let $b:=[{'1e':{'name':replace(concat($a,' - ',//meta[@property='og:title']/@content,replace((//@datetime[1],//meta[@property='article:published_time']/@content),'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'[&quot;&apos;]',''''''),'url'://source/@src}},//script/json(extract(.,'vmmaplayer=(.+);',1)[.])/{position()+1||'e':{'name':concat($a,' - ',title,replace(videoUrl,'.+?(\d+)/(\d+)/(\d+).+',' ($3$2$1)')),'url':videoUrl}}] return if ($b()('2e')) then (json:=$b,videos:=join($json()(),', ')) else $b()('1e') ! (name:=name,v_url:=url)" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nickelodeon.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "let $a:=//meta[@itemprop='name']/@content return doc(//@data-mrss)/(name:=concat('Nickelodeon - ',$a,replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),json:=[doc(//media:content/@url)//rendition/{'format':concat('mp4-',@bitrate),'url':src}]),formats:=join($json()/format,', '),best:=$json()[last()]/format" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:ketnet.be=%"=="%url%" (
@@ -294,7 +294,7 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:24kitchen.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "name:=concat('24Kitchen - ',//h1[@class='fn title'])" -f "extract($raw,'tp:releaseUrl=\"(.+^)\"',1)" --xquery "json:=[//video/{'format':concat('mp4-',@system-bitrate idiv 1000),'url':@src}],let $a:=for $x in $json()/format order by $x return $x return (formats:=join($a,', '),best:=$a[last()])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:dumpert.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist 1.52 beta" "%url%" --xquery "let $a:=json(if (//@data-files) then binary-to-string(base64Binary(//div/@data-files)) else //script/extract(.,'(\{.+\}),',1)[.]) return if ($a/embed) then _url:=replace($a/embed,'youtube:','https://youtu.be/') else (name:=concat('Dumpert - ',//meta[@name='title']/@content),json:=[$a()[.!='still'] ! {'format':.,'url':$a(.)}],let $b:=(for $x in $json()[format!='720p']/format order by $x return $x,$json()[format='720p']/format) return (formats:=join($b,', '),best:=$b[last()]))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist 1.52 beta" "%url%" --xquery "let $a:=json(if (//@data-files) then binary-to-string(base64Binary(//div/@data-files)) else //script/extract(.,'(\{.+\}),',1)[.]) return if ($a/embed) then v_url:=replace($a/embed,'youtube:','https://youtu.be/') else (name:=concat('Dumpert - ',//meta[@name='title']/@content),json:=[$a()[.!='still'] ! {'format':.,'url':$a(.)}],let $b:=(for $x in $json()[format!='720p']/format order by $x return $x,$json()[format='720p']/format) return (formats:=join($b,', '),best:=$b[last()]))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:comedycentral.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "let $a:=if (count(//@data-mrss)=1) then concat(//h1,' - ',(//h2)[1]) else //li[contains(a/@href,extract($url,'.+=(.+)|.+/(\d+)',(1,2))[.])] ! (if (@data-franchise) then concat(@data-franchise,' - ',a/@title) else replace(@data-title,':','')) return doc(if (count(//@data-mrss)=1) then //@data-mrss else //li[contains(a/@href,extract($url,'.+=(.+)|.+/(\d+)',(1,2))[.])]/@data-mrss)/(name:=concat('Comedy Central - ',$a,replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),doc(//media:content/@url)/(if (//rendition) then (json:=[//rendition/{'format':concat('mp4-',@bitrate),'url':src}],formats:=join($json()/format,', '),best:=$json()[last()]/format) else ()))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nl.funnyclips.cc=%"=="%url%" (
@@ -315,7 +315,7 @@ IF NOT "%url: =%"=="%url%" (
 
 IF DEFINED json (
 	GOTO Formats
-) ELSE IF DEFINED _url (
+) ELSE IF DEFINED v_url (
 	GOTO Task
 ) ELSE (
 	ECHO.
@@ -329,7 +329,7 @@ IF DEFINED json (
 REM ================================================================================================
 
 :NPO_meta
-FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%" --xquery "json(extract($raw,'\((.+)\)',1))/(name:=replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),' - ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':concat('http://www.npo.nl/',prid)})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),prid:=prid,pubopties:=pubopties,streams:=streams,t:=if (tijdsduur instance of string) then hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur) else (),ss:=hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start),to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),tt888:=tt888)" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%" --xquery "json(extract($raw,'\((.+)\)',1))/(name:=replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),' - ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':concat('http://www.npo.nl/',prid)})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),prid:=prid,pubopties:=pubopties,streams:=streams,t:=if (tijdsduur instance of string) then hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur) else (),ss:=hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start),to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),if (tt888='ja') then s_url:=concat('http://e.omroep.nl/tt888/',prid) else ())" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 GOTO NPO
 
 REM ================================================================================================
@@ -338,7 +338,7 @@ REM ============================================================================
 IF DEFINED pubopties (
 	FOR /F "delims=" %%A IN ('ECHO %pubopties% ^| %xidel% "http://ida.omroep.nl/npoplayer/i.js" -e "token:=replace(extract($raw,'\"(.+^)\"',1),'^(.{5})((.*?)(\d)(.*?)(\d)(.*)|(.{6})(.)(.)(.*))(.{5})$','$1$3$6$5$4$7$8$10$9$11$12')" - --xquery "let $a:=for $x in $json/(if (contains(.(),'adaptive')) then tokenize(('adaptive '||join(.()[.!='adaptive'],',')),' ') else join(.(),',')) return if ($x='adaptive') then substring-before(json(concat('http://ida.omroep.nl/odi/?prid=%prid%&amp;puboptions=',$x,'&amp;adaptive=yes&amp;token=',$token))/(streams)(),'p&amp;callback') ! (if (unparsed-text-available(.)) then for $x in json(.) return ({'format':'meta','url':$x/url},tail(tokenize(unparsed-text($x/url),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$x/url),extract(.,'(.+m3u8)',1))}) else ()) else json(concat('http://ida.omroep.nl/odi/?prid=%prid%&amp;puboptions=',$x,'&amp;adaptive=no&amp;token=',$token))/(streams)() ! (if (unparsed-text-available(substring-before(.,'p&amp;callback'))) then json(substring-before(.,'p&amp;callback'))/{'format':concat('mp4-',extract(url,'.+/([a-z]+)',1)),'url':substring-before(url,'?')} else ()) return if ($a) then (json:=[$a],let $b:=(reverse($a[contains(format,'mp4')]/format),$a[format='meta']/format,for $x in $a[format castable as double]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()" --output-format^=cmd') DO %%A
 ) ELSE IF DEFINED streams (
-	FOR /F "delims=" %%A IN ('ECHO %streams% ^| %xidel% - --xquery "if (count($json()/url)=1) then _url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()" --output-format^=cmd') DO %%A
+	FOR /F "delims=" %%A IN ('ECHO %streams% ^| %xidel% - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()" --output-format^=cmd') DO %%A
 ) ELSE (
 	ECHO.
 	ECHO Video niet beschikbaar.
@@ -349,7 +349,7 @@ IF DEFINED pubopties (
 
 IF DEFINED json (
 	GOTO Formats
-) ELSE IF DEFINED _url (
+) ELSE IF DEFINED v_url (
 	GOTO Task
 ) ELSE (
 	ECHO.
@@ -413,9 +413,9 @@ IF DEFINED videos (
 			GOTO Input
 		)
 	)
-	FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - --xquery "$json()('!video!')/(name:=name,if (formats) then (json:=formats,let $a:=($json()[contains(format,'rtsp')]/format,for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as double]/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()])) else _url:=url)" --output-encoding^=oem --output-format^=cmd') DO %%A
+	FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - --xquery "$json()('!video!')/(name:=name,if (formats) then (json:=formats,let $a:=($json()[contains(format,'rtsp')]/format,for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as double]/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()])) else v_url:=url)" --output-encoding^=oem --output-format^=cmd') DO %%A
 )
-IF DEFINED _url (
+IF DEFINED v_url (
 	GOTO Task
 )
 
@@ -433,29 +433,29 @@ FOR /F %%A IN ('^"%xidel% -e "if (matches('%formats%','^(.*\W)?%format%(\W.*)?$'
 		GOTO Input
 	)
 )
-FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - -e "_url:=$json()[format='%format%']/url" --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - -e "v_url:=$json()[format='%format%']/url" --output-format^=cmd') DO %%A
 GOTO Task
 
 REM ================================================================================================
 
 :Task
 SETLOCAL ENABLEDELAYEDEXPANSION
-IF "%_url:youtu.be=%"=="%_url%" (
+IF "%v_url:youtu.be=%"=="%v_url%" (
 	ECHO.
 	SET /P "task=Videolink achterhalen, of Downloaden? [V/d] "
 	IF /I "!task!"=="d" GOTO Download
 
 	IF DEFINED ss (
-		IF "%_url:mms://=%"=="%_url%" (
-			FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('%_url%?start=',round(%ss%),'^&end=',round(%to%))"^"') DO SET "_url=%%A"
+		IF "%v_url:mms://=%"=="%v_url%" (
+			FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('%v_url%?start=',round(%ss%),'^&end=',round(%to%))"^"') DO SET "v_url=%%A"
 		)
 	)
 )
 
 ECHO.
 ECHO Videolink:
-ECHO %_url%
-ECHO|SET /P ="%_url:^=%"|clip.exe
+ECHO %v_url%
+ECHO|SET /P ="%v_url:^=%"|clip.exe
 ECHO.
 ECHO Videolink gekopieerd naar het klembord.
 ECHO.
@@ -477,7 +477,7 @@ IF /I "%remap%"=="n" (
 )
 IF NOT "%map:~-1%"=="\" SET "map=%map%\"
 
-FOR /F "tokens=1 delims=?" %%A IN ("%_url%") DO (
+FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 	IF /I "%%~xA"==".m4a"  SET "ext=.m4a"
 	IF /I "%%~xA"==".m4v"  SET "ext=.mp4"
 	IF /I "%%~xA"==".mp4"  SET "ext=.mp4"
@@ -495,32 +495,27 @@ IF /I NOT "%rename%"=="n" (
 )
 
 SETLOCAL ENABLEDELAYEDEXPANSION
-IF "%tt888%"=="ja" (
+IF DEFINED s_url (
 	ECHO.
 	SET /P "subs=Ondertiteling Downloaden? [j/N] "
 	IF /I "!subs!"=="j" (
-		SET subs=1
 		ECHO.
 		SET /P "mux=Ondertiteling Muxen? [j/N] "
-		IF /I "!mux!"=="j" (
-			SET mux=1
-		) ELSE (
-			SET mux=
-		)
+		IF /I NOT "!mux!"=="j" SET mux=
 	) ELSE (
 		SET subs=
 	)
 )
 
-IF NOT "%_url:mms://=%"=="%_url%" SET "_url=%_url:mms://=mmsh://%"
+IF NOT "%v_url:mms://=%"=="%v_url%" SET "v_url=%v_url:mms://=mmsh://%"
 
 ECHO.
 IF DEFINED ss (
 	IF DEFINED mux (
-		%ffmpeg% -hide_banner -ss %ss% -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t %t% -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+		%ffmpeg% -hide_banner -ss %ss% -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t %t% -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 	) ELSE (
-		%ffmpeg% -hide_banner -ss %ss% -i "%_url%" -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss %ss% -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t %t% "!map!%name%.srt"
+		%ffmpeg% -hide_banner -ss %ss% -i "%v_url%" -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss %ss% -sub_charenc CP1252 -i "%s_url%" -t %t% "!map!%name%.srt"
 	)
 ) ELSE (
 	SET /P "part=Fragment downloaden? [j/N] "
@@ -530,36 +525,36 @@ IF DEFINED ss (
 		ECHO.
 		IF DEFINED mux (
 			IF NOT DEFINED ss (
-				%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+				%ffmpeg% -hide_banner -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			) ELSE IF "!ss!"=="0" (
-				%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+				%ffmpeg% -hide_banner -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			) ELSE IF NOT DEFINED t (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			) ELSE (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			)
 		) ELSE (
 			IF NOT DEFINED ss (
-				%ffmpeg% -hide_banner -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!%name%.srt"
+				%ffmpeg% -hide_banner -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "%s_url%" -t !t! "!map!%name%.srt"
 			) ELSE IF "!ss!"=="0" (
-				%ffmpeg% -hide_banner -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!%name%.srt"
+				%ffmpeg% -hide_banner -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "%s_url%" -t !t! "!map!%name%.srt"
 			) ELSE IF NOT DEFINED t (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" "!map!%name%.srt"
+				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "%s_url%" "!map!%name%.srt"
 			) ELSE (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!%name%.srt"
+				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "%s_url%" -t !t! "!map!%name%.srt"
 			)
 		)
 	) ELSE (
 		ECHO.
 		IF DEFINED mux (
-			%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+			%ffmpeg% -hide_banner -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 		) ELSE (
-			%ffmpeg% -hide_banner -i "%_url%" -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
-			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" "!map!%name%.srt"
+			%ffmpeg% -hide_banner -i "%v_url%" -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "%s_url%" "!map!%name%.srt"
 		)
 	)
 )
