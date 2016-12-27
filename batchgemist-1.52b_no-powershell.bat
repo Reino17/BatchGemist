@@ -32,7 +32,7 @@ REM         - Door betere tekencodering detectie in Xidel 0.9.4. is 'CHCP' overb
 REM         - Waar nodig extra 'ENDLOCAL'-commando's toegevoegd, omdat in een bepaalde situatie niet
 REM           alle variabelen waren gereset.
 REM       [Xidel queries]
-REM         - Queries geüpdate in lijn met versie 0.9.4.
+REM         - Queries geüpdatet in lijn met versie 0.9.4.
 REM         - ALLE websites opnieuw nagelopen!
 REM         - Formaat selectie verbeterd: Bij iedere extractor is de volgorde van beschikbare
 REM           formaten nu eerst progressief en dan dynamisch. En per variant is de kwaliteit
@@ -83,14 +83,14 @@ REM       - Gerepareerd: rtlXL 720p progressieve videostream, niet meer werkende
 REM         videoclips extractor en naam video in Disney- en Cartoon Network extractor.
 REM       - :Download opgeschoond.
 REM     30-03-2016 v1.4:
-REM       - Xidel queries geüpdate in lijn met versie 0.9.1.20160322.
+REM       - Xidel queries geüpdatet in lijn met versie 0.9.1.20160322.
 REM       - Disney extractor geoptimaliseerd en is nu af. Tijdelijke oplossing aan :Formats
 REM         toegevoegd voor het downloaden van de progressieve videostreams.
 REM         LET OP: voor het downloaden van de dynamische videostreams is FFMpeg ná 16 maart nodig!
 REM       - Ondersteuning toegevoegd voor: Cartoon Network.
 REM       - Samenvoeging programmalink controle NPO en NPOLive teniet gedaan en een aparte regel
 REM         voor de livestream van NPO 3 toegevoegd, omdat deze voor problemen bleef zorgen.
-REM         Hierdoor :NPO_meta en :NPOLive_meta ook geüpdate.
+REM         Hierdoor :NPO_meta en :NPOLive_meta ook geüpdatet.
 REM       - NOS- en 101TV extractor geoptimaliseerd door beter inzicht in Xidel's mogelijkheden.
 REM       - NPO extractor geoptimaliseerd en, dankzij een nieuwe versie van Xidel, uitgebreid met
 REM         een extra beschikbaarheids controle. Ook procenttekens in gecodeerde videolinks worden
@@ -233,7 +233,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.52 beta" "%url%" -e "uuid:=extract(//div[@class='videoContainer']//@src,'=(.+)/',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:www.kijk.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -f "replace(replace(//meta[@property='og:video']/@content,'federated_f9','htmlFederated'),'videoId','@videoPlayer')" --xquery "json(extract(//body,'experienceJSON = (.+\});',1))/(if (.//mediaDTO) then .//mediaDTO/(name:=customFields/concat(if (sbs_station='veronicatv') then 'Veronica' else upper-case(sbs_station),' - ',sbs_program,replace(sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),json:=[let $a:=(renditions)()[size=0]/defaultURL return ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}),json(concat('http://hbb.sbs6.nl/backend/veamerapi/index/method/video/brightCoveId/',id))/(videos)() ! {'format':replace(.,'.+-(\d+).+\.(.+)','$2-$1'),'url':.}],let $b:=($json()[contains(format,'mp4')]/format,$json()[format='meta']/format,for $x in $json()[format castable as double]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else())" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -f "replace(replace(parse-html('<html>'||substring-after($raw,'<![endif]>'))//meta[@name='video_src']/@content,'federated_f9','htmlFederated'),'videoId','@videoPlayer')" --xquery "json(extract(//body,'experienceJSON = (.+\});',1))/(if (.//mediaDTO) then .//mediaDTO/(name:=concat(if (customFields/sbs_station='veronicatv') then 'Veronica' else upper-case(customFields/sbs_station),' - ',displayName,replace(creationDate div 1000 * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),json:=if ((renditions)()[size=0]) then [let $a:=(renditions)()[size=0]/defaultURL return ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}),json(concat('http://hbb.sbs6.nl/backend/veamerapi/index/method/video/brightCoveId/',id))/(videos)() ! {'format':replace(.,'.+-(\d+).*\.(.+)','$2-$1'),'url':.}] else [(renditions)()/{'format':concat('mp4_',encodingRate idiv 1000),'url':defaultURL}],let $b:=(for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as double]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ())" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.omropfryslan.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "if (contains($url,'live')) then let $a:=json(doc(//script/extract(.,'playlist: \"(.+^)\"',1)[.]))(2)/(sources)() return (name:=concat(substring-before(//meta[@itemprop='name']/@content,'TV'),replace('%date%','.+?(\d+)-(\d+)-(\d+)','- Livestream ($1$2$3)')),json:=[doc($a[type='rtmp']/file)//video/{'format':concat('rtsp-',@system-bitrate idiv 1000),'url':concat(replace(//@base,'rtmp','rtsp'),@src)},let $b:=$a[type='hls']/file return ({'format':'meta','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$b),extract(.,'(.+m3u8)',1))})],formats:=join($json()/format,', '),best:=$json()[last()]/format) else let $a:=replace(//meta[@property='article:published_time']/@content,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return let $b:=//script/json(extract(.,'(\{\"sources\".+?)\)',1,'s')[.]) return if (count($b)=1) then (name:=concat('Omrop Fryslân - ',if (contains($url,'utstjoering')) then substring-before(//meta[@itemprop='name']/@content,' fan') else replace($b//idstring,'&quot;',''''''),$a),json:=[$b/(sources)()/{'format':replace(label,'(\d+).','mp4-$1'),'url':file}],formats:=join($json()/format,', '),best:=$json()[last()]/format) else (json:=[$b/{position()||'e':{'name':concat('Omrop Fryslân - ',replace(.//idstring,'&quot;',''''''),$a),'formats':(sources)()/{'format':replace(label,'(\d+).','mp4-$1'),'url':file}}}],videos:=join($json()(),', '))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvnoord.nl=%"=="%url%" (
