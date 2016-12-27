@@ -514,10 +514,10 @@ IF NOT "%_url:mms://=%"=="%_url%" SET "_url=%_url:mms://=mmsh://%"
 ECHO.
 IF DEFINED ss (
 	IF DEFINED mux (
-		%ffmpeg% -hide_banner -ss %ss% -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t %t% -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!!name!%ext%"
+		%ffmpeg% -hide_banner -ss %ss% -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t %t% -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 	) ELSE (
-		%ffmpeg% -hide_banner -ss %ss% -i "%_url%" -t %t% -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss %ss% -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t %t% "!map!!name!.srt"
+		%ffmpeg% -hide_banner -ss %ss% -i "%_url%" -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss %ss% -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t %t% "!map!%name%.srt"
 	)
 ) ELSE (
 	SET /P "part=Fragment downloaden? [j/N] "
@@ -527,36 +527,36 @@ IF DEFINED ss (
 		ECHO.
 		IF DEFINED mux (
 			IF NOT DEFINED ss (
-				%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!!name!%ext%"
+				%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			) ELSE IF "!ss!"=="0" (
-				%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!!name!%ext%"
+				%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			) ELSE IF NOT DEFINED t (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!!name!%ext%"
+				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			) ELSE (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!!name!%ext%"
+				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 			)
 		) ELSE (
 			IF NOT DEFINED ss (
-				%ffmpeg% -hide_banner -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!!name!.srt"
+				%ffmpeg% -hide_banner -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!%name%.srt"
 			) ELSE IF "!ss!"=="0" (
-				%ffmpeg% -hide_banner -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!!name!.srt"
+				%ffmpeg% -hide_banner -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!%name%.srt"
 			) ELSE IF NOT DEFINED t (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" "!map!!name!.srt"
+				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" "!map!%name%.srt"
 			) ELSE (
-				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!!name!.srt"
+				%ffmpeg% -hide_banner -ss !ss! -i "%_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -t !t! "!map!%name%.srt"
 			)
 		)
 	) ELSE (
 		ECHO.
 		IF DEFINED mux (
-			%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!!name!%ext%"
+			%ffmpeg% -hide_banner -i "%_url%" -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
 		) ELSE (
 			%ffmpeg% -hide_banner -i "%_url%" -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
-			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" "!map!!name!.srt"
+			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "http://e.omroep.nl/tt888/%prid%" "!map!%name%.srt"
 		)
 	)
 )
