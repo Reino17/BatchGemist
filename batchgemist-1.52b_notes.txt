@@ -1,20 +1,38 @@
-[{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content/ipod/2016/08/20/274108.mp4^"}]
+http://www.npo.nl/china-blaast-nieuw-leven-in-zijderoutes/20-08-2016/WO_NOS_4863988
+videofragment in meerdere formaten:
+[{"formaat": "h264", "kwaliteit": 3, "url": "http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4"}, {"formaat": "h264", "kwaliteit": 2, "url": "http://download.omroep.nl/nos/content/ipod/2016/08/20/274108.mp4"}]
 
-[{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/mp4/web03/2016/08/20/274109.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/ipod/2016/08/20/274109.mp4^"}]
+http://www.npo.nl/volleybalsters-grijpen-naast-bronzen-medaille/20-08-2016/WO_NOS_4863992
+beveiligd videofragment in meerdere formaten:
+[{"formaat": "h264", "kwaliteit": 3, "url": "http://download.omroep.nl/nos/content-ip/mp4/web03/2016/08/20/274109.mp4"}, {"formaat": "h264", "kwaliteit": 2, "url": "http://download.omroep.nl/nos/content-ip/ipod/2016/08/20/274109.mp4"}]
 
-[{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/bb.20060114.asf^"}^, {^"formaat^": ^"wmv^"^, ^"kwaliteit^": 1^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/sb.20060114.asf^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4^"}]
+http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
+videofragment in meerdere formaten, met voor het formaat met de hoogste resolutie het attribuut "type" i.p.v. "formaat" en "kwaliteit":
+[{"formaat": "h264", "kwaliteit": 2, "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/640x360_1000.m4v"}, {"formaat": "h264", "kwaliteit": 1, "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/320x180_180.m4v"}, {"type": "h264", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/854x480_1500.m4v"}]
 
-[{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/vpro/39594888/windowsmedia.asf^"}]
+http://www.npo.nl/slimmer-in-een-minuut-sociale-robots/20-10-2016/WO_NPO_5486659
+videofragment in één formaat met 'uri-decoded' videolink, die dus zonder '%20' niet werkt:
+[{"formaat": "h264", "kwaliteit": 3, "url": "http://download.omroep.nl/portal/NPO/NPO3/Vanessa 1 minuut.mp4"}]
 
-[{^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/640x360_1000.m4v^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 1^, ^"url^": ^"http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/320x180_180.m4v^"}^, {^"type^": ^"h264^"^, ^"url^": ^"http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/854x480_1500.m4v^"}]
+http://www.npo.nl/escaperoom-8-jill/21-10-2016/WO_KN_5639189
+videofragment in meerdere formaten, maar welke onbeschikbaar is ('HTTP/1.1 404 Not Found'):
+[{"formaat": "h264", "kwaliteit": 3, "url": "http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_high.mp4"}, {"formaat": "h264", "kwaliteit": 2, "url": "http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_low.mp4"}]
 
-[{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/portal/NPO/NPO3/Vanessa 1 minuut.mp4^"}]
+http://www.npo.nl/reacties-binnenhof/10-11-2016/WO_NOS_5947382
+videofragment in één formaat met een in eerste instantie al herleide url, die dus niet werkt:
+[{"formaat": "h264", "kwaliteit": 3, "url": "http://content1a.omroep.nl/urishieldv2/l27m79eb57e8082db2910058243e52000000.cb4aa61336292e4528b6440a973fdecc/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4"}]
+de NPO heeft het in de tussentijd gecorrigeerd, want deze werkt wel:
+[{"formaat": "h264", "kwaliteit": 3, "url": "http://video.omroep.nl/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4"}]
 
-[{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_high.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_low.mp4^"}]
+http://www.npo.nl/willem-wever/14-01-2006/NCRV_1210567
+'Windows Media' videostream in meerdere formaten:
+[{"formaat": "wmv", "kwaliteit": 2, "url": "http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/bb.20060114.asf"}, {"formaat": "wmv", "kwaliteit": 1, "url": "http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/sb.20060114.asf"}, {"formaat": "h264", "kwaliteit": 2, "url": "http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4"}]
 
-[{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://content.omroep.nl/kro/video/binnenstebuiten/BB_161013_Kevin-Audio_wk8_POMS_high_video.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://content.omroep.nl/kro/video/binnenstebuiten/BB_161013_Kevin-Audio_wk8_POMS_low_video.mp4^"}]
+http://www.npo.nl/zigeunermuziek-doet-pijn/21-07-2010/WO_VPRO_043833
+'Windows Media' videostream in één formaat (zeldzaam):
+[{"formaat": "wmv", "kwaliteit": 2, "url": "http://cgi.omroep.nl/cgi-bin/streams?/vpro/39594888/windowsmedia.asf"}]
 
-[{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://content1a.omroep.nl/urishieldv2/l27m79eb57e8082db2910058243e52000000.cb4aa61336292e4528b6440a973fdecc/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4^"}]
+-------------------------------------------------------------------------------------------------------------------------------
 
 xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://download.omroep.nl/nos/content-ip/mp4/web03/2016/08/20/274109.mp4','method':'HEAD','error-handling':'xxx=accept'})"
 {
@@ -68,7 +86,7 @@ xidel-0.9.6.exe -s --color=never -e "x:request({'post':'[{\"file\":\"http://down
 
 xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://download.omroep.nl/portal/NPO/NPO3/Vanessa 1 minuut.mp4','method':'HEAD','error-handling':'xxx=accept'})"
 {
-  "url": "http://download.omroep.nl/portal/NPO/NPO3/Vanessa%201%20minuut.mp4",
+  "url": "http://download.omroep.nl/portal/NPO/NPO3/Vanessa%201%20minuut.mp4",		// Xidel 'uri-encode' urls automatisch als dat nodig is.
   "type": "text/html; charset=UTF-8",
   "headers": [
     "HTTP/1.1 302 Found",
@@ -132,105 +150,178 @@ xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://content1a.omroep.
   "doc": null
 }
 
+xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://video.omroep.nl/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4','method':'HEAD','error-handling':'xxx=accept'})"
+{
+  "url": "http://video.omroep.nl/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4",
+  "type": "text/html; charset=UTF-8",
+  "headers": [
+    "HTTP/1.1 302 Found",
+    "Date: Fri, 30 Dec 2016 12:58:03 GMT",
+    "Server: Apache/2.4.23 (Unix) PHP/5.6.26",
+    "X-Powered-By: PHP/5.6.26",
+    "Location: http://content1c.omroep.nl/urishieldv2/l27m0657993561fb87e800586659db000000.1949881edf7c6f09e653ad311ab7b58e/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4",
+    "Cache-Control: \"max-age=60\"",
+    "Expires: Fri, 30 Dec 2016 12:59:03 GMT",
+    "X-WorkerInstancename: dlr2a",
+    "Content-Type: text/html; charset=UTF-8",
+    "X-ProxyInstancename: dlr1a",
+    "Set-Cookie: balancer://dlr2cluster=balancer.dlr2afp; path=/;",
+    "Connection: close",
+    "",
+    "\u0000m"
+  ],
+  "raw": "",
+  "doc": null
+}
+
+-------------------------------------------------------------------------------------------------------------------------------
+
 xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4','method':'HEAD','error-handling':'xxx=accept'})/(if (contains(headers[1],'302')) then url else ())"
 http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4
 
 xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4','method':'HEAD','error-handling':'xxx=accept'})/(if (contains(headers[1],'40')) then () else url)"
 http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4
 
+xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4','method':'HEAD','error-handling':'xxx=accept'})/(if (contains(headers[1],'200')) then url else if (contains(headers[1],'302')) then url else ())"
+http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4
+
 xidel-0.9.6.exe -s --color=never -e "x:request({'data':'http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4','method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())"
 http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4
 
-echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content/ipod/2016/08/20/274108.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
+-------------------------------------------------------------------------------------------------------------------------------
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content/ipod/2016/08/20/274108.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else url)} return $a"
+{
+  "format": "mp4-3",
+  "url": "http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4"
+}
+{
+  "format": "mp4-2",
+  "url": "http://download.omroep.nl/nos/content/ipod/2016/08/20/274108.mp4"
+}
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/mp4/web03/2016/08/20/274109.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/ipod/2016/08/20/274109.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{...} return $a"
+{
+  "format": "mp4-3",
+  "url": "https://video.omroep.nl/secure/ba015198a1db78f6c4eaf1696c5fb33e/586662c4/nos/content-ip/mp4/web03/2016/08/20/274109.mp4"
+}
+{
+  "format": "mp4-2",
+  "url": "https://video.omroep.nl/secure/7eb67accaf222a86ab36fca2ad5a9eb1/586662c5/nos/content-ip/ipod/2016/08/20/274109.mp4"
+}
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/portal/NPO/NPO3/Vanessa 1 minuut.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{...} return $a"
+{
+  "format": "mp4-3",
+  "url": "http://download.omroep.nl/portal/NPO/NPO3/Vanessa%201%20minuut.mp4"
+}
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_high.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_low.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{...} return $a"
+{
+  "format": "mp4-3",
+  "url": null
+}
+{
+  "format": "mp4-2",
+  "url": null
+}
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_high.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_low.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{...}[url] return $a"
+...
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://content1a.omroep.nl/urishieldv2/l27m79eb57e8082db2910058243e52000000.cb4aa61336292e4528b6440a973fdecc/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{...}[url] return $a"
+...
+
+echo [{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/bb.20060114.asf^"}^, {^"formaat^": ^"wmv^"^, ^"kwaliteit^": 1^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/sb.20060114.asf^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{...}[url] return $a"
+{
+  "format": "wmv-2",
+  "url": "mms://blaster.omroep.nl/public/ug-od/ms4/08/media/tv/ncrv/willemwever/bb.20060114.asf?wmt=58666396&wmhash=3ad17bb6"
+}
+{
+  "format": "wmv-1",
+  "url": "mms://blaster.omroep.nl/public/ug-od/ms4/08/media/tv/ncrv/willemwever/sb.20060114.asf?wmt=58666396&wmhash=59bc589c"
+}
+{
+  "format": "mp4-2",
+  "url": "http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4"
+}
+
+echo [{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/vpro/39594888/windowsmedia.asf^"}] | xidel-0.9.6.exe -s --color=never - --xquery "..."
+{
+  "format": "wmv-2",
+  "url": "mms://hurley.omroep.nl/public/ug-od/ms5/14/media/vpro/39594888/windowsmedia.asf?wmt=58666ccb&wmhash=4d5da383"
+}
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content/ipod/2016/08/20/274108.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else url)}[url] return if ($a) then if (count($a)=1) then v_url:=$a/url else (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
 json := [{"format": "mp4-3", "url": "http://download.omroep.nl/nos/content/mp4/web03/2016/08/20/274108.mp4"}, {"format": "mp4-2", "url": "http://download.omroep.nl/nos/content/ipod/2016/08/20/274108.mp4"}]
 formats := mp4-2, mp4-3
 best := mp4-3
 
-echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/mp4/web03/2016/08/20/274109.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/ipod/2016/08/20/274109.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/mp4/web03/2016/08/20/274109.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/nos/content-ip/ipod/2016/08/20/274109.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "..."
 json := [{"format": "mp4-3", "url": "https://video.omroep.nl/secure/ed64cb4aef309da7eac655c4a7207e99/585db2df/nos/content-ip/mp4/web03/2016/08/20/274109.mp4"}, {"format": "mp4-2", "url": "https://video.omroep.nl/secure/b4357506b4e714f8058bc7bffa27ba63/585db2df/nos/content-ip/ipod/2016/08/20/274109.mp4"}]
 formats := mp4-2, mp4-3
 best := mp4-3
 
-echo [{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/bb.20060114.asf^"}^, {^"formaat^": ^"wmv^"^, ^"kwaliteit^": 1^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/sb.20060114.asf^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/portal/NPO/NPO3/Vanessa 1 minuut.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "..."
+v_url := http://download.omroep.nl/portal/NPO/NPO3/Vanessa%201%20minuut.mp4
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_high.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_low.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "..."
+...
+
+echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://content1a.omroep.nl/urishieldv2/l27m79eb57e8082db2910058243e52000000.cb4aa61336292e4528b6440a973fdecc/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "..."
+...
+
+echo [{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/bb.20060114.asf^"}^, {^"formaat^": ^"wmv^"^, ^"kwaliteit^": 1^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/sb.20060114.asf^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "..."
 json := [{"format": "wmv-2", "url": "mms://hurley.omroep.nl/public/ug-od/ms4/08/media/tv/ncrv/willemwever/bb.20060114.asf?wmt=585db375&wmhash=133cf8ce"}, {"format": "wmv-1", "url": "mms://blaster.omroep.nl/public/ug-od/ms4/08/media/tv/ncrv/willemwever/sb.20060114.asf?wmt=585db375&wmhash=66f209f6"}, {"format": "mp4-2", "url": "http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4"}]
 formats := wmv-1, wmv-2, mp4-2
 best := mp4-2
 
-echo [{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/vpro/39594888/windowsmedia.asf^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
+echo [{^"formaat^": ^"wmv^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://cgi.omroep.nl/cgi-bin/streams?/vpro/39594888/windowsmedia.asf^"}] | xidel-0.9.6.exe -s --color=never - --xquery "..."
 v_url := mms://hurley.omroep.nl/public/ug-od/ms5/14/media/vpro/39594888/windowsmedia.asf?wmt=585db3e1&wmhash=5abbdbb3
 
-echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/640x360_1000.m4v^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 1^, ^"url^": ^"http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/320x180_180.m4v^"}^, {^"type^": ^"h264^"^, ^"url^": ^"http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/854x480_1500.m4v^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
-json := [{"format": "mp4-2", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/640x360_1000.m4v"}, {"format": "mp4-1", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/320x180_180.m4v"}, {"format": "mp4-3", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/854x480_1500.m4v"}]
-formats := mp4-1, mp4-2, mp4-3
-best := mp4-3
+-------------------------------------------------------------------------------------------------------------------------------
 
-echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/portal/NPO/NPO3/Vanessa 1 minuut.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
-v_url := http://download.omroep.nl/portal/NPO/NPO3/Vanessa%201%20minuut.mp4
-
-echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_high.mp4^"}^, {^"formaat^": ^"h264^"^, ^"kwaliteit^": 2^, ^"url^": ^"http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_low.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
-...
-
-echo [{^"formaat^": ^"h264^"^, ^"kwaliteit^": 3^, ^"url^": ^"http://content1a.omroep.nl/urishieldv2/l27m79eb57e8082db2910058243e52000000.cb4aa61336292e4528b6440a973fdecc/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4^"}] | xidel-0.9.6.exe -s --color=never - --xquery "if (count($json()/url)=1) then v_url:=if (ends-with($json()/url,'asf')) then doc($json()/url)//@href else x:request({'data':$json()/url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ()) else let $a:=$json()/{'format':if (type) then concat('mp4-',max($json()/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})/(if (some $x in ('200','302') satisfies contains(headers[1],$x)) then url else ())}[url] return if ($a) then (json:=[$a],let $b:=(for $x in $json()[contains(format,'wmv')]/format order by $x return $x,for $x in $json()[contains(format,'mp4')]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ()"
-v_url :=
-
---xquery "if (count($json()/url)=1) then
-            v_url:=if (ends-with($json()/url,'asf')) then
-              doc($json()/url)//@href
-            else
-              x:request(
-                {
-                  'data':$json()/url,
-                  'method':'HEAD',
-                  'error-handling':'xxx=accept'
-                }
-              )/(
-                if (some $x in ('200','302') satisfies contains(headers[1],$x)) then
-                  url
-                else
-                  ()
+--xquery "let $a:=$json()/{
+            'format':if (type) then
+              concat(
+                'mp4-',
+                max($json()/kwaliteit)+1
               )
-          else
-            let $a:=$json()/{
-              'format':if (type) then
-                concat(
-                  'mp4-',
-                  max($json()/kwaliteit)+1
-                )
-              else
-                concat(
-                  if (formaat='h264') then
-                    'mp4'
-                  else
-                    formaat,
-                  '-',
-                  kwaliteit
-                ),
-              'url':if (ends-with(url,'asf')) then
-                doc(url)//@href
-              else
-                if (contains(url,'content-ip')) then
-                  x:request(
-                    {
-                      'post':serialize-json([{\"file\":url}]),
-                      'url':'http://nos.nl/video/resolve/'
-                    }
-                  )//file
+            else
+              concat(
+                if (formaat='h264') then
+                  'mp4'
                 else
-                  x:request(
-                    {
-                      'data':url,
-                      'method':'HEAD',
-                      'error-handling':'xxx=accept'
-                    }
-                  )/(
-                    if (some $x in ('200','302') satisfies contains(headers[1],$x)) then
-                      ()
-                    else
-                      url
-                  )
-            }[url]
-            return
-            if ($a) then (
+                  formaat,
+                '-',
+                kwaliteit
+              ),
+            'url':x:request(
+              {
+                'data':url,
+                'method':'HEAD',
+                'error-handling':'xxx=accept'
+              }
+            )[some $x in ('200','302') satisfies contains(headers[1],$x)]/(
+              if (ends-with(url,'asf')) then
+                doc(url)//@href
+              else if (contains(url,'content-ip')) then
+                x:request(
+                  {
+                    'post':serialize-json([{\"file\":url}]),
+                    'url':'http://nos.nl/video/resolve/'
+                  }
+                )//file
+              else
+                url
+            )
+          }[url] return
+          if ($a) then
+            if (count($a)=1) then
+              v_url:=$a/url
+            else (
               json:=[$a],
               let $b:=(
                 for $x in $json()[contains(format,'wmv')]/format order by $x return $x,
@@ -240,8 +331,8 @@ v_url :=
                 best:=$b[last()]
               )
             )
-            else
-              ()"
+          else
+            ()"
 
 ================================================================================================================================
 
