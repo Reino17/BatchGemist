@@ -455,7 +455,9 @@ IF NOT "%url: =%"=="%url%" (
                 .^,
                 'prid: \^"(.+^^^)\^"'^,1
               ^)[.]^,
-              if (not(contains($url^,'broadcast'^)^)^) then (
+              if (contains($url^,'broadcast'^)^) then
+                (^)
+              else (
                 name:^=concat(
                   'EenVandaag - '^,
                   replace(
@@ -471,14 +473,29 @@ IF NOT "%url: =%"=="%url%" (
                 ^)^,
                 //script/json(
                   extract(
-                    .^,'options: (.+?\}^)'^,1^,'s'
+                    .^,
+                    'options: (.+?\}^)'^,1^,'s'
                   ^)
                 ^)/(
-                  ss:^=startAt^,
-                  to:^=endAt^,
-                  t:^=($to^)-($ss^)
+                  t:^=endAt - startAt^,
+                  startAt ! (
+                    if (. mod 30^=0^) then (
+                      if (.^=30^) then
+                        (^)
+                      else
+                        ss1:^=. - 30^,
+                      ss2:^=30
+                    ^) else (
+                      if (.^<30^) then
+                        (^)
+                      else
+                        ss1:^=. - (. mod 30^)^,
+                      ss2:^=. mod 30
+                    ^)
+                  ^)^,
+                  to:^=endAt
                 ^)^,
-                pubopties:^=json(
+                json(
                   extract(
                     unparsed-text(
                       concat(
@@ -488,9 +505,22 @@ IF NOT "%url: =%"=="%url%" (
                     ^)^,
                     '\((.+^)\^)'^,1
                   ^)
-                ^)/pubopties
-              ^) else
-               (^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+                ^)/(
+                  pubopties:^=pubopties^,
+                  if (tt888^='ja'^) then (
+                    s_url:^=concat(
+                      'http://e.omroep.nl/tt888/'^,
+                      prid
+                    ^)^,
+                    if (unparsed-text-available($s_url^)^) then
+                      (^)
+                    else
+                      s_charenc:^='-sub_charenc CP1252'
+                    ^)
+                  else
+                    (^)
+                ^)
+              ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 	IF DEFINED pubopties (
 		GOTO NPO
 	) ELSE (
@@ -3180,7 +3210,8 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                         'data':concat(
                           'http://www.npo.nl/'^,
                           prid
-                        ^)
+                        ^)^,
+                        'method':'HEAD'
                       }
                     ^)/url^,
                     '.+?(\d+^)-(\d+^)-(\d+^).+'^,
@@ -3197,16 +3228,34 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
               hours-from-time(tijdsduur^)*3600+minutes-from-time(tijdsduur^)*60+seconds-from-time(tijdsduur^)
             else
               (^)^,
-            ss:^=hours-from-time(start^)*3600+minutes-from-time(start^)*60+seconds-from-time(start^)^,
+            (hours-from-time(start^)*3600+minutes-from-time(start^)*60+seconds-from-time(start^)^) ! (
+              if (. mod 30^=0^) then (
+                if (.^=30^) then
+                  (^)
+                else
+                  ss1:^=. - 30^,
+                ss2:^=30
+              ^) else (
+                if (.^<30^) then
+                  (^)
+                else
+                  ss1:^=. - (. mod 30^)^,
+                ss2:^=. mod 30
+              ^)
+            ^)^,
             to:^=hours-from-time(eind^)*3600+minutes-from-time(eind^)*60+seconds-from-time(eind^)^,
-            if (tt888^='ja'^) then
+            if (tt888^='ja'^) then (
               s_url:^=concat(
                 'http://e.omroep.nl/tt888/'^,
                 prid
-              ^)
-            else
+              ^)^,
+              if (unparsed-text-available($s_url^)^) then
+                (^)
+              else
+                s_charenc:^='-sub_charenc CP1252'
+            ^) else 
               (^)
-            ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 GOTO NPO
 
 REM ================================================================================================
@@ -3653,12 +3702,12 @@ IF "%v_url:youtu.be=%"=="%v_url%" (
 	SET /P "task=Videolink achterhalen, of Downloaden? [V/d] "
 	IF /I "!task!"=="d" GOTO Download
 
-	IF DEFINED ss (
+	IF DEFINED to (
 		IF "%v_url:mms://=%"=="%v_url%" (
 			FOR /F "delims=" %%A IN ('^"%xidel%
             -e ^"concat(
                    '%v_url%?start^='^,
-                   round(%ss%^)^,
+                   round(%ss1%+%ss2%^)^,
                    '^^^&end^='^,
                    round(%to%^)
                 ^)^"^"') DO SET "v_url=%%A"
@@ -3687,16 +3736,17 @@ SET /P "remap=Wijzigen? [J/n] "
 IF /I "%remap%"=="n" (
 	SET "map=%~dp0"
 ) ELSE (
-	SET /P "map=Opslaan in: "
+	ECHO Opslaan in:
+	SET /P map=
 )
 IF NOT "%map:~-1%"=="\" SET "map=%map%\"
 
 FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
-	IF /I "%%~xA"==".m4a"  SET "ext=.m4a"
-	IF /I "%%~xA"==".m4v"  SET "ext=.mp4"
-	IF /I "%%~xA"==".mp4"  SET "ext=.mp4"
-	IF /I "%%~xA"==".m3u8" SET "ext=.mp4"
-	IF /I "%%~xA"==".asf"  SET "ext=.wmv"
+	IF /I "%%~xA"==".m4a"  SET ext=.m4a
+	IF /I "%%~xA"==".m4v"  SET ext=.mp4
+	IF /I "%%~xA"==".mp4"  SET ext=.mp4
+	IF /I "%%~xA"==".m3u8" SET ext=.mp4
+	IF /I "%%~xA"==".asf"  SET ext=.wmv
 )
 
 ECHO.
@@ -3714,7 +3764,8 @@ FOR /F "delims=" %%A IN ('^"%xidel%
 ECHO Bestandsnaam: %name%
 SET /P "rename=Wijzigen? [J/n] "
 IF /I NOT "%rename%"=="n" (
-	SET /P "name=Nieuwe bestandsnaam: "
+	ECHO Nieuwe bestandsnaam:
+	SET /P name=
 )
 
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -3733,51 +3784,97 @@ IF DEFINED s_url (
 IF NOT "%v_url:mms://=%"=="%v_url%" SET "v_url=%v_url:mms://=mmsh://%"
 
 ECHO.
-IF DEFINED ss (
+IF DEFINED ss1 (
 	IF DEFINED mux (
-		%ffmpeg% -hide_banner -ss %ss% -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t %t% -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+		%ffmpeg% -hide_banner -ss %ss1% -i "%v_url%" %s_charenc% -ss %ss1% -i "%s_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 	) ELSE (
-		%ffmpeg% -hide_banner -ss %ss% -i "%v_url%" -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss %ss% -sub_charenc CP1252 -i "%s_url%" -t %t% "!map!%name%.srt"
+		%ffmpeg% -hide_banner -ss %ss1% -i "%v_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss %ss1% -i "%s_url%" -ss %ss2% -t %t% "!map!%name%.srt"
+	)
+) ELSE IF DEFINED ss2 (
+	IF DEFINED mux (
+		%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+	) ELSE (
+		%ffmpeg% -hide_banner -i "%v_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss %ss2% -t %t% "!map!%name%.srt"
 	)
 ) ELSE (
 	SET /P "part=Fragment downloaden? [j/N] "
 	IF /I "!part!"=="j" (
-		SET /P "ss=Voer begintijd in (in seconden, of als uu:mm:ss[.xxx]) []: "
-		SET /P "t=Voer tijdsduur in (in seconden, of als uu:mm:ss[.xxx]) []: "
-		ECHO.
+		ECHO Voer begintijd in (in seconden, of als uu:mm:ss[.xxx]^):
+		FOR /F "delims=" %%A IN ('^"%xidel%
+        -e ^"let $a:^=read(^) return
+            if ($a^) then
+              let $a:^=if ($a castable as time^) then
+                hours-from-time($a^)*3600+minutes-from-time($a^)*60+seconds-from-time($a^)
+              else
+                $a
+              return
+              if ($a^=0^) then
+                (^)
+              else
+                if ($a mod 30^=0^) then (
+                  if ($a^=30^) then
+                    (^)
+                  else
+                    ss1:^=$a - 30^,
+                  ss2:^=30
+                ^) else (
+                  if ($a^<30^) then
+                    (^)
+                  else
+                    ss1:^=$a - ($a mod 30^)^,
+                  ss2:^=$a mod 30
+                ^)
+            else
+              (^)^" --output-format^=cmd^"') DO %%A
+		ECHO Voer tijdsduur in (in seconden, of als uu:mm:ss[.xxx]^):
+		SET /P t=
 		IF DEFINED mux (
-			IF NOT DEFINED ss (
-				%ffmpeg% -hide_banner -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
-			) ELSE IF "!ss!"=="0" (
-				%ffmpeg% -hide_banner -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
-			) ELSE IF NOT DEFINED t (
-				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+			IF DEFINED ss1 (
+				IF DEFINED t (
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+				) ELSE (
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+				)
+			) ELSE IF DEFINED ss2 (
+				IF DEFINED t (
+					%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+				) ELSE (
+					%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+				)
 			) ELSE (
-				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+				%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 			)
 		) ELSE (
-			IF NOT DEFINED ss (
-				%ffmpeg% -hide_banner -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "%s_url%" -t !t! "!map!%name%.srt"
-			) ELSE IF "!ss!"=="0" (
-				%ffmpeg% -hide_banner -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "%s_url%" -t !t! "!map!%name%.srt"
-			) ELSE IF NOT DEFINED t (
-				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "%s_url%" "!map!%name%.srt"
+			IF DEFINED ss1 (
+				IF DEFINED t (
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -t !t! "!map!%name%.srt"
+				) ELSE (
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! "!map!%name%.srt"
+				)
+			) ELSE IF DEFINED ss2 (
+				IF DEFINED t (
+					%ffmpeg% -hide_banner -i "%v_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss !ss2! -t !t! "!map!%name%.srt"
+				) ELSE (
+					%ffmpeg% -hide_banner -i "%v_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss !ss2! "!map!%name%.srt"
+				)
 			) ELSE (
-				%ffmpeg% -hide_banner -ss !ss! -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss! -sub_charenc CP1252 -i "%s_url%" -t !t! "!map!%name%.srt"
+				%ffmpeg% -hide_banner -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -t !t! "!map!%name%.srt"
 			)
 		)
 	) ELSE (
 		ECHO.
 		IF DEFINED mux (
-			%ffmpeg% -hide_banner -i "%v_url%" -sub_charenc CP1252 -i "%s_url%" -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "!map!%name%%ext%"
+			%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 		) ELSE (
 			%ffmpeg% -hide_banner -i "%v_url%" -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -sub_charenc CP1252 -i "%s_url%" "!map!%name%.srt"
+			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" "!map!%name%.srt"
 		)
 	)
 )
