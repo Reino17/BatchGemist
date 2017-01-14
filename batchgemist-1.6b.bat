@@ -134,7 +134,28 @@ REM
 REM BatchGemist is geschreven door Reino Wijnsma.
 REM http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm
 
-TITLE BatchGemist 1.6 beta
+REM Venster (buffer)grootte en kleur wijzigen (https://stackoverflow.com/a/13351373)
+MODE con: cols=100 lines=32
+COLOR 1f
+FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
+	IF %%A.%%B LSS 6.1 (
+		FOR /F "tokens=3" %%A IN ('REG QUERY "HKLM\SOFTWARE\Microsoft\PowerShell\1" /v Install ^| FIND "Install"') DO (
+			IF NOT "%%A"=="0x1" (
+				TITLE BatchGemist 1.6 beta
+				ECHO Venster buffergrootte niet kunnen wijzigen, omdat PowerShell niet is ge‹nstalleerd.
+				ECHO PowerShell 2.0 voor Windows XP: https://www.microsoft.com/en-us/download/details.aspx?id=16818
+				ECHO PowerShell 2.0 voor Windows Vista x86: https://www.microsoft.com/en-us/download/details.aspx?id=9864
+				ECHO PowerShell 2.0 voor Windows Vista x64: https://www.microsoft.com/en-us/download/details.aspx?id=9239
+				ECHO.
+				ECHO.
+			) ELSE (
+				powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6 beta';}"
+			)
+		)
+	) ELSE (
+		powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6 beta';}"
+	)
+)
 
 REM ================================================================================================
 
@@ -3579,72 +3600,57 @@ IF DEFINED videos (
 	ECHO.
 	ECHO Beschikbare video's: %videos%
 	SET /P "video=Kies gewenste video: "
-	FOR /F %%A IN ('^"%xidel%
-    -e ^"if (
-          matches(
-            '%videos%'^,
-            '^^(.*\W^)?!video!(\W.*^)?$'
-          ^)
-        ^) then
-          '!video!'
-        else
-          'error'^"^"') DO (
-		IF "%%A"=="error" (
-			ECHO.
-			ECHO Ongeldige video.
-			ECHO.
-			ECHO.
-			ENDLOCAL
-			GOTO Input
-		)
-	)
 	FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel%
-    - --xquery ^"$json(^)('!video!'^)/(
-                  name:^=name^,
-                  if (formats^) then (
-                    json:^=formats^,
-                    let $a:^=(
-                      $json(^)[contains(format^,'rtsp'^)]/format^,
-                      for $x in $json(^)[contains(format^,'mp4'^)]/format order by $x return $x^,
-                      $json(^)[format^='meta']/format^,
-                      for $x in $json(^)[format castable as double]/format order by $x return $x
-                    ^) return (
-                      formats:^=join($a^,'^, '^)^,
-                      best:^=$a[last(^)]
-                    ^)
-                  ^) else
-                    v_url:^=url
-                ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
+    - --xquery ^"if (matches('%videos%'^,'^^(.*\W^)?!video!(\W.*^)?$'^)^) then
+                  $json(^)('!video!'^)/(
+                    name:^=name^,
+                    if (formats^) then (
+                      json:^=formats^,
+                      let $a:^=(
+                        $json(^)[contains(format^,'rtsp'^)]/format^,
+                        for $x in $json(^)[contains(format^,'mp4'^)]/format order by $x return $x^,
+                        $json(^)[format^='meta']/format^,
+                        for $x in $json(^)[format castable as int]/format order by $x return $x
+                      ^) return (
+                        formats:^=join($a^,'^, '^)^,
+                        best:^=$a[last(^)]
+                      ^)
+                    ^) else
+                      v_url:^=url
+                  ^)
+                else
+                  error:^=1^" --output-encoding^=oem --output-format^=cmd') DO %%A
 )
-IF DEFINED v_url (
-	GOTO Task
+IF NOT DEFINED error (
+	IF DEFINED v_url (
+		GOTO Task
+	)
+) ELSE (
+	ECHO.
+	ECHO Ongeldige video.
+	ECHO.
+	ENDLOCAL
+	GOTO Formats
 )
 
 ECHO.
 ECHO Beschikbare formaten: %formats%
 SET /P "format=Voer gewenst formaat in: [%best%] "
-IF "%format%"=="" SET "format=%best%"
-FOR /F %%A IN ('^"%xidel%
--e ^"if (
-      matches(
-        '%formats%'^,
-        '^^(.*\W^)?%format%(\W.*^)?$'
-      ^)
-    ^) then
-      '%format%'
-    else
-      'error'^"^"') DO (
-	IF "%%A"=="error" (
-		ECHO.
-		ECHO Ongeldig formaat.
-		ECHO.
-		ECHO.
-		ENDLOCAL
-		GOTO Input
-	)
+IF NOT DEFINED format SET "format=%best%"
+FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel%
+- -e ^"if (matches('%formats%'^,'^^(.*\W^)?%format%(\W.*^)?$'^)^) then
+        v_url:^=$json(^)[format^='%format%']/url
+      else
+        (^)^" --output-format^=cmd') DO %%A
+IF DEFINED v_url (
+	GOTO Task
+) ELSE (
+	ECHO.
+	ECHO Ongeldig formaat.
+	ECHO.
+	ENDLOCAL
+	GOTO Formats
 )
-FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - -e "v_url:=$json()[format='%format%']/url" --output-format^=cmd') DO %%A
-GOTO Task
 
 REM ================================================================================================
 
