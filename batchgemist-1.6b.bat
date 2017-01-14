@@ -646,7 +646,7 @@ IF NOT "%url: =%"=="%url%" (
                     let $b:^=(
                       for $x in $json(^)[contains(format^,'mp4'^)]/format order by $x return $x^,
                       $json(^)[format^='meta']/format^,
-                      for $x in $json(^)[format castable as double]/format order by $x return $x
+                      for $x in $json(^)[format castable as int]/format order by $x return $x
                     ^) return (
                       formats:^=join($b^,'^, '^)^,
                       best:^=$b[last(^)]
@@ -1008,7 +1008,7 @@ IF NOT "%url: =%"=="%url%" (
               let $b:^=(
                 $json(^)[contains(format^,'rtsp'^)]/format^,
                 $json(^)[format^='meta']/format^,
-                for $x in $json(^)[format castable as double]/format order by $x return $x
+                for $x in $json(^)[format castable as int]/format order by $x return $x
               ^) return (
                 formats:^=join($b^,'^, '^)^,
                 best:^=$b[last(^)]
@@ -1327,7 +1327,7 @@ IF NOT "%url: =%"=="%url%" (
                 let $b:^=(
                   $json(^)[contains(format^,'mp4'^)]/format^,
                   $json(^)[format^='meta']/format^,
-                  for $x in $json(^)[format castable as double]/format order by $x return $x
+                  for $x in $json(^)[format castable as int]/format order by $x return $x
                 ^) return (
                   formats:^=join($b^,'^, '^)^,
                   best:^=$b[last(^)]
@@ -1560,7 +1560,7 @@ IF NOT "%url: =%"=="%url%" (
               let $b:^=(
                 $json(^)[contains(format^,'rtsp'^)]/format^,
                 $json(^)[format^='meta']/format^,
-                for $x in $json(^)[format castable as double]/format order by $x return $x
+                for $x in $json(^)[format castable as int]/format order by $x return $x
               ^) return (
                 formats:^=join($b^,'^, '^)^,
                 best:^=$b[last(^)]
@@ -2314,7 +2314,7 @@ IF NOT "%url: =%"=="%url%" (
               let $b:^=(
                 for $x in $json(^)[contains(format^,'mp4'^)]/format order by $x return $x^,
                 $json(^)[format^='meta']/format^,
-                for $x in $json(^)[format castable as double]/format order by $x return $x
+                for $x in $json(^)[format castable as int]/format order by $x return $x
               ^) return (
                 formats:^=join($b^,'^, '^)^,
                 best:^=$b[last(^)]
@@ -2460,7 +2460,7 @@ IF NOT "%url: =%"=="%url%" (
                   ]^,
                   let $c:^=(
                     $json(^)[format^='meta']/format^,
-                    for $x in $json(^)[format castable as double]/format order by $x return $x
+                    for $x in $json(^)[format castable as int]/format order by $x return $x
                   ^) return (
                     formats:^=join($c^,'^, '^)^,
                     best:^=$c[last(^)]
@@ -2570,7 +2570,7 @@ IF NOT "%url: =%"=="%url%" (
               let $b:^=(
                 for $x in $json(^)[contains(format^,'-'^)]/format order by $x return $x^,
                 $json(^)[format^='meta']/format^,
-                for $x in $json(^)[format castable as double]/format order by $x return $x
+                for $x in $json(^)[format castable as int]/format order by $x return $x
               ^) return (
                 formats:^=join($b^,'^, '^)^,
                 best:^=$b[last(^)]
@@ -3313,7 +3313,7 @@ IF DEFINED pubopties (
                     $a[contains(format^,'mp4'^)]/format
                   ^)^,
                   $a[format^='meta']/format^,
-                  for $x in $a[format castable as double]/format order by $x return $x
+                  for $x in $a[format castable as int]/format order by $x return $x
                 ^) return (
                   formats:^=join($b^,'^, '^)^,
                   best:^=$b[last(^)]
@@ -3532,51 +3532,43 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 '(.+m3u8^)'^,1
               ^)
             }^,
-            {
-              'format':'mp4-a2t'^,
-              'url':concat(
-                'http://pg.us.rtl.nl/rtlxl/network/a2t/progressive/'^,
-                replace(
-                  substring-after($url^,'/adaptive/'^)^,
-                  'm3u8'^,
-                  'mp4^'
+            let $a:^='http://pg.us.rtl.nl/rtlxl/network/' return
+            replace(
+              $url^,
+              '.+(/comp.+^)\.m3u8'^,
+              '$1.mp4'
+            ^) ! (
+              {
+                'format':'mp4-a2t'^,
+                'url':concat(
+                  $a^,
+                  'a2t/progressive'^,
+                  .
                 ^)
-              ^)
-            }^,
-            {
-              'format':'mp4-a3t'^,
-              'url':concat(
-                'http://pg.us.rtl.nl/rtlxl/network/a3t/progressive/'^,
-                replace(
-                  substring-after(
-                    $url^,
-                    '/adaptive/'
-                  ^)^,
-                  'm3u8'^,
-                  'mp4'
+              }^,
+              {
+                'format':'mp4-a3t'^,
+                'url':concat(
+                  $a^,
+                  'a3t/progressive'^,
+                  .
                 ^)
-              ^)
-            }^,
-            if ($q^='HD'^) then {
-              'format':'mp4-nettv'^,
-              'url':concat(
-                'http://pg.us.rtl.nl/rtlxl/network/nettv/progressive/'^,
-                replace(
-                  substring-after(
-                    $url^,
-                    '/adaptive/'
-                  ^)^,
-                  'm3u8'^,
-                  'mp4'
+              }^,
+              if ($q^='HD'^) then {
+                'format':'mp4-nettv'^,
+                'url':concat(
+                  $a^,
+                  'nettv/progressive'^,
+                  .
                 ^)
-              ^)
-            } else
-              (^)
+              } else
+                (^)
+            ^)
           ]^,
           let $a:^=(
             $json(^)[contains(format^,'mp4'^)]/format^,
             $json(^)[format^='meta']/format^,
-            for $x in $json(^)[format castable as double]/format order by $x return $x
+            for $x in $json(^)[format castable as int]/format order by $x return $x
           ^) return (
             formats:^=join($a^,'^, '^)^,
             best:^=$a[last(^)]
