@@ -3730,6 +3730,7 @@ GOTO Input
 REM ================================================================================================
 
 :Download
+SETLOCAL DISABLEDELAYEDEXPANSION
 ECHO.
 ECHO Doelmap: %~dp0
 SET /P "remap=Wijzigen? [J/n] "
@@ -3737,9 +3738,27 @@ IF /I "%remap%"=="n" (
 	SET "map=%~dp0"
 ) ELSE (
 	ECHO Opslaan in:
-	SET /P map=
+	FOR /F "delims=" %%A IN ('^"%xidel%
+    --xquery ^"let $a:^=extract(
+                read(^)^,
+                '(.:\\^|\\\\^)(.+^)'^,
+                (1^,2^)
+              ^)
+              let $b:^=concat(
+                $a[1]^,
+                replace(
+                  if (ends-with($a[2]^,'\'^)^) then
+                    $a[2]
+                  else
+                    $a[2]^|^|'\'^,
+                  '[^<^>/^|?*:^^]'^,
+                  ''
+                ^)
+              ^) return (
+                $b^,
+                file:create-dir($b^)
+              ^)^" --output-encoding^=oem^"') DO SET "map=%%A"
 )
-IF NOT "%map:~-1%"=="\" SET "map=%map%\"
 
 FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 	IF /I "%%~xA"==".m4a"  SET ext=.m4a
@@ -3750,9 +3769,8 @@ FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 )
 
 ECHO.
-SETLOCAL DISABLEDELAYEDEXPANSION
 FOR /F "delims=" %%A IN ('^"%xidel%
--e ^"name:^=replace(
+-e ^"replace(
       replace(
         normalize-space('%name%'^)^,
         ':'^,
@@ -3760,12 +3778,21 @@ FOR /F "delims=" %%A IN ('^"%xidel%
       ^)^,
       '[^<^>/\\^|?*^^]'^,
       ''
-    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+    ^)^" --output-encoding^=oem^"') DO SET "name=%%A"
 ECHO Bestandsnaam: %name%
 SET /P "rename=Wijzigen? [J/n] "
 IF /I NOT "%rename%"=="n" (
 	ECHO Nieuwe bestandsnaam:
-	SET /P name=
+	FOR /F "delims=" %%A IN ('^"%xidel%
+    -e ^"replace(
+          replace(
+            read(^)^,
+            ':'^,
+            '-'
+          ^)^,
+          '[^<^>/\\^|?*^^]'^,
+          ''
+        ^)^" --output-encoding^=oem^"') DO SET "name=%%A"
 )
 
 SETLOCAL ENABLEDELAYEDEXPANSION
@@ -3786,17 +3813,17 @@ IF NOT "%v_url:mms://=%"=="%v_url%" SET "v_url=%v_url:mms://=mmsh://%"
 ECHO.
 IF DEFINED ss1 (
 	IF DEFINED mux (
-		%ffmpeg% -hide_banner -ss %ss1% -i "%v_url%" %s_charenc% -ss %ss1% -i "%s_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -ss %ss1% -i "%v_url%" %s_charenc% -ss %ss1% -i "%s_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 	) ELSE (
-		%ffmpeg% -hide_banner -ss %ss1% -i "%v_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss %ss1% -i "%s_url%" -ss %ss2% -t %t% "!map!%name%.srt"
+		%ffmpeg% -hide_banner -ss %ss1% -i "%v_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss %ss1% -i "%s_url%" -ss %ss2% -t %t% "!map!!name!.srt"
 	)
 ) ELSE IF DEFINED ss2 (
 	IF DEFINED mux (
-		%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 	) ELSE (
-		%ffmpeg% -hide_banner -i "%v_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss %ss2% -t %t% "!map!%name%.srt"
+		%ffmpeg% -hide_banner -i "%v_url%" -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss %ss2% -t %t% "!map!!name!.srt"
 	)
 ) ELSE (
 	SET /P "part=Fragment downloaden? [j/N] "
@@ -3833,48 +3860,48 @@ IF DEFINED ss1 (
 		IF DEFINED mux (
 			IF DEFINED ss1 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 				) ELSE (
-					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 				)
 			) ELSE IF DEFINED ss2 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 				) ELSE (
-					%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 				)
 			) ELSE (
-				%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+				%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 			)
 		) ELSE (
 			IF DEFINED ss1 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -t !t! "!map!%name%.srt"
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! -t !t! "!map!!name!.srt"
 				) ELSE (
-					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! "!map!%name%.srt"
+					%ffmpeg% -hide_banner -ss !ss1! -i "%v_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i "%s_url%" -ss !ss2! "!map!!name!.srt"
 				)
 			) ELSE IF DEFINED ss2 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner -i "%v_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss !ss2! -t !t! "!map!%name%.srt"
+					%ffmpeg% -hide_banner -i "%v_url%" -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss !ss2! -t !t! "!map!!name!.srt"
 				) ELSE (
-					%ffmpeg% -hide_banner -i "%v_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss !ss2! "!map!%name%.srt"
+					%ffmpeg% -hide_banner -i "%v_url%" -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -ss !ss2! "!map!!name!.srt"
 				)
 			) ELSE (
-				%ffmpeg% -hide_banner -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -t !t! "!map!%name%.srt"
+				%ffmpeg% -hide_banner -i "%v_url%" -t !t! -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" -t !t! "!map!!name!.srt"
 			)
 		)
 	) ELSE (
 		ECHO.
 		IF DEFINED mux (
-			%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+			%ffmpeg% -hide_banner -i "%v_url%" %s_charenc% -i "%s_url%" -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!!name!.mkv"
 		) ELSE (
-			%ffmpeg% -hide_banner -i "%v_url%" -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" "!map!%name%.srt"
+			%ffmpeg% -hide_banner -i "%v_url%" -c copy -bsf:a aac_adtstoasc "!map!!name!%ext%"
+			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i "%s_url%" "!map!!name!.srt"
 		)
 	)
 )
