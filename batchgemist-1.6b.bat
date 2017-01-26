@@ -509,7 +509,7 @@ IF NOT "%url: =%"=="%url%" (
                   pubopties:^=pubopties^,
                   if (tt888^='ja'^) then (
                     s_url:^=concat(
-                      'http://e.omroep.nl/tt888/'^,
+                      'http://tt888.omroep.nl/tt888/'^,
                       prid
                     ^)^,
                     if (unparsed-text-available($s_url^)^) then
@@ -3246,7 +3246,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
             to:^=hours-from-time(eind^)*3600+minutes-from-time(eind^)*60+seconds-from-time(eind^)^,
             if (tt888^='ja'^) then (
               s_url:^=concat(
-                'http://e.omroep.nl/tt888/'^,
+                'http://tt888.omroep.nl/tt888/'^,
                 prid
               ^)^,
               if (unparsed-text-available($s_url^)^) then
