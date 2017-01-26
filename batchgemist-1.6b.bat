@@ -562,7 +562,10 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
 	FOR /F %%A IN ("%url%") DO SET "uuid=%%~nA"
 	GOTO rtlXL
-) ELSE IF NOT "%url:rtl.nl/#!=%"=="%url%" (
+) ELSE IF NOT "%url:rtl.nl/system/videoplayer=%"=="%url%" (
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%/','=(.+?)/',1)" --output-format^=cmd^"') DO %%A
+	GOTO rtlXL
+) ELSE IF NOT "%url:rtl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
     -e ^"uuid:^=json(
           concat(
@@ -573,9 +576,6 @@ IF NOT "%url: =%"=="%url%" (
             ^)
           ^)
         ^)//ExternalId^" --output-format^=cmd^"') DO %%A
-	GOTO rtlXL
-) ELSE IF NOT "%url:rtl.nl/system/videoplayer=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%/','=(.+?)/',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6 beta" "%url%"
