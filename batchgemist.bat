@@ -3268,104 +3268,108 @@ IF DEFINED pubopties (
 	      '^^(.{5}^)((.*?^)(\d^)(.*?^)(\d^)(.*^)^|(.{6}^)(.^)(.^)(.*^)^)(.{5}^)$'^,
 	      '$1$3$6$5$4$7$8$10$9$11$12'
 	    ^)^"
-	- --xquery ^"let $a:^=for $x in $json/(
-	              if (contains(.(^)^,'adaptive'^)^) then
-	                tokenize(
-	                  ('adaptive '^|^|join(.(^)[.!^='adaptive']^,'^,'^)^)^,
-	                  ' '
+	- --xquery ^"let $a:^=
+	              for $x in $json/(
+	                if (contains(.(^)^,'adaptive'^)^) then
+	                  (
+	                    .(1^)^,
+	                    join(
+	                      .(^)[.!^='adaptive']^,
+	                      '^,'
+	                    ^)
+	                  ^)
+	                else
+	                  join(.(^)^,'^,'^)
+	              ^) return
+	              if ($x^='adaptive'^) then
+	                substring-before(
+	                  json(
+	                    concat(
+	                      'http://ida.omroep.nl/odi/?prid^=%prid%^&amp^;puboptions^='^,
+	                      $x^,
+	                      '^&amp^;adaptive^=yes^&amp^;token^='^,
+	                      $token
+	                    ^)
+	                  ^)/(streams^)(^)^,
+	                  'p^&amp^;callback'
+	                ^) ! (
+	                  if (unparsed-text-available(.^)^) then
+	                    let $b:^=json(.^)/url return (
+	                      {
+	                        'format':'meta'^,
+	                        'url':$b
+	                      }^,
+	                      tail(
+	                        tokenize(
+	                          unparsed-text($b^)^,
+	                          '#EXT-X-STREAM-INF:'
+	                        ^)
+	                      ^) ! {
+	                        'format':string(
+	                          extract(
+	                            .^,
+	                            'BANDWIDTH^=(\d+^)'^,1
+	                          ^) idiv 1000
+	                        ^)^,
+	                        'url':concat(
+	                          resolve-uri(
+	                            '.'^,
+	                            $b
+	                          ^)^,
+	                          extract(
+	                            .^,
+	                            '(.+m3u8^)'^,1
+	                          ^)
+	                        ^)
+	                      }
+	                    ^)
+	                  else
+	                    (^)
 	                ^)
 	              else
-	                join(.(^)^,'^,'^)
-	            ^) return
-	            if ($x^='adaptive'^) then
-	              substring-before(
 	                json(
 	                  concat(
 	                    'http://ida.omroep.nl/odi/?prid^=%prid%^&amp^;puboptions^='^,
 	                    $x^,
-	                    '^&amp^;adaptive^=yes^&amp^;token^='^,
+	                    '^&amp^;adaptive^=no^&amp^;token^='^,
 	                    $token
 	                  ^)
-	                ^)/(streams^)(^)^,
-	                'p^&amp^;callback'
-	              ^) ! (
-	                if (unparsed-text-available(.^)^) then
-	                  for $x in json(.^) return (
-	                    {
-	                      'format':'meta'^,
-	                      'url':$x/url
-	                    }^,
-	                    tail(
-	                      tokenize(
-	                        unparsed-text($x/url^)^,
-	                        '#EXT-X-STREAM-INF:'
-	                      ^)
-	                    ^) ! {
-	                      'format':string(
+	                ^)/(streams^)(^) ! (
+	                  if (
+	                    unparsed-text-available(
+	                      substring-before(.^,'p^&amp^;callback'^)
+	                    ^)
+	                  ^) then
+	                    json(
+	                      substring-before(.^,'p^&amp^;callback'^)
+	                    ^)/{
+	                      'format':concat(
+	                        'mp4-'^,
 	                        extract(
-	                          .^,
-	                          'BANDWIDTH^=(\d+^)'^,1
-	                        ^) idiv 1000
-	                      ^)^,
-	                      'url':concat(
-	                        resolve-uri(
-	                          '.'^,
-	                          $x/url
-	                        ^)^,
-	                        extract(
-	                          .^,
-	                          '(.+m3u8^)'^,1
+	                          url^,
+	                          '.+/([a-z]+^)'^,1
 	                        ^)
-	                      ^)
+	                      ^)^,
+	                      'url':substring-before(url^,'?'^)
 	                    }
-	                  ^)
-	                else
-	                  (^)
-	              ^)
-	            else
-	              json(
-	                concat(
-	                  'http://ida.omroep.nl/odi/?prid^=%prid%^&amp^;puboptions^='^,
-	                  $x^,
-	                  '^&amp^;adaptive^=no^&amp^;token^='^,
-	                  $token
+	                  else
+	                    (^)
 	                ^)
-	              ^)/(streams^)(^) ! (
-	                if (
-	                  unparsed-text-available(
-	                    substring-before(.^,'p^&amp^;callback'^)
-	                  ^)
-	                ^) then
-	                  json(
-	                    substring-before(.^,'p^&amp^;callback'^)
-	                  ^)/{
-	                    'format':concat(
-	                      'mp4-'^,
-	                      extract(
-	                        url^,
-	                        '.+/([a-z]+^)'^,1
-	                      ^)
-	                    ^)^,
-	                    'url':substring-before(url^,'?'^)
-	                  }
-	                else
-	                  (^)
+	            return
+	            if ($a^) then (
+	              json:^=[$a]^,
+	              let $b:^=(
+	                reverse(
+	                  $a[contains(format^,'mp4'^)]/format
+	                ^)^,
+	                $a[format^='meta']/format^,
+	                for $x in $a[format castable as int]/format order by $x return $x
+	              ^) return (
+	                formats:^=join($b^,'^, '^)^,
+	                best:^=$b[last(^)]
 	              ^)
-	          return
-	          if ($a^) then (
-	            json:^=[$a]^,
-	            let $b:^=(
-	              reverse(
-	                $a[contains(format^,'mp4'^)]/format
-	              ^)^,
-	              $a[format^='meta']/format^,
-	              for $x in $a[format castable as int]/format order by $x return $x
-	            ^) return (
-	              formats:^=join($b^,'^, '^)^,
-	              best:^=$b[last(^)]
-	            ^)
-	          ^) else
-	            (^)^" --output-format^=cmd') DO %%A
+	            ^) else
+	              (^)^" --output-format^=cmd') DO %%A
 ) ELSE IF DEFINED streams (
 	FOR /F "delims=" %%A IN ('ECHO %streams% ^| %xidel%
 	- --xquery ^"let $a:^=$json(^)/{
