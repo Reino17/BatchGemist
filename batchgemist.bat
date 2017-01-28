@@ -2500,103 +2500,100 @@ IF NOT "%url: =%"=="%url%" (
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:disney.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"ref:^=string-to-base64Binary(
-	      concat('http://'^,$host^)
-	    ^)^"
-	-f ^"let $a:^=//script/json(extract(
-	      .^,
-	      'burger^=(.+^):\('^,1
-	    ^)[.]^)//externals return
-	    concat(
-	      'http://cdnapi.kaltura.com/api_v3/index.php?service^=multirequest^&format^=1^&1:service^=session^&1:action^=startWidgetSession^&1:widgetId^=_'^,
-	      $a//account^,
-	      '^&2:service^=baseentry^&2:action^=get^&2:entryId^='^,
-	      $a//data_id^,
-	      '^&3:service^=flavorAsset^&3:action^=getByEntryId^&3:entryId^='^,
-	      $a//data_id
-	    ^)^"
-	--xquery ^"name:^=$json(2^)/concat(
-	            'Disney - '^,
-	            name^,
-	            replace(
-	              createdAt * dayTimeDuration('PT1S'^) + date('1970-01-01'^)^,
-	              '(\d+^)-(\d+^)-(\d+^)'^,
-	              ' ($3$2$1^)'
+	-f ^"json(
+	      //script/extract(
+	        .^,
+	        'burger^=(.+^):\('^,1
+	      ^)[.]
+	    ^)/(.//embedURL^)[1]^"
+	--xquery ^"let $ref:^=string-to-base64Binary(
+	            concat(
+	              'http://'^,
+	              $host
 	            ^)
-	          ^)^,
-	          json:^=[
-	            let $a:^=concat(
-	              substring-before(
-	                $json(2^)/dataUrl^,
-	                'format'
+	          ^) return
+	          json(
+	            //script/extract(
+	              .^,
+	              '(\{.+\}^)'^,1
+	            ^)[.]
+	          ^)/(
+	            (.//externals^)(^)[1]/(
+	              name:^=concat(
+	                'Disney- '^,
+	                .//name^,
+	                replace(
+	                  .//createdAt * dayTimeDuration('PT1S'^) + date('1970-01-01'^)^,
+	                  '(\d+^)-(\d+^)-(\d+^)'^,
+	                  ' ($3$2$1^)'
+	                ^)
 	              ^)^,
-	              'flavorIds/'^,
-	              join($json(3^)(^)[isWeb^='true']/id^,'^,'^)^,
-	              '/format/applehttp/protocol/http?referrer^='^,
-	              $ref
-	            ^) return (
-	              {
-	                'format':'meta'^,
-	                'url':x:request(
-	                  {
-	                    'data':$a^,
-	                    'method':'HEAD'^,
-	                    'error-handling':'4xx^=accept'
-	                  }
-	                ^)/(
-	                  if (contains($headers[1]^,'404'^)^) then
-	                    (^)
-	                  else
-	                    url
-	                ^)
-	              }^,
-	              tail(
-	                tokenize(
-	                  unparsed-text($a^)^,
-	                  '#EXT-X-STREAM-INF:'
-	                ^)
-	              ^) ! {
-	                'format':string(
-	                  extract(
-	                    .^,
-	                    'BANDWIDTH^=(\d+^)'^,1
-	                  ^) idiv 1000
+	              dataUrl:^=.//dataUrl
+	            ^)^,
+	            json:^=[
+	              let $a:^=.//flavors/concat(
+	                substring-before(
+	                  $dataUrl^,
+	                  'format'
 	                ^)^,
-	                'url':extract(
-	                  .^,
-	                  '(.+m3u8.+^)'^,1
-	                ^)
-	              }^,
-	              $json(3^)(^)/{
-	                'format':if (isOriginal^='true'^) then
-	                  'mp4-source'
-	                else
-	                  concat(
-	                    fileExt^,
+	                'flavorIds/'^,
+	                join(
+	                  .(^)[height!^=0][format^='mp4']/extract(
+	                    url^,
+	                    'flavorId/(.+?^)/'^,1
+	                  ^)^,
+	                  '^,'
+	                ^)^,
+	                '/format/applehttp/protocol/http?referrer^='^,
+	                $ref
+	              ^) return (
+	                {
+	                  'format':'meta'^,
+	                  'url':x:request(
+	                    {
+	                      'data':$a^,
+	                      'method':'HEAD'^,
+	                      'error-handling':'4xx^=accept'
+	                    }
+	                  ^)/(
+	                    if (contains($headers[1]^,'404'^)^) then
+	                      (^)
+	                    else
+	                      url
+	                  ^)
+	                }^,
+	                tail(
+	                  tokenize(
+	                    unparsed-text($a^)^,
+	                    '#EXT-X-STREAM-INF:'
+	                  ^)
+	                ^) ! {
+	                  'format':string(
+	                    extract(
+	                      .^,
+	                      'BANDWIDTH^=(\d+^)'^,1
+	                    ^) idiv 1000
+	                  ^)^,
+	                  'url':extract(
+	                    .^,
+	                    '(.+m3u8.+^)'^,1
+	                  ^)
+	                }^,
+	                (.//flavors^)(^)[height!^=0]/{
+	                  'format':concat(
+	                    replace(
+	                      format^,
+	                      '.+-(.+^)'^,
+	                      '$1'
+	                    ^)^,
 	                    '-'^,
 	                    bitrate
 	                  ^)^,
-	                'url':x:request(
-	                  {
-	                    'data':concat(
-	                      $json(2^)/dataUrl^,
-	                      '/flavorId/'^,
-	                      id^,
-	                      '?referrer^='^,
-	                      $ref
-	                    ^)^,
-	                    'method':'HEAD'^,
-	                    'error-handling':'4xx^=accept'
-	                  }
-	                ^)/(
-	                  if (contains($headers[1]^,'404'^)^) then
-	                    (^)
-	                  else
-	                    url
-	                ^)
-	              }[url]
-	            ^)
-	          ]^,
+	                  'url':url
+	                }
+	              ^)
+	            ]
+	          ^)^,
 	          let $b:^=(
 	            for $x in $json(^)[contains(format^,'-'^)]/format order by $x return $x^,
 	            $json(^)[format^='meta']/format^,
