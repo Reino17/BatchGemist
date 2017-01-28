@@ -3641,7 +3641,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 IF DEFINED videos (
 	ECHO.
 	ECHO Beschikbare video's: %videos%
-	SET /P "video=Kies gewenste video: "
+	SET /P "video=Kies gewenste video: [1e] "
+	IF NOT DEFINED video SET "video=1e"
 	FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel%
 	- --xquery ^"if (matches('%videos%'^,'^^(.*\W^)?!video!(\W.*^)?$'^)^) then
 	              $json(^)('!video!'^)/(
