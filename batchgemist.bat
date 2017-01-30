@@ -591,8 +591,13 @@ IF NOT "%url: =%"=="%url%" (
 	      'uuid^=(.+?^)/'^,1
 	    ^)[.]^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
-) ELSE IF NOT "%url:www.kijk.nl=%"=="%url%" (
+) ELSE IF NOT "%url:kijk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
+	-f ^"replace(
+	       $url^,
+	       'embed'^,
+	       'www'
+	     ^)"
 	-f ^"replace(
 	      replace(
 	        parse-html(
