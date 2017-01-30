@@ -192,9 +192,9 @@ REM ============================================================================
 ENDLOCAL
 SETLOCAL
 ECHO Voer programmalink in (of 'h' voor hulp):
-FOR /F "delims=" %%A IN ('^"%xidel% -e "url:=read()" --output-format^=cmd^"') DO %%A
+SET /P url=
+IF NOT DEFINED url GOTO :EOF
 IF /I "%url%"=="h" GOTO Help
-IF "%url%"=="" GOTO :EOF
 IF NOT "%url: =%"=="%url%" (
 	ECHO.
 	ECHO Spaties in programmalink niet toegestaan.
@@ -571,7 +571,7 @@ IF NOT "%url: =%"=="%url%" (
 	      concat(
 	        'http://rtl.nl/api/v3/item/'^,
 	        extract(
-	          '%url%'^,
+	          \"%url%\"^,
 	          '.+/((\w+-^){4}[^^-]+^)'^,1
 	        ^)
 	      ^)
