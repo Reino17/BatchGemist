@@ -1719,42 +1719,38 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPOLive_meta
 ) ELSE IF NOT "%url:www.rtvutrecht.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"if (count(//div[contains(@id^,'videoplayer'^)]^)^=1^) then
-	            let $a:^=//script/extract(
-	              .^,
-	              '(http.+mp4^)'^,1
-	            ^)[.] return (
-	              name:^=concat(
-	                'RTV Utrecht - '^,
-	                if (contains($url^,'gemist'^)^) then
-	                  substring-before(
-	                    //h2[@class^='h2-large-met-grijs border-top'][1]^,
-	                    ' -'
-	                  ^)
-	                else
-	                  replace(
-	                    if (//p[@class^='margin-bottom-5 fragment-bijschrift']/text(^)^) then
-	                      //p[@class^='margin-bottom-5 fragment-bijschrift']
-	                    else
-	                      //meta[@name^='og:title']/@content^,
-	                    '[^&quot^;^&apos^;]'^,
-	                    ''''''
-	                  ^)^,
+	--xquery ^"let $a:^=//script/extract(
+	            .^,
+	            '(http.+mp4^)'^,1
+	          ^)[.] return
+	          if (count($a^)^=1^) then (
+	            name:^=concat(
+	              'RTV Utrecht - '^,
+	              if (contains($url^,'gemist'^)^) then
+	                substring-before(
+	                  //h2[@class^='h2-large-met-grijs border-top'][1]^,
+	                  ' -'
+	                ^)
+	              else
+	                replace(
+	                  if (//p[@class^='margin-bottom-5 fragment-bijschrift']^) then
+	                    //p[@class^='margin-bottom-5 fragment-bijschrift']
+	                  else
+	                    //meta[@name^='og:title']/@content^,
+	                  '[^&quot^;^&apos^;]'^,
+	                  ''''''
+	                ^)^,
 	                replace(
 	                  $a^,
 	                  '.+(\d{4}^)/(\d{2}^)/(\d{2}^).+'^,
 	                  ' ($3$2$1^)'
 	                ^)
-	              ^)^,
-	              v_url:^=$a
-	            ^)
-	          else (
+	            ^)^,
+	            v_url:^=$a
+	          ^) else (
 	            json:^=[
-	              for $x at $i in //div[contains(@id^,'videoplayer'^)]/@id return {
-	                $i^|^|'e':let $a:^=//script[contains(.^,$x^)]/extract(
-	                  .^,
-	                  '(http.+mp4^)'^,1
-	                ^)[.] return {
+	              for $x at $i in $a return {
+	                $i^|^|'e':{
 	                  'name':concat(
 	                    'RTV Utrecht - '^,
 	                    replace(
@@ -1763,12 +1759,12 @@ IF NOT "%url: =%"=="%url%" (
 	                      ''''''
 	                    ^)^,
 	                    replace(
-	                      $a^,
+	                      $x^,
 	                      '.+(\d{4}^)/(\d{2}^)/(\d{2}^).+'^,
 	                      ' ($3$2$1^)'
 	                    ^)
 	                  ^)^,
-	                  'url':$a
+	                  'url':$x
 	                }
 	              }
 	            ]^,
