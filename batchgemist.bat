@@ -1284,19 +1284,15 @@ IF NOT "%url: =%"=="%url%" (
 	          best:^=$json(^)[last(^)]/format^" --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.omroepflevoland.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"let $a:^=if (contains($url^,'kijken'^)^) then
-	            (//div[@class^='jwplayercontainer']^)[1]
-	          else
-	            //div[@class^='jwplayercontainer'][@onclick]
-	          return
-	          if (count($a^)^=1^) then (
+	--xquery ^"let $a:^=//div[@class^='jwplayercontainer'] return
+	          if (count($a^)^=2^) then (
 	            name:^=concat(
 	              'Omroep Flevoland - '^,
 	              if (contains($url^,'kijken'^)^) then
 	                //meta[@name^='keywords']/@content
 	              else
 	                extract(
-	                  $a/@data-video-name^,
+	                  $a[1]/@data-video-name^,
 	                  '.+?- (.+^) -'^,1
 	                ^)^,
 	              replace(
@@ -1306,20 +1302,16 @@ IF NOT "%url: =%"=="%url%" (
 	              ^)
 	            ^)^,
 	            json:^=[
-	              for $x in tail(
-	                reverse(
-	                  json(
-	                    //script/extract(
-	                      .^,
-	                      concat(
-	                        $a/div/@id^,
-	                        '.+sources:(.+?\]^)'
-	                      ^)^,
-	                      1^,'s'
-	                    ^)[.]
-	                  ^)(^)
-	                ^)
-	              ^) return (
+	              for $x in json(
+	                //script/extract(
+	                  .^,
+	                  concat(
+	                    $a[1]/div/@id^,
+	                    '.+sources:(.+?\]^)'
+	                  ^)^,
+	                  1^,'s'
+	                ^)[.]
+	              ^)(^)[starts-with(file^,'http'^)] return (
 	                if (ends-with($x/file^,'m3u8'^)^) then (
 	                  {
 	                    'format':'meta'^,
@@ -1369,7 +1361,10 @@ IF NOT "%url: =%"=="%url%" (
 	            ^)
 	          ^) else (
 	            json:^=[
-	              for $x at $i in $a return {
+	              for $x at $i in remove(
+	                $a^,
+	                count($a^)
+	              ^) return {
 	                $i^|^|'e':{
 	                  'name':concat(
 	                    'Omroep Flevoland - '^,
@@ -1383,20 +1378,16 @@ IF NOT "%url: =%"=="%url%" (
 	                      ' ($3$2$1^)'
 	                    ^)
 	                  ^)^,
-	                  'formats':for $y in tail(
-	                    reverse(
-	                      json(
-	                        //script/extract(
-	                          .^,
-	                          concat(
-	                            $x/div/@id^,
-	                            '.+sources:(.+?\]^)'
-	                          ^)^,
-	                          1^,'s'
-	                        ^)[.]
-	                      ^)(^)
-	                    ^)
-	                  ^) return (
+	                  'formats':for $y in json(
+	                    //script/extract(
+	                      .^,
+	                      concat(
+	                        $x/div/@id^,
+	                        '.+sources:(.+?\]^)'
+	                      ^)^,
+	                      1^,'s'
+	                    ^)[.]
+	                  ^)(^)[starts-with(file^,'http'^)] return (
 	                    if (ends-with($y/file^,'m3u8'^)^) then (
 	                      {
 	                        'format':'meta'^,
