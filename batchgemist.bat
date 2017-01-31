@@ -2074,7 +2074,7 @@ IF NOT "%url: =%"=="%url%" (
 	                  'format':concat('rtmp-'^,bandwidth^)^,
 	                  'url':src
 	                }^,
-	                for $x in clipData/(assets^)(^)[mediatype^='MP4_IPOD']/src return
+	                for $x in clipData/(assets^)(^)[mediatype^='MP4_IPOD']/concat('http:'^,src^) return
 	                tail(
 	                  tokenize(
 	                    unparsed-text($x^)^,
