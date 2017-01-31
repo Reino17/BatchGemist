@@ -2118,10 +2118,7 @@ IF NOT "%url: =%"=="%url%" (
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.omroepbrabant.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"let $a:^=//meta[@property^='og:type'] return
-	          if (count(
-	            (//@data-url^,//@data-script^)
-	          ^)^=1^) then
+	--xquery ^"if (count((//@data-url^,//@data-script^)^)^=1^) then
 	            json(
 	              extract(
 	                unparsed-text(
@@ -2133,7 +2130,43 @@ IF NOT "%url: =%"=="%url%" (
 	                'var opts ^= (.+^)^;'^,1
 	              ^)
 	            ^)/clipData/(
-	              if ($a^) then (
+	              if (contains($url^,'Portal'^)^) then (
+	                name:^=replace(
+	                  '%date%'^,
+	                  '.+?(\d+^)-(\d+^)-(\d+^)'^,
+	                  'Omroep Brabant - Livestream ($1$2$3^)'
+	                ^)^,
+	                let $a:^=substring-before(
+	                  (assets^)(1^)/src^,
+	                  '?'
+	                ^) return
+	                json:^=[
+	                  {
+	                    'format':'meta'^,
+	                    'url':$a
+	                  }^,
+	                  tail(
+	                    tokenize(
+	                      unparsed-text($a^)^,
+	                      '#EXT-X-STREAM-INF:'
+	                    ^)
+	                  ^) ! {
+	                    'format':string(
+	                      extract(
+	                        .^,
+	                        'BANDWIDTH^=(\d+^)'^,1
+	                      ^) idiv 1000
+	                    ^)^,
+	                    'url':concat(
+	                      resolve-uri('.'^,$a^)^,
+	                      extract(
+	                        .^,
+	                        '.+/(.+m3u8^)'^,1
+	                      ^)
+	                    ^)
+	                  }
+	                ]
+	              ^) else (
 	                name:^=concat(
 	                  'Omroep Brabant - '^,
 	                  replace(
@@ -2149,87 +2182,60 @@ IF NOT "%url: =%"=="%url%" (
 	                ^)^,
 	                json:^=[
 	                  (assets^)(^)/{
-	                    'format':concat('mp4-'^,bandwidth^)^,
+	                    'format':concat(
+	                      'mp4-'^,
+	                      bandwidth
+	                    ^)^,
 	                    'url':src
 	                  }
 	                ]
-	              ^) else (
-	                name:^=replace(
-	                  '%date%'^,
-	                  '.+?(\d+^)-(\d+^)-(\d+^)'^,
-	                  'Omroep Brabant - Livestream ($1$2$3^)'
-	                ^)^,
-	                let $b:^=substring-before(
-	                  (assets^)(1^)/src^,
-	                  '?'
-	                ^) return
-	                json:^=[
-	                  {
-	                    'format':'meta'^,
-	                    'url':$b
-	                  }^,
-	                  tail(
-	                    tokenize(
-	                      unparsed-text($b^)^,
-	                      '#EXT-X-STREAM-INF:'
-	                    ^)
-	                  ^) ! {
-	                    'format':string(
-	                      extract(
-	                        .^,
-	                        'BANDWIDTH^=(\d+^)'^,1
-	                      ^) idiv 1000
-	                    ^)^,
-	                    'url':concat(
-	                      resolve-uri('.'^,$b^)^,
-	                      extract(
-	                        .^,
-	                        '.+/(.+m3u8^)'^,1
-	                      ^)
-	                    ^)
-	                  }
-	                ]
 	              ^)^,
-	              let $c:^=(
+	              let $b:^=(
 	                $json(^)[format^='meta']/format^,
 	                for $x in $json(^)[format!^='meta']/format order by $x return $x
 	              ^) return (
-	                formats:^=join($c^,'^, '^)^,
-	                best:^=$c[last(^)]
+	                formats:^=join($b^,'^, '^)^,
+	                best:^=$b[last(^)]
 	              ^)
 	            ^)
 	          else (
-	            json:^=[
-	              //@data-script ! {
-	                position(^)^|^|'e':json(
-	                  extract(
-	                    unparsed-text(.^)^,
-	                    'var opts ^= (.+^)^;'^,1
-	                  ^)
-	                ^)/clipData/{
-	                  'name':concat(
-	                    'Omroep West - '^,
-	                    replace(
-	                      title^,
-	                      '[^&quot^;^&apos^;]'^,
-	                      ''''''
-	                    ^)^,
-	                    replace(
-	                      publisheddate^,
-	                      '(\d+^)-(\d+^)-(\d+^).+'^,
-	                      ' ($3$2$1^)'
+	            if (//@data-script^) then (
+	              json:^=[
+	                //@data-script ! {
+	                  position(^)^|^|'e':json(
+	                    extract(
+	                      unparsed-text(.^)^,
+	                      'var opts ^= (.+^)^;'^,1
 	                    ^)
-	                  ^)^,
-	                  'formats':[
-	                    (assets^)(^)/{
-	                      'format':concat('mp4-'^,bandwidth^)^,
-	                      'url':src
-	                    }
-	                  ]
+	                  ^)/clipData/{
+	                    'name':concat(
+	                      'Omroep Brabant - '^,
+	                      replace(
+	                        title^,
+	                        '[^&quot^;^&apos^;]'^,
+	                        ''''''
+	                      ^)^,
+	                      replace(
+	                        publisheddate^,
+	                        '(\d+^)-(\d+^)-(\d+^).+'^,
+	                        ' ($3$2$1^)'
+	                      ^)
+	                    ^)^,
+	                    'formats':[
+	                      (assets^)(^)/{
+	                        'format':concat(
+	                          'mp4-'^,
+	                          bandwidth
+	                        ^)^,
+	                        'url':src
+	                      }
+	                    ]
+	                  }
 	                }
-	              }
-	            ]^,
-	            videos:^=join($json(^)(^)^,'^, '^)
+	              ]^,
+	              videos:^=join($json(^)(^)^,'^, '^)
+	            ^) else
+	              (^)
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.l1.nl/epg_nowon/popup/tv=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
