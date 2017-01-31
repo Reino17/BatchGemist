@@ -1808,7 +1808,7 @@ IF NOT "%url: =%"=="%url%" (
 	                '.+?(\d+^)-(\d+^)-(\d+^)'^,
 	                'Omroep Gelderland - Livestream ($1$2$3^)'
 	              ^)^,
-	              url:^=extract(
+	              v_url:^=extract(
 	                unparsed-text(//@data-media^)^,
 	                '(.+m3u8^)'^,1
 	              ^)
