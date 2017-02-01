@@ -2237,56 +2237,108 @@ IF NOT "%url: =%"=="%url%" (
 	            ^) else
 	              (^)
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
-) ELSE IF NOT "%url:www.l1.nl/epg_nowon/popup/tv=%"=="%url%" (
+) ELSE IF NOT "%url:l1-live.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-f ^"//iframe/@src^"
 	-e ^"prid:^=//script/extract(
 	      .^,
 	      'prid: \^"(.+^^^)\^"'^,1
 	    ^)[.]^" --output-format^=cmd^"') DO %%A
 	GOTO NPOLive_meta
-) ELSE IF NOT "%url:www.l1.nl=%"=="%url%" (
+) ELSE IF NOT "%url:l1.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"json(
-	            extract(
-	              unparsed-text(
-	                (
-	                  //iframe ! doc(
-	                    concat('http:'^,@src^)
-	                  ^)//@src^,
-	                  //script[contains(@src^,'bbvms'^)]/@src
-	                ^)
-	              ^)^,
-	              'var opts ^= (.+^)^;'^,1
-	            ^)
-	          ^)/(
-	            if (clipData^) then (
-	              name:^=concat(
-	                'L1 - '^,
-	                replace(
-	                  clipData/title^,
-	                  '(.+^) -.+'^,
-	                  '$1'
-	                ^)^,
-	                replace(
-	                  clipData/publisheddate^,
-	                  '(\d+^)-(\d+^)-(\d+^).+'^,
-	                  ' ($3$2$1^)'
-	                ^)
-	              ^)^,
-	              let $a:^=publicationData/defaultMediaAssetPath return
-	              json:^=[
-	                clipData/(assets^)(^)/{
-	                  'format':concat('mp4-'^,bandwidth^)^,
-	                  'url':concat($a^,src^)
-	                }
-	              ]^,
-	              let $b:^=for $x in $json(^)/format order by $x return $x return (
-	                formats:^=join($b^,'^, '^)^,
-	                best:^=$b[last(^)]
+	--xquery ^"let $a:^=//div/script[contains(@src^,'video'^)]/@src return
+	          if (count($a^)^=1^) then
+	            json(
+	              extract(
+	                unparsed-text($a^)^,
+	                'var opts ^= (.+^)^;'^,1
 	              ^)
-	            ^) else
-	              (^)
+	            ^)/(
+	              if (clipData^) then
+	                let $b:^=.//defaultMediaAssetPath return
+	                clipData/(
+	                  name:^=concat(
+	                    'L1 - '^,
+	                    replace(
+	                      replace(
+	                        title^,
+	                        '(.+^) -.+'^,
+	                        '$1'
+	                      ^)^,
+	                      '[^&quot^;^&apos^;]'^,
+	                      ''''''
+	                    ^)^,
+	                    replace(
+	                      publisheddate^,
+	                      '(\d+^)-(\d+^)-(\d+^).+'^,
+	                      ' ($3$2$1^)'
+	                    ^)
+	                  ^)^,
+	                  json:^=[
+	                    (assets^)(^)/{
+	                      'format':concat(
+	                        'mp4-'^,
+	                        bandwidth
+	                      ^)^,
+	                      'url':concat(
+	                        $b^,
+	                        src
+	                      ^)
+	                    }
+	                  ]^,
+	                  let $c:^=for $x in $json(^)/format order by $x return $x return (
+	                    formats:^=join($c^,'^, '^)^,
+	                    best:^=$c[last(^)]
+	                  ^)
+	                ^)
+	              else
+	                (^)
+	            ^)
+	          else (
+	            json:^=[
+	              for $x at $i in $a return {
+	                $i^|^|'e':json(
+	                  extract(
+	                    unparsed-text($x^)^,
+	                    'var opts ^= (.+^)^;'^,1
+	                  ^)
+	                ^)/(
+	                  let $b:^=.//defaultMediaAssetPath return
+	                  clipData/{
+	                    'name':concat(
+	                      'L1 - '^,
+	                      replace(
+	                        replace(
+	                          title^,
+	                          '(.+^) -.+'^,
+	                          '$1'
+	                        ^)^,
+	                        '[^&quot^;^&apos^;]'^,
+	                        ''''''
+	                      ^)^,
+	                      replace(
+	                        publisheddate^,
+	                        '(\d+^)-(\d+^)-(\d+^).+'^,
+	                        ' ($3$2$1^)'
+	                      ^)
+	                    ^)^,
+	                    'formats':[
+	                      (assets^)(^)/{
+	                        'format':concat(
+	                          'mp4-'^,
+	                          bandwidth
+	                        ^)^,
+	                        'url':concat(
+	                          $b^,
+	                          src
+	                        ^)
+	                      }
+	                    ]
+	                  }
+	                ^)
+	              }
+	            ]^,
+	            videos:^=join($json(^)(^)^,'^, '^)
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.telegraaf.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
