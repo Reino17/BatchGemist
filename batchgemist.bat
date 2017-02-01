@@ -1591,125 +1591,90 @@ IF NOT "%url: =%"=="%url%" (
 	            formats:^=join($b^,'^, '^)^,
 	            best:^=$b[last(^)]
 	          ^)^" --output-format^=cmd^"') DO %%A
-) ELSE IF NOT "%url:www.at5.nl/gemist=%"=="%url%" (
+) ELSE IF NOT "%url:www.at5.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"name:^=concat(
-	      'AT5 - '^,
-	      //div[@class^='banner_label']^,
-	      replace(
-	        //a[@class^='video-player']/@href^,
-	        '.+(\d{4}^)/(\d{2}^)/(\d{2}^).+'^,
-	        ' ($3$2$1^)'
-	      ^)
-	    ^)^,
-	    let $a:^=json(
-	      replace(
-	        //script/extract(
-	          .^,
-	          'sources: (.+^)^,\s+\]'^,1^,'s'
-	        ^)[.]^,
-	        '^,\s+\}'^,
-	        '}'
-	      ^)^|^|']'
-	    ^)(^) return
-	    json:^=[
-	      ('low'^,'medium'^,'hi'^) ! {
-	        'format':concat('mp4-'^,.^)^,
-	        'url':replace(
-	          $a[last(^)]/file^,
-	          '(.+_^).+(\.mp4^)'^,
-	          concat('$1'^,.^,'$2'^)
-	        ^)
-	      }^,
-	      for $x in ('low'^,'medium'^,'hi'^) ! replace(
-	        $a[type^='hls']/file^,
-	        '(.+_^).+(\.mp4^)'^,
-	        concat('$1'^,.^,'$2'^)
-	      ^) return
-	      tail(
-	        tokenize(
-	          unparsed-text($x^)^,
-	          '#EXT-X-STREAM-INF:'
-	        ^)
-	      ^) ! {
-	        'format':string(
-	          extract(
-	            .^,
-	            'BANDWIDTH^=(\d+^)'^,1
-	          ^) idiv 1000
-	        ^)^,
-	        'url':concat(
-	          resolve-uri('.'^,$x^)^,
-	          extract(
-	            .^,
-	            '(.+m3u8^)'^,1
-	          ^)
-	        ^)
-	      }
-	    ]^,
-	    formats:^=join($json(^)/format^,'^, '^)^,
-	    best:^=$json(^)[last(^)]/format^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
-) ELSE IF NOT "%url:www.at5.nl/artikelen=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"name:^=concat(
-	      'AT5 - '^,
-	      //meta[@property^='og:title']/@content^,
-	      replace(
-	        //meta[@property^='article:published_time']/@content^,
-	        '(\d+^)-(\d+^)-(\d+^).+'^,
-	        ' ($3$2$1^)'
-	      ^)
-	    ^)^"
-	-f ^"concat(
-	      'http://www.at5.nl/embedder/smil?m^='^,
-	      //div/@data-video
-	    ^)^"
-	-e ^"json:^=[
-	      //@src ! {
-	        'format':concat(
-	          'mp4-'^,
-	          extract(
-	            .^,
-	            '_(.+^)\.'^,1
-	          ^)
-	        ^)^,
-	        'url':concat(
-	          'http://rtvnh-dl1.streamgate.nl'^,
-	          substring-after(.^,'content2'^)
-	        ^)
-	      }^,
-	      for $x in //@src ! concat(
-	        replace(
-	          //@base^,
-	          'rtmp'^,
-	          'http'
-	        ^)^,
-	        substring-after(.^,'mp4:'^)^,
-	        '/playlist.m3u8'
-	      ^) return
-	      tail(
-	        tokenize(
-	          unparsed-text($x^)^,
-	          '#EXT-X-STREAM-INF:'
-	        ^)
-	      ^) ! {
-	        'format':string(
-	          extract(
-	            .^,
-	            'BANDWIDTH^=(\d+^)'^,1
-	          ^) idiv 1000
-	        ^)^,
-	        'url':concat(
-	          resolve-uri('.'^,$x^)^,
-	          extract(
-	            .^,
-	            '(.+m3u8^)'^,1
-	          ^)
-	        ^)
-	      }
-	    ]^,
-	    formats:^=join($json(^)/format^,'^, '^)^,
-	    best:^=$json(^)[last(^)]/format^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	--xquery ^"name:^=concat(
+	            'AT5 - '^,
+	            replace(
+	              if (contains($url^,'gemist'^)^) then
+	                concat(
+	                  if (contains(//div[@class^='banner_label']^,'Nieuws'^)^) then
+	                    'Nieuws'
+	                  else
+	                    concat(
+	                      //div[@class^='banner_label']^,
+	                      '- '^,
+	                      //div[@class^='banner_title']
+	                    ^)^,
+	                  replace(
+	                    //a[@class^='video-player']/@href^,
+	                    '.+(\d{4}^)/(\d{2}^)/(\d{2}^).+'^,
+	                    ' ($3$2$1^)'
+	                  ^)
+	                ^)
+	              else
+	                concat(
+	                  //meta[@property^='og:title']/@content^,
+	                  replace(
+	                    //meta[@property^='article:published_time']/@content^,
+	                    '(\d+^)-(\d+^)-(\d+^).+'^,
+	                    ' ($3$2$1^)'
+	                  ^)
+	                ^)^,
+	              '[^&quot^;^&apos^;]'^,
+	              ''''''
+	            ^)
+	          ^)^,
+	          if (//iframe^) then
+	            (^)
+	          else (
+	            let $a:^=json(
+	              concat(
+	                'http://www.at5.nl/video/json?m^='^,
+	                (
+	                  //div[@class^='video-container']/substring-after(@id^,'video'^)^,
+	                  //div/@data-video
+	                ^)
+	              ^)
+	            ^)/source return
+	            json:^=[
+	              ('low'^,'medium'^,'hi'^) ! {
+	                'format':concat('mp4-'^,.^)^,
+	                'url':replace(
+	                  $a/(fb^)(1^)/file^,
+	                  '(hi^)'^,
+	                  .
+	                ^)
+	              }^,
+	              for $x in ('low'^,'medium'^,'hi'^) ! replace(
+	                $a/(def^)(^)[type^='hls']/file^,
+	                '(hi^)'^,
+	                .
+	              ^) return
+	              tail(
+	                tokenize(
+	                  unparsed-text($x^)^,
+	                  '#EXT-X-STREAM-INF:'
+	                ^)
+	              ^) ! {
+	                'format':string(
+	                  extract(
+	                    .^,
+	                    'BANDWIDTH^=(\d+^)'^,1
+	                  ^) idiv 1000
+	                ^)^,
+	                'url':concat(
+	                  resolve-uri('.'^,$x^)^,
+	                  extract(
+	                    .^,
+	                    '(.+m3u8^)'^,1
+	                  ^)
+	                ^)
+	              }
+	            ]^,
+	            formats:^=join($json(^)/format^,'^, '^)^,
+	            best:^=$json(^)[last(^)]/format
+	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvutrecht.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"prid:^=//script/extract(
