@@ -9,7 +9,7 @@ REM       -
 REM     26-10-2016 v1.51:
 REM       - Ondersteuning voor Collegerama TU Delft verwijderd i.v.m. copyright van het
 REM         beeldmateriaal.
-REM       - NPO extractor: Spaties in videolink van videofragmenten verholpen, waardoor ze nu wel
+REM       - NPO extractor: Spaties in video-url van videofragmenten verholpen, waardoor ze nu wel
 REM         zijn te downloaden / af te spelen. Extra beschikbaarheids controle toegevoegd voor
 REM         videofragmenten die uiteindelijk toch niet beschikbaar zijn.
 REM     16-10-2016 v1.5:
@@ -17,11 +17,11 @@ REM       [Batch code]
 REM         - Onder :Input waar mogelijk 'GOTO'-commando's onderaan in IF-statement ondergebracht.
 REM         - :Formats sterk geoptimaliseerd door veel van de speciale queries onderaan bij de
 REM           desbetreffende extractors onder te brengen.
-REM         - Onder :Task extra IF-statement toegevoegd voor de twee extractors die Youtube-links
-REM           teruggeven. Omdat mijn script het downloaden van Youtube-links niet ondersteunt, wordt
+REM         - Onder :Task extra IF-statement toegevoegd voor de twee extractors die Youtube-urls
+REM           teruggeven. Omdat mijn script het downloaden van Youtube-urls niet ondersteunt, wordt
 REM           deze vraag in dit geval overgeslagen.
 REM         - Onder :Task extra IF-statement toegevoegd voor oude 'Silverlight' videostreams, omdat
-REM           deze geen fragment selectie in de videolink ondersteunen.
+REM           deze geen fragment selectie in de video-url ondersteunen.
 REM         - Aan :Download de mogelijkheid toegevoegd om ondertiteling van de NPO te muxen.
 REM         - Onder :Download de FFMpeg-commando '-user_agent', om rtlXL's progressieve videostreams
 REM           te kunnen downloaden, verwijderd. Voor andere websites gaf dit teveel problemen. Omdat
@@ -55,7 +55,7 @@ REM         - Schooltv extractor: Gerepareerd.
 REM         - NOS extractor: Gerepareerd en ondersteuning toegevoegd voor artikelen met meerdere
 REM           video's.
 REM         - EenVandaag extractor: Ondersteuning toegevoegd voor complete uitzendingen.
-REM         - 101TV extractor: Gerepareerd en ondersteuning toegevoegd voor Youtube-links.
+REM         - 101TV extractor: Gerepareerd en ondersteuning toegevoegd voor Youtube-urls.
 REM         - Alle regionale omroep extractors: Gerepareerd, sterk geoptimaliseerd en bijna allemaal
 REM           ondersteunen ze nu livestreams, uitzendingen en artikelen al dan niet met meerdere
 REM           video's.
@@ -68,7 +68,7 @@ REM         - Disney extractor: Gerepareerd en samengevoegd. De bestandsnaamgevi
 REM           datum. Beschikbaarheids controle voorheen onder :Formats nu geïntegreerd.
 REM         - Cartoon Network extractor: De bestandsnaamgeving combineert nu een datum.
 REM           Beschikbaarheids controle voorheen onder :Formats nu geïntegreerd.
-REM         - Dumpert extractor: Youtube-link controle voorheen onder :Formats nu geïntegreerd.
+REM         - Dumpert extractor: Youtube-url controle voorheen onder :Formats nu geïntegreerd.
 REM         - Comedy Central extractor: Bestandsnaamgeving verbeterd.
 REM         - Funny Clips extractor: De bestandsnaamgeving combineert nu een datum.
 REM         - MTV extractor: Bestandsnaamgeving verbeterd.
@@ -79,7 +79,7 @@ REM           video's.
 REM         - Ondersteuning toegevoegd voor: Andere Tijden, Willem Wever, NOS Livestreams,
 REM           101TV Livestream, http://rtl.nl/#!/... en FOX Sports.
 REM     25-04-2016 v1.41:
-REM       - Gerepareerd: rtlXL 720p progressieve videostream, niet meer werkende videolink in Disney
+REM       - Gerepareerd: rtlXL 720p progressieve videostream, niet meer werkende video-url in Disney
 REM         videoclips extractor en naam video in Disney- en Cartoon Network extractor.
 REM       - :Download opgeschoond.
 REM     30-03-2016 v1.4:
@@ -88,14 +88,14 @@ REM       - Disney extractor geoptimaliseerd en is nu af. Tijdelijke oplossing a
 REM         toegevoegd voor het downloaden van de progressieve videostreams.
 REM         LET OP: voor het downloaden van de dynamische videostreams is FFMpeg ná 16 maart nodig!
 REM       - Ondersteuning toegevoegd voor: Cartoon Network.
-REM       - Samenvoeging programmalink controle NPO en NPOLive teniet gedaan en een aparte regel
+REM       - Samenvoeging programma-url controle NPO en NPOLive teniet gedaan en een aparte regel
 REM         voor de livestream van NPO 3 toegevoegd, omdat deze voor problemen bleef zorgen.
 REM         Hierdoor :NPO_meta en :NPOLive_meta ook geüpdatet.
 REM       - NOS- en 101TV extractor geoptimaliseerd door beter inzicht in Xidel's mogelijkheden.
 REM       - NPO extractor geoptimaliseerd en, dankzij een nieuwe versie van Xidel, uitgebreid met
-REM         een extra beschikbaarheids controle. Ook procenttekens in gecodeerde videolinks worden
+REM         een extra beschikbaarheids controle. Ook procenttekens in gecodeerde video-urls worden
 REM         nu goed weergegeven.
-REM       - rtlXL extractor gerepareerd: Samenstelling videolink progressieve videostreams. Extra
+REM       - rtlXL extractor gerepareerd: Samenstelling video-url progressieve videostreams. Extra
 REM         FFMpeg parameter aan :Download toegevoegd voor het kunnen downloaden van de dynamische
 REM         videostreams.
 REM       - Kijk extractor uitgebreid met ondersteuning voor progressieve videostreams.
@@ -110,9 +110,9 @@ REM         en waar mogelijk bij :Input ondergebracht.
 REM       - NPO extractor grondig aangepakt waardoor nog meer video's worden ondersteund, waaronder
 REM         beveiligde progressieve videofragmenten. Op nos.nl, waar ze ook voorkomen, worden ze ook
 REM         ondersteund.
-REM       - Programmalink controle van NPO en NPOLive samengevoegd met prid-check, vanwege de
+REM       - Programma-url controle van NPO en NPOLive samengevoegd met prid-check, vanwege de
 REM         livestream van NPO 3, die als enige 'live' niet in de url heeft.
-REM       - Gerepareerd: Escape characters in videolinks van Collegerama TU Delft.
+REM       - Gerepareerd: Escape characters in video-urls van Collegerama TU Delft.
 REM       - De :Formats_xxx subroutines teruggebracht tot één grote.
 REM       - Overzicht ondersteunde websites onder :Help ingekort.
 REM     15-11-2015 v1.2:
@@ -122,7 +122,7 @@ REM         bij :Input.
 REM       - Door ondersteuning van Eenvandaag, tijdcode-calculaties voor :NPO videofragmenten aan
 REM         Xidel overgelaten.
 REM       - NPO extractor opgedeeld in :NPO_meta en :NPO.
-REM       - Extra FOR-loop toegevoegd voor eventueel achtervoegsel in rtl-embed-link.
+REM       - Extra FOR-loop toegevoegd voor eventueel achtervoegsel in rtl-embed-url.
 REM     04-10-2015 v1.1:
 REM       - Script aanzienlijk verkort door websites en veel voorkomende functies onder te verdelen
 REM         in aparte subroutines.
@@ -191,16 +191,18 @@ REM ============================================================================
 :Input
 ENDLOCAL
 SETLOCAL
-ECHO Voer programmalink in (of 'h' voor hulp):
+ECHO Voer programma-url in (of 'h' voor hulp):
 SET /P url=
 IF NOT DEFINED url GOTO :EOF
 IF /I "%url%"=="h" GOTO Help
 IF NOT "%url: =%"=="%url%" (
 	ECHO.
-	ECHO Spaties in programmalink niet toegestaan.
+	ECHO Spaties in programma-url niet toegestaan.
 	ECHO.
 	ECHO.
 	GOTO Input
+) ELSE IF "%url%"=="radio" (
+	GOTO NPORadio
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//@data-prid" --output-format^=cmd^"') DO %%A
 	GOTO NPOLive_meta
@@ -3155,7 +3157,7 @@ IF NOT "%url: =%"=="%url%" (
 	            videos:^=join($json(^)(^)^,'^, '^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE (
 	ECHO.
-	ECHO Ongeldige programmalink.
+	ECHO Ongeldige programma-url.
 	ECHO.
 	ECHO.
 	GOTO Input
@@ -3179,95 +3181,95 @@ REM ============================================================================
 :NPO_meta
 FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
 --xquery ^"json(
-	        extract(
-	          $raw^,
-	          '\((.+^)\^)'^,1
-	        ^)
-	      ^)/(
-	        name:^=replace(
-	          concat(
-	            if (count(.//naam^)^=1^) then
-	              .//naam
-	            else
-	              join(.//naam^,' en '^)^,
-	            ' - '^,
-	            if (ptype^='episode'^) then (
-	              if (aflevering_titel^) then (
-	                if (contains(titel^,aflevering_titel^)^) then
-	                  titel
-	                else (
-	                  if (contains(aflevering_titel^,titel^)^) then
-	                    aflevering_titel
-	                  else
-	                    concat(
-	                      titel^,
-	                      ' - '^,
-	                      aflevering_titel
-	                    ^)
-	                ^)
-	              ^) else
-	                titel
-	            ^) else
-	              concat(
-	                .//serie_titel^,
-	                ' - '^,
-	                titel
-	              ^)^,
-	            if (matches('%date%'^,'^^\d'^)^) then
-	              ' (%date%^)'
-	            else
-	              replace(
-	                x:request(
-	                  {
-	                    'data':concat(
-	                      'http://www.npo.nl/'^,
-	                      prid
-	                    ^)^,
-	                    'method':'HEAD'
-	                  }
-	                ^)/url^,
-	                '.+?(\d+^)-(\d+^)-(\d+^).+'^,
-	                ' ($1$2$3^)'
-	              ^)
-	          ^)^,
-	          '[^&quot^;^&apos^;]'^,
-	          ''''''
-	        ^)^,
-	        prid:^=prid^,
-	        pubopties:^=pubopties^,
-	        streams:^=streams^,
-	        t:^=if (tijdsduur instance of string^) then
-	          hours-from-time(tijdsduur^)*3600+minutes-from-time(tijdsduur^)*60+seconds-from-time(tijdsduur^)
-	        else
-	          (^)^,
-	        (hours-from-time(start^)*3600+minutes-from-time(start^)*60+seconds-from-time(start^)^) ! (
-	          if (. mod 30^=0^) then (
-	            if (.^=30^) then
-	              (^)
-	            else
-	              ss1:^=. - 30^,
-	            ss2:^=30
-	          ^) else (
-	            if (.^<30^) then
-	              (^)
-	            else
-	              ss1:^=. - (. mod 30^)^,
-	            ss2:^=. mod 30
-	          ^)
-	        ^)^,
-	        to:^=hours-from-time(eind^)*3600+minutes-from-time(eind^)*60+seconds-from-time(eind^)^,
-	        if (tt888^='ja'^) then (
-	          s_url:^=concat(
-	            'http://tt888.omroep.nl/tt888/'^,
-	            prid
-	          ^)^,
-	          if (unparsed-text-available($s_url^)^) then
-	            (^)
-	          else
-	            s_charenc:^='-sub_charenc CP1252'
-	        ^) else 
-	          (^)
-	      ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+            extract(
+              $raw^,
+              '\((.+^)\^)'^,1
+            ^)
+          ^)/(
+            name:^=replace(
+              concat(
+                if (count(.//naam^)^=1^) then
+                  .//naam
+                else
+                  join(.//naam^,' en '^)^,
+                ' - '^,
+                if (ptype^='episode'^) then (
+                  if (aflevering_titel^) then (
+                    if (contains(titel^,aflevering_titel^)^) then
+                      titel
+                    else (
+                      if (contains(aflevering_titel^,titel^)^) then
+                        aflevering_titel
+                      else
+                        concat(
+                          titel^,
+                          ' - '^,
+                          aflevering_titel
+                        ^)
+                    ^)
+                  ^) else
+                    titel
+                ^) else
+                  concat(
+                    .//serie_titel^,
+                    ' - '^,
+                    titel
+                  ^)^,
+                if (matches('%date%'^,'^^\d'^)^) then
+                  ' (%date%^)'
+                else
+                  replace(
+                    x:request(
+                      {
+                        'data':concat(
+                          'http://www.npo.nl/'^,
+                          prid
+                        ^)^,
+                        'method':'HEAD'
+                      }
+                    ^)/url^,
+                    '.+?(\d+^)-(\d+^)-(\d+^).+'^,
+                    ' ($1$2$3^)'
+                  ^)
+              ^)^,
+              '[^&quot^;^&apos^;]'^,
+              ''''''
+            ^)^,
+            prid:^=prid^,
+            pubopties:^=pubopties^,
+            streams:^=streams^,
+            t:^=if (tijdsduur instance of string^) then
+              hours-from-time(tijdsduur^)*3600+minutes-from-time(tijdsduur^)*60+seconds-from-time(tijdsduur^)
+            else
+              (^)^,
+            (hours-from-time(start^)*3600+minutes-from-time(start^)*60+seconds-from-time(start^)^) ! (
+              if (. mod 30^=0^) then (
+                if (.^=30^) then
+                  (^)
+                else
+                  ss1:^=. - 30^,
+                ss2:^=30
+              ^) else (
+                if (.^<30^) then
+                  (^)
+                else
+                  ss1:^=. - (. mod 30^)^,
+                ss2:^=. mod 30
+              ^)
+            ^)^,
+            to:^=hours-from-time(eind^)*3600+minutes-from-time(eind^)*60+seconds-from-time(eind^)^,
+            if (tt888^='ja'^) then (
+              s_url:^=concat(
+                'http://tt888.omroep.nl/tt888/'^,
+                prid
+              ^)^,
+              if (unparsed-text-available($s_url^)^) then
+                (^)
+              else
+                s_charenc:^='-sub_charenc CP1252'
+            ^) else 
+              (^)
+          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 GOTO NPO
 
 REM ================================================================================================
@@ -3468,21 +3470,21 @@ REM ============================================================================
 :NPOLive_meta
 FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
 -e ^"json(
-	  extract(
-	    $raw^,
-	    '\((.+^)\^)'^,1
-	  ^)
-	^)/(
-	  name:^=concat(
-	    titel^,
-	    replace(
-	      '%date%'^,
-	      '.+?(\d+^)-(\d+^)-(\d+^)'^,
-	      ' - Livestream ($1$2$3^)'
-	    ^)
-	  ^)^,
-	  hls:^=(streams^)(^)[type^='hls']/url
-	^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+      extract(
+        $raw^,
+        '\((.+^)\^)'^,1
+      ^)
+    ^)/(
+      name:^=concat(
+        titel^,
+        replace(
+          '%date%'^,
+          '.+?(\d+^)-(\d+^)-(\d+^)'^,
+          ' - Livestream ($1$2$3^)'
+        ^)
+      ^)^,
+      hls:^=(streams^)(^)[type^='hls']/url
+    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 GOTO NPOLive
 
 REM ================================================================================================
@@ -3490,45 +3492,45 @@ REM ============================================================================
 :NPOLive
 FOR /F "delims=" %%A IN ('^"%xidel% "http://ida.omroep.nl/npoplayer/i.js"
 -f ^"concat(
-	  'http://ida.omroep.nl/aapi/?stream^=%hls%^&token^='^,
-	  replace(
-	    extract(
-	      $raw^,
-	      '\^"(.+^^^)\^"'^,1
-	    ^)^,
-	    '^^(.{5}^)((.*?^)(\d^)(.*?^)(\d^)(.*^)^|(.{6}^)(.^)(.^)(.*^)^)(.{5}^)$'^,
-	    '$1$3$6$5$4$7$8$10$9$11$12'
-	  ^)
-	^)^"
+      'http://ida.omroep.nl/aapi/?stream^=%hls%^&token^='^,
+      replace(
+        extract(
+          $raw^,
+          '\^"(.+^^^)\^"'^,1
+        ^)^,
+        '^^(.{5}^)((.*?^)(\d^)(.*?^)(\d^)(.*^)^|(.{6}^)(.^)(.^)(.*^)^)(.{5}^)$'^,
+        '$1$3$6$5$4$7$8$10$9$11$12'
+      ^)
+    ^)^"
 -f ^"$json/stream^"
 -e ^"json:^=[
-	  {
-	    'format':'meta'^,
-	    'url':$url
-	  }^,
-	  tail(
-	    tokenize(
-	      $raw^,
-	      '#EXT-X-STREAM-INF:'
-	    ^)
-	  ^) ! {
-	    'format':string(
-	      extract(
-	        .^,
-	        'BANDWIDTH^=(\d+^)'^,1
-	      ^) idiv 1000
-	    ^)^,
-	    'url':concat(
-	      resolve-uri('.'^)^,
-	      extract(
-	        .^,
-	        '(.+m3u8^)'^,1
-	      ^)
-	    ^)
-	  }
-	]^,
-	formats:^=join($json(^)/format^,'^, '^)^,
-	best:^=$json(^)[last(^)]/format^" --output-format^=cmd^"') DO %%A
+      {
+        'format':'meta'^,
+        'url':$url
+      }^,
+      tail(
+        tokenize(
+          $raw^,
+          '#EXT-X-STREAM-INF:'
+        ^)
+      ^) ! {
+        'format':string(
+          extract(
+            .^,
+            'BANDWIDTH^=(\d+^)'^,1
+          ^) idiv 1000
+        ^)^,
+        'url':concat(
+          resolve-uri('.'^)^,
+          extract(
+            .^,
+            '(.+m3u8^)'^,1
+          ^)
+        ^)
+      }
+    ]^,
+    formats:^=join($json(^)/format^,'^, '^)^,
+    best:^=$json(^)[last(^)]/format^" --output-format^=cmd^"') DO %%A
 
 IF DEFINED json (
 	GOTO Formats
@@ -3545,99 +3547,99 @@ REM ============================================================================
 :rtlXL
 FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/"
 --xquery ^"$json/(
-	        name:^=replace(
-	          concat(
-	            .//station^,
-	            ' - '^,
-	            abstracts/name^,
-	            ' - '^,
-	            if (.//classname^='uitzending'^) then
-	              episodes/name
-	            else
-	              .//title^,
-	            replace(
-	              .//original_date * dayTimeDuration('PT1S'^) + date('1970-01-01'^)^,
-	              '(\d+^)-(\d+^)-(\d+^)'^,
-	              ' ($3$2$1^)'
-	            ^)
-	          ^)^,
-	          '[^&quot^;^&apos^;]'^,
-	          ''''''
-	        ^)^,
-	        q:^=.//quality
-	      ^)^"
+            name:^=replace(
+              concat(
+                .//station^,
+                ' - '^,
+                abstracts/name^,
+                ' - '^,
+                if (.//classname^='uitzending'^) then
+                  episodes/name
+                else
+                  .//title^,
+                replace(
+                  .//original_date * dayTimeDuration('PT1S'^) + date('1970-01-01'^)^,
+                  '(\d+^)-(\d+^)-(\d+^)'^,
+                  ' ($3$2$1^)'
+                ^)
+              ^)^,
+              '[^&quot^;^&apos^;]'^,
+              ''''''
+            ^)^,
+            q:^=.//quality
+          ^)^"
 -f ^"$json/(
-	  if (meta/nr_of_videos_total^=0^) then
-	    (^)
-	  else
-	    concat(
-	      meta/videohost^,
-	      material/videopath
-	    ^)
-	^)^"
+      if (meta/nr_of_videos_total^=0^) then
+        (^)
+      else
+        concat(
+          meta/videohost^,
+          material/videopath
+        ^)
+    ^)^"
 --xquery ^"json:^=[
-	        {
-	          'format':'meta'^,
-	          'url':$url
-	        }^,
-	        tail(
-	          tokenize(
-	            $raw^,
-	            '#EXT-X-STREAM-INF:'
-	          ^)
-	        ^) ! {
-	          'format':string(
-	            extract(
-	              .^,
-	              'BANDWIDTH^=(\d+^)'^,1
-	            ^) idiv 1000
-	          ^)^,
-	          'url':extract(
-	            .^,
-	            '(.+m3u8^)'^,1
-	          ^)
-	        }^,
-	        let $a:^='http://pg.us.rtl.nl/rtlxl/network/' return
-	        replace(
-	          $url^,
-	          '.+(/comp.+^)\.m3u8'^,
-	          '$1.mp4'
-	        ^) ! (
-	          {
-	            'format':'mp4-a2t'^,
-	            'url':concat(
-	              $a^,
-	              'a2t/progressive'^,
-	              .
-	            ^)
-	          }^,
-	          {
-	            'format':'mp4-a3t'^,
-	            'url':concat(
-	              $a^,
-	              'a3t/progressive'^,
-	              .
-	            ^)
-	          }^,
-	          if ($q^='HD'^) then {
-	            'format':'mp4-nettv'^,
-	            'url':concat(
-	              $a^,
-	              'nettv/progressive'^,
-	              .
-	            ^)
-	          } else
-	            (^)
-	        ^)
-	      ]^,
-	      let $a:^=(
-	        $json(^)[contains(format^,'mp4'^)]/format^,
-	        $json(^)[format^='meta']/format^,
-	        for $x in $json(^)[format castable as int]/format order by $x return $x
-	      ^) return (
-	        formats:^=join($a^,'^, '^)^,
-	        best:^=$a[last(^)]
-	      ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+            {
+              'format':'meta'^,
+              'url':$url
+            }^,
+            tail(
+              tokenize(
+                $raw^,
+                '#EXT-X-STREAM-INF:'
+              ^)
+            ^) ! {
+              'format':string(
+                extract(
+                  .^,
+                  'BANDWIDTH^=(\d+^)'^,1
+                ^) idiv 1000
+              ^)^,
+              'url':extract(
+                .^,
+                '(.+m3u8^)'^,1
+              ^)
+            }^,
+            let $a:^='http://pg.us.rtl.nl/rtlxl/network/' return
+            replace(
+              $url^,
+              '.+(/comp.+^)\.m3u8'^,
+              '$1.mp4'
+            ^) ! (
+              {
+                'format':'mp4-a2t'^,
+                'url':concat(
+                  $a^,
+                  'a2t/progressive'^,
+                  .
+                ^)
+              }^,
+              {
+                'format':'mp4-a3t'^,
+                'url':concat(
+                  $a^,
+                  'a3t/progressive'^,
+                  .
+                ^)
+              }^,
+              if ($q^='HD'^) then {
+                'format':'mp4-nettv'^,
+                'url':concat(
+                  $a^,
+                  'nettv/progressive'^,
+                  .
+                ^)
+              } else
+                (^)
+            ^)
+          ]^,
+          let $a:^=(
+            $json(^)[contains(format^,'mp4'^)]/format^,
+            $json(^)[format^='meta']/format^,
+            for $x in $json(^)[format castable as int]/format order by $x return $x
+          ^) return (
+            formats:^=join($a^,'^, '^)^,
+            best:^=$a[last(^)]
+          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED json (
 	GOTO Formats
@@ -3647,6 +3649,104 @@ IF DEFINED json (
 	ECHO.
 	ECHO.
 	GOTO Input
+)
+
+REM ================================================================================================
+
+:NPORadio
+SETLOCAL
+ECHO.
+%xidel% "http://radio-app.omroep.nl/player/script/player.js" ^
+-e ^"json(^
+       extract(^
+         $raw,^
+         'NPW.config.channels=(.+),NPW.config.comscore_configurations',1^
+       )^
+     )()[name!='demo']/concat(^
+       id,^
+       ': ',^
+       name^
+     )^"
+ECHO.
+SET /P "id=Voer nummer in van gewenste radiozender: [1] "
+IF NOT DEFINED id SET "id=1"
+FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/player.js"
+--xquery ^"if (matches('%id%'^,'^^\d+$'^)^) then
+            let $a:^=json(
+              extract(
+                $raw^,
+                'NPW.config.channels^=(.+^)^,NPW.config.comscore_configurations'^,1
+              ^)
+            ^)(^) return
+            if ($a[id^=%id%]^) then (
+              $a[id^=%id%]/(
+                name:^=concat(
+                  name^,
+                  replace(
+                    '%date%'^,
+                    '.+?(\d+^)-(\d+^)-(\d+^)'^,
+                    ' - Livestream ($1$2$3^)'
+                  ^)
+                ^)^,
+                json:^=[
+                  (audiostreams^)(^)[protocol^='http']/{
+                    'format':concat(
+                      audiocodec^,
+                      '-'^,
+                      bitrate
+                    ^)^,
+                    'url':url
+                  }^,
+                  let $b:^=(videostreams^)(^)[name^='hasp-hls']/url return
+                  if ($b^) then (
+                    {
+                      'format':'meta'^,
+                      'url':$b
+                    }^,
+                    tail(
+                      tokenize(
+                        unparsed-text($b^)^,
+                        '#EXT-X-STREAM-INF:'
+                      ^)
+                    ^) ! {
+                      'format':string(
+                        extract(
+                          .^,
+                          'BANDWIDTH^=(\d+^)'^,1
+                        ^) idiv 1000
+                      ^)^,
+                      'url':concat(
+                        resolve-uri('.'^,$b^)^,
+                        extract(
+                          .^,
+                          '(.+m3u8^)'^,1
+                        ^)
+                      ^)
+                    }
+                  ^) else
+                    (^)
+                ]
+              ^)^,
+              let $c:^=(
+                for $x in $json(^)[contains(format^,'-'^)]/format order by $x return $x^,
+                $json(^)[format^='meta']/format^,
+                $json(^)[format castable as int]/format
+              ^) return (
+                formats:^=join($c^,'^, '^)^,
+                best:^=$c[last(^)]
+              ^)
+            ^) else
+              (^)
+          else (^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+
+IF DEFINED json (
+	GOTO Formats
+) ELSE (
+	ECHO.
+	ECHO Ongeldig nummer.
+	ECHO.
+	ENDLOCAL
+	GOTO NPORadio
 )
 
 REM ================================================================================================
@@ -3716,30 +3816,31 @@ REM ============================================================================
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF "%v_url:youtu.be=%"=="%v_url%" (
 	ECHO.
-	SET /P "task=Videolink achterhalen, of Downloaden? [V/d] "
+	SET /P "task=Url achterhalen, of downloaden? [U/d] "
 	IF /I "!task!"=="d" GOTO Download
 
 	IF DEFINED to (
 		IF "%v_url:mms://=%"=="%v_url%" (
 			FOR /F "delims=" %%A IN ('^"%xidel%
-	        -e ^"concat(
-	               '%v_url%?start^='^,
-	               round(%ss1%+%ss2%^)^,
-	               '^^^&end^='^,
-	               round(%to%^)
-	            ^)^"^"') DO SET "v_url=%%A"
+			-e ^"concat(
+			       '%v_url%?start^='^,
+			       round(%ss1%+%ss2%^)^,
+			       '^^^&end^='^,
+			       round(%to%^)
+			    ^)^"^"') DO SET "v_url=%%A"
 		)
 	)
 )
 
 ECHO.
-ECHO Videolink:
+ECHO Audio- of video-url:
 ECHO %v_url%
 ECHO|SET /P ="%v_url:^=%"|clip.exe
 ECHO.
-ECHO Videolink gekopieerd naar het klembord.
+ECHO Url gekopieerd naar het klembord.
 ECHO.
 ECHO.
+ENDLOCAL
 ENDLOCAL
 ENDLOCAL
 GOTO Input
@@ -3788,14 +3889,14 @@ FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 ECHO.
 FOR /F "delims=" %%A IN ('^"%xidel%
 -e ^"replace(
-	  replace(
-	    normalize-space('%name%'^)^,
-	    ':'^,
-	    '-'
-	  ^)^,
-	  '[^<^>/\\^|?*^^]'^,
-	  ''
-	^)^" --output-encoding^=oem^"') DO SET "name=%%A"
+      replace(
+        normalize-space('%name%'^)^,
+        ':'^,
+        '-'
+      ^)^,
+      '[^<^>/\\^|?*^^]'^,
+      ''
+    ^)^" --output-encoding^=oem^"') DO SET "name=%%A"
 ECHO Bestandsnaam: %name%
 SET /P "rename=Wijzigen? [J/n] "
 IF /I NOT "%rename%"=="n" (
@@ -3847,31 +3948,31 @@ IF DEFINED ss1 (
 	IF /I "!part!"=="j" (
 		ECHO Voer begintijd in (in seconden, of als uu:mm:ss[.xxx]^):
 		FOR /F "delims=" %%A IN ('^"%xidel%
-	    -e ^"let $a:^=read(^) return
-	        if ($a^) then
-	          let $a:^=if ($a castable as time^) then
-	            hours-from-time($a^)*3600+minutes-from-time($a^)*60+seconds-from-time($a^)
-	          else
-	            $a
-	          return
-	          if ($a^=0^) then
-	            (^)
-	          else
-	            if ($a mod 30^=0^) then (
-	              if ($a^=30^) then
-	                (^)
-	              else
-	                ss1:^=$a - 30^,
-	              ss2:^=30
-	            ^) else (
-	              if ($a^<30^) then
-	                (^)
-	              else
-	                ss1:^=$a - ($a mod 30^)^,
-	              ss2:^=$a mod 30
-	            ^)
-	        else
-	          (^)^" --output-format^=cmd^"') DO %%A
+		-e ^"let $a:^=read(^) return
+		    if ($a^) then
+		      let $a:^=if ($a castable as time^) then
+		        hours-from-time($a^)*3600+minutes-from-time($a^)*60+seconds-from-time($a^)
+		      else
+		        $a
+		      return
+		      if ($a^=0^) then
+		        (^)
+		      else
+		        if ($a mod 30^=0^) then (
+		          if ($a^=30^) then
+		            (^)
+		          else
+		            ss1:^=$a - 30^,
+		          ss2:^=30
+		        ^) else (
+		          if ($a^<30^) then
+		            (^)
+		          else
+		            ss1:^=$a - ($a mod 30^)^,
+		          ss2:^=$a mod 30
+		        ^)
+		    else
+		      (^)^" --output-format^=cmd^"') DO %%A
 		ECHO Voer tijdsduur in (in seconden, of als uu:mm:ss[.xxx]^):
 		SET /P t=
 		IF DEFINED mux (
@@ -3928,6 +4029,7 @@ ENDLOCAL
 ENDLOCAL
 ENDLOCAL
 ENDLOCAL
+ENDLOCAL
 GOTO Input
 
 REM ================================================================================================
@@ -3936,7 +4038,7 @@ REM ============================================================================
 ECHO.
 ECHO   [Beschrijving]
 ECHO     BatchGemist is een batchscript om video's van verscheidene websites te downloaden, of de
-ECHO     videolink ervan te achterhalen.
+ECHO     video-url ervan te achterhalen.
 ECHO.
 ECHO   [Benodigdheden]
 ECHO     - xidel.exe (http://videlibri.sourceforge.net/xidel.html#downloads)
@@ -3945,12 +4047,12 @@ ECHO       alle gegevens.
 ECHO       Download Xidel (versie 0.9.6 of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
 ECHO       batchscript, of wijzig de programma-map in dit script onder ":Check".
 ECHO     - ffmpeg.exe (http://ffmpeg.zeranoe.com/builds)
-ECHO       Met de gegenereerde videolink als invoer zorgt FFMpeg ervoor dat de video effici‰nt wordt
+ECHO       Met de gegenereerde video-url als invoer zorgt FFMpeg ervoor dat de video effici‰nt wordt
 ECHO       gedownload.
 ECHO       Download FFMpeg en plaats 'ffmpeg.exe' in dezelfde map als dit batchscript, of wijzig de
 ECHO       programma-map in dit script onder ":Check".
 ECHO     - clip.exe (http://www.c3scripts.com/tutorials/msdos/clip.zip) [Windows XP]
-ECHO       Clip kopieert de videolink naar het klembord. Vanaf Windows Vista wordt 'clip.exe' standaard
+ECHO       Clip kopieert de video-url naar het klembord. Vanaf Windows Vista wordt 'clip.exe' standaard
 ECHO       meegeleverd, dus dit is alleen voor Windows XP gebruikers.
 ECHO       Download Clip en plaats 'clip.exe' in de C:\WINDOWS\system32 map.
 ECHO.
@@ -3975,9 +4077,10 @@ ECHO     cartoonnetwork.nl     foxsports.nl
 ECHO     24kitchen.nl          abhd.nl
 ECHO.
 ECHO   [Gebruik]
-ECHO     Surf naar ‚‚n van de ondersteunde websites en kopieer de programmalink van een gewenst
-ECHO     programma. Start dit batch-script en plak deze link d.m.v. rechtermuis-knop + plakken (Ctrl+V
+ECHO     Surf naar ‚‚n van de ondersteunde websites en kopieer de programma-url van een gewenst
+ECHO     programma. Start dit batch-script en plak deze url d.m.v. rechtermuis-knop + plakken (Ctrl+V
 ECHO     werkt hier niet).
+ECHO     Voer 'radio' in voor een opsomming van alle NPO radiozenders en maak je keuze.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
 ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie. Voor dit
@@ -3986,13 +4089,15 @@ ECHO     zijn dynamische videostreams. De formaten die beginnen met 'mp4' zijn p
 ECHO     videostreams.
 ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
-ECHO     Dan volgen een aantal keuzevragen, beginnend met 'Videolink achterhalen, of Downloaden?
-ECHO     [V/d]'. De keuze met hoofdletter is voorgeselecteerd. Voor 'Videolink achterhalen' kun je dan
-ECHO     gewoon op ENTER drukken. Voor 'Downloaden' moet je wel 'd' invullen.
-ECHO     Voor de '[J/n]'-, of '[j/N]'-vragen die dan volgen geldt precies hetzelfde. De keuze met
+ECHO     Dan volgen een aantal keuzevragen, beginnend met 'Url achterhalen, of downloaden? [U/d]'.
+ECHO     De keuze met hoofdletter is voorgeselecteerd. Voor 'Url achterhalen' kun je dan gewoon
+ECHO     op ENTER drukken. Voor 'downloaden' moet je wel 'd' invullen.
+ECHO     Voor de '[J/n]'-, of '[j/N]' vragen die dan volgen geldt precies hetzelfde. De keuze met
 ECHO     hoofdletter is voorgeselecteerd.
 ECHO.
 ECHO     Druk op ENTER om BatchGemist af te sluiten.
+ECHO.
+PAUSE
 ECHO.
 ECHO.
 IF DEFINED check (
