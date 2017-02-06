@@ -130,9 +130,6 @@ REM       - Ondersteuning toegevoegd voor: Ketnet en 24Kitchen.
 REM       - RTVNoord-, RTVDrenthe- en RTVDrenthe_Live extractor vernieuwd.
 REM     29-09-2015 v1.0:
 REM       - Eerste versie.
-REM 
-REM BatchGemist is geschreven door Reino Wijnsma.
-REM http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm
 
 REM Venster (buffer)grootte en kleur wijzigen (https://stackoverflow.com/a/13351373)
 MODE con: cols=100 lines=32
@@ -141,7 +138,7 @@ FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
 	IF %%A.%%B LSS 6.1 (
 		FOR /F "tokens=3" %%A IN ('REG QUERY "HKLM\SOFTWARE\Microsoft\PowerShell\1" /v Install ^| FIND "Install"') DO (
 			IF NOT "%%A"=="0x1" (
-				TITLE BatchGemist 1.6 beta
+				TITLE BatchGemist 1.6-git
 				ECHO Venster buffergrootte niet kunnen wijzigen, omdat PowerShell niet is ge‹nstalleerd.
 				ECHO PowerShell 2.0 voor Windows XP: https://www.microsoft.com/en-us/download/details.aspx?id=16818
 				ECHO PowerShell 2.0 voor Windows Vista x86: https://www.microsoft.com/en-us/download/details.aspx?id=9864
@@ -149,11 +146,11 @@ FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
 				ECHO.
 				ECHO.
 			) ELSE (
-				powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6 beta';}"
+				powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6-git';}"
 			)
 		)
 	) ELSE (
-		powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6 beta';}"
+		powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6-git';}"
 	)
 )
 
@@ -194,6 +191,7 @@ SETLOCAL
 ECHO Voer programma-url in (of 'h' voor hulp):
 SET /P url=
 IF NOT DEFINED url GOTO :EOF
+IF /I "%url%"=="v" GOTO Versie
 IF /I "%url%"=="h" GOTO Help
 IF NOT "%url: =%"=="%url%" (
 	ECHO.
@@ -4034,6 +4032,38 @@ GOTO Input
 
 REM ================================================================================================
 
+:Versie
+ECHO.
+ECHO BatchGemist 1.6-git
+ECHO.
+ECHO http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm
+ECHO door Reino Wijnsma ^<rwijnsma@xs4all.nl^>
+ECHO.
+%xidel% -e ^"let $a:=tokenize(^
+              system('%xidel:"=% --version'),^
+              '\r\n'^
+            ) return^
+            concat(^
+              $a[1],^
+              extract(^
+                $a[2],^
+                '(\.\d+)',1^
+              )^
+            )^"
+%xidel% -e ^"replace(^
+              tokenize(^
+                system('%ffmpeg:"=% -version'),^
+                '\r\n'^
+              )[1],^
+              '(.+?) .+? (.+?) .+',^
+              '$1 $2'^
+            )^"
+ECHO.
+ECHO.
+GOTO Input
+
+REM ================================================================================================
+
 :Help
 ECHO.
 ECHO   [Beschrijving]
@@ -4044,8 +4074,9 @@ ECHO   [Benodigdheden]
 ECHO     - xidel.exe (http://videlibri.sourceforge.net/xidel.html#downloads)
 ECHO       Xidel is het hart van BatchGemist en is verantwoordelijk voor het ontleden van zo'n beetje
 ECHO       alle gegevens.
-ECHO       Download Xidel (versie 0.9.6 of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
+ECHO       Download Xidel (versie 0.9.7.5391* of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
 ECHO       batchscript, of wijzig de programma-map in dit script onder ":Check".
+ECHO       * https://sourceforge.net/projects/videlibri/files/Xidel/Xidel development/
 ECHO     - ffmpeg.exe (http://ffmpeg.zeranoe.com/builds)
 ECHO       Met de gegenereerde video-url als invoer zorgt FFMpeg ervoor dat de video effici‰nt wordt
 ECHO       gedownload.
@@ -4064,7 +4095,6 @@ ECHO     anderetijden.nl       rtl.nl                rtvnh.nl                  r
 ECHO     schooltv.nl           rtlnieuws.nl          omroepflevoland.nl        omroepzeeland.nl
 ECHO     willemwever.nl        rtlz.nl               rtvoost.nl                omroepbrabant.nl
 ECHO     nos.nl                kijk.nl               at5.nl                    l1.nl
-ECHO.
 ECHO.
 PAUSE
 ECHO.
@@ -4095,6 +4125,7 @@ ECHO     op ENTER drukken. Voor 'downloaden' moet je wel 'd' invullen.
 ECHO     Voor de '[J/n]'-, of '[j/N]' vragen die dan volgen geldt precies hetzelfde. De keuze met
 ECHO     hoofdletter is voorgeselecteerd.
 ECHO.
+ECHO     Voer 'v' in voor de versie nummers van BatchGemist, Xidel en FFMpeg.
 ECHO     Druk op ENTER om BatchGemist af te sluiten.
 ECHO.
 PAUSE
