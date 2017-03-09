@@ -478,7 +478,10 @@ IF NOT "%url: =%"=="%url%" (
 	              ^)
 	            ^)/(
 	              t:^=endAt - startAt^,
+	              duur:^=$t * dayTimeDuration('PT1S'^) + time('00:00:00'^)^,
 	              startAt ! (
+	                ss:^=.^,
+	                start:^=. * dayTimeDuration('PT1S'^) + time('00:00:00'^)^,
 	                if (. mod 30^=0^) then (
 	                  if (.^=30^) then
 	                    (^)
@@ -493,7 +496,8 @@ IF NOT "%url: =%"=="%url%" (
 	                  ss2:^=. mod 30
 	                ^)
 	              ^)^,
-	              to:^=endAt
+	              to:^=endAt^,
+	              eind:^=$to * dayTimeDuration('PT1S'^) + time('00:00:00'^)
 	            ^)^
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -3221,8 +3225,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                   ''''''
                 ^)^,
               if (tijdsduur^) then (
+                duur:^=tijdsduur^,
                 t:^=hours-from-time(tijdsduur^)*3600+minutes-from-time(tijdsduur^)*60+seconds-from-time(tijdsduur^)^,
+                start:^=start^,
                 (hours-from-time(start^)*3600+minutes-from-time(start^)*60+seconds-from-time(start^)^) ! (
+                  ss:^=.^,
                   if (. mod 30^=0^) then (
                     if (.^=30^) then
                       (^)
@@ -3237,7 +3244,42 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     ss2:^=. mod 30
                   ^)
                 ^)^,
+                eind:^=eind^,
                 to:^=hours-from-time(eind^)*3600+minutes-from-time(eind^)*60+seconds-from-time(eind^)^,
+                if (publicatie_eind^) then (
+                  let $a:^=dateTime(publicatie_eind^) - current-dateTime(^) return
+                  tot:^=concat(
+                    replace(
+                      publicatie_eind^,
+                      '(\d+^)-(\d+^)-(\d+^)T(.+^)\+.+'^,
+                      '$3-$2-$1 $4'
+                    ^)^,
+                    ' (nog '^,
+                    days-from-duration($a^) ! (
+                      if (.^=0^) then
+                        (^)
+                      else if (.^=1^) then
+                        .^|^|' dag en '
+                      else
+                        .^|^|' dagen en '
+                    ^)^,
+                    hours-from-duration($a^) ! (
+                      if (.^=0^) then
+                        (^)
+                      else
+                        .^|^|'u'
+                    ^)^,
+                    minutes-from-duration($a^) ! (
+                      if (.^=0^) then
+                        (^)
+                      else
+                        .^|^|'m'
+                    ^)^,
+                    floor(seconds-from-duration($a^)^)^,
+                    's^)'
+                  ^)
+                ^) else
+                  (^)
               ^) else
                 (^)
             ^)^,
@@ -3421,7 +3463,45 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
               '[^&quot^;^&apos^;]'^,
               ''''''
             ^)^,
-            q:^=.//quality
+            q:^=.//quality^,
+            (material^)(^)/(
+              duur:^=substring-before(duration^,'.'^)^,
+              t:^=hours-from-time(duration^)*3600+minutes-from-time(duration^)*60+floor(seconds-from-time(duration^)^)^,
+              let $a:^=(.//ddr_timeframes^)(^)[model^='AVOD']/stop * dayTimeDuration('PT1S'^) + dateTime('1970-01-01T00:00:00'^)
+              let $b:^=$a - current-dateTime(^) return
+              tot:^=concat(
+                replace(
+                  $a^,
+                  '(\d+^)-(\d+^)-(\d+^)T(.+^)'^,
+                  '$3-$2-$1 $4'
+                ^)^,
+                ' (nog '^,
+                days-from-duration($b^) ! (
+                  if (.^=0^) then
+                    (^)
+                  else if (.^=1^) then
+                    .^|^|' dag en '
+                  else
+                    .^|^|' dagen en '
+                ^)^,
+                hours-from-duration($b^) ! (
+                  if (.^=0^) then
+                    (^)
+                  else
+                    .^|^|'u'
+                ^)^,
+                minutes-from-duration($b^) ! (
+                  if (.^=0^) then
+                    (^)
+                  else
+                    .^|^|'m'
+                ^)^,
+                floor(
+                  seconds-from-duration($b^)
+                ^)^,
+                's^)'
+              ^)
+            ^)
           ^)^"
 -f ^"$json/(
       if (meta/nr_of_videos_total^=0^) then
@@ -3670,6 +3750,27 @@ REM ============================================================================
 :Task
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF "%v_url:youtu.be=%"=="%v_url%" (
+	IF NOT DEFINED duur (
+		FOR /F "delims=" %%A IN ('^"%ffmpeg% -i "%v_url%" 2^>^&1 ^| %xidel%
+		- -e ^"let $a:^=extract(
+		         $raw^,
+		         'Duration: (.+?^)^, start'^,1
+		       ^) return
+		       if ($a castable as time^) then (
+		         duur:^=substring-before($a^,'.'^)^,
+		         t:^=hours-from-time($a^)*3600+minutes-from-time($a^)*60+floor(seconds-from-time($a^)^)
+		       ^)
+		         else (^)^" --output-format^=cmd^"') DO %%A
+	)
+	IF DEFINED duur (
+		ECHO.
+		ECHO Tijdsduur:  !duur! (!t!!duur:~8,4!s^)
+		IF DEFINED ss (
+			ECHO Start:      %start% (%ss%s^)
+			ECHO Einde:      %eind% (%to%s^)
+		)
+		IF DEFINED tot ECHO Gratis tot: %tot%
+	)
 	ECHO.
 	SET /P "task=Url achterhalen, of downloaden? [U/d] "
 	IF /I "!task!"=="d" GOTO Download
