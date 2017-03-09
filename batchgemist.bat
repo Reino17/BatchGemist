@@ -3846,9 +3846,13 @@ ECHO.
 FOR /F "delims=" %%A IN ('^"%xidel%
 -e ^"replace(
       replace(
-        normalize-space('%name%'^)^,
-        ':'^,
-        '-'
+        replace(
+          normalize-space('%name%'^)^,
+          ':'^,
+          '-'
+        ^)^,
+        '\?'^,
+        '.'
       ^)^,
       '[^<^>/\\^|?*^^]'^,
       ''
@@ -3860,9 +3864,13 @@ IF /I NOT "%rename%"=="n" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"replace(
 	      replace(
-	        read(^)^,
-	        ':'^,
-	        '-'
+	        replace(
+	          read(^)^,
+	          ':'^,
+	          '-'
+	        ^)^,
+	        '\?'^,
+	        '.'
 	      ^)^,
 	      '[^<^>/\\^|?*^^]'^,
 	      ''
@@ -3997,24 +4005,17 @@ ECHO.
 ECHO http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm
 ECHO door Reino Wijnsma ^<rwijnsma@xs4all.nl^>
 ECHO.
-%xidel% -e ^"let $a:=tokenize(^
+%xidel% -e ^"replace(^
               system('%xidel:"=% --version'),^
-              '\r\n'^
-            ) return^
-            concat(^
-              $a[1],^
-              extract(^
-                $a[2],^
-                '(\.\d+)',1^
-              )^
+              '(.+)\r\n\(.+?(\.\d+)\..+',^
+              '$1$2',^
+              's'^
             )^"
 %xidel% -e ^"replace(^
-              tokenize(^
-                system('%ffmpeg:"=% -version'),^
-                '\r\n'^
-              )[1],^
+              system('%ffmpeg:"=% -version'),^
               '(.+?) .+? (.+?) .+',^
-              '$1 $2'^
+              '$1 $2',^
+              's'^
             )^"
 ECHO.
 ECHO.
