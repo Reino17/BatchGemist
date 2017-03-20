@@ -3305,9 +3305,10 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                       'http://ida.omroep.nl/app.php/auth'
                     ^)/token
                   ^)
-                ^)//url ! extract(
+                ^)//url ! replace(
                   .^,
-                  '(.+type^=json^)'^,1
+                  'jsonp'^,
+                  'json'
                 ^) return
                 if (unparsed-text-available($x^)^) then
                   if (contains($x^,'m3u8'^)^) then
@@ -3376,31 +3377,31 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                       '-'^,
                       kwaliteit
                     ^)^,
-                    'url':x:request(
-                      {
-                        'data':url^,
-                        'method':'HEAD'^,
-                        'error-handling':'xxx^=accept'
-                      }
-                    ^)[some $x in ('200'^,'302'^) satisfies contains(headers[1]^,$x^)]/(
-                      if (ends-with(url^,'asf'^)^) then
-                        doc(url^)//@href
-                      else if (contains(url^,'content-ip'^)^) then
-                        x:request(
-                          {
-                            'post':serialize-json(
-                              [
-                                {
-                                  \^"file\^":url
-                                }
-                              ]
-                            ^)^,
-                            'url':'http://nos.nl/video/resolve/'
-                          }
-                        ^)//file
-                      else
-                        url
-                    ^)
+                  'url':x:request(
+                    {
+                      'data':url^,
+                      'method':'HEAD'^,
+                      'error-handling':'xxx^=accept'
+                    }
+                  ^)[some $x in ('200'^,'302'^) satisfies contains(headers[1]^,$x^)]/(
+                    if (ends-with(url^,'asf'^)^) then
+                      doc(url^)//@href
+                    else if (contains(url^,'content-ip'^)^) then
+                      x:request(
+                        {
+                          'post':serialize-json(
+                            [
+                              {
+                                \^"file\^":url
+                              }
+                            ]
+                          ^)^,
+                          'url':'http://nos.nl/video/resolve/'
+                        }
+                      ^)//file
+                    else
+                      url
+                  ^)
                 }[url]
               else
                 (^)
@@ -3751,16 +3752,16 @@ REM ============================================================================
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF "%v_url:youtu.be=%"=="%v_url%" (
 	IF NOT DEFINED duur (
-		FOR /F "delims=" %%A IN ('^"%ffmpeg% -i "%v_url%" 2^>^&1 ^| %xidel%
-		- -e ^"let $a:^=extract(
-		         $raw^,
-		         'Duration: (.+?^)^, start'^,1
-		       ^) return
-		       if ($a castable as time^) then (
-		         duur:^=substring-before($a^,'.'^)^,
-		         t:^=hours-from-time($a^)*3600+minutes-from-time($a^)*60+floor(seconds-from-time($a^)^)
-		       ^)
-		         else (^)^" --output-format^=cmd^"') DO %%A
+		FOR /F "delims=" %%A IN ('^"%xidel%
+		-e ^"let $a:^=extract(
+		      system('cmd /c %ffmpeg% -i \"%v_url%\" 2^>^&1'^)^,
+		      'Duration: (.+?^)^, start'^,1
+		    ^) return
+		    if ($a castable as time^) then (
+		      duur:^=substring-before($a^,'.'^)^,
+		      t:^=hours-from-time($a^)*3600+minutes-from-time($a^)*60+floor(seconds-from-time($a^)^)
+		    ^) else
+		      (^)^" --output-format^=cmd^"') DO %%A
 	)
 	IF DEFINED duur (
 		ECHO.
