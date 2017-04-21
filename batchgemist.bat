@@ -3362,7 +3362,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                 (^)^,
               if (medium!^='live' and streams^) then
                 let $b:^=(streams^)(^) return
-                $b/{
+                $b[not(contains(url^,'drm'^)^)]/{
                   'format':if (type^) then
                     concat(
                       'mp4-'^,
