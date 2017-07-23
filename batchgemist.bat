@@ -3473,40 +3473,43 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
             (material^)(^)/(
               duur:^=substring-before(duration^,'.'^)^,
               t:^=hours-from-time(duration^)*3600+minutes-from-time(duration^)*60+floor(seconds-from-time(duration^)^)^,
-              let $a:^=(.//ddr_timeframes^)(^)[model^='AVOD']/stop * dayTimeDuration('PT1S'^) + dateTime('1970-01-01T00:00:00'^)
-              let $b:^=$a - current-dateTime(^) return
-              tot:^=concat(
-                replace(
-                  $a^,
-                  '(\d+^)-(\d+^)-(\d+^)T(.+^)'^,
-                  '$3-$2-$1 $4'
-                ^)^,
-                ' (nog '^,
-                days-from-duration($b^) ! (
-                  if (.^=0^) then
-                    (^)
-                  else if (.^=1^) then
-                    .^|^|' dag en '
-                  else
-                    .^|^|' dagen en '
-                ^)^,
-                hours-from-duration($b^) ! (
-                  if (.^=0^) then
-                    (^)
-                  else
-                    .^|^|'u'
-                ^)^,
-                minutes-from-duration($b^) ! (
-                  if (.^=0^) then
-                    (^)
-                  else
-                    .^|^|'m'
-                ^)^,
-                floor(
-                  seconds-from-duration($b^)
-                ^)^,
-                's^)'
-              ^)
+              if ((.//ddr_timeframes^)(^)[model^='AVOD']/stop^) then
+                let $a:^=(.//ddr_timeframes^)(^)[model^='AVOD']/stop * dayTimeDuration('PT1S'^) + dateTime('1970-01-01T00:00:00'^)
+                let $b:^=$a - current-dateTime(^) return
+                tot:^=concat(
+                  replace(
+                    $a^,
+                    '(\d+^)-(\d+^)-(\d+^)T(.+^)'^,
+                    '$3-$2-$1 $4'
+                  ^)^,
+                  ' (nog '^,
+                  days-from-duration($b^) ! (
+                    if (.^=0^) then
+                      (^)
+                    else if (.^=1^) then
+                      .^|^|' dag en '
+                    else
+                      .^|^|' dagen en '
+                  ^)^,
+                  hours-from-duration($b^) ! (
+                    if (.^=0^) then
+                      (^)
+                    else
+                      .^|^|'u'
+                  ^)^,
+                  minutes-from-duration($b^) ! (
+                    if (.^=0^) then
+                      (^)
+                    else
+                      .^|^|'m'
+                  ^)^,
+                  floor(
+                    seconds-from-duration($b^)
+                  ^)^,
+                  's^)'
+                ^)
+              else
+                (^)
             ^)
           ^)^"
 -f ^"$json/(
