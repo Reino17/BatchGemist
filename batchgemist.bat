@@ -2,7 +2,6 @@
 CLS
 
 REM BatchGemist versie 1.6
-REM Copyright (C) 2017 Reino Wijnsma. Op dit script is de GNU GPLv3 Licentie van toepassing.
 REM 
 REM   Veranderingslogboek:
 REM     xx-xx-2017 v1.6:
@@ -131,7 +130,12 @@ REM       - Ondersteuning toegevoegd voor: Ketnet en 24Kitchen.
 REM       - RTVNoord-, RTVDrenthe- en RTVDrenthe_Live extractor vernieuwd.
 REM     29-09-2015 v1.0:
 REM       - Eerste versie.
+REM
+REM BatchGemist is geschreven door Reino Wijnsma en is terug te vinden op
+REM http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm.
+REM Copyright (C) 2017 Reino Wijnsma. Op dit script is de GNU GPLv3 Licentie van toepassing.
 
+SET ver=1.6-git
 REM Venster (buffer)grootte en kleur wijzigen (https://stackoverflow.com/a/13351373)
 MODE con: cols=100 lines=32
 COLOR 1f
@@ -139,7 +143,7 @@ FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
 	IF %%A.%%B LSS 6.1 (
 		FOR /F "tokens=3" %%A IN ('REG QUERY "HKLM\SOFTWARE\Microsoft\PowerShell\1" /v Install ^| FIND "Install"') DO (
 			IF NOT "%%A"=="0x1" (
-				TITLE BatchGemist 1.6-git
+				TITLE BatchGemist %ver%
 				ECHO Venster buffergrootte niet kunnen wijzigen, omdat PowerShell niet is ge‹nstalleerd.
 				ECHO PowerShell 2.0 voor Windows XP: https://www.microsoft.com/en-us/download/details.aspx?id=16818
 				ECHO PowerShell 2.0 voor Windows Vista x86: https://www.microsoft.com/en-us/download/details.aspx?id=9864
@@ -147,11 +151,11 @@ FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
 				ECHO.
 				ECHO.
 			) ELSE (
-				powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6-git';}"
+				powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist %ver%';}"
 			)
 		)
 	) ELSE (
-		powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6-git';}"
+		powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist %ver%';}"
 	)
 )
 
@@ -554,14 +558,14 @@ IF NOT "%url: =%"=="%url%" (
 	    ^)//ExternalId^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6-git" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%"
 	-e ^"uuid:^=extract(
 	      //div[@class^='videoContainer']//@src^,
 	      '^=(.+^)/'^,1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6-git" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%"
 	-e ^"uuid:^=//iframe/extract(
 	      @src^,
 	      'uuid^=(.+?^)/'^,1
@@ -2675,7 +2679,7 @@ IF NOT "%url: =%"=="%url%" (
 	            best:^=$a[last(^)]
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:dumpert.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist 1.6-git" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist %ver%" "%url%"
 	--xquery ^"let $a:^=json(
 	            if (//@data-files^) then
 	              binary-to-string(
@@ -4002,20 +4006,16 @@ REM ============================================================================
 
 :Versie
 ECHO.
-ECHO BatchGemist 1.6-git
-ECHO.
-ECHO http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm
-ECHO door Reino Wijnsma ^<rwijnsma@xs4all.nl^>
-ECHO.
+ECHO BatchGemist %ver%
 %xidel% -e ^"replace(^
               system('%xidel:"=% --version'),^
-              '(.+)\r\n\(.+?(\.\d+)\..+',^
+              '(.+)\r\n.+(\.\d+)\..+',^
               '$1$2',^
               's'^
             )^"
 %xidel% -e ^"replace(^
               system('%ffmpeg:"=% -version'),^
-              '(.+?) .+? (.+?) .+',^
+              '(.+?) (?:version )?([\w.-]+).+',^
               '$1 $2',^
               's'^
             )^"

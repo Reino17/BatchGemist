@@ -2,7 +2,6 @@
 CLS
 
 REM BatchGemist versie 1.6
-REM Copyright (C) 2017 Reino Wijnsma. Op dit script is de GNU GPLv3 Licentie van toepassing.
 REM 
 REM   Veranderingslogboek:
 REM     xx-xx-2017 v1.6:
@@ -131,7 +130,12 @@ REM       - Ondersteuning toegevoegd voor: Ketnet en 24Kitchen.
 REM       - RTVNoord-, RTVDrenthe- en RTVDrenthe_Live extractor vernieuwd.
 REM     29-09-2015 v1.0:
 REM       - Eerste versie.
+REM
+REM BatchGemist is geschreven door Reino Wijnsma en is terug te vinden op
+REM http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm.
+REM Copyright (C) 2017 Reino Wijnsma. Op dit script is de GNU GPLv3 Licentie van toepassing.
 
+SET ver=1.6-git
 REM Venster (buffer)grootte en kleur wijzigen (https://stackoverflow.com/a/13351373)
 MODE con: cols=100 lines=32
 COLOR 1f
@@ -139,7 +143,7 @@ FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
 	IF %%A.%%B LSS 6.1 (
 		FOR /F "tokens=3" %%A IN ('REG QUERY "HKLM\SOFTWARE\Microsoft\PowerShell\1" /v Install ^| FIND "Install"') DO (
 			IF NOT "%%A"=="0x1" (
-				TITLE BatchGemist 1.6-git
+				TITLE BatchGemist %ver%
 				ECHO Venster buffergrootte niet kunnen wijzigen, omdat PowerShell niet is ge‹nstalleerd.
 				ECHO PowerShell 2.0 voor Windows XP: https://www.microsoft.com/en-us/download/details.aspx?id=16818
 				ECHO PowerShell 2.0 voor Windows Vista x86: https://www.microsoft.com/en-us/download/details.aspx?id=9864
@@ -147,11 +151,11 @@ FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
 				ECHO.
 				ECHO.
 			) ELSE (
-				powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6-git';}"
+				powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist %ver%';}"
 			)
 		)
 	) ELSE (
-		powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist 1.6-git';}"
+		powershell -command "&{$H=get-host;$W=$H.ui.rawui;$B=$W.buffersize;$B.width=100;$B.height=1024;$W.buffersize=$B;$W.windowtitle='BatchGemist %ver%';}"
 	)
 )
 
@@ -248,10 +252,10 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=json(concat('http://rtl.nl/api/v3/item/',extract(\"%url%\",'.+/((\w+-){4}[^-]+)',1)))//ExternalId" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6-git" "%url%" -e "uuid:=extract(//div[@class='videoContainer']//@src,'=(.+)/',1)" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "uuid:=extract(//div[@class='videoContainer']//@src,'=(.+)/',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6-git" "%url%" -e "uuid:=//iframe/extract(@src,'uuid=(.+?)/',1)[.]" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "uuid:=//iframe/extract(@src,'uuid=(.+?)/',1)[.]" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:kijk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -f "replace($url,'embed','www')" -f "replace(replace(parse-html('<html>'||substring-after($raw,'<![endif]>'))//meta[@name='video_src']/@content,'federated_f9','htmlFederated'),'videoId','@videoPlayer')" --xquery "json(extract(//body,'experienceJSON = (.+\});',1))/(if (.//mediaDTO) then .//mediaDTO/(name:=concat(if (customFields/sbs_station='veronicatv') then 'Veronica' else upper-case(customFields/sbs_station),' - ',displayName,replace(creationDate div 1000 * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),json:=if ((renditions)()[size=0]) then [let $a:=(renditions)()[size=0]/defaultURL return ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}),json(concat('http://hbb.sbs6.nl/backend/veamerapi/index/method/video/brightCoveId/',id))/(videos)() ! {'format':replace(.,'.+-(\d+).*\.(.+)','$2-$1'),'url':.}] else [(renditions)()/{'format':concat('mp4_',encodingRate idiv 1000),'url':defaultURL}],let $b:=(for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as int]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ())" --output-encoding^=oem --output-format^=cmd^"') DO %%A
@@ -310,7 +314,7 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:24kitchen.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "name:=concat('24Kitchen - ',//h1[@class='fn title'])" -f "extract($raw,'tp:releaseUrl=\"(.+^)\"',1)" --xquery "json:=[//video/{'format':concat('mp4-',@system-bitrate idiv 1000),'url':@src}],let $a:=for $x in $json()/format order by $x return $x return (formats:=join($a,', '),best:=$a[last()])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:dumpert.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist 1.6-git" "%url%" --xquery "let $a:=json(if (//@data-files) then binary-to-string(base64Binary(//div/@data-files)) else //script/extract(.,'(\{.+\}),',1)[.]) return if ($a/embed) then v_url:=replace($a/embed,'youtube:','https://youtu.be/') else (name:=concat('Dumpert - ',//meta[@name='title']/@content),json:=[$a()[.!='still'] ! {'format':.,'url':$a(.)}],let $b:=(for $x in $json()[format!='720p']/format order by $x return $x,$json()[format='720p']/format) return (formats:=join($b,', '),best:=$b[last()]))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist %ver%" "%url%" --xquery "let $a:=json(if (//@data-files) then binary-to-string(base64Binary(//div/@data-files)) else //script/extract(.,'(\{.+\}),',1)[.]) return if ($a/embed) then v_url:=replace($a/embed,'youtube:','https://youtu.be/') else (name:=concat('Dumpert - ',//meta[@name='title']/@content),json:=[$a()[.!='still'] ! {'format':.,'url':$a(.)}],let $b:=(for $x in $json()[format!='720p']/format order by $x return $x,$json()[format='720p']/format) return (formats:=join($b,', '),best:=$b[last()]))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:comedycentral.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "let $a:=if (count(//@data-mrss)=1) then concat(//h1,' - ',(//h2)[1]) else //li[contains(a/@href,extract($url,'.+=(.+)|.+/(\d+)',(1,2))[.])] ! (if (@data-franchise) then concat(@data-franchise,' - ',a/@title) else replace(@data-title,':','')) return doc(if (count(//@data-mrss)=1) then //@data-mrss else //li[contains(a/@href,extract($url,'.+=(.+)|.+/(\d+)',(1,2))[.])]/@data-mrss)/(name:=concat('Comedy Central - ',$a,replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),doc(//media:content/@url)/(if (//rendition) then (json:=[//rendition/{'format':concat('mp4-',@bitrate),'url':src}],formats:=join($json()/format,', '),best:=$json()[last()]/format) else ()))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nl.funnyclips.cc=%"=="%url%" (
@@ -609,13 +613,9 @@ REM ============================================================================
 
 :Versie
 ECHO.
-ECHO BatchGemist 1.6-git
-ECHO.
-ECHO http://rwijnsma.home.xs4all.nl/uitzendinggemist/batchgemist.htm
-ECHO door Reino Wijnsma ^<rwijnsma@xs4all.nl^>
-ECHO.
-%xidel% -e "replace(system('%xidel:"=% --version'),'(.+)\r\n\(.+?(\.\d+)\..+','$1$2','s')"
-%xidel% -e "replace(system('%ffmpeg:"=% -version'),'(.+?) .+? (.+?) .+','$1 $2','s')"
+ECHO BatchGemist %ver%
+%xidel% -e "replace(system('%xidel:"=% --version'),'(.+)\r\n.+(\.\d+)\..+','$1$2','s')"
+%xidel% -e "replace(system('%ffmpeg:"=% -version'),'(.+?) (?:version )?([\w.-]+).+','$1 $2','s')"
 ECHO.
 ECHO.
 GOTO Input
