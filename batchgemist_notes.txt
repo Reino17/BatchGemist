@@ -15,7 +15,7 @@ videofragment in meerdere formaten, met voor het formaat met de hoogste resoluti
 [{"formaat": "h264", "kwaliteit": 2, "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/640x360_1000.m4v"}, {"formaat": "h264", "kwaliteit": 1, "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/320x180_180.m4v"}, {"type": "h264", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/854x480_1500.m4v"}]
 
 http://www.npo.nl/slimmer-in-een-minuut-sociale-robots/20-10-2016/WO_NPO_5486659
-videofragment in Ã©Ã©n formaat met 'uri-decoded' videolink, die dus zonder '%20' niet werkt:
+videofragment in één formaat met 'uri-decoded' videolink, die dus zonder '%20' niet werkt:
 [{"formaat": "h264", "kwaliteit": 3, "url": "http://download.omroep.nl/portal/NPO/NPO3/Vanessa 1 minuut.mp4"}]
 
 http://www.npo.nl/escaperoom-8-jill/21-10-2016/WO_KN_5639189
@@ -23,7 +23,7 @@ videofragment in meerdere formaten, maar welke onbeschikbaar is ('HTTP/1.1 404 N
 [{"formaat": "h264", "kwaliteit": 3, "url": "http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_high.mp4"}, {"formaat": "h264", "kwaliteit": 2, "url": "http://download.omroep.nl/ncrv/video/zapplive_zapplive_escaperoom_jill_video_low.mp4"}]
 
 http://www.npo.nl/reacties-binnenhof/10-11-2016/WO_NOS_5947382
-videofragment in Ã©Ã©n formaat met een in eerste instantie al herleide url, die dus niet werkt:
+videofragment in één formaat met een in eerste instantie al herleide url, die dus niet werkt:
 [{"formaat": "h264", "kwaliteit": 3, "url": "http://content1a.omroep.nl/urishieldv2/l27m79eb57e8082db2910058243e52000000.cb4aa61336292e4528b6440a973fdecc/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4"}]
 de NPO heeft het in de tussentijd gecorrigeerd, want deze werkt wel:
 [{"formaat": "h264", "kwaliteit": 3, "url": "http://video.omroep.nl/ntr/educatie/npofocus/video/reacties_binnenhof_2001_web_20161103.mp4"}]
@@ -33,7 +33,7 @@ http://www.npo.nl/willem-wever/14-01-2006/NCRV_1210567
 [{"formaat": "wmv", "kwaliteit": 2, "url": "http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/bb.20060114.asf"}, {"formaat": "wmv", "kwaliteit": 1, "url": "http://cgi.omroep.nl/cgi-bin/streams?/tv/ncrv/willemwever/sb.20060114.asf"}, {"formaat": "h264", "kwaliteit": 2, "url": "http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4"}]
 
 http://www.npo.nl/zigeunermuziek-doet-pijn/21-07-2010/WO_VPRO_043833
-'Windows Media' videostream in Ã©Ã©n formaat (zeldzaam):
+'Windows Media' videostream in één formaat (zeldzaam):
 [{"formaat": "wmv", "kwaliteit": 2, "url": "http://cgi.omroep.nl/cgi-bin/streams?/vpro/39594888/windowsmedia.asf"}]
 
 -------------------------------------------------------------------------------------------------------------------------------
@@ -946,7 +946,7 @@ name := VTM NIEUWS - Rechters snoeihard na uitspraken De Wever (10122016)
 v_url := http://flvpd.vtm.be/videocms/nieuws/2016/12/10/201612101312391010034065084005056B7305C0000004916B00000D0F034975.mp4
 
 xidel-0.9.6.exe -s --color=never "http://nieuws.vtm.be/politiek/217669-de-wever-haalt-uit-naar-rechters" --xquery "..."
-json := [{"1e": {"name": "VTM NIEUWS - De Wever haalt uit naar rechters (09122016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/12/09/201612091914374010034065084005056B7305C0000004916B00000D0F034130.mp4"}}, {"2e": {"name": "VTM NIEUWS - Video: Theo Francken stapt naar Cassatie (08122016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/12/08/201612081921518010034065084005056B7305C0000004916B00000D0F032052.mp4"}}, {"3e": {"name": "VTM NIEUWS - Video: BelgiÃ« betaalt dwangsom voor Syrische familie (26102016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/10/26/201610261943566010034065084005056B7305C0000005076B00000D0F089298.mp4"}}, {"4e": {"name": "VTM NIEUWS - Video: Francken in beroep na heisa rond dwangsom (27102016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/10/27/201610271318187010034065084005056B7305C0000005076B00000D0F090649.mp4"}}]
+json := [{"1e": {"name": "VTM NIEUWS - De Wever haalt uit naar rechters (09122016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/12/09/201612091914374010034065084005056B7305C0000004916B00000D0F034130.mp4"}}, {"2e": {"name": "VTM NIEUWS - Video: Theo Francken stapt naar Cassatie (08122016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/12/08/201612081921518010034065084005056B7305C0000004916B00000D0F032052.mp4"}}, {"3e": {"name": "VTM NIEUWS - Video: België betaalt dwangsom voor Syrische familie (26102016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/10/26/201610261943566010034065084005056B7305C0000005076B00000D0F089298.mp4"}}, {"4e": {"name": "VTM NIEUWS - Video: Francken in beroep na heisa rond dwangsom (27102016)", "url": "http://flvpd.vtm.be/videocms/nieuws/2016/10/27/201610271318187010034065084005056B7305C0000005076B00000D0F090649.mp4"}}]
 videos := 1e, 2e, 3e, 4e
 
 --xquery "let $a:=concat(
@@ -1204,7 +1204,7 @@ En in lenigheid zijn ze hun grote neef zeker de baas.
 
 2
 00:00:38,005 --> 00:00:44,000
-Deze rÃ¶ntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
+Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
 
 3
 00:00:44,005 --> 00:00:47,004
@@ -1214,7 +1214,7 @@ en leniger is dan die machtige roofdieren.
 ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 642 -t 14 "VPWON_1269922-frag.srt"
 1
 00:00:03,014 --> 00:00:09,009
-Deze rÃ¶ntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
+Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
 
 2
 00:00:09,014 --> 00:00:12,013
@@ -1224,7 +1224,7 @@ en leniger is dan die machtige roofdieren.
 ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 630 -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 12 -t 14 "VPWON_1269922-frag.srt"
 1
 00:00:03,014 --> 00:00:09,009
-Deze rÃ¶ntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
+Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
 
 2
 00:00:09,014 --> 00:00:12,013
@@ -1233,19 +1233,19 @@ en leniger is dan die machtige roofdieren.
 --------------------------------------------------------------------------------------------------------------------------------
 
 ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://e.omroep.nl/tt888/VPWON_1269922" -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922-frag.mp4"
-Met --ss 642 vÃ³Ã³r de eerste input krijg je wel het juiste videofragment, maar de ondertiteling wordt niks mee gedaan en start vanaf het begin.
+Met --ss 642 vóór de eerste input krijg je wel het juiste videofragment, maar de ondertiteling wordt niks mee gedaan en start vanaf het begin.
 
 ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -ss 642 -i "http://e.omroep.nl/tt888/VPWON_1269922" -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922-frag.mp4"
-Met -ss 642 vÃ³Ã³r elke input krijg je:
+Met -ss 642 vóór elke input krijg je:
 [mp4 @ 0373e180] Application provided duration: -34986 / timestamp: 9014 is out of range for mov/mp4 format
 [mp4 @ 0373e180] pts has no value
-Je krijgt wel het juiste videofragment, maar de tijdsduur klopt niks van. De ondertiteling loopt wel synchroon, maar toch gaat ook hier iets mis, want de regel vÃ³Ã³r #1 (#86 in de hele video) is vanaf het begin van het videofragment in beeld.
+Je krijgt wel het juiste videofragment, maar de tijdsduur klopt niks van. De ondertiteling loopt wel synchroon, maar toch gaat ook hier iets mis, want de regel vóór #1 (#86 in de hele video) is vanaf het begin van het videofragment in beeld.
 
 ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 642 -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922_url-frag.mp4"
-Met -ss 642 nÃ¡ de laatste input krijg je het juiste videofragment Ã©n ondertiteling die synchroon loopt, maar omdat er nu nauwkeurig gezocht moet worden, kost het enige tijd voordat 00:10:42 bereikt is. Niet optimaal dus.
+Met -ss 642 ná de laatste input krijg je het juiste videofragment én ondertiteling die synchroon loopt, maar omdat er nu nauwkeurig gezocht moet worden, kost het enige tijd voordat 00:10:42 bereikt is. Niet optimaal dus.
 
 ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 630 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -ss 630 -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 12 -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922_url-frag.mp4"
-Met -ss 630 vÃ³Ã³r elke input Ã©n -ss 12 nÃ¡ de laatste input krijg je het juiste videofragment Ã©n ondertiteling die synchroon loopt.
+Met -ss 630 vóór elke input én -ss 12 ná de laatste input krijg je het juiste videofragment én ondertiteling die synchroon loopt.
 Er wordt eerst snel gezocht naar 00:10:30 en daarna nauwkeurig naar 00:10:42. Hierdoor gaat het dus ook lekker snel.
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1263,7 +1263,7 @@ Ondertitelingstreams in Matroska daarentegen zijn voor mijn smart tv (en voor de
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-Nu moet de (ingevoerde) begintijd opgesplitst worden in een voor FFMpeg -ss parameter voor vÃ³Ã³r de input en een voor nÃ¡ de input.
+Nu moet de (ingevoerde) begintijd opgesplitst worden in een voor FFMpeg -ss parameter voor vóór de input en een voor ná de input.
 
 Invoer al dan niet converteren naar tijd en d.m.v. de 'from-time'-functies ontleden:
 xidel-0.9.6.exe -s --color=never -e "let $a:='642' return let $a:=if ($a castable as time) then $a else $a * dayTimeDuration('PT1S') + time('00:00:00') return (ss1:=hours-from-time($a)*3600+minutes-from-time($a)*60,ss2:=seconds-from-time($a))"
@@ -1299,7 +1299,7 @@ xidel-0.9.6.exe ... '00:01:00' ... return ((hours-from-time($a)*3600+minutes-fro
 xidel-0.9.6.exe ... '00:01:00' ... return (($a[1]*3600+$a[2]*60) ! (if (.=0) then () else ss1:=.),ss2:=$a[3])"
 xidel-0.9.6.exe ... '00:01:00' ... return (if ($a<60) then () else ss1:=$a - ($a mod 60),ss2:=$a mod 60)"
 ss1 := 60
-ss2 := 00		// DEZE zou dus juist 60 moeten zijn voor de -ss nÃ¡ de input
+ss2 := 00		// DEZE zou dus juist 60 moeten zijn voor de -ss ná de input
 
 xidel-0.9.6.exe ... '00:01:00' ... return if (seconds-from-time($a)=0) then (ss1:=hours-from-time($a)*3600+minutes-from-time($a)*60-60,ss2:=60) else ((hours-from-time($a)*3600+minutes-from-time($a)*60) ! (if (.=0) then () else ss1:=.),ss2:=seconds-from-time($a))"
 xidel-0.9.6.exe ... '00:01:00' ... return if (($a[2]*60+$a[3]) mod 60=0) then (ss1:=$a[1]*3600+$a[2]*60-60,ss2:=60) else (($a[1]*3600+$a[2]*60) ! (if (.=0) then () else ss1:=.),ss2:=$a[3])"
@@ -1339,7 +1339,7 @@ xidel-0.9.6.exe ... '01:00:00' ... return if ($a mod 30=0) then (if ($a=30) then
 ss1 := 3570
 ss2 := 30
 
-De laatste methode is duidelijk de kortste en efficiÃ«ntste, helemaal als er voor deze laatste stap geen extra code aan toegevoegd hoeft te worden.
+De laatste methode is duidelijk de kortste en efficiëntste, helemaal als er voor deze laatste stap geen extra code aan toegevoegd hoeft te worden.
 
 -e "let $a:='01:00:00' return
     let $a:=if ($a castable as time) then
@@ -1415,7 +1415,7 @@ false
 xidel-0.9.6.exe -s --color=never -e "unparsed-text-available('http://e.omroep.nl/tt888/POW_00942206','LATIN1')"
 true
 
-In dit geval is -sub_charenc CP1252 nodig voor FFMpeg, maar ondanks dat gaat het hier om een coderingsfout bij de NPO, omdat 'MÃ¼nchen' niet goed wordt weergegeven:
+In dit geval is -sub_charenc CP1252 nodig voor FFMpeg, maar ondanks dat gaat het hier om een coderingsfout bij de NPO, omdat 'München' niet goed wordt weergegeven:
 xidel-0.9.6.exe -s --color=never -e "unparsed-text-lines('http://e.omroep.nl/tt888/POW_00942206','LATIN1')[9]"
 Op de veiligheidsconferentie in MEunchen klinkt duidelijke taal over het Oekraiense conflict.
 
@@ -1424,7 +1424,7 @@ true
 
 Hier is uiteraard geen -sub_charenc CP1252 nodig:
 xidel-0.9.6.exe -s --color=never -e "unparsed-text-lines('http://e.omroep.nl/tt888/VPWON_1269922')[349]"
-Deze rÃ¶ntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
+Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
 
 --------------------------------------------------------------------------------------------------------------------------------
 
@@ -1652,7 +1652,7 @@ xidel-0.9.6.exe -s --color=never ^
        ss2:=$a mod 30 ^
      )^"
 
-Het einde van elke regel moet ge-escaped worden met een caret. Als elke opeenvolgende regel aan het begin begint (zoals de 2e regel hierboven), dan moet er een spatie vÃ³Ã³r de laatste caret.
+Het einde van elke regel moet ge-escaped worden met een caret. Als elke opeenvolgende regel aan het begin begint (zoals de 2e regel hierboven), dan moet er een spatie vóór de laatste caret.
 Ook < en " moeten hier ge-escaped worden.
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -1683,7 +1683,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% -s --color^=never
 Ik dacht altijd dat het in een for-loop nooit mogelijk was, maar blijkbaar toch wel. :)
 Het escapen van elke regel is hier niet nodig, maar die van alle escape-characters wel! Hier zijn dat " = ) , en <
 
-De Xidel commando wordt nog steeds ontleed als Ã©Ã©n lange regel, waardoor de limiet van 8192 tekens ook hier van kracht is.
+De Xidel commando wordt nog steeds ontleed als één lange regel, waardoor de limiet van 8192 tekens ook hier van kracht is.
 
 --------------------------------------------------------------------------------------------------------------------------------
 
@@ -1692,7 +1692,7 @@ xidel-0.9.6.exe -s --color=never -e "file:read-text-lines('batchgemist-1.52_note
 
 Officieel zijn dit de escape-characters: [^&<>|",;()=], maar...
 - Een ^ vooraan moet worden ge-escaped.
-- De " moeten worden ge-escaped, maar ook verdubbeld, omdat Ã©Ã©n " in Batch problemen geeft.
+- De " moeten worden ge-escaped, maar ook verdubbeld, omdat één " in Batch problemen geeft.
 - De ( kan achterwege gelaten worden, omdat het escapen van een ( in een for-loop in Batch, i.t.t. een ), niet noodzakelijk is.
 
 I.p.v. de " te moeten verdubbelen, kan ook xquery gebruikt worden (denk wel om de eerste & ):
@@ -1853,7 +1853,7 @@ formats := mp4-laag, mp4-middel, mp4-hoog, meta, 819, 1024, 1536
 best := 1536
 
 xidel-0.9.6.exe -s --color=never "http://www.omroepflevoland.nl/nieuws/138485/dronten-meerpaaldagen-een-grote-reunie" --xquery "..."
-json := [{"1e": {"name": "Omroep Flevoland - Meerpaaldagen: ''Een grote reÃ¼nie'' - Meerpaaldagen: ''Een grote reÃ¼nie'' (12082016)", "formats": [{"format": "meta", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/middel/160813_Meerpaaldagen_00000G1Z.mp4/playlist.m3u8"}, {"format": "1697", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/middel/160813_Meerpaaldagen_00000G1Z.mp4/chunklist_w321678006.m3u8"}, {"format": "mp4-laag", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/laag/160813_Meerpaaldagen_00000G1Z.mp4"}, {"format": "mp4-middel", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/middel/160813_Meerpaaldagen_00000G1Z.mp4"}, {"format": "mp4-hoog", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/hoog/160813_Meerpaaldagen_00000G1Z.mp4"}]}}, {"2e": {"name": "Omroep Flevoland - Meerpaaldagen: ''Een grote reÃ¼nie'' - Optreden op het Meerpaalplein (12082016)", "formats": [{"format": "meta", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/playlist.m3u8"}, {"format": "1536", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/chunklist_w1093632719_b1536000_t64SG9vZw==.m3u8"}, {"format": "1024", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/chunklist_w1093632719_b1024000_t64TWlkZGVs.m3u8"}, {"format": "819", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/chunklist_w1093632719_b819200_t64TGFhZw==.m3u8"}, {"format": "mp4-laag", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/laag/160813_meerpaaldagen_Int.mp4"}, {"format": "mp4-middel", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/middel/160813_meerpaaldagen_Int.mp4"}, {"format": "mp4-hoog", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/hoog/160813_meerpaaldagen_Int.mp4"}]}}]
+json := [{"1e": {"name": "Omroep Flevoland - Meerpaaldagen: ''Een grote reünie'' - Meerpaaldagen: ''Een grote reünie'' (12082016)", "formats": [{"format": "meta", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/middel/160813_Meerpaaldagen_00000G1Z.mp4/playlist.m3u8"}, {"format": "1697", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/middel/160813_Meerpaaldagen_00000G1Z.mp4/chunklist_w321678006.m3u8"}, {"format": "mp4-laag", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/laag/160813_Meerpaaldagen_00000G1Z.mp4"}, {"format": "mp4-middel", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/middel/160813_Meerpaaldagen_00000G1Z.mp4"}, {"format": "mp4-hoog", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/hoog/160813_Meerpaaldagen_00000G1Z.mp4"}]}}, {"2e": {"name": "Omroep Flevoland - Meerpaaldagen: ''Een grote reünie'' - Optreden op het Meerpaalplein (12082016)", "formats": [{"format": "meta", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/playlist.m3u8"}, {"format": "1536", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/chunklist_w1093632719_b1536000_t64SG9vZw==.m3u8"}, {"format": "1024", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/chunklist_w1093632719_b1024000_t64TWlkZGVs.m3u8"}, {"format": "819", "url": "http://videostream.flevolandstreaming.nl/vod/_definst_/ondemand/streams/transfer/160813_meerpaaldagen_Int.mp4.smil/chunklist_w1093632719_b819200_t64TGFhZw==.m3u8"}, {"format": "mp4-laag", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/laag/160813_meerpaaldagen_Int.mp4"}, {"format": "mp4-middel", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/middel/160813_meerpaaldagen_Int.mp4"}, {"format": "mp4-hoog", "url": "http://progressivestream.flevolandstreaming.nl/ondemand/streams/transfer/hoog/160813_meerpaaldagen_Int.mp4"}]}}]
 videos := 1e, 2e
 
 --xquery "let $a:=//div[@class='jwplayercontainer'] return

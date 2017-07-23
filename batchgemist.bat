@@ -1,7 +1,8 @@
 @ECHO off
 CLS
 
-REM BatchGemist versie 1.6 beta
+REM BatchGemist versie 1.6
+REM Copyright (C) 2017 Reino Wijnsma. Op dit script is de GNU GPLv3 Licentie van toepassing.
 REM 
 REM   Veranderingslogboek:
 REM     xx-xx-2017 v1.6:
@@ -32,7 +33,7 @@ REM         - Door betere tekencodering detectie in Xidel 0.9.4. is 'CHCP' overb
 REM         - Waar nodig extra 'ENDLOCAL'-commando's toegevoegd, omdat in een bepaalde situatie niet
 REM           alle variabelen waren gereset.
 REM       [Xidel queries]
-REM         - Queries geÃ¼pdatet in lijn met versie 0.9.4.
+REM         - Queries geüpdatet in lijn met versie 0.9.4.
 REM         - ALLE websites opnieuw nagelopen!
 REM         - Formaat selectie verbeterd: Bij iedere extractor is de volgorde van beschikbare
 REM           formaten nu eerst progressief en dan dynamisch. En per variant is de kwaliteit
@@ -45,7 +46,7 @@ REM           van de programma ID en eventueel de datum.
 REM         - NPO extractor: Sterk geoptimaliseerd en teruggebracht tot twee queries. Extra
 REM           beschikbaarheids controles toegevoegd. Alleen de beveiligde progressieve
 REM           videofragmenten geen nu nog door de resolver. 'Silverlight' videostream controle
-REM           voorheen onder :Formats nu geÃ¯ntegreerd.
+REM           voorheen onder :Formats nu geïntegreerd.
 REM         - rtlXL extractor: De bestandsnaamgeving combineert nu de originele datum en niet die
 REM           van de herhaling. Extra controle toegevoegd voor als de 720p progressieve videostream
 REM           niet beschikbaar is.
@@ -65,10 +66,10 @@ REM         - Nickelodeon: De bestandsnaamgeving combineert nu de originele datu
 REM           herhaling.
 REM         - Ketnet extractor: De bestandsnaamgeving combineert nu een datum.
 REM         - Disney extractor: Gerepareerd en samengevoegd. De bestandsnaamgeving combineert nu een
-REM           datum. Beschikbaarheids controle voorheen onder :Formats nu geÃ¯ntegreerd.
+REM           datum. Beschikbaarheids controle voorheen onder :Formats nu geïntegreerd.
 REM         - Cartoon Network extractor: De bestandsnaamgeving combineert nu een datum.
-REM           Beschikbaarheids controle voorheen onder :Formats nu geÃ¯ntegreerd.
-REM         - Dumpert extractor: Youtube-url controle voorheen onder :Formats nu geÃ¯ntegreerd.
+REM           Beschikbaarheids controle voorheen onder :Formats nu geïntegreerd.
+REM         - Dumpert extractor: Youtube-url controle voorheen onder :Formats nu geïntegreerd.
 REM         - Comedy Central extractor: Bestandsnaamgeving verbeterd.
 REM         - Funny Clips extractor: De bestandsnaamgeving combineert nu een datum.
 REM         - MTV extractor: Bestandsnaamgeving verbeterd.
@@ -83,14 +84,14 @@ REM       - Gerepareerd: rtlXL 720p progressieve videostream, niet meer werkende
 REM         videoclips extractor en naam video in Disney- en Cartoon Network extractor.
 REM       - :Download opgeschoond.
 REM     30-03-2016 v1.4:
-REM       - Xidel queries geÃ¼pdatet in lijn met versie 0.9.1.20160322.
+REM       - Xidel queries geüpdatet in lijn met versie 0.9.1.20160322.
 REM       - Disney extractor geoptimaliseerd en is nu af. Tijdelijke oplossing aan :Formats
 REM         toegevoegd voor het downloaden van de progressieve videostreams.
-REM         LET OP: voor het downloaden van de dynamische videostreams is FFMpeg nÃ¡ 16 maart nodig!
+REM         LET OP: voor het downloaden van de dynamische videostreams is FFMpeg ná 16 maart nodig!
 REM       - Ondersteuning toegevoegd voor: Cartoon Network.
 REM       - Samenvoeging programma-url controle NPO en NPOLive teniet gedaan en een aparte regel
 REM         voor de livestream van NPO 3 toegevoegd, omdat deze voor problemen bleef zorgen.
-REM         Hierdoor :NPO_meta en :NPOLive_meta ook geÃ¼pdatet.
+REM         Hierdoor :NPO_meta en :NPOLive_meta ook geüpdatet.
 REM       - NOS- en 101TV extractor geoptimaliseerd door beter inzicht in Xidel's mogelijkheden.
 REM       - NPO extractor geoptimaliseerd en, dankzij een nieuwe versie van Xidel, uitgebreid met
 REM         een extra beschikbaarheids controle. Ook procenttekens in gecodeerde video-urls worden
@@ -113,7 +114,7 @@ REM         ondersteund.
 REM       - Programma-url controle van NPO en NPOLive samengevoegd met prid-check, vanwege de
 REM         livestream van NPO 3, die als enige 'live' niet in de url heeft.
 REM       - Gerepareerd: Escape characters in video-urls van Collegerama TU Delft.
-REM       - De :Formats_xxx subroutines teruggebracht tot Ã©Ã©n grote.
+REM       - De :Formats_xxx subroutines teruggebracht tot één grote.
 REM       - Overzicht ondersteunde websites onder :Help ingekort.
 REM     15-11-2015 v1.2:
 REM       - Ondersteuning toegevoegd voor: NPO Doc, Eenvandaag, Telegraaf en Disney videoclips.
@@ -139,7 +140,7 @@ FOR /F "tokens=4,5 delims=[.XP " %%A IN ('VER') DO (
 		FOR /F "tokens=3" %%A IN ('REG QUERY "HKLM\SOFTWARE\Microsoft\PowerShell\1" /v Install ^| FIND "Install"') DO (
 			IF NOT "%%A"=="0x1" (
 				TITLE BatchGemist 1.6-git
-				ECHO Venster buffergrootte niet kunnen wijzigen, omdat PowerShell niet is geâ€¹nstalleerd.
+				ECHO Venster buffergrootte niet kunnen wijzigen, omdat PowerShell niet is ge‹nstalleerd.
 				ECHO PowerShell 2.0 voor Windows XP: https://www.microsoft.com/en-us/download/details.aspx?id=16818
 				ECHO PowerShell 2.0 voor Windows Vista x86: https://www.microsoft.com/en-us/download/details.aspx?id=9864
 				ECHO PowerShell 2.0 voor Windows Vista x64: https://www.microsoft.com/en-us/download/details.aspx?id=9239
@@ -223,7 +224,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"prid:^=extract(
 	      $url^,
-	      '.+/(.+\d+^)'^,
+	      '.+/(.+\d+^)'^,1
 	    ^)^,
 	    date:^=replace(
 	      $url^,
@@ -553,14 +554,14 @@ IF NOT "%url: =%"=="%url%" (
 	    ^)//ExternalId^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6 beta" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6-git" "%url%"
 	-e ^"uuid:^=extract(
 	      //div[@class^='videoContainer']//@src^,
 	      '^=(.+^)/'^,1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6 beta" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist 1.6-git" "%url%"
 	-e ^"uuid:^=//iframe/extract(
 	      @src^,
 	      'uuid^=(.+?^)/'^,1
@@ -2350,7 +2351,7 @@ IF NOT "%url: =%"=="%url%" (
 	              ^)
 	            else
 	              (^)
-	          ^) return
+	          ^)
 	          let $b:^=[
 	            {
 	              '1e':{
@@ -2674,7 +2675,7 @@ IF NOT "%url: =%"=="%url%" (
 	            best:^=$a[last(^)]
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:dumpert.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist 1.6 beta" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist 1.6-git" "%url%"
 	--xquery ^"let $a:^=json(
 	            if (//@data-files^) then
 	              binary-to-string(
@@ -4038,7 +4039,7 @@ ECHO       Download Xidel (versie 0.9.7.5391* of nieuwer) en plaats 'xidel.exe' 
 ECHO       batchscript, of wijzig de programma-map in dit script onder ":Check".
 ECHO       * https://sourceforge.net/projects/videlibri/files/Xidel/Xidel development/
 ECHO     - ffmpeg.exe (http://ffmpeg.zeranoe.com/builds)
-ECHO       Met de gegenereerde video-url als invoer zorgt FFMpeg ervoor dat de video efficiâ€°nt wordt
+ECHO       Met de gegenereerde video-url als invoer zorgt FFMpeg ervoor dat de video effici‰nt wordt
 ECHO       gedownload.
 ECHO       Download FFMpeg en plaats 'ffmpeg.exe' in dezelfde map als dit batchscript, of wijzig de
 ECHO       programma-map in dit script onder ":Check".
@@ -4067,17 +4068,17 @@ ECHO     cartoonnetwork.nl     foxsports.nl
 ECHO     24kitchen.nl          abhd.nl
 ECHO.
 ECHO   [Gebruik]
-ECHO     Surf naar â€šâ€šn van de ondersteunde websites en kopieer de programma-url van een gewenst
+ECHO     Surf naar ‚‚n van de ondersteunde websites en kopieer de programma-url van een gewenst
 ECHO     programma. Start dit batch-script en plak deze url d.m.v. rechtermuis-knop + plakken (Ctrl+V
 ECHO     werkt hier niet).
 ECHO     Voer 'radio' in voor een opsomming van alle NPO radiozenders en maak je keuze.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
-ECHO     Eâ€šn formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie. Voor dit
+ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie. Voor dit
 ECHO     formaat kun je gewoon op ENTER drukken. Het formaat 'meta' en de formaten met alleen een getal
 ECHO     zijn dynamische videostreams. De formaten die beginnen met 'mp4' zijn progressieve
 ECHO     videostreams.
-ECHO     Deze stap wordt overgeslagen als er maar â€šâ€šn formaat beschikbaar is.
+ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
 ECHO     Dan volgen een aantal keuzevragen, beginnend met 'Url achterhalen, of downloaden? [U/d]'.
 ECHO     De keuze met hoofdletter is voorgeselecteerd. Voor 'Url achterhalen' kun je dan gewoon
