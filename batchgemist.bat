@@ -207,31 +207,28 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF "%url%"=="radio" (
 	GOTO NPORadio
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//@data-prid" --output-format^=cmd^"') DO %%A
-	GOTO NPO
-) ELSE IF "%url%"=="http://www.npo.nl/npo3" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//@data-prid" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:npo.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
-	      $url^,
+	      '%url%'^,
 	      '.+/(.+\d+^)'^,1
 	    ^)^,
 	    date:^=replace(
-	      $url^,
+	      '%url%'^,
 	      '.+?(\d+^)-(\d+^)-(\d+^).+'^,
 	      '$1$2$3'
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:gemi.st=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
-	      $url^,
+	      '%url%'^,
 	      '.+/(.+\d+^)'^,1
 	    ^)^,
 	    date:^=replace(
-	      $url^,
+	      '%url%'^,
 	      '.+?(\d+^)-(\d+^)-(\d+^).+'^,
 	      '$1$2$3'
 	    ^)^" --output-format^=cmd^"') DO %%A
@@ -539,23 +536,26 @@ IF NOT "%url: =%"=="%url%" (
 	        ^)^,
 	        v_url:^=//file
 	      ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
-) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
-	FOR /F %%A IN ("%url%") DO SET "uuid=%%~nA"
+) ELSE IF NOT "%url:static.rtl.nl/embed=%"=="%url%" (
+	FOR /F "delims=" %%A IN ('^"%xidel%
+	-e ^"uuid:^=extract(
+	      '%url%'^,
+	      'uuid=([\w-]+^)'^,1
+	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
-) ELSE IF NOT "%url:rtl.nl/system/videoplayer=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%/','=(.+?)/',1)" --output-format^=cmd^"') DO %%A
+) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
+	FOR /F "delims=" %%A IN ('^"%xidel%
+	-e ^"uuid:^=extract(
+	      '%url%'^,
+	      'video/([\w-]+^)'^,1
+	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"uuid:^=json(
-	      concat(
-	        'http://rtl.nl/api/v3/item/'^,
-	        extract(
-	          \"%url%\"^,
-	          '.+/((\w+-^){4}[^^-]+^)'^,1
-	        ^)
-	      ^)
-	    ^)//ExternalId^" --output-format^=cmd^"') DO %%A
+	-e ^"uuid:^=extract(
+	      '%url%'^,
+	      'video/([\w-]+^)'^,1
+	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%"
