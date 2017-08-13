@@ -198,6 +198,7 @@ SET /P url=
 IF NOT DEFINED url GOTO :EOF
 IF /I "%url%"=="v" GOTO Versie
 IF /I "%url%"=="h" GOTO Help
+:Process
 IF NOT "%url: =%"=="%url%" (
 	ECHO.
 	ECHO Spaties in programma-url niet toegestaan.
@@ -233,6 +234,31 @@ IF NOT "%url: =%"=="%url%" (
 	      '$1$2$3'
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO NPO
+) ELSE IF NOT "%url:uitzendinggemist.net/aflevering=%"=="%url%" (
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --user-agent "BatchGemist %ver%"
+	-e ^"url:^=x:request(
+	      {
+	        'data':let $a:^=(
+	          //iframe[@class]/@src^,
+	          extract(
+	            //@onclick^,
+	            '(http.+?^)'''^,1
+	          ^)
+	        ^) return
+	        replace(
+	          $a^,
+	          '.+(?:/^|^=^)(.+^)'^,
+	          if (contains($a^,'npo'^)^) then
+	            'http://www.npo.nl/$1'
+	          else if (contains($a^,'rtl'^)^) then
+	            'http://www.rtl.nl/video/$1'
+	          else
+	            'http://www.kijk.nl/video/$1'
+	        ^)^,
+	        'method':'HEAD'
+	      }
+	    ^)/url^" --output-format^=cmd^"') DO %%A
+	GOTO Process
 ) ELSE IF NOT "%url:2doc.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"prid:^=(//@data-media-id^)[1]^,
@@ -3876,8 +3902,8 @@ IF "%v_url:youtu.be=%"=="%v_url%" (
 	IF NOT DEFINED duur (
 		FOR /F "delims=" %%A IN ('^"%xidel%
 		-e ^"let $a:^=extract(
-		      system('cmd /c %ffmpeg% -i \"%v_url%\" 2^>^&1'^)^,
-		      'Duration: (.+?^)^, start'^,1
+		      system('cmd /c %ffmpeg% -i "%v_url%" 2^>^&1'^)^,
+		      'Duration: (.+?^)^,'^,1
 		    ^) return
 		    if ($a castable as time^) then (
 		      duur:^=substring-before($a^,'.'^)^,
