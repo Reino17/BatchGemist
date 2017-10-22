@@ -164,6 +164,7 @@ REM ============================================================================
 :Check
 SET xidel="xidel.exe"
 SET ffmpeg="ffmpeg.exe"
+SET mpc=""
 
 SET check=
 IF NOT EXIST %xidel% (
@@ -342,8 +343,13 @@ IF NOT "%url: =%"=="%url%" (
 
 IF DEFINED json (
 	GOTO Formats
-) ELSE IF DEFINED v_url (
-	GOTO Task
+)
+IF DEFINED v_url (
+	IF NOT "%v_url:youtu.be=%"=="%v_url%" (
+		GOTO Render
+	) ELSE (
+		GOTO Select
+	)
 ) ELSE (
 	ECHO.
 	ECHO Video niet (meer^) beschikbaar.
@@ -361,7 +367,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%" --xquer
 IF DEFINED json (
 	GOTO Formats
 ) ELSE IF DEFINED v_url (
-	GOTO Task
+	GOTO Select
 ) ELSE (
 	ECHO.
 	ECHO Video nog niet, of niet meer beschikbaar.
@@ -419,7 +425,7 @@ IF DEFINED videos (
 )
 IF NOT DEFINED error (
 	IF DEFINED v_url (
-		GOTO Task
+		GOTO Select
 	)
 ) ELSE (
 	ECHO.
@@ -435,7 +441,7 @@ SET /P "format=Voer gewenst formaat in: [%best%] "
 IF NOT DEFINED format SET "format=%best%"
 FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - -e "if (matches('%formats%','^(.*\W)?%format%(\W.*)?$')) then v_url:=$json()[format='%format%']/url else ()" --output-format^=cmd') DO %%A
 IF DEFINED v_url (
-	GOTO Task
+	GOTO Select
 ) ELSE (
 	ECHO.
 	ECHO Ongeldig formaat.
@@ -446,32 +452,71 @@ IF DEFINED v_url (
 
 REM ================================================================================================
 
-:Task
-SETLOCAL ENABLEDELAYEDEXPANSION
-IF "%v_url:youtu.be=%"=="%v_url%" (
-	IF NOT DEFINED duur (
-		FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=extract(system('cmd /c %ffmpeg% -i "%v_url%" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then (duur:=substring-before($a,'.'),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+floor(seconds-from-time($a))) else ()" --output-format^=cmd^"') DO %%A
+:Select
+SETLOCAL DISABLEDELAYEDEXPANSION
+IF NOT DEFINED duur (
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=extract(system('cmd /c %ffmpeg% -i %v_url% 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then (duur:=substring-before($a,'.'),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+floor(seconds-from-time($a))) else ()" --output-format^=cmd^"') DO %%A
+)
+FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(normalize-space('%name%'),':','-'),'[<>/\\|?*]','')" --output-encoding^=oem^"') DO SET "name=%%A"
+ECHO.
+IF DEFINED duur (
+	ECHO Naam:       %name%
+	ECHO Tijdsduur:  %duur% (%t%%duur:~8,4%s^)
+	IF DEFINED ss (
+		ECHO Start:      %start% (%ss%s^)
+		ECHO Einde:      %eind% (%to%s^)
 	)
-	IF DEFINED duur (
-		ECHO.
-		ECHO Tijdsduur:  !duur! (!t!!duur:~8,4!s^)
-		IF DEFINED ss (
-			ECHO Start:      %start% (%ss%s^)
-			ECHO Einde:      %eind% (%to%s^)
-		)
-		IF DEFINED tot ECHO Gratis tot: %tot%
-	)
-	ECHO.
-	SET /P "task=Url achterhalen, of downloaden? [U/d] "
-	IF /I "!task!"=="d" GOTO Download
-
-	IF DEFINED to (
-		IF "%v_url:mms://=%"=="%v_url%" (
-			FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('%v_url%?start=',round(%ss1%+%ss2%),'^&end=',round(%to%))"^"') DO SET "v_url=%%A"
-		)
-	)
+	IF DEFINED tot ECHO Gratis tot: %tot%
+) ELSE (
+	ECHO Naam: %name%
 )
 
+ECHO.
+ECHO   1. Audio/video-url weergeven.
+ECHO   2. Audio/video downloaden.
+IF EXIST %mpc% (
+	ECHO   3. Audio/video openen met MPC-HC/BE.
+	ECHO   4. Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.
+)
+ECHO.
+SET /P "id=Voer keuze in: [1] "
+IF NOT DEFINED id (
+	GOTO Render
+) ELSE IF "%id%"=="1" (
+	GOTO Render
+) ELSE IF "%id%"=="2" (
+	GOTO Download
+) ELSE IF EXIST %mpc% (
+	IF "%id%"=="3" GOTO Play
+	IF "%id%"=="4" GOTO Play
+	ECHO.
+	ECHO Ongeldige keuze.
+	ECHO.
+	ENDLOCAL
+	GOTO Select
+) ELSE (
+	ECHO.
+	ECHO Ongeldige keuze.
+	ECHO.
+	ENDLOCAL
+	GOTO Select
+)
+
+ECHO.
+ECHO.
+ENDLOCAL
+ENDLOCAL
+ENDLOCAL
+GOTO Input
+
+REM ================================================================================================
+
+:Render
+IF DEFINED ss (
+	IF "%v_url:mms://=%"=="%v_url%" (
+		FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('%v_url%?start^=',round(%ss1%+%ss2%),'^&end^=',round(%to%))"^"') DO SET "v_url=%%A"
+	)
+)
 ECHO.
 ECHO Audio- of video-url:
 ECHO %v_url%
@@ -487,8 +532,41 @@ GOTO Input
 
 REM ================================================================================================
 
+:Play
+SETLOCAL ENABLEDELAYEDEXPANSION
+IF DEFINED ss (
+	IF "%v_url:mms://=%"=="%v_url%" (
+		IF "%id%"=="3" (
+			FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('?start=',round(%ss1%+%ss2%),'&end=',round(%to%))"^"') DO %mpc% "%v_url%%%A" /close
+		)
+		IF "%id%"=="4" %ffmpeg% -v error -ss %ss1% -i "%v_url%" -ss %ss2% -t %t% -c copy -f nut - | %mpc% - /close
+	)
+) ELSE IF DEFINED s_url (
+	ECHO.
+	SET /P "subs=Inclusief ondertiteling? [j/N] "
+	IF /I "!subs!"=="j" (
+		IF "%id%"=="3" %mpc% "%v_url%" /sub "%s_url%" /close
+		IF "%id%"=="4" %ffmpeg% -v error -i "%v_url%" -c copy -f nut - | %mpc% - /sub "%s_url%" /close
+	) ELSE (
+		IF "%id%"=="3" %mpc% "%v_url%" /close
+		IF "%id%"=="4" %ffmpeg% -v error -i "%v_url%" -c copy -f nut - | %mpc% - /close
+	)
+) ELSE (
+	IF "%id%"=="3" %mpc% "%v_url%" /close
+	IF "%id%"=="4" %ffmpeg% -v error -i "%v_url%" -c copy -f nut - | %mpc% - /close
+)
+ECHO.
+ECHO.
+ENDLOCAL
+ENDLOCAL
+ENDLOCAL
+ENDLOCAL
+GOTO Input
+
+REM ================================================================================================
+
 :Download
-SETLOCAL DISABLEDELAYEDEXPANSION
+IF NOT "%v_url:mms://=%"=="%v_url%" SET "v_url=%v_url:mms://=mmsh://%"
 ECHO.
 ECHO Doelmap: %~dp0
 SET /P "remap=Wijzigen? [J/n] "
@@ -508,13 +586,14 @@ FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 )
 
 ECHO.
-FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(replace(normalize-space('%name%'),':','-'),'\?','.'),'[<>/\\|?*^]','')" --output-encoding^=oem^"') DO SET "name=%%A"
 ECHO Bestandsnaam: %name%
 SET /P "rename=Wijzigen? [J/n] "
-IF /I NOT "%rename%"=="n" (
+IF /I "%rename%"=="n" (
+	SET "name=%name:^=%"
+) ELSE (
 	ECHO Nieuwe bestandsnaam:
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(replace(read(),':','-'),'\?','.'),'[<>/\\|?*^]','')" --output-encoding^=oem^"') DO SET "name=%%A"
-)
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(read(),':','-'),'[<>/\\|?*^]','')" --output-encoding^=oem^"') DO SET "name=%%A"
+) 
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF DEFINED s_url (
@@ -528,8 +607,6 @@ IF DEFINED s_url (
 		SET subs=
 	)
 )
-
-IF NOT "%v_url:mms://=%"=="%v_url%" SET "v_url=%v_url:mms://=mmsh://%"
 
 ECHO.
 IF DEFINED ss1 (
@@ -607,7 +684,6 @@ ENDLOCAL
 ENDLOCAL
 ENDLOCAL
 ENDLOCAL
-ENDLOCAL
 GOTO Input
 
 REM ================================================================================================
@@ -645,17 +721,24 @@ ECHO     - clip.exe (http://www.c3scripts.com/tutorials/msdos/clip.zip) [Windows
 ECHO       Clip kopieert de video-url naar het klembord. Vanaf Windows Vista wordt 'clip.exe' standaard
 ECHO       meegeleverd, dus dit is alleen voor Windows XP gebruikers.
 ECHO       Download Clip en plaats 'clip.exe' in de C:\WINDOWS\system32 map.
+ECHO     - mpc-hc.exe/mpc-be.exe (https://mpc-hc.org/downloads/, https://sourceforge.net/projects/mpcbe
+ECHO       /files/MPC-BE/) (optioneel)
+ECHO       Met Media Player Classic - Home Cinema / Black Edition kan een gegenereerde video-url
+ECHO       rechtstreeks geopend worden.
+ECHO       Download MPC-HC/BE, plaats 'mpc-hc.exe' of 'mpc-be.exe' in dezelfde map als dit batchscript
+ECHO       en voeg de programma-map toe in dit script onder ":Check".
 ECHO.
 ECHO   [Ondersteunde websites]
 ECHO     npo.nl                eenvandaag.nl         omropfryslan.nl           rtvutrecht.nl
+ECHO.
+PAUSE
+ECHO.
 ECHO     gemi.st               101.tv                rtvnoord.nl               omroepgelderland.nl
 ECHO     2doc.nl               rtlxl.nl              rtvdrenthe.nl             omroepwest.nl
 ECHO     anderetijden.nl       rtl.nl                rtvnh.nl                  rijnmond.nl
 ECHO     schooltv.nl           rtlnieuws.nl          omroepflevoland.nl        omroepzeeland.nl
 ECHO     willemwever.nl        rtlz.nl               rtvoost.nl                omroepbrabant.nl
 ECHO     nos.nl                kijk.nl               at5.nl                    l1.nl
-ECHO.
-PAUSE
 ECHO.
 ECHO     telegraaf.nl          dumpert.nl            autojunk.nl
 ECHO     vtm.be                comedycentral.nl      tweakers.net
@@ -678,16 +761,17 @@ ECHO     zijn dynamische videostreams. De formaten die beginnen met 'mp4' zijn p
 ECHO     videostreams.
 ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
-ECHO     Dan volgen een aantal keuzevragen, beginnend met 'Url achterhalen, of downloaden? [U/d]'.
-ECHO     De keuze met hoofdletter is voorgeselecteerd. Voor 'Url achterhalen' kun je dan gewoon
-ECHO     op ENTER drukken. Voor 'downloaden' moet je wel 'd' invullen.
-ECHO     Voor de '[J/n]'-, of '[j/N]' vragen die dan volgen geldt precies hetzelfde. De keuze met
-ECHO     hoofdletter is voorgeselecteerd.
+ECHO     Vervolgens krijg je de keuze om de gegenereerde audio/video-url weer te geven, te downloaden
+ECHO.
+PAUSE
+ECHO.
+ECHO     en te openen met MPC-HC/BE (als je die hebt toegevoegd onder ":Check"). Optie 1 tussen blok-
+ECHO     haken is voorgeselecteerd. In dat geval kun je dan gewoon op ENTER drukken.
+ECHO     Voor de ja/nee-vragen die dan volgen geldt dit ook. De keuze met hoofdletter is voor-
+ECHO     geselecteerd. Voor 'ja' bij "[J/n]" kun je dan gewoon op ENTER drukken.
 ECHO.
 ECHO     Voer 'v' in voor de versie nummers van BatchGemist, Xidel en FFMpeg.
 ECHO     Druk op ENTER om BatchGemist af te sluiten.
-ECHO.
-PAUSE
 ECHO.
 ECHO.
 IF DEFINED check (
