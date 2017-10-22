@@ -478,57 +478,8 @@ IF NOT "%url: =%"=="%url%" (
 	            ^)
 	          else
 	            videos:^=join($json(^)(^)^,'^, '^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
-) ELSE IF NOT "%url:eenvandaag.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"prid:^=//script/extract(
-	            .^,
-	            'prid: \^"(.+^^^)\^"'^,1
-	          ^)[.]^,
-	          if (contains($url^,'broadcast'^)^) then
-	            (^)
-	          else (
-	            name:^=concat(
-	              'EenVandaag - '^,
-	              replace(
-	                //meta[@name^='twitter:title']/@content^,
-	                '[^&quot^;^&apos^;]'^,
-	                ''''''
-	              ^)^,
-	              replace(
-	                //meta[@name^='twitter:player:stream']/@content^,
-	                '.+std\.(\d{4}^)(\d{2}^)(\d{2}^).+'^,
-	                ' ($3$2$1^)'
-	              ^)
-	            ^)^,
-	            //script/json(
-	              extract(
-	                .^,
-	                'options: (.+?\}^)'^,1^,'s'
-	              ^)
-	            ^)/(
-	              t:^=endAt - startAt^,
-	              duur:^=$t * dayTimeDuration('PT1S'^) + time('00:00:00'^)^,
-	              startAt ! (
-	                ss:^=.^,
-	                start:^=. * dayTimeDuration('PT1S'^) + time('00:00:00'^)^,
-	                if (. mod 30^=0^) then (
-	                  if (.^=30^) then
-	                    (^)
-	                  else
-	                    ss1:^=. - 30^,
-	                  ss2:^=30
-	                ^) else (
-	                  if (.^<30^) then
-	                    (^)
-	                  else
-	                    ss1:^=. - (. mod 30^)^,
-	                  ss2:^=. mod 30
-	                ^)
-	              ^)^,
-	              to:^=endAt^,
-	              eind:^=$to * dayTimeDuration('PT1S'^) + time('00:00:00'^)
-	            ^)^
-	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+) ELSE IF NOT "%url:eenvandaag.avrotros.nl=%"=="%url%" (
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=json(//@data-at-player)/video_id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:www.101.tv/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
