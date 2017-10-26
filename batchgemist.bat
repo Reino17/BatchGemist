@@ -618,9 +618,10 @@ IF NOT "%url: =%"=="%url%" (
 	                  //@data-account^,
 	                  '/videos/'^,
 	                  //@data-video-id
-	                ^)
+	                ^)^,
+	                'error-handling':'xxx^=accept'
 	              }
-	            ^)/json
+	            ^)/json[not(.//error_code^)]
 	            let $b:^=json(embed_api_url^)[videoId] return (
 	              if ($a^) then
 	                $a/(
@@ -3235,9 +3236,8 @@ IF NOT "%url: =%"=="%url%" (
 
 IF DEFINED json (
 	GOTO Formats
-)
-IF DEFINED v_url (
-	IF NOT "%v_url:youtu.be=%"=="%v_url%" (
+) ELSE IF DEFINED v_url (
+	IF NOT "%%v_url:youtu.be=%%"=="%%v_url%%" (
 		GOTO Render
 	) ELSE (
 		GOTO Select

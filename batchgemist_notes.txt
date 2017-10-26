@@ -3178,7 +3178,7 @@ v_url := mms://hurley.omroep.nl/public/ug-od/ms5/14/media/vpro/39594888/windowsm
                 (),
               if (medium!='live' and streams) then
                 let $b:=(streams)() return
-                $b[starts-with(url,'http')]/{/{
+                $b[starts-with(url,'http')]/{
                   'format':if (type) then
                     concat(
                       'mp4-',
@@ -3467,6 +3467,7 @@ t := 471
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/feb2b1964a18164fb9ccd38f2ac78ac322670f58]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1
 
@@ -3511,6 +3512,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
 
 xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1','.+videos/(\w+).+','http://api.kijk.nl/v1/default/entitlement/$1'))/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ())"
 31-03-2020 05:55:00 (nog 960 dagen en 16u4m27s)
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 -- {"embed_video_url": "//embed.kijk.nl/?video=w7ZW52xLgL5"} (brightcove)
@@ -3707,6 +3709,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
     "url": "https://l3c.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402112340719592-bg-1200.mp4"
   }
 ]
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 -- {"embed_api_url": "http://embed.kijk.nl/api/video/w7ZW52xLgL5?id=kijkapp"} (ericsson)
@@ -3808,6 +3811,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_9/index.m3u8"
   }
 ]
+
 --------------------------------------------------------------------------------------------------------------------------------
 
 http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-laat-12-augustus-2017
@@ -3849,6 +3853,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
   "embed_api_url": "http://embed.kijk.nl/api/video/gcuLMlCxPtL?id=kijkapp",
   "hasDRM": false
 }
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 -- {"embed_video_url": "//embed.kijk.nl/?video=gcuLMlCxPtL"} (brightcove)
@@ -3858,6 +3863,7 @@ name := SBS6 - Hart van Nederland - Laat (12082017)
 t := 1240
 duur := 00:20:40
 json := [{"format": "meta", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232836767844-hls-main.m3u8"}, {"format": "610", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r1/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232455767844-hls-350.m3u8"}, {"format": "928", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r2/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231245767844-hls-650.m3u8"}, {"format": "1288", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r3/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232718767844-hls-900.m3u8"}, {"format": "1643", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232544767844-hls-1200.m3u8"}, {"format": "2179", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r8/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232640767844-hls-1885.m3u8"}, {"format": "mp4-2085", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232401767844-bg-1885.mp4"}, {"format": "mp4-1116", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231808767844-bg-900.mp4"}, {"format": "mp4-866", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232038767844-bg-650.mp4"}, {"format": "mp4-1465", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231900767844-bg-1200.mp4"}, {"format": "mp4-450", "url": "https://l3c.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231618767844-bg-350.mp4"}]
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 -- {"embed_api_url": "http://embed.kijk.nl/api/video/gcuLMlCxPtL?id=kijkapp"} (ericsson)
@@ -3873,6 +3879,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
   "playlist": "https://embed.kijk.nl/api/playlist/.m3u8",
   [...]
 }
+
 --------------------------------------------------------------------------------------------------------------------------------
 
 http://www.kijk.nl/autoweek/autoweekspecials/videos/Zrlt5xCjHqHp/de-7-beste-driftautos (ericsson dynamisch videofragment)
@@ -3914,6 +3921,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
   "embed_api_url": "http://embed.kijk.nl/api/video/Zrlt5xCjHqHp?id=kijkapp",
   "hasDRM": false
 }
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 -- {"embed_video_url": "//embed.kijk.nl/?video=Zrlt5xCjHqHp"} (brightcove)
@@ -3924,6 +3932,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
 <script src="/js/82fdbb3.js"></script>
 <script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js" type="text/javascript"></script>
 <script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 -- {"embed_api_url": "http://embed.kijk.nl/api/video/Zrlt5xCjHqHp?id=kijkapp"} (ericsson)
@@ -3933,6 +3942,7 @@ name := AutoWeek Specials - De 7 beste driftauto's (12082017)
 t := 289
 duur := 00:04:49
 json := [{"format": "meta_hd", "url": "https://embed.kijk.nl/api/playlist/Zrlt5xCjHqHp-2_dbzyr6.m3u8?user_token=sSs2xTm3ppivJscO20HqojnBR&app_token=CgZzYW5vbWESFVpybHQ1eENqSHFIcC0yX2RienlyNhoLODAuMTAxLjQ5LjUiGXNTczJ4VG0zcHBpdkpzY08yMEhxb2puQlIoqtue3t0rMgcIAGgAoAEBOgRGVk9EQgNTQlNKFVpybHQ1eENqSHFIcC0yX2RienlyNg%3D%3D%7CCZsCRb6LDulF3Vnq3ZUzde1aeG3oa0C2N/G8bAJHFAg%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "316_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "500_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "900_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "1500_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "2468_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "4500_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "5750_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "7000_hd", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
+
 --------------------------------------------------------------------------------------------------------------------------------
 
 http://www.kijk.nl/sbs6/desmaakpolitie/videos/KxsFnNTV9Njv/het-is-weer-smerig-vies (brightcove progressief videofragment)
@@ -4077,6 +4087,7 @@ name := De Smaakpolitie - Het is weer smerig vies (21122012)
 t := 97
 duur := 00:01:37
 json := [{"format": "mp4-975", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048962019001_smerigvies.mp4"}, {"format": "mp4-287", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964412001_smerigvies.mp4"}, {"format": "mp4-1611", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964429001_smerigvies.mp4"}, {"format": "mp4-608", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964957001_smerigvies.mp4"}]
+
 --------------------------------------------------------------------------------------------------------------------------------
 
 http://www.kijk.nl/sbs9/topgear/videos/9dltVx6aK3kn/aflevering-1
@@ -4118,6 +4129,7 @@ xidel-0.9.7.5447-openssl.exe -s --color=never -e "json(replace('http://www.kijk.
   "embed_api_url": "http://embed.kijk.nl/api/video/9dltVx6aK3kn?id=kijkapp",
   "hasDRM": true									# Video met DRM en is dus niet af te spelen.
 }
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 -- {"embed_api_url": "http://embed.kijk.nl/api/video/9dltVx6aK3kn?id=kijkapp"} (ericsson)
@@ -4161,11 +4173,28 @@ Unable to open key file http://127.0.0.1:8080/key
 [hls,applehttp @ 04b1fee0] Opening 'crypto+https://vod-es-gf-prod-2.sbscdn.nl/prod/6/627234/vod_sbs_hd_mux_enc_2_4_9/0/seg-00001.ts' for reading
 [hls,applehttp @ 04b1fee0] Error when loading first segment 'https://vod-es-gf-prod-2.sbscdn.nl/prod/6/627234/vod_sbs_hd_mux_enc_2_4_9/0/seg-00001.ts'
 https://vod-es-gf-prod-2.sbscdn.nl/prod/6/627234/vod_sbs_hd_mux_enc_2_4_9/index.m3u8: Invalid data found when processing input
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+http://www.kijk.nl/sbs6/mensenkennis/videos/9Zb61du3kCD/aflevering-6 (brightcove, die toch niet beschikbaar blijkt te zijn)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "json(replace('http://www.kijk.nl/sbs6/mensenkennis/videos/9Zb61du3kCD/aflevering-6','.+videos/(\w+).+','http://api.kijk.nl/v1/default/entitlement/$1'))/playerInfo[not(hasDRM)]/doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':concat('Accept: application/json;pk=',extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1)),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id)})/json
+Error:
+Internet/HTTP Error: 403
+when talking to: https://edge.api.brightcove.com/playback/v1/accounts/585049245001/videos/5595305209001
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "json(replace('http://www.kijk.nl/sbs6/mensenkennis/videos/9Zb61du3kCD/aflevering-6','.+videos/(\w+).+','http://api.kijk.nl/v1/default/entitlement/$1'))/playerInfo[not(hasDRM)]/doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':concat('Accept: application/json;pk=',extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1)),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json
+[
+  {
+    "error_code": "VIDEO_NOT_PLAYABLE"
+  }
+]
+
 --------------------------------------------------------------------------------------------------------------------------------
 
 Alles samen, incl. $formats en $best
 
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(replace('http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1','.+videos/(\w+).+','http://api.kijk.nl/v1/default/entitlement/$1'))/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return tot:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':concat('Accept: application/json;pk=',extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1)),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id)})/json let $b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),' - ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,' - ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,' - ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duur:=$t * dayTimeDuration('PT1S') + time('00:00:00'),json:=[$a/(if (.//sbs_videotype='vod') then ({'format':'meta','url':(sources)()/src},tail(tokenize(unparsed-text((sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a/(sources)()/src),extract(.,'(.+m3u8)',1))},(sources)()[container='MP4']/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))}) else (sources)()[src]/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':src}),$b/({'format':'meta_hd','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000)||'_hd','url':extract(.,'(.+m3u8)',1)})]),let $a:=(for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as int]/format order by $x return $x,$json()[format='meta_hd']/format,for $x in $json()[matches(format,'\d+_hd')]/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()]))"
+xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(replace('http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1','.+videos/(\w+).+','http://api.kijk.nl/v1/default/entitlement/$1'))/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return tot:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':concat('Accept: application/json;pk=',extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1)),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] let $b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),' - ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,' - ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,' - ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duur:=$t * dayTimeDuration('PT1S') + time('00:00:00'),json:=[$a/(if (.//sbs_videotype='vod') then ({'format':'meta','url':(sources)()/src},tail(tokenize(unparsed-text((sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a/(sources)()/src),extract(.,'(.+m3u8)',1))},(sources)()[container='MP4']/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))}) else (sources)()[src]/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':src}),$b/({'format':'meta_hd','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000)||'_hd','url':extract(.,'(.+m3u8)',1)})]),let $a:=(for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as int]/format order by $x return $x,$json()[format='meta_hd']/format,for $x in $json()[matches(format,'\d+_hd')]/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()]))"
 tot := 31-03-2020 05:55:00 (nog 960 dagen en 14u1m20s)
 name := NET5 - Peking Express S01E01 (03042017)
 t := 3840
@@ -4208,6 +4237,16 @@ duur := 00:01:37
 json := [{"format": "mp4-975", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048962019001_smerigvies.mp4"}, {"format": "mp4-287", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964412001_smerigvies.mp4"}, {"format": "mp4-1611", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964429001_smerigvies.mp4"}, {"format": "mp4-608", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964957001_smerigvies.mp4"}]
 formats := mp4-287, mp4-608, mp4-975, mp4-1611
 best := mp4-1611
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "json(replace('http://www.kijk.nl/sbs6/mensenkennis/videos/9Zb61du3kCD/aflevering-6','.+videos/(\w+).+','http://api.kijk.nl/v1/default/entitlement/$1'))/playerInfo[not(hasDRM)]/([...])"
+tot := 03-10-2020 21:29:11 (nog 1073 dagen en 21u31m21s)
+name := SBS6 - Mensenkennis (03102017)
+t := 2511
+duur := 00:41:51
+json := [{"format": "meta_hd", "url": "https://embed.kijk.nl/api/playlist/9Zb61du3kCD_dbzyr6.m3u8?user_token=UpbmHKxJuypmE9PZZDG7FRLon&app_token=CgZzYW5vbWESEjlaYjYxZHUza0NEX2RienlyNhoLODAuMTAxLjQ5LjUiGVVwYm1IS3hKdXlwbUU5UFpaREc3RlJMb24ox%2Bi8rPUrMgJoADoERlZPREIDU0JTShI5WmI2MWR1M2tDRF9kYnp5cjY%3D%7CJSx2u8TTlogtotamufIGilB2I6jJc7B/IAK4uIy2xeo%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "316_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "900_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "1500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "2468_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "4500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "5750_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "7000_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
+formats := meta_hd, 316_hd, 500_hd, 900_hd, 1500_hd, 2468_hd, 4500_hd, 5750_hd, 7000_hd
+best := 7000_hd
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 --xquery "json(
@@ -4277,9 +4316,10 @@ best := mp4-1611
                   //@data-account,
                   '/videos/',
                   //@data-video-id
-                )
+                ),
+                'error-handling':'xxx=accept'
               }
-            )/json
+            )/json[not(.//error_code)]
             let $b:=json(embed_api_url)[videoId] return (
               if ($a) then
                 $a/(
@@ -4421,9 +4461,10 @@ best := mp4-1611
               best:=$a[last()]
             )
           )"
+
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/9097a36305ace5a11cf248c857ef032021bcc530]
 
 http://www.uitzendinggemist.net/aflevering/402151/Nos_Journaal_2000.html
 http://www.uitzendinggemist.net/aflevering/402175/Rtl_Nieuws_1930_Uur.html
