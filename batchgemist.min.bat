@@ -218,7 +218,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/(.+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:uitzendinggemist.net/aflevering=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --user-agent "BatchGemist %ver%" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'method':'HEAD'})/url" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'user-agent':'BatchGemist %ver%','method':'HEAD'})/url" --output-format^=cmd^"') DO %%A
 	GOTO Process
 ) ELSE IF NOT "%url:2doc.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=(//@data-media-id)[1],date:=replace((//@datetime)[1],'(\d+)-(\d+)-(\d+)','$3$2$1')" --output-format^=cmd^"') DO %%A
@@ -706,7 +706,7 @@ ECHO   [Benodigdheden]
 ECHO     - xidel.exe (http://videlibri.sourceforge.net/xidel.html#downloads)
 ECHO       Xidel is het hart van BatchGemist en is verantwoordelijk voor het ontleden van zo'n beetje
 ECHO       alle gegevens.
-ECHO       Download Xidel (versie 0.9.7.5391* of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
+ECHO       Download Xidel (versie 0.9.7.5648* of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
 ECHO       batchscript, of wijzig de programma-map in dit script onder ":Check".
 ECHO       * https://sourceforge.net/projects/videlibri/files/Xidel/Xidel development/
 ECHO     - ffmpeg.exe (http://ffmpeg.zeranoe.com/builds)

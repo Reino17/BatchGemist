@@ -3464,10 +3464,11 @@ t := 471
       t:=hours-from-time($a)*3600+minutes-from-time($a)*60+floor(seconds-from-time($a))
     ) else
       ()"
+
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/feb2b1964a18164fb9ccd38f2ac78ac322670f58]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/62eecea09f25c725b644969d250f931debd985f4]
 
 http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1
 
@@ -4465,6 +4466,7 @@ best := 7000_hd
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/9097a36305ace5a11cf248c857ef032021bcc530]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.uitzendinggemist.net/aflevering/402151/Nos_Journaal_2000.html
 http://www.uitzendinggemist.net/aflevering/402175/Rtl_Nieuws_1930_Uur.html
@@ -4484,7 +4486,31 @@ http://www.npo.nl/POW_03375494
 http://www.rtl.nl/video/408f1683-6aec-3cf0-bf39-cabf9dbeb4f2
 http://www.kijk.nl/video/gcuLMlCxPtL
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "[de 3 urls]" --user-agent "BatchGemist 1.6-git" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'method':'HEAD'})/url"
+xidel-0.9.7.5447-openssl.exe -s --color=never "[de 3 urls]" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'user-agent':'BatchGemist 1.6-git','method':'HEAD'})/url"
 https://www.npo.nl/nos-journaal/12-08-2017/POW_03375494
 https://www.rtl.nl/video/408f1683-6aec-3cf0-bf39-cabf9dbeb4f2
 http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-laat
+
+-e "url:=x:request(
+      {
+        'data':let $a:=(
+          //iframe[@class]/@src,
+          extract(
+            //@onclick,
+            '(http.+?)''',1
+          )
+        ) return
+        replace(
+          $a,
+          '.+(?:/|=)(.+)',
+          if (contains($a,'npo')) then
+            'http://www.npo.nl/$1'
+          else if (contains($a,'rtl')) then
+            'http://www.rtl.nl/video/$1'
+          else
+            'http://www.kijk.nl/video/$1'
+        ),
+        'user-agent':'BatchGemist 1.6-git',
+        'method':'HEAD'
+      }
+    )/url"
