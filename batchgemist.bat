@@ -3614,7 +3614,13 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                       ' ($3$2$1^)'
                     ^)
                   ^)^,
-                  t:^=.//duration
+                  t:^=.//duration^,
+                  s_url:^='https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (
+                    if (unparsed-text-available(.^)^) then
+                      .
+                    else
+                      (^)
+                  ^)
                 ^)^,
               duur:^=$t * dayTimeDuration('PT1S'^) + time('00:00:00'^)^,
               json:^=[

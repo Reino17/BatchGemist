@@ -3469,6 +3469,7 @@ t := 471
 
 [https://github.com/Reino17/BatchGemist/commit/feb2b1964a18164fb9ccd38f2ac78ac322670f58]
 [https://github.com/Reino17/BatchGemist/commit/62eecea09f25c725b644969d250f931debd985f4]
+[https://github.com/Reino17/BatchGemist/commit/60b11d43e9be9fa49289914d3e8458cf53456b01]
 [https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1
@@ -4202,11 +4203,18 @@ prid := 9Zb61du3kCD
 
 --------------------------------------------------------------------------------------------------------------------------------
 
+http://www.kijk.nl/net5/masterchefaustralie/videos/eJfQ4dxRs3D/aflevering-39 (ericsson, met soft-subs)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "unparsed-text-available('https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/eJfQ4dxRs3D_dbzyr6/vtt/nl.vtt')"
+true
+
+--------------------------------------------------------------------------------------------------------------------------------
+
 Alles samen, incl. $formats en $best
 
 http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return tot:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':concat('Accept: application/json;pk=',extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1)),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] let $b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),' - ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,' - ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,' - ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duur:=$t * dayTimeDuration('PT1S') + time('00:00:00'),json:=[$a/(if (.//sbs_videotype='vod') then ({'format':'meta','url':(sources)()/src},tail(tokenize(unparsed-text((sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a/(sources)()/src),extract(.,'(.+m3u8)',1))},(sources)()[container='MP4']/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))}) else (sources)()[src]/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':src}),$b/({'format':'meta_hd','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000)||'_hd','url':extract(.,'(.+m3u8)',1)})]),let $a:=(for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as int]/format order by $x return $x,$json()[format='meta_hd']/format,for $x in $json()[matches(format,'\d+_hd')]/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()]))"
+xidel-0.9.7.5447-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return tot:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':concat('Accept: application/json;pk=',extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1)),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] let $b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),' - ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,' - ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,' - ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration,s_url:='https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then . else ())),duur:=$t * dayTimeDuration('PT1S') + time('00:00:00'),json:=[$a/(if (.//sbs_videotype='vod') then ({'format':'meta','url':(sources)()/src},tail(tokenize(unparsed-text((sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a/(sources)()/src),extract(.,'(.+m3u8)',1))},(sources)()[container='MP4']/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))}) else (sources)()[src]/{'format':concat('mp4-',avg_bitrate idiv 1000),'url':src}),$b/({'format':'meta_hd','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000)||'_hd','url':extract(.,'(.+m3u8)',1)})]),let $a:=(for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as int]/format order by $x return $x,$json()[format='meta_hd']/format,for $x in $json()[matches(format,'\d+_hd')]/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()]))"
 tot := 31-03-2020 05:55:00 (nog 960 dagen en 14u1m20s)
 name := NET5 - Peking Express S01E01 (03042017)
 t := 3840
@@ -4266,6 +4274,18 @@ name := SBS6 - Mensenkennis (03102017)
 t := 2511
 duur := 00:41:51
 json := [{"format": "meta_hd", "url": "https://embed.kijk.nl/api/playlist/9Zb61du3kCD_dbzyr6.m3u8?user_token=UpbmHKxJuypmE9PZZDG7FRLon&app_token=CgZzYW5vbWESEjlaYjYxZHUza0NEX2RienlyNhoLODAuMTAxLjQ5LjUiGVVwYm1IS3hKdXlwbUU5UFpaREc3RlJMb24ox%2Bi8rPUrMgJoADoERlZPREIDU0JTShI5WmI2MWR1M2tDRF9kYnp5cjY%3D%7CJSx2u8TTlogtotamufIGilB2I6jJc7B/IAK4uIy2xeo%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "316_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "900_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "1500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "2468_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "4500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "5750_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "7000_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
+formats := meta_hd, 316_hd, 500_hd, 900_hd, 1500_hd, 2468_hd, 4500_hd, 5750_hd, 7000_hd
+best := 7000_hd
+
+http://www.kijk.nl/net5/masterchefaustralie/videos/eJfQ4dxRs3D/aflevering-39
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "[...]"
+tot := 31-07-2020 23:59:59 (nog 994 dagen en 22m20s)
+name := NET5 - MasterChef Australië (01112017)
+t := 2714
+s_url := https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/eJfQ4dxRs3D_dbzyr6/vtt/nl.vtt
+duur := 00:45:14
+json := [{"format": "meta_hd", "url": "https://embed.kijk.nl/api/playlist/eJfQ4dxRs3D_dbzyr6.m3u8?user_token=Sfx7qKcXMqRjySsyWuAM5Toes&app_token=CgZzYW5vbWESEmVKZlE0ZHhSczNEX2RienlyNhoLODAuMTAxLjQ5LjUiGVNmeDdxS2NYTXFSanlTc3lXdUFNNVRvZXMo2brlwPorMgJoADoERlZPREIDU0JTShJlSmZRNGR4UnMzRF9kYnp5cjY%3D%7CcBejTBMrAhJLriknNwdJXdPaRawUoP1n/R1%2BD%2B7sHGI%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "316_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "900_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "1500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "2468_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "4500_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "5750_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "7000_hd", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/2/668782/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
 formats := meta_hd, 316_hd, 500_hd, 900_hd, 1500_hd, 2468_hd, 4500_hd, 5750_hd, 7000_hd
 best := 7000_hd
 
@@ -4481,7 +4501,7 @@ best := 7000_hd
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/9097a36305ace5a11cf248c857ef032021bcc530]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/0a65e575647605c500a26c8739174f288d0718bf]
 
 http://www.uitzendinggemist.net/aflevering/402151/Nos_Journaal_2000.html
 http://www.uitzendinggemist.net/aflevering/402175/Rtl_Nieuws_1930_Uur.html
