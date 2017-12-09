@@ -2319,315 +2319,6 @@ name := AT5 - ''Bekende voetballers kopen massaal huizen op in Amsterdam'' (2801
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/e9b1a15d92b26b518770012bde1815f9f86697d8]
-
-xidel-0.9.6.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo']/concat(id,': ',name)"
-1: NPO Radio 1
-2: NPO Radio 2
-3: NPO 3FM
-4: NPO Radio 4
-5: NPO Radio 5
-7: NPO FunX
-6: NPO Soul & Jazz
-37: NPO SterrenNL
-11: NPO 3FM KX Radio
-14: NPO 3FM Alternative
-16: NPO Radio 4 Concerten
-40: NPO FunX Amsterdam Arab
-41: NPO FunX Dance
-44: NPO FunX Utrecht Latin
-45: NPO FunX Rotterdam Reggae
-46: NPO FunX Slow Jamz
-62: NPO FunX Amsterdam
-63: NPO FunX Rotterdam
-64: NPO FunX Den Haag
-65: NPO FunX Utrecht
-66: NPO FunX Den Haag Hip Hop
-
-xidel-0.9.6.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[id=1]"
-{
-  "id": 1,
-  "name": "NPO Radio 1",
-  "sitestat": "radio1",
-  "comscore_name": "nporadio1",
-  "type": "main",
-  "parent_id": null,
-  "url": "http://nporadio1.nl/popup-live",
-  "audiostreams": [
-    {
-      "id": 258,
-      "name": "icecast-mp3-high",
-      "url": "http://icecast.omroep.nl/radio1-bb-mp3",
-      "audiocodec": "mp3",
-      "bitrate": 192,
-      "protocol": "http",
-      "audiosamplerate": 48000
-    },
-    {
-      "id": 270,
-      "name": "icecast-aac-high",
-      "url": "http://icecast.omroep.nl/radio1-bb-aac",
-      "audiocodec": "aac",
-      "bitrate": 64,
-      "protocol": "http",
-      "audiosamplerate": 48000
-    },
-    {
-      "id": 318,
-      "name": "icecast-mp3-low",
-      "url": "http://icecast.omroep.nl/radio1-sb-mp3",
-      "audiocodec": "mp3",
-      "bitrate": 96,
-      "protocol": "http",
-      "audiosamplerate": 4800
-    },
-    {
-      "id": 463,
-      "name": "NPO Player",
-      "url": "LI_RA1_837059",
-      "audiocodec": "npoplayer",
-      "bitrate": 192,
-      "protocol": "prid",
-      "audiosamplerate": null
-    }
-  ],
-  "videostreams": [
-    {
-      "id": 47,
-      "name": "smoothstream",
-      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8",
-      "audiocodec": "aac",
-      "videocodec": "H.264",
-      "container": "mp4",
-      "minbitrate": 0,
-      "maxbitrate": 0,
-      "protocol": "http"
-    },
-    {
-      "id": 52,
-      "name": "hasp-hls",
-      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8",
-      "audiocodec": "aac",
-      "videocodec": "h264",
-      "container": "m3u8",
-      "minbitrate": 200,
-      "maxbitrate": 1800,
-      "protocol": "http"
-    },
-    {
-      "id": 57,
-      "name": "hasp-sms",
-      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/Manifest",
-      "audiocodec": "aac",
-      "videocodec": "h264",
-      "container": "mp4",
-      "minbitrate": 200,
-      "maxbitrate": 1800,
-      "protocol": "http"
-    },
-    {
-      "id": 58,
-      "name": "hasp-hds",
-      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.f4m",
-      "audiocodec": "aac",
-      "videocodec": "h264",
-      "container": "f4m",
-      "minbitrate": 200,
-      "maxbitrate": 1800,
-      "protocol": "http"
-    },
-    {
-      "id": 74,
-      "name": "NPO Player",
-      "url": "LI_RADIO1_300877",
-      "audiocodec": "",
-      "videocodec": "",
-      "container": "",
-      "minbitrate": 0,
-      "maxbitrate": 0,
-      "protocol": "prid"
-    }
-  ],
-  "comscore_configuration": {
-    "id": 1
-  },
-  "npw": {
-    "url": "http://radioplayer.npo.nl/radio1",
-    "name": "radio1",
-    "base_color": "white",
-    "background": "http://radio-app.omroep.nl/player/css/images/bg/radio1.jpg",
-    "config": "http://radio-app.omroep.nl/player/config/radio1.js",
-    "favicon": "http://radio-app.omroep.nl/player/css/images/favicon/radio1.ico"
-  }
-}
-
-xidel-0.9.6.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[id=1]/(audiostreams)()[protocol='http']"
-{
-  "id": 258,
-  "name": "icecast-mp3-high",
-  "url": "http://icecast.omroep.nl/radio1-bb-mp3",
-  "audiocodec": "mp3",
-  "bitrate": 192,
-  "protocol": "http",
-  "audiosamplerate": 48000
-}
-{
-  "id": 270,
-  "name": "icecast-aac-high",
-  "url": "http://icecast.omroep.nl/radio1-bb-aac",
-  "audiocodec": "aac",
-  "bitrate": 64,
-  "protocol": "http",
-  "audiosamplerate": 48000
-}
-{
-  "id": 318,
-  "name": "icecast-mp3-low",
-  "url": "http://icecast.omroep.nl/radio1-sb-mp3",
-  "audiocodec": "mp3",
-  "bitrate": 96,
-  "protocol": "http",
-  "audiosamplerate": 4800
-}
-
-xidel-0.9.6.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[id=1]/[(audiostreams)()[protocol='http']/{'format':concat(audiocodec,'-',bitrate),'url':url}]"
-[
-  {
-    "format": "mp3-192",
-    "url": "http://icecast.omroep.nl/radio1-bb-mp3"
-  },
-  {
-    "format": "aac-64",
-    "url": "http://icecast.omroep.nl/radio1-bb-aac"
-  },
-  {
-    "format": "mp3-96",
-    "url": "http://icecast.omroep.nl/radio1-sb-mp3"
-  }
-]
-
-xidel-0.9.6.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[id=1]/[(audiostreams)()[protocol='http']/{'format':concat(audiocodec,'-',bitrate),'url':url},let $a:=(videostreams)()[name='hasp-hls']/url return if ($a) then ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}) else ()]"
-[
-  {
-    "format": "mp3-192",
-    "url": "http://icecast.omroep.nl/radio1-bb-mp3"
-  },
-  {
-    "format": "aac-64",
-    "url": "http://icecast.omroep.nl/radio1-bb-aac"
-  },
-  {
-    "format": "mp3-96",
-    "url": "http://icecast.omroep.nl/radio1-sb-mp3"
-  },
-  {
-    "format": "meta",
-    "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8"
-  },
-  {
-    "format": "347",
-    "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=200000.m3u8"
-  },
-  {
-    "format": "665",
-    "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=500000.m3u8"
-  },
-  {
-    "format": "877",
-    "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=700000.m3u8"
-  },
-  {
-    "format": "1195",
-    "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=1000000.m3u8"
-  }
-]
-
-xidel-0.9.6.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[id=4]/[(audiostreams)()[protocol='http']/{'format':concat(audiocodec,'-',bitrate),'url':url},let $a:=(videostreams)()[name='hasp-hls']/url return if ($a) then ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}) else ()]"
-[
-  {
-    "format": "mp3-192",
-    "url": "http://icecast.omroep.nl/radio4-bb-mp3"
-  },
-  {
-    "format": "aac-64",
-    "url": "http://icecast.omroep.nl/radio4-bb-aac"
-  },
-  {
-    "format": "mp3-96",
-    "url": "http://icecast.omroep.nl/radio4-sb-mp3"
-  }
-]
-
-xidel-0.9.6.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[id=1]/(name:=concat(name,replace('%date%','.+?(\d+)-(\d+)-(\d+)',' - Livestream ($1$2$3)')),json:=[(audiostreams)()[protocol='http']/{'format':concat(audiocodec,'-',bitrate),'url':url},let $b:=(videostreams)()[name='hasp-hls']/url return if ($b) then ({'format':'meta','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$b),extract(.,'(.+m3u8)',1))}) else ()]),let $c:=(for $x in $json()[contains(format,'-')]/format order by $x return $x,$json()[format='meta']/format,$json()[format castable as int]/format) return (formats:=join($c,', '),best:=$c[last()])"
-name := NPO Radio 1 - Livestream (01022017)
-json := [{"format": "mp3-192", "url": "http://icecast.omroep.nl/radio1-bb-mp3"}, {"format": "aac-64", "url": "http://icecast.omroep.nl/radio1-bb-aac"}, {"format": "mp3-96", "url": "http://icecast.omroep.nl/radio1-sb-mp3"}, {"format": "meta", "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8"}, {"format": "347", "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=200000.m3u8"}, {"format": "665", "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=500000.m3u8"}, {"format": "877", "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=700000.m3u8"}, {"format": "1195", "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1-audio_2=128000-video=1000000.m3u8"}]
-formats := aac-64, mp3-96, mp3-192, meta, 347, 665, 877, 1195
-best := 1195
-
---xquery "json(
-            extract(
-              $raw,
-              'NPW.config.channels=(.+),NPW.config.comscore_configurations',1
-            )
-          )()[id=1]/(
-            name:=concat(
-              name,
-              replace(
-                '%date%',
-                '.+?(\d+)-(\d+)-(\d+)',
-                ' - Livestream ($1$2$3)'
-              )
-            ),
-            json:=[
-              (audiostreams)()[protocol='http']/{
-                'format':concat(
-                  audiocodec,
-                  '-',
-                  bitrate
-                ),
-                'url':url
-              },
-              let $b:=(videostreams)()[name='hasp-hls']/url return
-              if ($b) then (
-                {
-                  'format':'meta',
-                  'url':$b
-                },
-                tail(
-                  tokenize(
-                    unparsed-text($b),
-                    '#EXT-X-STREAM-INF:'
-                  )
-                ) ! {
-                  'format':string(
-                    extract(
-                      .,
-                      'BANDWIDTH=(\d+)',1
-                    ) idiv 1000
-                  ),
-                  'url':concat(
-                    resolve-uri('.',$b),
-                    extract(
-                      .,
-                      '(.+m3u8)',1
-                    )
-                  )
-                }
-              ) else
-                ()
-            ]
-          ),
-          let $c:=(
-            for $x in $json()[contains(format,'-')]/format order by $x return $x,
-            $json()[format='meta']/format,
-            $json()[format castable as int]/format
-          ) return (
-            formats:=join($c,', '),
-            best:=$c[last()]
-          )"
-
-================================================================================================================================
-
 [https://github.com/Reino17/BatchGemist/commit/65a431dc6c933e41934b389faddbd464211f40eb]
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
 [https://github.com/Reino17/BatchGemist/commit/f581a9cd374d082585c7037e51b132aeb2a8cb21]
@@ -4624,7 +4315,7 @@ formats := [{"format": "pg-a2t", "extension": "mp4", "resolution": "704x400", "v
 [https://github.com/Reino17/BatchGemist/commit/62eecea09f25c725b644969d250f931debd985f4]
 [https://github.com/Reino17/BatchGemist/commit/60b11d43e9be9fa49289914d3e8458cf53456b01]
 [https://github.com/Reino17/BatchGemist/commit/ae8be184a02c3ef1f7ca2b13acd4f23bc313efbb]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/0cdfeede4b7cf2505a88847c2d128d5c3667b59f]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "prid:=extract('http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1/','(?:video|videos)/(\w+)',1)"
 prid := w7ZW52xLgL5
@@ -5992,6 +5683,485 @@ formats := [{"format": "pg-450", "extension": "mp4", "resolution": "320x180", "u
                 )
               ]
             )
+          )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/e9b1a15d92b26b518770012bde1815f9f86697d8]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "for $x in json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'] order by $x/id return concat('  ',$x/id,'. ',$x/name)"
+  1. NPO Radio 1
+  2. NPO Radio 2
+  3. NPO 3FM
+  4. NPO Radio 4
+  5. NPO Radio 5
+  6. NPO Radio 2 Soul & Jazz
+  7. NPO FunX
+  11. NPO 3FM KX Radio
+  14. NPO 3FM Alternative
+  16. NPO Radio 4 Concerten
+  37. NPO SterrenNL
+  40. NPO FunX Amsterdam Arab
+  41. NPO FunX Dance
+  44. NPO FunX Utrecht Latin
+  45. NPO FunX Rotterdam Reggae
+  46. NPO FunX Slow Jamz
+  62. NPO FunX Amsterdam
+  63. NPO FunX Rotterdam
+  64. NPO FunX Den Haag
+  65. NPO FunX Utrecht
+  66. NPO FunX Den Haag Hip Hop
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[id=1]"
+{
+  "id": 1,
+  "name": "NPO Radio 1",
+  "sitestat": "radio1",
+  "comscore_name": "nporadio1",
+  "type": "main",
+  "parent_id": null,
+  "url": "http://nporadio1.nl/popup-live",
+  "audiostreams": [
+    {
+      "id": 258,
+      "name": "icecast-mp3-high",
+      "url": "http://icecast.omroep.nl/radio1-bb-mp3",
+      "audiocodec": "mp3",
+      "bitrate": 192,
+      "protocol": "http",
+      "audiosamplerate": 48000
+    },
+    {
+      "id": 270,
+      "name": "icecast-aac-high",
+      "url": "http://icecast.omroep.nl/radio1-bb-aac",
+      "audiocodec": "aac",
+      "bitrate": 64,
+      "protocol": "http",
+      "audiosamplerate": 48000
+    },
+    {
+      "id": 318,
+      "name": "icecast-mp3-low",
+      "url": "http://icecast.omroep.nl/radio1-sb-mp3",
+      "audiocodec": "mp3",
+      "bitrate": 96,
+      "protocol": "http",
+      "audiosamplerate": 4800
+    },
+    {
+      "id": 463,
+      "name": "NPO Player",
+      "url": "LI_RA1_837059",
+      "audiocodec": "npoplayer",
+      "bitrate": 192,
+      "protocol": "prid",
+      "audiosamplerate": null
+    }
+  ],
+  "videostreams": [
+    {
+      "id": 47,
+      "name": "smoothstream",
+      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8",
+      "audiocodec": "aac",
+      "videocodec": "H.264",
+      "container": "mp4",
+      "minbitrate": 0,
+      "maxbitrate": 0,
+      "protocol": "http"
+    },
+    {
+      "id": 52,
+      "name": "hasp-hls",
+      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8",
+      "audiocodec": "aac",
+      "videocodec": "h264",
+      "container": "m3u8",
+      "minbitrate": 200,
+      "maxbitrate": 1800,
+      "protocol": "http"
+    },
+    {
+      "id": 57,
+      "name": "hasp-sms",
+      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/Manifest",
+      "audiocodec": "aac",
+      "videocodec": "h264",
+      "container": "mp4",
+      "minbitrate": 200,
+      "maxbitrate": 1800,
+      "protocol": "http"
+    },
+    {
+      "id": 58,
+      "name": "hasp-hds",
+      "url": "http://livestreams.omroep.nl/live/npo/visualradio/radio1/radio1.isml/radio1.f4m",
+      "audiocodec": "aac",
+      "videocodec": "h264",
+      "container": "f4m",
+      "minbitrate": 200,
+      "maxbitrate": 1800,
+      "protocol": "http"
+    },
+    {
+      "id": 74,
+      "name": "NPO Player",
+      "url": "LI_RADIO1_300877",
+      "audiocodec": "",
+      "videocodec": "",
+      "container": "",
+      "minbitrate": 0,
+      "maxbitrate": 0,
+      "protocol": "prid"
+    }
+  ],
+  "comscore_configuration": {
+    "id": 1
+  },
+  "npw": {
+    "url": "http://radioplayer.npo.nl/radio1",
+    "name": "radio1",
+    "base_color": "white",
+    "background": "http://radio-app.omroep.nl/player/css/images/bg/radio1.jpg",
+    "config": "http://radio-app.omroep.nl/player/config/radio1.js",
+    "favicon": "http://radio-app.omroep.nl/player/css/images/favicon/radio1.ico"
+  }
+}
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=1]/(audiostreams)()[protocol='http']"
+{
+  "id": 258,
+  "name": "icecast-mp3-high",
+  "url": "http://icecast.omroep.nl/radio1-bb-mp3",
+  "audiocodec": "mp3",
+  "bitrate": 192,
+  "protocol": "http",
+  "audiosamplerate": 48000
+}
+{
+  "id": 270,
+  "name": "icecast-aac-high",
+  "url": "http://icecast.omroep.nl/radio1-bb-aac",
+  "audiocodec": "aac",
+  "bitrate": 64,
+  "protocol": "http",
+  "audiosamplerate": 48000
+}
+{
+  "id": 318,
+  "name": "icecast-mp3-low",
+  "url": "http://icecast.omroep.nl/radio1-sb-mp3",
+  "audiocodec": "mp3",
+  "bitrate": 96,
+  "protocol": "http",
+  "audiosamplerate": 4800
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=1]/[for $x in (audiostreams)()[protocol='http'] order by $x/bitrate return $x/{'format':concat(audiocodec,'-',bitrate),'abitrate':concat('a:',bitrate,'k'),'url':url}]"
+[
+  {
+    "format": "aac-64",
+    "abitrate": "a:64k",
+    "url": "http://icecast.omroep.nl/radio1-bb-aac"
+  },
+  {
+    "format": "mp3-96",
+    "abitrate": "a:96k",
+    "url": "http://icecast.omroep.nl/radio1-sb-mp3"
+  },
+  {
+    "format": "mp3-192",
+    "abitrate": "a:192k",
+    "url": "http://icecast.omroep.nl/radio1-bb-mp3"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=1]/(videostreams)()[protocol='prid']"
+{
+  "id": 74,
+  "name": "NPO Player",
+  "url": "LI_RADIO1_300877",
+  "audiocodec": "",
+  "videocodec": "",
+  "container": "",
+  "minbitrate": 0,
+  "maxbitrate": 0,
+  "protocol": "prid"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" -e "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=1]/json(concat('http://ida.omroep.nl/app.php/',(videostreams)()[protocol='prid']/url,'?token=',json('http://ida.omroep.nl/app.php/auth')/token))/json(replace(.//url,'jsonp','json'))"
+https://pedgewarer22b.video.kpnstreaming.nl/session/ebdc9834-dad8-11e7-afa2-9cb65498e820/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8?token=dfdf145eee15173e0f089737285f7fc7_1512687486_1512687486
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=1]/[let $a:=json(concat('http://ida.omroep.nl/app.php/',(videostreams)()[protocol='prid']/url,'?token=',json('http://ida.omroep.nl/app.php/auth')/token))/json(replace(.//url,'jsonp','json')) return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x)]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/838a07ac-dad9-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8?token=f0a7910f402ae6affba0e65274d62e10_1512687740_1512687740"
+  },
+  {
+    "format": "hls-136",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/838a07ac-dad9-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000.m3u8"
+  },
+  {
+    "format": "hls-348",
+    "extension": "m3u8",
+    "resolution": "384x216",
+    "vbitrate": "v:200k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/838a07ac-dad9-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=200000.m3u8"
+  },
+  {
+    "format": "hls-666",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/838a07ac-dad9-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=500000.m3u8"
+  },
+  {
+    "format": "hls-878",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:700k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/838a07ac-dad9-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=700000.m3u8"
+  },
+  {
+    "format": "hls-1196",
+    "extension": "m3u8",
+    "resolution": "768x432",
+    "vbitrate": "v:1000k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/838a07ac-dad9-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=1000000.m3u8"
+  },
+  {
+    "format": "hls-1620",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1400k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/838a07ac-dad9-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=1400000.m3u8"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=1]/[for $x in (audiostreams)()[protocol='http'] order by $x/bitrate return $x/{'format':concat(audiocodec,'-',bitrate),'abitrate':concat('a:',bitrate,'k'),'url':url},(videostreams)()[protocol='prid']/(let $a:=json(concat('http://ida.omroep.nl/app.php/',url,'?token=',json('http://ida.omroep.nl/app.php/auth')/token))/json(replace(.//url,'jsonp','json')) return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x))]"
+[
+  {
+    "format": "aac-64",
+    "abitrate": "a:64k",
+    "url": "http://icecast.omroep.nl/radio1-bb-aac"
+  },
+  {
+    "format": "mp3-96",
+    "abitrate": "a:96k",
+    "url": "http://icecast.omroep.nl/radio1-sb-mp3"
+  },
+  {
+    "format": "mp3-192",
+    "abitrate": "a:192k",
+    "url": "http://icecast.omroep.nl/radio1-bb-mp3"
+  },
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://pedgewarea26b.video.kpnstreaming.nl/session/04c048e0-dada-11e7-9af0-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8?token=e606680ec1309b8ba3f7ec61b0e1eb12_1512687957_1512687957"
+  },
+  {
+    "format": "hls-136",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea26b.video.kpnstreaming.nl/session/04c048e0-dada-11e7-9af0-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000.m3u8"
+  },
+  {
+    "format": "hls-348",
+    "extension": "m3u8",
+    "resolution": "384x216",
+    "vbitrate": "v:200k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea26b.video.kpnstreaming.nl/session/04c048e0-dada-11e7-9af0-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=200000.m3u8"
+  },
+  {
+    "format": "hls-666",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea26b.video.kpnstreaming.nl/session/04c048e0-dada-11e7-9af0-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=500000.m3u8"
+  },
+  {
+    "format": "hls-878",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:700k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea26b.video.kpnstreaming.nl/session/04c048e0-dada-11e7-9af0-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=700000.m3u8"
+  },
+  {
+    "format": "hls-1196",
+    "extension": "m3u8",
+    "resolution": "768x432",
+    "vbitrate": "v:1000k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea26b.video.kpnstreaming.nl/session/04c048e0-dada-11e7-9af0-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=1000000.m3u8"
+  },
+  {
+    "format": "hls-1620",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1400k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea26b.video.kpnstreaming.nl/session/04c048e0-dada-11e7-9af0-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=1400000.m3u8"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=5]/[...]"
+[
+  {
+    "format": "aac-64",
+    "abitrate": "a:64k",
+    "url": "http://icecast.omroep.nl/radio5-bb-aac"
+  },
+  {
+    "format": "mp3-96",
+    "abitrate": "a:96k",
+    "url": "http://icecast.omroep.nl/radio5-sb-mp3"
+  },
+  {
+    "format": "mp3-192",
+    "abitrate": "a:192k",
+    "url": "http://icecast.omroep.nl/radio5-bb-mp3"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=1]/(name:=name||replace('%date%','.+?(\d+)-(\d+)-(\d+)',' - Livestream ($1$2$3)'),formats:=[for $x in (audiostreams)()[protocol='http'] order by $x/bitrate return $x/{'format':concat(audiocodec,'-',bitrate),'abitrate':concat('a:',bitrate,'k'),'url':url},(videostreams)()[protocol='prid']/(let $a:=json(concat('http://ida.omroep.nl/app.php/',url,'?token=',json('http://ida.omroep.nl/app.php/auth')/token))/json(replace(.//url,'jsonp','json')) return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x))])"
+name := NPO Radio 1 - Livestream (24112017)
+formats := [{"format": "aac-64", "abitrate": "a:64k", "url": "http://icecast.omroep.nl/radio1-bb-aac"}, {"format": "mp3-96", "abitrate": "a:96k", "url": "http://icecast.omroep.nl/radio1-sb-mp3"}, {"format": "mp3-192", "abitrate": "a:192k", "url": "http://icecast.omroep.nl/radio1-bb-mp3"}, {"format": "hls-master", "extension": "m3u8", "url": "https://pedgewarer21b.video.kpnstreaming.nl/session/dda31106-dada-11e7-a428-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1.m3u8?token=994452b59231e8ae702e380f233e0299_1512688321_1512688321"}, {"format": "hls-136", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://pedgewarer21b.video.kpnstreaming.nl/session/dda31106-dada-11e7-a428-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000.m3u8"}, {"format": "hls-348", "extension": "m3u8", "resolution": "384x216", "vbitrate": "v:200k", "abitrate": "a:128k", "url": "https://pedgewarer21b.video.kpnstreaming.nl/session/dda31106-dada-11e7-a428-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=200000.m3u8"}, {"format": "hls-666", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://pedgewarer21b.video.kpnstreaming.nl/session/dda31106-dada-11e7-a428-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=500000.m3u8"}, {"format": "hls-878", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:700k", "abitrate": "a:128k", "url": "https://pedgewarer21b.video.kpnstreaming.nl/session/dda31106-dada-11e7-a428-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=700000.m3u8"}, {"format": "hls-1196", "extension": "m3u8", "resolution": "768x432", "vbitrate": "v:1000k", "abitrate": "a:128k", "url": "https://pedgewarer21b.video.kpnstreaming.nl/session/dda31106-dada-11e7-a428-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=1000000.m3u8"}, {"format": "hls-1620", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1400k", "abitrate": "a:128k", "url": "https://pedgewarer21b.video.kpnstreaming.nl/session/dda31106-dada-11e7-a428-1458d0426038/fqimjj/b2b/live/npo/live/npo/visualradio/radio1/radio1.isml/radio1-audio_nld=128000-video=1400000.m3u8"}]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=5]/[...]"
+name := NPO Radio 5 - Livestream (24112017)
+formats := [{"format": "aac-64", "abitrate": "a:64k", "url": "http://icecast.omroep.nl/radio5-bb-aac"}, {"format": "mp3-96", "abitrate": "a:96k", "url": "http://icecast.omroep.nl/radio5-sb-mp3"}, {"format": "mp3-192", "abitrate": "a:192k", "url": "http://icecast.omroep.nl/radio5-bb-mp3"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "json(
+            extract(
+              $raw,
+              'NPW.config.channels=(.+),NPW.config.comscore_configurations',
+              1
+            )
+          )()[name!='demo'][id=1]/(
+            name:=name||replace(
+              '%date%',
+              '.+?(\d+)-(\d+)-(\d+)',
+              ' - Livestream ($1$2$3)'
+            ),
+            formats:=[
+              for $x in (audiostreams)()[protocol='http'] order by $x/bitrate return
+              $x/{
+                'format':concat(
+                  audiocodec,
+                  '-',
+                  bitrate
+                ),
+                'abitrate':concat(
+                  'a:',
+                  bitrate,
+                  'k'
+                ),
+                'url':url
+              },
+              (videostreams)()[protocol='prid']/(
+                let $a:=json(
+                  concat(
+                    'http://ida.omroep.nl/app.php/',
+                    url,
+                    '?token=',
+                    json(
+                      'http://ida.omroep.nl/app.php/auth'
+                    )/token
+                  )
+                )/json(
+                  replace(
+                    .//url,
+                    'jsonp',
+                    'json'
+                  )
+                ) return (
+                  {
+                    'format':'hls-master',
+                    'extension':'m3u8',
+                    'url':$a
+                  },
+                  for $x in tail(
+                    tokenize(
+                      extract(
+                        unparsed-text($a),
+                        '(#EXT-X-STREAM-INF.+m3u8$)',
+                        1,'ms'
+                      ),
+                      '#EXT-X-STREAM-INF:'
+                    )
+                  ) ! {
+                    'format':'hls-'||extract(
+                      .,
+                      'BANDWIDTH=(\d+)\d{3}',
+                      1
+                    ),
+                    'extension':'m3u8',
+                    'resolution':extract(
+                      .,
+                      'RESOLUTION=(.+),',
+                      1
+                    ),
+                    'vbitrate':extract(
+                      .,
+                      'video=(\d+)\d{3}',
+                      1
+                    ) ! (
+                      if (.) then
+                        concat(
+                          'v:',
+                          .,
+                          'k'
+                        )
+                      else
+                        ''
+                    ),
+                    'abitrate':replace(
+                      .,
+                      '.+audio.+?(\d+)\d{3}.+',
+                      'a:$1k',
+                      's'
+                    ),
+                    'url':resolve-uri(
+                      '.',
+                      $a
+                    )||extract(
+                      .,
+                      '(.+m3u8)',
+                      1
+                    )
+                  } order by $x/format return $x
+                )
+              )
+            ]
           )"
 
 ================================================================================================================================

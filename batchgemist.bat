@@ -3816,90 +3816,130 @@ REM ============================================================================
 :NPORadio
 SETLOCAL
 ECHO.
+ECHO Beschikbare radiozenders:
+ECHO.
 %xidel% "http://radio-app.omroep.nl/player/script/player.js" ^
--e ^"json(^
-       extract(^
-         $raw,^
-         'NPW.config.channels=(.+),NPW.config.comscore_configurations',1^
-       )^
-     )()[name!='demo']/concat(^
-       id,^
-       ': ',^
-       name^
-     )^"
+--xquery ^"for $x in json(^
+             extract(^
+               $raw,^
+               'NPW.config.channels=(.+),NPW.config.comscore_configurations',^
+               1^
+             )^
+           )()[name!='demo'] order by $x/id return^
+           concat('  ',^
+             $x/id,^
+             '. ',^
+             $x/name^
+           )^"
 ECHO.
 SET /P "id=Voer nummer in van gewenste radiozender: [1] "
 IF NOT DEFINED id SET "id=1"
 FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/player.js"
---xquery ^"if (matches('%id%'^,'^^\d+$'^)^) then
-            let $a:^=json(
-              extract(
-                $raw^,
-                'NPW.config.channels^=(.+^)^,NPW.config.comscore_configurations'^,1
-              ^)
-            ^)(^) return
-            if ($a[id^=%id%]^) then (
-              $a[id^=%id%]/(
-                name:^=concat(
-                  name^,
-                  replace(
-                    '%date%'^,
-                    '.+?(\d+^)-(\d+^)-(\d+^)'^,
-                    ' - Livestream ($1$2$3^)'
-                  ^)
+--xquery ^"json^(
+            extract^(
+              $raw^,
+              'NPW.config.channels^=^(.+^)^,NPW.config.comscore_configurations'^,
+              1
+            ^)
+          ^)^(^)[name!^='demo'][id^=%id%]/^(
+            name:^=name^|^|replace^(
+              '%date%'^,
+              '.+?^(\d+^)-^(\d+^)-^(\d+^)'^,
+              ' - Livestream ^($1$2$3^)'
+            ^)^,
+            formats:^=[
+              for $x in ^(audiostreams^)^(^)[protocol^='http'] order by $x/bitrate return
+              $x/{
+                'format':concat^(
+                  audiocodec^,
+                  '-'^,
+                  bitrate
                 ^)^,
-                json:^=[
-                  (audiostreams^)(^)[protocol^='http']/{
-                    'format':concat(
-                      audiocodec^,
-                      '-'^,
-                      bitrate
-                    ^)^,
-                    'url':url
+                'abitrate':concat^(
+                  'a:'^,
+                  bitrate^,
+                  'k'
+                ^)^,
+                'url':url
+              }^,
+              ^(videostreams^)^(^)[protocol^='prid']/^(
+                let $a:^=json^(
+                  concat^(
+                    'http://ida.omroep.nl/app.php/'^,
+                    url^,
+                    '?token^='^,
+                    json^(
+                      'http://ida.omroep.nl/app.php/auth'
+                    ^)/token
+                  ^)
+                ^)/json^(
+                  replace^(
+                    .//url^,
+                    'jsonp'^,
+                    'json'
+                  ^)
+                ^) return ^(
+                  {
+                    'format':'hls-master'^,
+                    'extension':'m3u8'^,
+                    'url':$a
                   }^,
-                  let $b:^=(videostreams^)(^)[name^='hasp-hls']/url return
-                  if ($b^) then (
-                    {
-                      'format':'meta'^,
-                      'url':$b
-                    }^,
-                    tail(
-                      tokenize(
-                        unparsed-text($b^)^,
-                        '#EXT-X-STREAM-INF:'
-                      ^)
-                    ^) ! {
-                      'format':string(
-                        extract(
-                          .^,
-                          'BANDWIDTH^=(\d+^)'^,1
-                        ^) idiv 1000
+                  for $x in tail^(
+                    tokenize^(
+                      extract^(
+                        unparsed-text^($a^)^,
+                        '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
+                        1^,'ms'
                       ^)^,
-                      'url':concat(
-                        resolve-uri('.'^,$b^)^,
-                        extract(
+                      '#EXT-X-STREAM-INF:'
+                    ^)
+                  ^) ! {
+                    'format':'hls-'^|^|extract^(
+                      .^,
+                      'BANDWIDTH^=^(\d+^)\d{3}'^,
+                      1
+                    ^)^,
+                    'extension':'m3u8'^,
+                    'resolution':extract^(
+                      .^,
+                      'RESOLUTION^=^(.+^)^,'^,
+                      1
+                    ^)^,
+                    'vbitrate':extract^(
+                      .^,
+                      'video^=^(\d+^)\d{3}'^,
+                      1
+                    ^) ! ^(
+                      if ^(.^) then
+                        concat^(
+                          'v:'^,
                           .^,
-                          '(.+m3u8^)'^,1
+                          'k'
                         ^)
-                      ^)
-                    }
-                  ^) else
-                    (^)
-                ]
-              ^)^,
-              let $c:^=(
-                for $x in $json(^)[contains(format^,'-'^)]/format order by $x return $x^,
-                $json(^)[format^='meta']/format^,
-                $json(^)[format castable as int]/format
-              ^) return (
-                formats:^=join($c^,'^, '^)^,
-                best:^=$c[last(^)]
+                      else
+                        ''
+                    ^)^,
+                    'abitrate':replace^(
+                      .^,
+                      '.+audio.+?^(\d+^)\d{3}.+'^,
+                      'a:$1k'^,
+                      's'
+                    ^)^,
+                    'url':resolve-uri^(
+                      '.'^,
+                      $a
+                    ^)^|^|extract^(
+                      .^,
+                      '^(.+m3u8^)'^,
+                      1
+                    ^)
+                  } order by $x/format return $x
+                ^)
               ^)
-            ^) else
-              (^)
-          else (^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+            ]
+          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
-IF DEFINED json (
+IF DEFINED formats (
 	GOTO Formats
 ) ELSE (
 	ECHO.
