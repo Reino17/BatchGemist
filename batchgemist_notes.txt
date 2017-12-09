@@ -1628,6 +1628,7 @@ s_url := http://e.omroep.nl/tt888/AT_2064397
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/a18a79b733631d8d173190fce6c28d9599965484]
+[https://github.com/Reino17/BatchGemist/commit/7983bba09cce9be8c00be877d9d52b0ba34cee31]
 
 Prettification:
 
@@ -3446,6 +3447,160 @@ t := 235
             else
               ()
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+'VPWON_1274590.json':
+
+[{"format": "pg-sb", "extension": "m4v", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:64k", "url": "https://content1a.omroep.nl/urishieldv2/l27m0da85d420476543a005a0ec670000000.d42809f8ed643c559c7836d9aeafabfb/ceresodi/h264/p/1b/10/10/7c/sb_VPWON_1274590.m4v"}, {"format": "pg-bb", "extension": "m4v", "resolution": "640x360", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://content1a.omroep.nl/urishieldv2/l27m06dff7f63401caa6005a0ec670000000.e5f629ea173a5909457c4acac69d9c83/ceresodi/h264/p/1b/10/10/7c/bb_VPWON_1274590.m4v"}, {"format": "pg-std", "extension": "m4v", "resolution": "960x540", "vbitrate": "v:1000k", "abitrate": "a:128k", "url": "https://content1b.omroep.nl/urishieldv2/l27m6d6c3544288687e5005a0ec670000000.a2dced05aee1b84c0b035d659355e890/ceresodi/h264/p/1b/10/10/7c/std_VPWON_1274590.m4v"}, {"format": "hls-master", "extension": "m3u8", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590.m3u8"}, {"format": "hls-314", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:96k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=96000-video=200000.m3u8"}, {"format": "hls-348", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:128k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=128000-video=200000.m3u8"}, {"format": "hls-416", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:192k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=192000-video=200000.m3u8"}, {"format": "hls-631", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:96k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=96000-video=499000.m3u8"}, {"format": "hls-665", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:128k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=128000-video=499000.m3u8"}, {"format": "hls-733", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:192k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=192000-video=499000.m3u8"}, {"format": "hls-1265", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:96k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=96000-video=1097000.m3u8"}, {"format": "hls-1299", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:128k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=128000-video=1097000.m3u8"}, {"format": "hls-1367", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:192k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=192000-video=1097000.m3u8"}, {"format": "hls-2005", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:96k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=96000-video=1795000.m3u8"}, {"format": "hls-2039", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:128k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=128000-video=1795000.m3u8"}, {"format": "hls-2107", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:192k", "url": "https://adaptive-e50c2a.npostreaming.nl/urishieldv2/l27m3b9778ad1417ee23005a0ec670000000.82554cd211af309b7b82a6abf6ef501f/p/1b/10/10/34/VPWON_1274590/VPWON_1274590.ism/VPWON_1274590-audio=192000-video=1795000.m3u8"}]
+
+
+Opsomming beschikbare formaten
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') for $x in $json() return join($a ! $x(.))"
+pg-sb m4v 480x270 v:200k a:64k
+pg-bb m4v 640x360 v:500k a:128k
+pg-std m4v 960x540 v:1000k a:128k
+hls-master m3u8
+hls-314 m3u8 480x270 v:200k a:96k
+hls-348 m3u8 480x270 v:200k a:128k
+hls-416 m3u8 480x270 v:200k a:192k
+hls-631 m3u8 640x360 v:499k a:96k
+hls-665 m3u8 640x360 v:499k a:128k
+hls-733 m3u8 640x360 v:499k a:192k
+hls-1265 m3u8 1024x576 v:1097k a:96k
+hls-1299 m3u8 1024x576 v:1097k a:128k
+hls-1367 m3u8 1024x576 v:1097k a:192k
+hls-2005 m3u8 1024x576 v:1795k a:96k
+hls-2039 m3u8 1024x576 v:1795k a:128k
+hls-2107 m3u8 1024x576 v:1795k a:192k
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Andersom, voor de gein
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "for $x in reverse($json()/format) let $a:=('format','extension','resolution','vbitrate','abitrate') for $y in $json()[format=$x] return join($a ! $y(.))"
+hls-2107 m3u8 1024x576 v:1795k a:192k
+hls-2039 m3u8 1024x576 v:1795k a:128k
+hls-2005 m3u8 1024x576 v:1795k a:96k
+hls-1367 m3u8 1024x576 v:1097k a:192k
+hls-1299 m3u8 1024x576 v:1097k a:128k
+hls-1265 m3u8 1024x576 v:1097k a:96k
+hls-733 m3u8 640x360 v:499k a:192k
+hls-665 m3u8 640x360 v:499k a:128k
+hls-631 m3u8 640x360 v:499k a:96k
+hls-416 m3u8 480x270 v:200k a:192k
+hls-348 m3u8 480x270 v:200k a:128k
+hls-314 m3u8 480x270 v:200k a:96k
+hls-master m3u8
+pg-std m4v 960x540 v:1000k a:128k
+pg-bb m4v 640x360 v:500k a:128k
+pg-sb m4v 480x270 v:200k a:64k
+
+of
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "for $x in (for $x in $json()[matches(format,'hls-\d+')]/format order by $x descending return $x,$json()[format='hls-master']/format,for $x in $json()[starts-with(format,'pg')] order by $x/resolution descending return $x/format) let $a:=('format','extension','resolution','vbitrate','abitrate') for $y in $json()[format=$x] return join($a ! $y(.))"
+hls-2107 m3u8 1024x576 v:1795k a:192k
+hls-2039 m3u8 1024x576 v:1795k a:128k
+hls-2005 m3u8 1024x576 v:1795k a:96k
+hls-1367 m3u8 1024x576 v:1097k a:192k
+hls-1299 m3u8 1024x576 v:1097k a:128k
+hls-1265 m3u8 1024x576 v:1097k a:96k
+hls-733 m3u8 640x360 v:499k a:192k
+hls-665 m3u8 640x360 v:499k a:128k
+hls-631 m3u8 640x360 v:499k a:96k
+hls-416 m3u8 480x270 v:200k a:192k
+hls-348 m3u8 480x270 v:200k a:128k
+hls-314 m3u8 480x270 v:200k a:96k
+hls-master m3u8
+pg-std m4v 960x540 v:1000k a:128k
+pg-bb m4v 640x360 v:500k a:128k
+pg-sb m4v 480x270 v:200k a:64k
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Het gebruik van een TAB heeft niet het gewenste resultaat
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') for $x in $json() return join($a ! $x(.),'&#x9;')"
+pg-sb   m4v     480x270 v:200k  a:64k
+pg-bb   m4v     640x360 v:500k  a:128k
+pg-std  m4v     960x540 v:1000k a:128k
+hls-master      m3u8
+hls-314 m3u8    480x270 v:200k  a:96k
+hls-348 m3u8    480x270 v:200k  a:128k
+hls-416 m3u8    480x270 v:200k  a:192k
+hls-631 m3u8    640x360 v:499k  a:96k
+hls-665 m3u8    640x360 v:499k  a:128k
+hls-733 m3u8    640x360 v:499k  a:192k
+hls-1265        m3u8    1024x576        v:1097k a:96k
+hls-1299        m3u8    1024x576        v:1097k a:128k
+hls-1367        m3u8    1024x576        v:1097k a:192k
+hls-2005        m3u8    1024x576        v:1795k a:96k
+hls-2039        m3u8    1024x576        v:1795k a:128k
+hls-2107        m3u8    1024x576        v:1795k a:192k
+
+De maximale kolombreedte voor elk van de eigenschappen
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') return $a ! max($json()(.) ! string-length(.))"
+10
+4
+8
+7
+6
+
+De maximale kolombreedte toegepast, plus 2 spaties tussenruimte
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') let $b:=$a ! max($json()(.) ! string-length(.)) for $x in $json() return string-join(for $y at $i in $a return substring(string-join(($x($y),for $x in 1 to $b[$i]+2 return ' ')),1,$b[$i]+2))"
+pg-sb       m4v   480x270   v:200k   a:64k
+pg-bb       m4v   640x360   v:500k   a:128k
+pg-std      m4v   960x540   v:1000k  a:128k
+hls-master  m3u8
+hls-314     m3u8  480x270   v:200k   a:96k
+hls-348     m3u8  480x270   v:200k   a:128k
+hls-416     m3u8  480x270   v:200k   a:192k
+hls-631     m3u8  640x360   v:499k   a:96k
+hls-665     m3u8  640x360   v:499k   a:128k
+hls-733     m3u8  640x360   v:499k   a:192k
+hls-1265    m3u8  1024x576  v:1097k  a:96k
+hls-1299    m3u8  1024x576  v:1097k  a:128k
+hls-1367    m3u8  1024x576  v:1097k  a:192k
+hls-2005    m3u8  1024x576  v:1795k  a:96k
+hls-2039    m3u8  1024x576  v:1795k  a:128k
+hls-2107    m3u8  1024x576  v:1795k  a:192k
+
+Alternatief van Benito, plus 2 extra spaties aan het begin
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') let $b:=$a ! max($json()(.) ! string-length(.)) let $c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+  pg-sb       m4v   480x270   v:200k   a:64k
+  pg-bb       m4v   640x360   v:500k   a:128k
+  pg-std      m4v   960x540   v:1000k  a:128k
+  hls-master  m3u8
+  hls-314     m3u8  480x270   v:200k   a:96k
+  hls-348     m3u8  480x270   v:200k   a:128k
+  hls-416     m3u8  480x270   v:200k   a:192k
+  hls-631     m3u8  640x360   v:499k   a:96k
+  hls-665     m3u8  640x360   v:499k   a:128k
+  hls-733     m3u8  640x360   v:499k   a:192k
+  hls-1265    m3u8  1024x576  v:1097k  a:96k
+  hls-1299    m3u8  1024x576  v:1097k  a:128k
+  hls-1367    m3u8  1024x576  v:1097k  a:192k
+  hls-2005    m3u8  1024x576  v:1795k  a:96k
+  hls-2039    m3u8  1024x576  v:1795k  a:128k
+  hls-2107    m3u8  1024x576  v:1795k  a:192k
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "$json()[starts-with(format,'pg')][last()]/format"
+pg-std
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "max($json()[format!='hls-master'][starts-with(format,'hls')]/format)"
+hls-2107
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "max($json()[replace(format,'hls-','') castable as int]/format)"
+hls-2107
+
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "max($json()[matches(format,'hls-\d+')]/format)"
+hls-2107
 
 ================================================================================================================================
 

@@ -345,7 +345,9 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO Input
 )
 
-IF DEFINED json (
+IF DEFINED videos (
+	GOTO Videos
+) ELSE IF DEFINED formats (
 	GOTO Formats
 ) ELSE IF DEFINED v_url (
 	IF NOT "%%v_url:youtu.be=%%"=="%%v_url%%" (
@@ -432,32 +434,53 @@ IF DEFINED json (
 
 REM ================================================================================================
 
-:Formats
-SETLOCAL ENABLEDELAYEDEXPANSION
-IF DEFINED videos (
-	ECHO.
-	ECHO Beschikbare video's: %videos%
-	SET /P "video=Kies gewenste video: [1e] "
-	IF NOT DEFINED video SET "video=1e"
-	FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - --xquery "if (matches('%videos%','^(.*\W)?!video!(\W.*)?$')) then $json()('!video!')/(name:=name,if (formats) then (json:=formats,let $a:=($json()[contains(format,'rtsp')]/format,for $x in $json()[contains(format,'mp4')]/format order by $x return $x,$json()[format='meta']/format,for $x in $json()[format castable as int]/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()])) else v_url:=url) else error:=1" --output-encoding^=oem --output-format^=cmd') DO %%A
-)
-IF NOT DEFINED error (
-	IF DEFINED v_url (
-		GOTO Select
-	)
+:Videos
+SETLOCAL
+ECHO.
+ECHO Beschikbare video's:
+ECHO.
+ECHO %videos% | %xidel% - -e "$json()/concat('  ',.(),'. ',.//name)"
+ECHO.
+SET /P "video=Kies gewenste video: [1] "
+IF NOT DEFINED video SET "video=1"
+FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - --xquery "$json()('%video%')/(name:=name,duration:=duration,t:=t,if (url) then v_url:=url else formats:=formats)" --output-encoding^=oem --output-format^=cmd') DO %%A
+
+IF DEFINED formats (
+	GOTO Formats
+) ELSE IF DEFINED v_url (
+	GOTO Select
 ) ELSE (
 	ECHO.
 	ECHO Ongeldige video.
 	ECHO.
 	ENDLOCAL
-	GOTO Formats
+	GOTO Videos
 )
 
+REM ================================================================================================
+
+:Formats
+SETLOCAL ENABLEDELAYEDEXPANSION
 ECHO.
-ECHO Beschikbare formaten: %formats%
-SET /P "format=Voer gewenst formaat in: [%best%] "
-IF NOT DEFINED format SET "format=%best%"
-FOR /F "delims=" %%A IN ('ECHO !json! ^| %xidel% - -e "if (matches('%formats%','^(.*\W)?%format%(\W.*)?$')) then v_url:=$json()[format='%format%']/url else ()" --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
+	IF "%%A"=="1" (
+		ECHO Beschikbaar formaat:
+		ECHO.
+		ECHO %formats% | %xidel% - --xquery "let $a:=('extension','resolution','vbitrate','abitrate') let $b:=$a ^! max($json()(.) ^! string-length(.)) let $c:=string-join((1 to sum($b)) ^! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "v_url:=$json()/url" --output-format^=cmd') DO %%A
+	) ELSE (
+		ECHO Beschikbare formaten:
+		ECHO.
+		ECHO %formats% | %xidel% - --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') let $b:=$a ^! max($json()(.) ^! string-length(.)) let $c:=string-join((1 to sum($b)) ^! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+		ECHO.
+		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[last()]/format"') DO (
+			SET /P "format=Voer gewenst formaat in: [%%A] "
+			IF NOT DEFINED format SET "format=%%A"
+		)
+		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[format='!format!']/(v_url:=url)" --output-format^=cmd') DO %%A
+	)
+)
+
 IF DEFINED v_url (
 	GOTO Select
 ) ELSE (
