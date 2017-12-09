@@ -3569,63 +3569,70 @@ REM ============================================================================
 
 :Kijk
 FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%prid%"
---xquery ^"playerInfo[not(hasDRM^)]/(
-            if (.//enddate^) then
-              dateTime(
-                replace(
+--xquery ^"$json/playerInfo[not^(hasDRM^)]/^(
+            if ^(.//enddate^) then
+              dateTime^(
+                replace^(
                   .//enddate/date^,
                   ' '^,
                   'T'
                 ^)
-              ^) ! (
-                let $a:^=. - current-dateTime(^) return
-                tot:^=concat(
-                  replace(
+              ^) ! ^(
+                let $a:^=. - current-dateTime^(^) return
+                expire:^=concat^(
+                  replace^(
                     .^,
-                    '(\d+^)-(\d+^)-(\d+^)T(.+^)'^,
+                    '^(\d+^)-^(\d+^)-^(\d+^)T^(.+^)'^,
                     '$3-$2-$1 $4'
                   ^)^,
-                  ' (nog '^,
-                  days-from-duration($a^) ! (
-                    if (.^=0^) then
-                      (^)
-                    else if (.^=1^) then
+                  ' ^(nog '^,
+                  days-from-duration^($a^) ! ^(
+                    if ^(.^=0^) then
+                      ^(^)
+                    else if ^(.^=1^) then
                       .^|^|' dag en '
                     else
                       .^|^|' dagen en '
                   ^)^,
-                  hours-from-duration($a^) ! (
-                    if (.^=0^) then
-                      (^)
+                  hours-from-duration^($a^) ! ^(
+                    if ^(.^=0^) then
+                      ^(^)
                     else
                       .^|^|'u'
                   ^)^,
-                  minutes-from-duration($a^) ! (
-                    if (.^=0^) then
-                      (^)
+                  minutes-from-duration^($a^) ! ^(
+                    if ^(.^=0^) then
+                      ^(^)
                     else
                       .^|^|'m'
                   ^)^,
-                  floor(seconds-from-duration($a^)^)^,
+                  floor^(
+                    seconds-from-duration^($a^)
+                  ^)^,
                   's^)'
                 ^)
               ^)
             else
-              (^)^,
-            let $a:^=doc(
+              ^(^)^,
+            let $a:^=doc^(
               'http:'^|^|embed_video_url
-            ^)[//@data-video-id]/x:request(
+            ^)[//@data-video-id]/x:request^(
               {
-                'headers':concat(
-                  'Accept: application/json^;pk^='^,
-                  extract(
-                    unparsed-text(
-                      //script[contains(@src^,//@data-account^)]/@src
+                'headers':
+                  'Accept: application/json^;pk^='^|^|
+                  extract^(
+                    unparsed-text^(
+                      //script[
+                        contains^(
+                          @src^,
+                          //@data-account
+                        ^)
+                      ]/@src
                     ^)^,
-                    'policyKey:\^"(.+?^)\^"'^,1
-                  ^)
-                ^)^,
-                'url':concat(
+                    'policyKey:\^"^(.+?^)\^"'^,
+                    1
+                  ^)^,
+                'url':concat^(
                   'https://edge.api.brightcove.com/playback/v1/accounts/'^,
                   //@data-account^,
                   '/videos/'^,
@@ -3633,156 +3640,168 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                 ^)^,
                 'error-handling':'xxx^=accept'
               }
-            ^)/json[not(.//error_code^)]
-            let $b:^=json(embed_api_url^)[videoId] return (
-              if ($a^) then
-                $a/(
-                  name:^=if (.//sbs_videotype^='vod'^) then
-                    concat(
-                      if (.//sbs_station^='veronicatv'^) then
+            ^)/json[not^(.//error_code^)]
+            let $b:^=json^(embed_api_url^)[videoId] return ^(
+              if ^($a^) then
+                $a/^(
+                  name:^=if ^(.//sbs_videotype^='vod'^) then
+                    concat^(
+                      if ^(.//sbs_station^='veronicatv'^) then
                         'Veronica'
                       else
-                        upper-case(.//sbs_station^)^,
+                        upper-case^(.//sbs_station^)^,
                       ' - '^,
                       name^,
-                      if (string-length(.//sbs_episode^)^<^=7^) then
+                      if ^(string-length^(.//sbs_episode^)^<^=7^) then
                         ' '^|^|.//sbs_episode
                       else
-                        (^)^,
-                      replace(
+                        ^(^)^,
+                      replace^(
                         .//sko_dt^,
-                        '(\d{4}^)(\d{2}^)(\d{2}^)'^,
-                        ' ($3$2$1^)'
+                        '^(\d{4}^)^(\d{2}^)^(\d{2}^)'^,
+                        ' ^($3$2$1^)'
                       ^)
                     ^)
                   else
-                    concat(
+                    concat^(
                       .//sbs_program^,
                       ' - '^,
                       name^,
-                      replace(
+                      replace^(
                         published_at^,
-                        '(\d+^)-(\d+^)-(\d+^).+'^,
-                        ' ($3$2$1^)'
+                        '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+                        ' ^($3$2$1^)'
                       ^)
                     ^)^,
-                  t:^=round(duration div 1000^)
+                  t:^=round^(duration div 1000^)
                 ^)
               else
-                $b/(
-                  name:^=concat(
-                    if (.//sbs_videotype^='vod'^) then
-                      if (.//sbs_station^='veronicatv'^) then
+                $b/^(
+                  name:^=concat^(
+                    if ^(.//sbs_videotype^='vod'^) then
+                      if ^(.//sbs_station^='veronicatv'^) then
                         'Veronica'
                       else
-                        upper-case(.//sbs_station^)
+                        upper-case^(.//sbs_station^)
                     else
                       .//sbs_program^,
                     ' - '^,
                     .//title^,
-                    replace(
+                    replace^(
                       .//sko_dt^,
-                      '(\d{4}^)(\d{2}^)(\d{2}^)'^,
-                      ' ($3$2$1^)'
+                      '^(\d{4}^)^(\d{2}^)^(\d{2}^)'^,
+                      ' ^($3$2$1^)'
                     ^)
                   ^)^,
-                  t:^=.//duration^,
-                  s_url:^='https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (
-                    if (unparsed-text-available(.^)^) then
-                      .
-                    else
-                      (^)
-                  ^)
+                  t:^=.//duration
                 ^)^,
-              duur:^=$t * dayTimeDuration('PT1S'^) + time('00:00:00'^)^,
-              json:^=[
-                $a/(
-                  if (.//sbs_videotype^='vod'^) then (
-                    {
-                      'format':'meta'^,
-                      'url':(sources^)(^)/src
-                    }^,
-                    tail(
-                      tokenize(
-                        unparsed-text((sources^)(^)/src^)^,
-                        '#EXT-X-STREAM-INF:'
+              duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+              'https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! ^(
+                if ^(unparsed-text-available^(.^)^) then
+                  s_url:^=.
+                else
+                  ^(^)
+              ^)^,
+              formats:^=[
+                if ^($a//sbs_videotype^='vod'^) then ^(
+                  for $x in $a/^(sources^)^(^)[container^='MP4'] order by $x/size return $x/{
+                    'format':'pg-'^|^|avg_bitrate idiv 1000^,
+                    'extension':'mp4'^,
+                    'resolution':concat^(
+                      width^,
+                      'x'^,
+                      height
+                    ^)^,
+                    'url':replace^(
+                      stream_name^,
+                      'mp4:'^,
+                      extract^(
+                        $a/^(sources^)^(^)/src^,
+                        '^(.+nl/^)'^,
+                        1
                       ^)
-                    ^) ! {
-                      'format':string(
-                        extract(
-                          .^,
-                          'BANDWIDTH^=(\d+^)'^,1
-                        ^) idiv 1000
-                      ^)^,
-                      'url':concat(
-                        resolve-uri('.'^,$a/(sources^)(^)/src^)^,
-                        extract(
-                          .^,
-                          '(.+m3u8^)'^,1
-                        ^)
-                      ^)
-                    }^,
-                    (sources^)(^)[container^='MP4']/{
-                      'format':concat(
-                        'mp4-'^,
-                        avg_bitrate idiv 1000
-                      ^)^,
-                      'url':replace(
-                        stream_name^,
-                        'mp4:'^,
-                        extract(
-                          $a/(sources^)(^)/src^,
-                          '(.+nl/^)'^,1
-                        ^)
-                      ^)
-                    }
-                  ^) else
-                    (sources^)(^)[src]/{
-                      'format':concat(
-                        'mp4-'^,
-                        avg_bitrate idiv 1000
-                      ^)^,
-                      'url':src
-                    }
-                  ^)^,
-                $b/(
-                  {
-                    'format':'meta_hd'^,
-                    'url':playlist
+                    ^)
                   }^,
-                  tail(
-                    tokenize(
-                      unparsed-text(playlist^)^,
+                  {
+                    'format':'hls-master'^,
+                    'extension':'m3u8'^,
+                    'url':$a/^(sources^)^(^)/src
+                  }^,
+                  tail^(
+                    tokenize^(
+                      unparsed-text^(
+                        $a/^(sources^)^(^)/src
+                      ^)^,
                       '#EXT-X-STREAM-INF:'
                     ^)
                   ^) ! {
-                    'format':string(
-                      extract(
-                        .^,
-                        'BANDWIDTH^=(\d+^)'^,1
-                      ^) idiv 1000
-                    ^)^|^|'_hd'^,
-                    'url':extract(
+                    'format':'hls-'^|^|extract^(
                       .^,
-                      '(.+m3u8^)'^,1
+                      'BANDWIDTH^=^(\d+^)\d{3}'^,
+                      1
+                    ^)^,
+                    'extension':'m3u8'^,
+                    'resolution':extract^(
+                      .^,
+                      'RESOLUTION^=^(.+?^)^,'^,
+                      1
+                    ^)^,
+                    'url':resolve-uri^(
+                      '.'^,
+                      $a/^(sources^)^(^)/src
+                    ^)^|^|extract^(
+                      .^,
+                      '^(.+m3u8^)'^,
+                      1
+                    ^)
+                  }
+                ^) else
+                  for $x in $a/^(sources^)^(^)[src] order by $x/size return $x/{
+                    'format':'pg-'^|^|avg_bitrate idiv 1000^,
+                    'extension':'mp4'^,
+                    'resolution':concat^(
+                      width^,
+                      'x'^,
+                      height
+                    ^)^,
+                    'url':src
+                  }^,
+                $b/^(
+                  {
+                    'format':'hls-master_hd'^,
+                    'extension':'m3u8'^,
+                    'url':playlist
+                  }^,
+                  tail^(
+                    tokenize^(
+                      unparsed-text^(playlist^)^,
+                      '#EXT-X-STREAM-INF:'
+                    ^)
+                  ^) ! {
+                    'format':replace^(
+                      .^,
+                      '.+BANDWIDTH^=^(\d+^)\d{3}.+'^,
+                      'hls-$1_hd'^,
+                      's'
+                    ^)^,
+                    'extension':'m3u8'^,
+                    'resolution':extract^(
+                      .^,
+                      'RESOLUTION^=^(.+^)'^,
+                      1
+                    ^)^,
+                    'url':extract^(
+                      .^,
+                      '^(.+m3u8^)'^,
+                      1
                     ^)
                   }
                 ^)
               ]
-            ^)^,
-            let $a:^=(
-              for $x in $json(^)[contains(format^,'mp4'^)]/format order by $x return $x^,
-              $json(^)[format^='meta']/format^,
-              for $x in $json(^)[format castable as int]/format order by $x return $x^,
-              $json(^)[format^='meta_hd']/format^,
-              for $x in $json(^)[matches(format^,'\d+_hd'^)]/format order by $x return $x
-            ^) return (
-              formats:^=join($a^,'^, '^)^,
-              best:^=$a[last(^)]
             ^)
           ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
-IF DEFINED json (
+IF DEFINED formats (
 	GOTO Formats
 ) ELSE (
 	ECHO.
