@@ -5688,7 +5688,7 @@ formats := [{"format": "pg-450", "extension": "mp4", "resolution": "320x180", "u
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/e9b1a15d92b26b518770012bde1815f9f86697d8]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/9b61484ba4c82af8ed77f79b65dafb8c0644b6e2]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "for $x in json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'] order by $x/id return concat('  ',$x/id,'. ',$x/name)"
   1. NPO Radio 1
@@ -6218,3 +6218,433 @@ http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-l
         'method':'HEAD'
       }
     )/url"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30 (losse video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" -e "json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()"
+{
+  "id": "5wVDEI7aZxcE",
+  "title": "De rol van het verzet tegen de nazi's in Wolfenstein II: The New Colossus",
+  "description": "Om duidelijk te maken dat&nbsp;Wolfenstein II: The New Colossus op 27 oktober op de markt verschijnt, heeft uitgever Bethesda de 'release trailer' van de game vrijgegeven. Daarom komt vooral de rol van het verzet tegen de nazi's naar voren, waar B.J.",
+  "poster": "https://ic.tweakimg.net/img/account=s7JeEm/item=5wVDEI7aZxcE/size=980x551/image.jpg",
+  "duration": 91,
+  "locations": {
+    "adaptive": [
+      {
+        "type": "application/dash+xml",
+        "src": "https://cdn.tweakers.tv/dash/account=s7JeEm/item=5wVDEI7aZxcE/5wVDEI7aZxcE.mpd"
+      },
+      {
+        "type": "application/x-mpegURL",
+        "src": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/5wVDEI7aZxcE.m3u8"
+      }
+    ],
+    "progressive": [
+      {
+        "label": "1080p60",
+        "height": 1080,
+        "width": 1920,
+        "sources": [
+          {
+            "type": "video/mp4",
+            "src": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dpcDEsdYKkcg/5wVDEI7aZxcE.mp4"
+          }
+        ]
+      },
+      {
+        "label": "720p60",
+        "height": 720,
+        "width": 1280,
+        "sources": [
+          {
+            "type": "video/mp4",
+            "src": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dKFKMs_KKl8A/5wVDEI7aZxcE.mp4"
+          }
+        ]
+      },
+      {
+        "label": "360p",
+        "height": 360,
+        "width": 640,
+        "sources": [
+          {
+            "type": "video/mp4",
+            "src": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=ZrELEqtIa54A/5wVDEI7aZxcE.mp4"
+          }
+        ]
+      },
+      {
+        "label": "270p",
+        "height": 270,
+        "width": 480,
+        "sources": [
+          {
+            "type": "video/mp4",
+            "src": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=9qVLMq5IKpUA/5wVDEI7aZxcE.mp4"
+          }
+        ]
+      }
+    ]
+  },
+  "audioonly": false,
+  "live": false,
+  "account": "s7JeEm",
+  "shareurl": "https://tweakers.net/video/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html",
+  "adtag": "https://pubads.g.doubleclick.net/gampad/ads?env=vp&gdfp_req=1&impl=s&output=vast&iu=%2F7455%2Ftweakers%2Ftweakers.video%2Fgames&sz=620x100&unviewed_position_start=1&url=https%3A%2F%2Ftweakers.net%2Fvideo%2F15869%2Fde-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html&correlator=1512593236"
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Dynamische videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" --xquery "json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/locations/[let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x)]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/5wVDEI7aZxcE.m3u8"
+  },
+  {
+    "format": "hls-136",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000.m3u8"
+  },
+  {
+    "format": "hls-666",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=500000.m3u8"
+  },
+  {
+    "format": "hls-950",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:768k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=768000.m3u8"
+  },
+  {
+    "format": "hls-5436",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "vbitrate": "v:5000k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=5000000.m3u8"
+  },
+  {
+    "format": "hls-8616",
+    "extension": "m3u8",
+    "resolution": "1920x1080",
+    "vbitrate": "v:8000k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=8000000.m3u8"
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Progressieve videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" --xquery "json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/locations/[for $x in (progressive)() order by $x/height return $x/{'format':'pg-'||height,'extension':'mp4','resolution':concat(width,'x',height),'url':.//src}]"
+[
+  {
+    "format": "pg-270",
+    "extension": "mp4",
+    "resolution": "480x270",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=9qVLMq5IKpUA/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-360",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=ZrELEqtIa54A/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-720",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dKFKMs_KKl8A/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-1080",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dpcDEsdYKkcg/5wVDEI7aZxcE.mp4"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" --xquery "json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/locations/[for $x in (progressive)() order by $x/height return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x//src} 2>&amp;1') ! {'format':'pg-'||$x/height,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x//src}]"
+[
+  {
+    "format": "pg-270",
+    "extension": "mp4",
+    "resolution": "480x270",
+    "vbitrate": "v:466k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=9qVLMq5IKpUA/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-360",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:719k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=ZrELEqtIa54A/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-720",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "vbitrate": "v:4828k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dKFKMs_KKl8A/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-1080",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "vbitrate": "v:7820k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dpcDEsdYKkcg/5wVDEI7aZxcE.mp4"
+  }
+]
+
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Progressieve- en dynamische videostreams samen
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" --xquery "json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/locations/[for $x in (progressive)() order by $x/height return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x//src} 2>&amp;1') ! {'format':'pg-'||$x/height,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x//src},let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x)]"
+[
+  {
+    "format": "pg-270",
+    "extension": "mp4",
+    "resolution": "480x270",
+    "vbitrate": "v:466k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=9qVLMq5IKpUA/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-360",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:719k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=ZrELEqtIa54A/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-720",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "vbitrate": "v:4828k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dKFKMs_KKl8A/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "pg-1080",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "vbitrate": "v:7820k",
+    "abitrate": "a:128k",
+    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dpcDEsdYKkcg/5wVDEI7aZxcE.mp4"
+  },
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/5wVDEI7aZxcE.m3u8"
+  },
+  {
+    "format": "hls-136",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000.m3u8"
+  },
+  {
+    "format": "hls-666",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=500000.m3u8"
+  },
+  {
+    "format": "hls-950",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:768k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=768000.m3u8"
+  },
+  {
+    "format": "hls-5436",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "vbitrate": "v:5000k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=5000000.m3u8"
+  },
+  {
+    "format": "hls-8616",
+    "extension": "m3u8",
+    "resolution": "1920x1080",
+    "vbitrate": "v:8000k",
+    "abitrate": "a:128k",
+    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=8000000.m3u8"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" --xquery "declare function local:extract($json){$json/[for $x in (progressive)() order by $x/height return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x//src} 2>&amp;1') ! {'format':'pg-'||$x/height,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x//src},let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x)]}; if (count(//iframe)>1) then videos:=[//iframe/doc(@src)/{position():json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/{'name':'Tweakers- '||replace(title,'[&quot;&apos;]',''''''),'t':duration,'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),'formats':local:extract(locations)}}] else (json((if (//iframe) then doc(//iframe/@src)//script else //script)/extract(.,'''video'',(.+)\);',1)[.])//items)()/(name:='Tweakers- '||replace(title,'[&quot;&apos;]',''''''),t:=duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),formats:=local:extract(locations))"
+name := Tweakers- De rol van het verzet tegen de nazi''s in Wolfenstein II: The New Colossus
+t := 91
+duration := 00:01:31
+formats := [{"format": "pg-270", "extension": "mp4", "resolution": "480x270", "vbitrate": "v:466k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=9qVLMq5IKpUA/5wVDEI7aZxcE.mp4"}, {"format": "pg-360", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:719k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=ZrELEqtIa54A/5wVDEI7aZxcE.mp4"}, {"format": "pg-720", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:4828k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dKFKMs_KKl8A/5wVDEI7aZxcE.mp4"}, {"format": "pg-1080", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:7820k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dpcDEsdYKkcg/5wVDEI7aZxcE.mp4"}, {"format": "hls-master", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/5wVDEI7aZxcE.m3u8"}, {"format": "hls-136", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-666", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-950", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-5436", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:5000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=5000000.m3u8"}, {"format": "hls-8616", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:8000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=8000000.m3u8"}]
+
+https://tweakers.net/reviews/5325/samsung-galaxy-s8-en-s8+-sexy-smartphone-blijkt-behoorlijk-trouw.html (artikel met één video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://tweakers.net/reviews/5325/samsung-galaxy-s8-en-s8+-sexy-smartphone-blijkt-behoorlijk-trouw.html" --xquery "[...]"
+name := Tweakers- Samsung Galaxy S8 en S8+ Review - Sexy smartphone blijkt behoorlijk trouw
+t := 413
+duration := 00:06:53
+formats := [{"format": "pg-270", "extension": "mp4", "resolution": "480x270", "vbitrate": "v:464k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=yyILUqNZqhwQ/file=WIYCUMLJ40UU/yyILUqNZqhwQ.mp4"}, {"format": "pg-360", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:714k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=yyILUqNZqhwQ/file=WLJLdIZJq00U/yyILUqNZqhwQ.mp4"}, {"format": "pg-720", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:4602k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=yyILUqNZqhwQ/file=W6BLdOPLokYw/yyILUqNZqhwQ.mp4"}, {"format": "pg-1080", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:7376k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=yyILUqNZqhwQ/file=25ZKcKpb40cw/yyILUqNZqhwQ.mp4"}, {"format": "hls-master", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=yyILUqNZqhwQ/yyILUqNZqhwQ.m3u8"}, {"format": "hls-136", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=yyILUqNZqhwQ/SRQCVovb6kQ0-SZJCcqrbqw0Q-SxBDUq_bqk4U-y5ADdovJ6gwU-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-666", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=yyILUqNZqhwQ/SRQCVovb6kQ0-SZJCcqrbqw0Q-SxBDUq_bqk4U-y5ADdovJ6gwU-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-950", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=yyILUqNZqhwQ/SRQCVovb6kQ0-SZJCcqrbqw0Q-SxBDUq_bqk4U-y5ADdovJ6gwU-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-5436", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:5000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=yyILUqNZqhwQ/SRQCVovb6kQ0-SZJCcqrbqw0Q-SxBDUq_bqk4U-y5ADdovJ6gwU-hls-nodrm-audio=128000-video=5000000.m3u8"}, {"format": "hls-8616", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:8000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=yyILUqNZqhwQ/SRQCVovb6kQ0-SZJCcqrbqw0Q-SxBDUq_bqk4U-y5ADdovJ6gwU-hls-nodrm-audio=128000-video=8000000.m3u8"}]
+
+https://tweakers.net/reviews/4619/overwatch-meesterlijke-multiplayer.html (artikel met twee video's)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://tweakers.net/reviews/4619/overwatch-meesterlijke-multiplayer.html" --xquery "[...]"
+videos := [{"1": {"name": "Tweakers- Gameplay Overwatch", "t": 755, "duration": "00:12:35", "formats": [{"format": "pg-270", "extension": "mp4", "resolution": "480x270", "vbitrate": "v:496k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"}, {"format": "pg-360", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:760k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=vasvw8DbMBKw/Po9v4qRJMNOw.mp4"}, {"format": "pg-720", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:6452k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=Nq8uwejbPYqU/Po9v4qRJMNOw.mp4"}, {"format": "pg-1080", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:11928k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"}, {"format": "hls-master", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"}, {"format": "hls-136", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-666", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-950", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-7026", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:6500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=6500000.m3u8"}, {"format": "hls-12856", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:12000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"}]}}, {"2": {"name": "Tweakers- Blizzard toont gameplay Overwatch", "t": 345, "duration": "00:05:45", "formats": [{"format": "pg-270", "extension": "mp4", "resolution": "480x270", "vbitrate": "v:497k", "abitrate": "a:127k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=nPe8ZZfcCH/file=OkeW4t86Uo/nPe8ZZfcCH.mp4"}, {"format": "pg-360", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:764k", "abitrate": "a:127k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=nPe8ZZfcCH/file=duHdtz865n/nPe8ZZfcCH.mp4"}, {"format": "pg-720", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:6231k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=nPe8ZZfcCH/file=vw4OpuhCKJIW/nPe8ZZfcCH.mp4"}, {"format": "hls-master", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/nPe8ZZfcCH.m3u8"}, {"format": "hls-136", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/OkeW4t86Uo-duHdtz865n-fUOhDjV8Yf-yD4Gu-jAn0Mk-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-204", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:192k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/OkeW4t86Uo-duHdtz865n-fUOhDjV8Yf-yD4Gu-jAn0Mk-hls-nodrm-audio=192000.m3u8"}, {"format": "hls-666", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/OkeW4t86Uo-duHdtz865n-fUOhDjV8Yf-yD4Gu-jAn0Mk-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-1018", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:192k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/OkeW4t86Uo-duHdtz865n-fUOhDjV8Yf-yD4Gu-jAn0Mk-hls-nodrm-audio=192000-video=768000.m3u8"}, {"format": "hls-5456", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:4954k", "abitrate": "a:192k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/OkeW4t86Uo-duHdtz865n-fUOhDjV8Yf-yD4Gu-jAn0Mk-hls-nodrm-audio=192000-video=4954553.m3u8"}, {"format": "hls-7094", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:6500k", "abitrate": "a:192k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/OkeW4t86Uo-duHdtz865n-fUOhDjV8Yf-yD4Gu-jAn0Mk-hls-nodrm-audio=192000-video=6500000.m3u8"}]}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "declare function local:extract($json){
+            $json/[
+              for $x in (progressive)() order by $x/height return
+              system(
+                x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x//src} 2>&amp;1'
+              ) ! {
+                'format':'pg-'||$x/height,
+                'extension':'mp4',
+                'resolution':extract(
+                  .,
+                  'Video:.+, (\d+x\d+)',
+                  1
+                ),
+                'vbitrate':replace(
+                  .,
+                  '.+Video:.+?(\d+) kb.+',
+                  'v:$1k',
+                  's'
+                ),
+                'abitrate':replace(
+                  .,
+                  '.+Audio:.+?(\d+) kb.+',
+                  'a:$1k',
+                  's'
+                ),
+                'url':$x//src
+              },
+              let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return (
+                {
+                  'format':'hls-master',
+                  'extension':'m3u8',
+                  'url':$a
+                },
+                for $x in tail(
+                  tokenize(
+                    extract(
+                      unparsed-text($a),
+                      '(#EXT-X-STREAM-INF.+m3u8$)',
+                      1,'ms'
+                    ),
+                    '#EXT-X-STREAM-INF:'
+                  )
+                ) ! {
+                  'format':'hls-'||extract(
+                    .,
+                    'BANDWIDTH=(\d+)\d{3}',
+                    1
+                  ),
+                  'extension':'m3u8',
+                  'resolution':extract(
+                    .,
+                    'RESOLUTION=(.+?),',
+                    1
+                  ),
+                  'vbitrate':extract(
+                    .,
+                    'video=(\d+)\d{3}',
+                    1
+                  ) ! (
+                    if (.) then
+                      concat(
+                        'v:',
+                        .,
+                        'k'
+                      )
+                    else
+                      ''
+                  ),
+                  'abitrate':replace(
+                    .,
+                    '.+audio.+?(\d+)\d{3}.+',
+                    'a:$1k',
+                    's'
+                  ),
+                  'url':resolve-uri(
+                    '.',
+                    $a
+                  )||extract(
+                    .,
+                    '(.+m3u8)',
+                    1
+                  )
+                } order by $x/format return $x
+              )
+            ]
+          };
+          if (count(//iframe)>1) then
+            videos:=[
+              //iframe/doc(@src)/{
+                position():json(
+                  //script/extract(
+                    .,
+                    '''video'',(.+)\);',
+                    1
+                  )[.]
+                )/(.//items)()/{
+                  'name':'Tweakers- '||replace(title,'[&quot;&apos;]',''''''),
+                  't':duration,
+                  'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),
+                  'formats':local:extract(locations)
+                }
+              }
+            ]
+          else
+            json(
+              (
+                if (//iframe) then
+                  doc(//iframe/@src)//script
+                else
+                  //script
+              )/extract(
+                .,
+                '''video'',(.+)\);',
+                1
+              )[.]
+            )/(.//items)()/(
+              name:='Tweakers- '||replace(title,'[&quot;&apos;]',''''''),
+              t:=duration,
+              duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
+              formats:=local:extract(locations)
+            )"

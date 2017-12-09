@@ -2960,83 +2960,127 @@ IF NOT "%url: =%"=="%url%" (
 	    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:tweakers.net=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --method^=POST "%url%"
-	--xquery ^"if (//iframe^) then
-	            let $a:^=replace(
-	              //span[@itemprop^='datePublished']/@content^,
-	              '(\d+^)-(\d+^)-(\d+^).+'^,
-	              ' ($3$2$1^)'
-	            ^) return
-	            if (count(//iframe^)^=1^) then
-	              json(
-	                doc(
-	                  substring-before(
-	                    //iframe/@src^,
-	                    '?'
-	                  ^)
-	                ^)//script/extract(
+	--xquery ^"declare function local:extract^($json^){
+	            $json/[
+	              for $x in ^(progressive^)^(^) order by $x/height return
+	              system^(
+	                x'cmd /c ^"FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe^" -i {$x//src} 2^>^&amp^;1'
+	              ^) ! {
+	                'format':'pg-'^|^|$x/height^,
+	                'extension':'mp4'^,
+	                'resolution':extract^(
 	                  .^,
-	                  '^,(\{.+^)\^)'^,1
-	                ^)[.]^)/(
-	                name:^=concat(
-	                  'Tweakers - '^,
-	                  (.//title^)[1]^,
-	                  $a
+	                  'Video:.+^, ^(\d+x\d+^)'^,
+	                  1
 	                ^)^,
-	                json:^=[
-	                  (.//progressive^)(^)/{
-	                    'format':concat('mp4-'^,height^)^,
-	                    'url':(sources^)(^)/src
-	                  }
-	                ]
-	              ^)
-	            else
-	              json:^=[
-	                //iframe/doc(
-	                  substring-before(./@src^,'?'^)
-	                ^)/{
-	                  position(^)^|^|'e':json(
-	                    //script/extract(
-	                      .^,
-	                      '^,(\{.+^)\^)'^,1
-	                    ^)[.]
-	                  ^)/{
-	                    'name':concat(
-	                      'Tweakers - '^,
-	                      (.//title^)[1]^,
-	                      $a
+	                'vbitrate':replace^(
+	                  .^,
+	                  '.+Video:.+?^(\d+^) kb.+'^,
+	                  'v:$1k'^,
+	                  's'
+	                ^)^,
+	                'abitrate':replace^(
+	                  .^,
+	                  '.+Audio:.+?^(\d+^) kb.+'^,
+	                  'a:$1k'^,
+	                  's'
+	                ^)^,
+	                'url':$x//src
+	              }^,
+	              let $a:^=^(adaptive^)^(^)[ends-with^(src^,'m3u8'^)]/src return ^(
+	                {
+	                  'format':'hls-master'^,
+	                  'extension':'m3u8'^,
+	                  'url':$a
+	                }^,
+	                for $x in tail^(
+	                  tokenize^(
+	                    extract^(
+	                      unparsed-text^($a^)^,
+	                      '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
+	                      1^,'ms'
 	                    ^)^,
-	                    'formats':(.//progressive^)(^)/{
-	                      'format':concat('mp4-'^,height^)^,
-	                      'url':(sources^)(^)/src
-	                    }
-	                  }
+	                    '#EXT-X-STREAM-INF:'
+	                  ^)
+	                ^) ! {
+	                  'format':'hls-'^|^|extract^(
+	                    .^,
+	                    'BANDWIDTH^=^(\d+^)\d{3}'^,
+	                    1
+	                  ^)^,
+	                  'extension':'m3u8'^,
+	                  'resolution':extract^(
+	                    .^,
+	                    'RESOLUTION^=^(.+?^)^,'^,
+	                    1
+	                  ^)^,
+	                  'vbitrate':extract^(
+	                    .^,
+	                    'video^=^(\d+^)\d{3}'^,
+	                    1
+	                  ^) ! ^(
+	                    if ^(.^) then
+	                      concat^(
+	                        'v:'^,
+	                        .^,
+	                        'k'
+	                      ^)
+	                    else
+	                      ''
+	                  ^)^,
+	                  'abitrate':replace^(
+	                    .^,
+	                    '.+audio.+?^(\d+^)\d{3}.+'^,
+	                    'a:$1k'^,
+	                    's'
+	                  ^)^,
+	                  'url':resolve-uri^(
+	                    '.'^,
+	                    $a
+	                  ^)^|^|extract^(
+	                    .^,
+	                    '^(.+m3u8^)'^,
+	                    1
+	                  ^)
+	                } order by $x/format return $x
+	              ^)
+	            ]
+	          }^;
+	          if ^(count^(//iframe^)^>1^) then
+	            videos:^=[
+	              //iframe/doc^(@src^)/{
+	                position^(^):json^(
+	                  //script/extract^(
+	                    .^,
+	                    '''video''^,^(.+^)\^)^;'^,
+	                    1
+	                  ^)[.]
+	                ^)/^(.//items^)^(^)/{
+	                  'name':'Tweakers- '^|^|replace^(title^,'[^&quot^;^&apos^;]'^,''''''^)^,
+	                  't':duration^,
+	                  'duration':duration * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+	                  'formats':local:extract^(locations^)
 	                }
-	              ]
+	              }
+	            ]
 	          else
-	            json(
-	              //script/extract(
+	            json^(
+	              ^(
+	                if ^(//iframe^) then
+	                  doc^(//iframe/@src^)//script
+	                else
+	                  //script
+	              ^)/extract^(
 	                .^,
-	                '^,(\{.+^)\^)'^,1
+	                '''video''^,^(.+^)\^)^;'^,
+	                1
 	              ^)[.]
-	            ^)/(
-	              name:^=concat(
-	                'Tweakers - '^,
-	                (.//title^)[1]
-	              ^)^,
-	              json:^=[
-	                (.//progressive^)(^)/{
-	                  'format':concat('mp4-'^,height^)^,
-	                  'url':(sources^)(^)/src
-	                }
-	              ]
-	            ^)^,
-	          if ($json(1^)/format^) then
-	            let $b:^=for $x in $json(^)/format order by $x return $x return (
-	              formats:^=join($b^,'^, '^)^,
-	              best:^=$b[last(^)]
-	            ^)
-	          else
-	            videos:^=join($json(^)(^)^,'^, '^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	            ^)/^(.//items^)^(^)/^(
+	              name:^='Tweakers- '^|^|replace^(title^,'[^&quot^;^&apos^;]'^,''''''^)^,
+	              t:^=duration^,
+	              duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+	              formats:^=local:extract^(locations^)
+	            ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE (
 	ECHO.
 	ECHO Ongeldige programma-url.
