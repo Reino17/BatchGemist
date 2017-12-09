@@ -224,7 +224,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=(//@data-media-id)[1],date:=replace((//@datetime)[1],'(\d+)-(\d+)-(\d+)','$3$2$1')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:anderetijden.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=(//@data-prid)[1]" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "if (count(//figure[@data-mid])=1) then prid:=//figure[@data-mid]/@data-mid else videos:=[//figure[@data-mid]/{position():{'name':.//h2,'prid':@data-mid,'goto':'NPO'}}]" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:schooltv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//div/@data-mid,date:=replace(//dd[span[@property='datePublished']],'(\d+)-(\d+)-(\d+)','$1$2$3')" --output-format^=cmd^"') DO %%A
@@ -443,9 +443,11 @@ ECHO %videos% | %xidel% - -e "$json()/concat('  ',.(),'. ',.//name)"
 ECHO.
 SET /P "video=Kies gewenste video: [1] "
 IF NOT DEFINED video SET "video=1"
-FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - --xquery "$json()('%video%')/(name:=name,duration:=duration,t:=t,if (url) then v_url:=url else formats:=formats)" --output-encoding^=oem --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - --xquery "$json()('%video%')/(if (goto) then (goto:=goto,prid:=prid) else (name:=name,duration:=duration,t:=t,if (url) then v_url:=url else formats:=formats))" --output-encoding^=oem --output-format^=cmd') DO %%A
 
-IF DEFINED formats (
+IF DEFINED goto (
+	GOTO %goto%
+) ELSE IF DEFINED formats (
 	GOTO Formats
 ) ELSE IF DEFINED v_url (
 	GOTO Select

@@ -6221,7 +6221,7 @@ http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-l
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/d40a3b85a7cfdc06263ad21e165f48e23ce47ed7]
 
 https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30 (losse video)
 
@@ -6648,3 +6648,83 @@ videos := [{"1": {"name": "Tweakers- Gameplay Overwatch", "t": 755, "duration": 
               duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
               formats:=local:extract(locations)
             )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+https://anderetijden.nl/programma/1/Andere-Tijden/aflevering/721/100-jaar-Russische-Revolutie
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://anderetijden.nl/programma/1/Andere-Tijden/aflevering/721/100-jaar-Russische-Revolutie" -e "[//figure[@data-mid]/{position():{'name':.//h2,'prid':@data-mid,'goto':'NPO'}}]"
+[
+  {
+    "1": {
+      "name": "100 jaar Russische Revolutie",
+      "prid": "VPWON_1274590",
+      "goto": "NPO"
+    }
+  },
+  {
+    "2": {
+      "name": "Romanovs hopen terug te keren, NOS",
+      "prid": "WO_NTR_11228148",
+      "goto": "NPO"
+    }
+  },
+  {
+    "3": {
+      "name": "Definitief bewijs in NOS Journaal",
+      "prid": "WO_NTR_11228145",
+      "goto": "NPO"
+    }
+  },
+  {
+    "4": {
+      "name": "Begrafenis in Sint-Petersburg, RTR",
+      "prid": "WO_NTR_11228146",
+      "goto": "NPO"
+    }
+  },
+  {
+    "5": {
+      "name": "Heiligverklaring Romanovs, NOS",
+      "prid": "WO_NTR_11228147",
+      "goto": "NPO"
+    }
+  },
+  {
+    "6": {
+      "name": "Gregorich over zijn vondst",
+      "prid": "WO_NTR_11228144",
+      "goto": "NPO"
+    }
+  }
+]
+
+-e "[
+      //figure[@data-mid]/{
+        position():{
+          'name':.//h2,
+          'prid':@data-mid,
+          'goto':':NPO'
+        }
+      }
+    ]"
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://anderetijden.nl/artikel/6779/De-Onbegrepen-Dammer" -e "if (count(//figure[@data-mid])=1) then prid:=//figure[@data-mid]/@data-mid else videos:=[//figure[@data-mid]/{position():{'name':.//h2,'prid':@data-mid,'goto':'NPO'}}]"
+prid := VPWON_1264902
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "if (count(//figure[@data-mid])=1) then
+      prid:=//figure[@data-mid]/@data-mid
+    else
+      videos:=[
+        //figure[@data-mid]/{
+          position():{
+            'name':.//h2,
+            'prid':@data-mid,
+            'goto':'NPO'
+          }
+        }
+      ]"
