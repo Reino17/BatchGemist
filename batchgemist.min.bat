@@ -495,19 +495,19 @@ REM ============================================================================
 
 :Select
 SETLOCAL DISABLEDELAYEDEXPANSION
-IF NOT DEFINED duur (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=extract(system('cmd /c %ffmpeg% -i %v_url% 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then (duur:=substring-before($a,'.'),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+floor(seconds-from-time($a))) else ()" --output-format^=cmd^"') DO %%A
+IF NOT DEFINED duration (
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=extract(system('cmd /c %ffmpeg% -i %v_url% 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),.),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.) else ()" --output-format^=cmd^"') DO %%A
 )
 FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(normalize-space('%name%'),':','-'),'[<>/\\|?*]','')" --output-encoding^=oem^"') DO SET "name=%%A"
 ECHO.
-IF DEFINED duur (
+IF DEFINED duration (
 	ECHO Naam:       %name%
-	ECHO Tijdsduur:  %duur% (%t%%duur:~8,4%s^)
+	ECHO Tijdsduur:  %duration% (%t%%duration:~8,4%s^)
 	IF DEFINED ss (
-		ECHO Start:      %start% (%ss%s^)
-		ECHO Einde:      %eind% (%to%s^)
+		ECHO Begin:      %start% (%ss%s^)
+		ECHO Einde:      %end% (%to%s^)
 	)
-	IF DEFINED tot ECHO Gratis tot: %tot%
+	IF DEFINED expire ECHO Gratis tot: %expire%
 ) ELSE (
 	ECHO Naam: %name%
 )

@@ -3450,7 +3450,7 @@ t := 235
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/e9d866ede38cc08037c5bd457aa0c1c40466e3cf]
 
 'VPWON_1274590.json':
 
@@ -3605,19 +3605,43 @@ hls-2107
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
+[https://github.com/Reino17/BatchGemist/commit/
 
-xidel-0.9.7.5447-openssl.exe -s -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-x86-N-83034-gf48b6b8.exe" -i \"http://download.omroep.nl/nos/content/mp4/web03/2017/02/27/285337.mp4\" 2>&1'),'Duration: (.+?), start',1) return if ($a castable as time) then (duur:=substring-before($a,'.'),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+floor(seconds-from-time($a))) else ()"
-duur := 00:07:51
-t := 471
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'(Duration: .+?),',1)"
+Duration: 00:04:53.99
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://pedgewarer23b.video.kpnstreaming.nl/session/dc48616a-d6b3-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1800000.m3u8\" 2>&1'),'(Duration: .+?),',1)"
+Duration: N/A
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then concat(extract($a,'(.+:)',1),round(seconds-from-time($a))) else ()"
+00:04:54
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),.),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.) else ()"
+duration := 00:04:54
+t := 294
 
 -e "let $a:=extract(
-      system('cmd /c "FFMpeg\ffmpeg-x86-N-83034-gf48b6b8.exe" -i \"http://download.omroep.nl/nos/content/mp4/web03/2017/02/27/285337.mp4\" 2>&1'),
-      'Duration: (.+?), start',1
+      system(
+        'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'
+      ),
+      'Duration: (.+?),',
+      1
     ) return
-    if ($a castable as time) then (
-      duur:=substring-before($a,'.'),
-      t:=hours-from-time($a)*3600+minutes-from-time($a)*60+floor(seconds-from-time($a))
-    ) else
+    if ($a castable as time) then
+      round(
+        seconds-from-time($a)
+      ) ! (
+        duration:=concat(
+          extract(
+            $a,
+            '(.+:)',
+            1
+          ),
+          .
+        ),
+        t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.
+      )
+    else
       ()"
 
 ================================================================================================================================
