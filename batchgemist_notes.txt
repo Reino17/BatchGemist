@@ -1688,15 +1688,12 @@ De Xidel commando wordt nog steeds ontleed als één lange regel, waardoor de limi
 --------------------------------------------------------------------------------------------------------------------------------
 
 Ontleed een specifiek gedeelte van een tekstbestand en escape alle escape-characters:
-xidel-0.9.6.exe -s --color=never -e "file:read-text-lines('batchgemist-1.52_notes.txt')[position()>1261][position()<88] ! replace(.,'([\^&<>|\"\",;=)])','^$1')" | clip
+xidel-0.9.6.exe -s --color=never -e "file:read-text-lines('batchgemist-1.6_notes.txt')[position()>1261][position()<88] ! replace(.,'([\^&<>|\"\",;=()])','^$1')" | clip
 
-Officieel zijn dit de escape-characters: [^&<>|",;()=], maar...
-- Een ^ vooraan moet worden ge-escaped.
-- De " moeten worden ge-escaped, maar ook verdubbeld, omdat één " in Batch problemen geeft.
-- De ( kan achterwege gelaten worden, omdat het escapen van een ( in een for-loop in Batch, i.t.t. een ), niet noodzakelijk is.
+Officieel zijn dit de escape-characters: [^&<>|",;()=], maar een ^ vooraan moet worden ge-escaped. Een " moeten ook worden ge-escaped, maar ook verdubbeld, omdat één " in Batch problemen geeft.
 
-I.p.v. de " te moeten verdubbelen, kan ook xquery gebruikt worden (denk wel om de eerste & ):
-xidel-0.9.6.exe -s --color=never --xquery "file:read-text-lines('batchgemist-1.52_notes.txt')[position()>1261][position()<88] ! replace(.,'([\^&amp;<>|&quot;,;=)])','^$1')" | clip
+I.p.v. de " te moeten verdubbelen, kan ook xquery gebruikt worden (denk wel om de eerste &):
+xidel-0.9.6.exe -s --color=never --xquery "file:read-text-lines('batchgemist-1.6_notes.txt')[position()>1261][position()<88] ! replace(.,'([\^&amp;<>|&quot;,;=()])','^$1')" | clip
 
 ================================================================================================================================
 
@@ -1807,6 +1804,9 @@ best := 4291
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/dca7a6c88b583d02d6ec25a70495b4a2f4b2abf2]
+
+xidel-0.9.6.exe -s --color=never -e "let $a:=('a','b','c','d','e','f') return $a[1]"
+a
 
 xidel-0.9.6.exe -s --color=never -e "let $a:=('a','b','c','d','e','f') return head($a)"
 a
@@ -4526,13 +4526,16 @@ https://www.npo.nl/nos-journaal/12-08-2017/POW_03375494
 https://www.rtl.nl/video/408f1683-6aec-3cf0-bf39-cabf9dbeb4f2
 http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-laat
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 -e "url:=x:request(
       {
         'data':let $a:=(
           //iframe[@class]/@src,
           extract(
             //@onclick,
-            '(http.+?)''',1
+            '(http.+?)''',
+            1
           )
         ) return
         replace(

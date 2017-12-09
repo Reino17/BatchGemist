@@ -215,7 +215,8 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
 	      '%url%'^,
-	      '.+/(.+\d+^)'^,1
+	      '.+/(.+\d+^)'^,
+	      1
 	    ^)^,
 	    date:^=replace(
 	      '%url%'^,
@@ -227,7 +228,8 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
 	      '%url%'^,
-	      '.+/(.+\d+^)'^,1
+	      '.+/(.+\d+^)'^,
+	      1
 	    ^)^,
 	    date:^=replace(
 	      '%url%'^,
@@ -243,7 +245,8 @@ IF NOT "%url: =%"=="%url%" (
 	          //iframe[@class]/@src^,
 	          extract(
 	            //@onclick^,
-	            '(http.+?^)'''^,1
+	            '(http.+?^)'''^,
+	            1
 	          ^)
 	        ^) return
 	        replace(
@@ -519,49 +522,56 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"uuid:^=extract(
 	      '%url%'^,
-	      'uuid=([\w-]+^)'^,1
+	      'uuid=([\w-]+^)'^,
+	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"uuid:^=extract(
 	      '%url%'^,
-	      'video/([\w-]+^)'^,1
+	      'video/([\w-]+^)'^,
+	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"uuid:^=extract(
 	      '%url%'^,
-	      'video/([\w-]+^)'^,1
+	      'video/([\w-]+^)'^,
+	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%"
 	-e ^"uuid:^=extract(
 	      //div[@class^='videoContainer']//@src^,
-	      '^=(.+^)/'^,1
+	      '^=(.+^)/'^,
+	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%"
 	-e ^"uuid:^=//iframe/extract(
 	      @src^,
-	      'uuid^=(.+?^)/'^,1
+	      'uuid^=(.+?^)/'^,
+	      1
 	    ^)[.]^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:kijk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
 	      '%url%'^,
-	      '(?:video^|videos^)/(\w+^)'^,1
+	      '(?:video^|videos^)/(\w+^)'^,
+	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO Kijk
 ) ELSE IF NOT "%url:sbs6.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
 	      '%url%'^,
-	      'videos/(\w+^)'^,1
+	      'videos/(\w+^)'^,
+	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO Kijk
 ) ELSE IF NOT "%url:www.omropfryslan.nl=%"=="%url%" (
