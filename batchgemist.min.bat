@@ -225,7 +225,7 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPO
 ) ELSE IF NOT "%url:anderetijden.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "if (count(//figure[@data-mid])=1) then prid:=//figure[@data-mid]/@data-mid else videos:=[//figure[@data-mid]/{position():{'name':.//h2,'prid':@data-mid,'goto':'NPO'}}]" --output-format^=cmd^"') DO %%A
-	GOTO NPO
+	IF DEFINED prid GOTO NPO
 ) ELSE IF NOT "%url:schooltv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//div/@data-mid,date:=replace(//dd[span[@property='datePublished']],'(\d+)-(\d+)-(\d+)','$1$2$3')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -740,7 +740,7 @@ ECHO   [Benodigdheden]
 ECHO     - xidel.exe (http://videlibri.sourceforge.net/xidel.html#downloads)
 ECHO       Xidel is het hart van BatchGemist en is verantwoordelijk voor het ontleden van zo'n beetje
 ECHO       alle gegevens.
-ECHO       Download Xidel (versie 0.9.7.5648* of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
+ECHO       Download Xidel (versie 0.9.7.5651* of nieuwer) en plaats 'xidel.exe' in dezelfde map als dit
 ECHO       batchscript, of wijzig de programma-map in dit script onder ":Check".
 ECHO       * https://sourceforge.net/projects/videlibri/files/Xidel/Xidel development/
 ECHO     - ffmpeg.exe (http://ffmpeg.zeranoe.com/builds)
@@ -764,12 +764,12 @@ ECHO     npo.nl                eenvandaag.nl         omropfryslan.nl           r
 ECHO.
 PAUSE
 ECHO.
-ECHO     gemi.st               101.tv                rtvnoord.nl               omroepgelderland.nl
-ECHO     2doc.nl               rtlxl.nl              rtvdrenthe.nl             omroepwest.nl
-ECHO     anderetijden.nl       rtl.nl                rtvnh.nl                  rijnmond.nl
-ECHO     schooltv.nl           rtlnieuws.nl          omroepflevoland.nl        omroepzeeland.nl
-ECHO     willemwever.nl        rtlz.nl               rtvoost.nl                omroepbrabant.nl
-ECHO     nos.nl                kijk.nl               at5.nl                    l1.nl
+ECHO     gemi.st               rtlxl.nl              rtvnoord.nl               omroepgelderland.nl
+ECHO     2doc.nl               rtl.nl                rtvdrenthe.nl             omroepwest.nl
+ECHO     anderetijden.nl       rtlnieuws.nl          rtvnh.nl                  rijnmond.nl
+ECHO     schooltv.nl           rtlz.nl               omroepflevoland.nl        omroepzeeland.nl
+ECHO     willemwever.nl        kijk.nl               rtvoost.nl                omroepbrabant.nl
+ECHO     nos.nl                sbs6.nl               at5.nl                    l1.nl
 ECHO.
 ECHO     telegraaf.nl          dumpert.nl            autojunk.nl
 ECHO     vtm.be                comedycentral.nl      tweakers.net
@@ -786,17 +786,17 @@ ECHO     werkt hier niet).
 ECHO     Voer 'radio' in voor een opsomming van alle NPO radiozenders en maak je keuze.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
-ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie. Voor dit
-ECHO     formaat kun je gewoon op ENTER drukken. Het formaat 'meta' en de formaten met alleen een getal
-ECHO     zijn dynamische videostreams. De formaten die beginnen met 'mp4' zijn progressieve
-ECHO     videostreams.
+ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie/bitrate.
+ECHO     Voor dit formaat kun je gewoon op ENTER drukken. Formaten die beginnen met 'hls' zijn
+ECHO     dynamische videostreams en eindigen op 'm3u8'. Formaten die beginnen met 'pg' zijn
+ECHO     progressieve videostreams en eindigen op 'mp4/m4v'.
 ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
-ECHO     Vervolgens krijg je de keuze om de gegenereerde audio/video-url weer te geven, te downloaden
+ECHO     Vervolgens krijg je de keuze om de gegenereerde audio/video-url weer te geven, te downloaden,
 ECHO.
 PAUSE
 ECHO.
-ECHO     en te openen met MPC-HC/BE (als je die hebt toegevoegd onder ":Check"). Optie 1 tussen blok-
+ECHO     of te openen met MPC-HC/BE (als je die hebt toegevoegd onder ":Check"). Optie 1 tussen blok-
 ECHO     haken is voorgeselecteerd. In dat geval kun je dan gewoon op ENTER drukken.
 ECHO     Voor de ja/nee-vragen die dan volgen geldt dit ook. De keuze met hoofdletter is voor-
 ECHO     geselecteerd. Voor 'ja' bij "[J/n]" kun je dan gewoon op ENTER drukken.
