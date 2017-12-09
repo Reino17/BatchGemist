@@ -3605,7 +3605,7 @@ hls-2107
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
-[https://github.com/Reino17/BatchGemist/commit/
+[https://github.com/Reino17/BatchGemist/commit/e69868def8a5576e733289d4f84e494f9611da2f]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'(Duration: .+?),',1)"
 Duration: 00:04:53.99

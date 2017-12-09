@@ -580,21 +580,21 @@ IF DEFINED ss (
 		IF "%id%"=="3" (
 			FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('?start=',round(%ss1%+%ss2%),'&end=',round(%to%))"^"') DO %mpc% %v_url%%%A /close
 		)
-		IF "%id%"=="4" %ffmpeg% -v error -ss %ss1% -i %v_url% -ss %ss2% -t %t% -c copy -f nut - | %mpc% - /close
+		IF "%id%"=="4" %ffmpeg% -v fatal -ss %ss1% -i %v_url% -ss %ss2% -t %t% -c copy -f nut - | %mpc% - /close
 	)
 ) ELSE IF DEFINED s_url (
 	ECHO.
 	SET /P "subs=Inclusief ondertiteling? [j/N] "
 	IF /I "!subs!"=="j" (
 		IF "%id%"=="3" %mpc% %v_url% /sub %s_url% /close
-		IF "%id%"=="4" %ffmpeg% -v error -i %v_url% -c copy -f nut - | %mpc% - /sub %s_url% /close
+		IF "%id%"=="4" %ffmpeg% -v fatal -i %v_url% -c copy -f nut - | %mpc% - /sub %s_url% /close
 	) ELSE (
 		IF "%id%"=="3" %mpc% %v_url% /close
-		IF "%id%"=="4" %ffmpeg% -v error -i %v_url% -c copy -f nut - | %mpc% - /close
+		IF "%id%"=="4" %ffmpeg% -v fatal -i %v_url% -c copy -f nut - | %mpc% - /close
 	)
 ) ELSE (
 	IF "%id%"=="3" %mpc% %v_url% /close
-	IF "%id%"=="4" %ffmpeg% -v error -i %v_url% -c copy -f nut - | %mpc% - /close
+	IF "%id%"=="4" %ffmpeg% -v fatal -i %v_url% -c copy -f nut - | %mpc% - /close
 )
 ECHO.
 ECHO.
