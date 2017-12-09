@@ -239,11 +239,6 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:eenvandaag.avrotros.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=json(//@data-at-player)/video_id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
-) ELSE IF NOT "%url:www.101.tv/live=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -f "(//@data-src)[1]" -e "prid:=//script/extract(.,'prid: \"(.+^)\"',1)[.]" --output-format^=cmd^"') DO %%A
-	GOTO NPO
-) ELSE IF NOT "%url:www.101.tv=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "if (//p/iframe) then v_url:=replace(//p/iframe/@src,'.+/(.+)','https://youtu.be/$1') else doc(concat('http://media.bnn.nl/video/',extract($url,'.+/(.+)',1),'/bnntv')) ! (name:=concat('101TV - ',//title),v_url:=//file)" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:static.rtl.nl/embed=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%','uuid=([\w-]+)',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
