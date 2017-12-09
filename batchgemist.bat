@@ -3068,285 +3068,315 @@ REM ============================================================================
 
 :NPO
 FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
---xquery ^"json(
-            extract(
+--xquery ^"json^(
+            extract^(
               $raw^,
-              '\((.+^)\^)'^,1
+              '\^(^(.+^)\^)'^,
+              1
             ^)
-          ^) ! (
-            if (environment-variable('name'^)^) then
-              (^)
-            else (
-              name:^=if (medium^='live'^) then
-                concat(
-                  titel^,
-                  replace(
-                    '%date%'^,
-                    '.+?(\d+^)-(\d+^)-(\d+^)'^,
-                    ' - Livestream ($1$2$3^)'
-                  ^)
-                ^)
-              else
-                replace(
-                  concat(
-                    if (count(.//naam^)^=1^) then
-                      .//naam
-                    else
-                      join(
-                        .//naam^,
-                        ' en '
-                      ^)^,
-                    ' - '^,
-                    if (ptype^='episode'^) then (
-                      if (aflevering_titel^) then (
-                        if (contains(titel^,aflevering_titel^)^) then
-                          titel
-                        else (
-                          if (contains(aflevering_titel^,titel^)^) then
-                            aflevering_titel
-                          else
-                            concat(
-                              titel^,
-                              ' - '^,
-                              aflevering_titel
-                            ^)
-                        ^)
-                      ^) else
-                        titel
-                    ^) else
-                      concat(
-                        .//serie_titel^,
-                        ' - '^,
-                        titel
-                      ^)^,
-                    if (matches('%date%'^,'^^\d'^)^) then
-                      ' (%date%^)'
-                    else
-                      replace(
-                        x:request(
-                          {
-                            'data':concat(
-                              'http://www.npo.nl/'^,
-                              prid
-                            ^)^,
-                            'method':'HEAD'
-                          }
-                        ^)/url^,
-                        '.+?(\d+^)-(\d+^)-(\d+^).+'^,
-                        ' ($1$2$3^)'
-                      ^)
-                  ^)^,
-                  '[^&quot^;^&apos^;]'^,
-                  ''''''
-                ^)^,
-              if (tijdsduur^) then (
-                duur:^=tijdsduur^,
-                t:^=hours-from-time(tijdsduur^)*3600+minutes-from-time(tijdsduur^)*60+seconds-from-time(tijdsduur^)^,
-                start:^=start^,
-                (hours-from-time(start^)*3600+minutes-from-time(start^)*60+seconds-from-time(start^)^) ! (
-                  ss:^=.^,
-                  if (. mod 30^=0^) then (
-                    if (.^=30^) then
-                      (^)
-                    else
-                      ss1:^=. - 30^,
-                    ss2:^=30
-                  ^) else (
-                    if (.^<30^) then
-                      (^)
-                    else
-                      ss1:^=. - (. mod 30^)^,
-                    ss2:^=. mod 30
-                  ^)
-                ^)^,
-                eind:^=eind^,
-                to:^=hours-from-time(eind^)*3600+minutes-from-time(eind^)*60+seconds-from-time(eind^)^,
-                if (publicatie_eind^) then (
-                  let $a:^=dateTime(publicatie_eind^) - current-dateTime(^) return
-                  tot:^=concat(
-                    replace(
-                      publicatie_eind^,
-                      '(\d+^)-(\d+^)-(\d+^)T(.+^)\+.+'^,
-                      '$3-$2-$1 $4'
-                    ^)^,
-                    ' (nog '^,
-                    days-from-duration($a^) ! (
-                      if (.^=0^) then
-                        (^)
-                      else if (.^=1^) then
-                        .^|^|' dag en '
-                      else
-                        .^|^|' dagen en '
-                    ^)^,
-                    hours-from-duration($a^) ! (
-                      if (.^=0^) then
-                        (^)
-                      else
-                        .^|^|'u'
-                    ^)^,
-                    minutes-from-duration($a^) ! (
-                      if (.^=0^) then
-                        (^)
-                      else
-                        .^|^|'m'
-                    ^)^,
-                    floor(seconds-from-duration($a^)^)^,
-                    's^)'
-                  ^)
-                ^) else
-                  (^)
-              ^) else
-                (^)
-            ^)^,
-            if (tt888^='ja'^) then (
-              s_url:^=concat(
-                'http://tt888.omroep.nl/tt888/'^,
-                prid
-              ^)^,
-              if (unparsed-text-available($s_url^)^) then
-                (^)
-              else
-                s_charenc:^='-sub_charenc CP1252'
-            ^) else
-              (^)^,
-            let $a:^=(
-              if (medium^='live' or pubopties^) then
-                for $x in json(
-                  concat(
-                    'http://ida.omroep.nl/app.php/'^,
-                    prid^,
-                    '?token^='^,
-                    json(
-                      'http://ida.omroep.nl/app.php/auth'
-                    ^)/token
-                  ^)
-                ^)//url ! replace(
-                  .^,
-                  'jsonp'^,
-                  'json'
-                ^) return
-                if (unparsed-text-available($x^)^) then
-                  if (contains($x^,'m3u8'^)^) then
-                    let $b:^=if (contains($x^,'live'^)^) then
-                      json($x^)
-                    else
-                      json($x^)/url
-                    return (
-                      {
-                        'format':'meta'^,
-                        'url':$b
-                      }^,
-                      tail(
-                        tokenize(
-                          unparsed-text($b^)^,
-                          '#EXT-X-STREAM-INF:'
-                        ^)
-                      ^) ! {
-                        'format':string(
-                          extract(
-                            .^,
-                            'BANDWIDTH^=(\d+^)'^,1
-                          ^) idiv 1000
-                        ^)^,
-                        'url':concat(
-                          resolve-uri('.'^,$b^)^,
-                          extract(
-                            .^,
-                            '(.+m3u8^)'^,1
-                          ^)
-                        ^)
-                      }
-                    ^)
-                  else
-                    json($x^)/{
-                      'format':concat(
-                        'mp4-'^,
-                        extract(
-                          url^,
-                          '.+/([a-z]+^)'^,1
-                        ^)
-                      ^)^,
-                      'url':substring-before(
-                        url^,
-                        '?'
-                      ^)
-                    }
-                else
-                  (^)
-              else
-                (^)^,
-              if (medium!^='live' and streams^) then
-                let $b:^=(streams^)(^) return
-                $b[starts-with(url^,'http'^)]/{
-                  'format':if (type^) then
-                    concat(
-                      'mp4-'^,
-                      max($b/kwaliteit^)+1
-                    ^)
-                  else
-                    concat(
-                      if (formaat^='h264'^) then
-                        'mp4'
-                      else
-                        formaat^,
-                      '-'^,
-                      kwaliteit
-                    ^)^,
-                  'url':x:request(
-                    {
-                      'data':url^,
-                      'method':'HEAD'^,
-                      'error-handling':'xxx^=accept'
-                    }
-                  ^)[some $x in ('200'^,'302'^) satisfies contains(headers[1]^,$x^)]/(
-                    if (ends-with(url^,'asf'^)^) then
-                      doc(url^)//@href
-                    else if (contains(url^,'content-ip'^)^) then
-                      x:request(
-                        {
-                          'post':serialize-json(
-                            [
-                              {
-                                \^"file\^":url
-                              }
-                            ]
-                          ^)^,
-                          'url':'http://nos.nl/video/resolve/'
-                        }
-                      ^)//file
-                    else
-                      url
-                  ^)
-                }[url]
-              else
-                (^)
-            ^) return
-            if ($a^) then
-              if (count($a^)^=1^) then
-                v_url:^=$a/url
-              else (
-                json:^=[$a]^,
-                let $b:^=(
-                  for $x in $a[contains(format^,'wmv'^)]/format order by $x return $x^,
-                  for $x in $a[matches(format^,'mp4-\d'^)]/format order by $x return $x^,
-                  reverse(
-                    $a[matches(format^,'mp4-[a-z]'^)]/format
-                  ^)^,
-                  $a[format^='meta']/format^,
-                  for $x in $a[format castable as int]/format order by $x return $x
-                ^) return (
-                  formats:^=join($b^,'^, '^)^,
-                  best:^=$b[last(^)]
+          ^)[not^(error^)] ! ^(
+            name:^=if ^(medium^='live'^) then
+              concat^(
+                titel^,
+                replace^(
+                  '%date%'^,
+                  '.+?^(\d+^)-^(\d+^)-^(\d+^)'^,
+                  ' - Livestream ^($1$2$3^)'
                 ^)
               ^)
             else
-              (^)
-          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+              replace^(
+                concat^(
+                  if ^(count^(.//naam^)^=1^) then
+                    .//naam
+                  else
+                    join^(
+                      .//naam^,
+                      ' en '
+                    ^)^,
+                  ' - '^,
+                  if ^(ptype^='episode'^) then ^(
+                    if ^(aflevering_titel^) then ^(
+                      if ^(contains^(titel^,aflevering_titel^)^) then
+                        titel
+                      else ^(
+                        if ^(contains^(aflevering_titel^,titel^)^) then
+                          aflevering_titel
+                        else
+                          concat^(
+                            titel^,
+                            ' - '^,
+                            aflevering_titel
+                          ^)
+                      ^)
+                    ^) else
+                      titel
+                  ^) else
+                    concat^(
+                      .//serie_titel^,
+                      ' - '^,
+                      titel
+                    ^)^,
+                  if ^(matches^('%date%'^,'^^\d'^)^) then
+                    ' ^(%date%^)'
+                  else
+                    replace^(
+                      x:request^(
+                        {
+                          'data':'http://www.npo.nl/%prid%'^,
+                          'method':'HEAD'
+                        }
+                      ^)/url^,
+                      '.+?^(\d+^)-^(\d+^)-^(\d+^).+'^,
+                      ' ^($1$2$3^)'
+                    ^)
+                ^)^,
+                '[^&quot^;^&apos^;]'^,
+                ''''''
+              ^)^,
+            if ^(tijdsduur^) then ^(
+              duration:^=tijdsduur^,
+              t:^=hours-from-time^(tijdsduur^)*3600+minutes-from-time^(tijdsduur^)*60+seconds-from-time^(tijdsduur^)^,
+              if ^(start^) then ^(
+                start:^=start^,
+                ^(hours-from-time^(start^)*3600+minutes-from-time^(start^)*60+seconds-from-time^(start^)^) ! ^(
+                  ss:^=.^,
+                  if ^(. mod 30^=0^) then ^(
+                    if ^(.^=30^) then
+                      ^(^)
+                    else
+                      ss1:^=. - 30^,
+                    ss2:^=30
+                  ^) else ^(
+                    if ^(.^<30^) then
+                      ^(^)
+                    else
+                      ss1:^=. - ^(. mod 30^)^,
+                    ss2:^=. mod 30
+                  ^)
+                ^)^,
+                end:^=eind^,
+                to:^=hours-from-time^(eind^)*3600+minutes-from-time^(eind^)*60+seconds-from-time^(eind^)
+              ^) else
+                ^(^)^,
+              if ^(publicatie_eind^) then ^(
+                let $a:^=dateTime^(publicatie_eind^) - current-dateTime^(^) return
+                expire:^=concat^(
+                  replace^(
+                    publicatie_eind^,
+                    '^(\d+^)-^(\d+^)-^(\d+^)T^(.+^)\+.+'^,
+                    '$3-$2-$1 $4'
+                  ^)^,
+                  ' ^(nog '^,
+                  days-from-duration^($a^) ! ^(
+                    if ^(.^=0^) then
+                      ^(^)
+                    else if ^(.^=1^) then
+                      .^|^|' dag en '
+                    else
+                      .^|^|' dagen en '
+                  ^)^,
+                  hours-from-duration^($a^) ! ^(
+                    if ^(.^=0^) then
+                      ^(^)
+                    else
+                      .^|^|'u'
+                  ^)^,
+                  minutes-from-duration^($a^) ! ^(
+                    if ^(.^=0^) then
+                      ^(^)
+                    else
+                      .^|^|'m'
+                  ^)^,
+                  floor^(
+                    seconds-from-duration^($a^)
+                  ^)^,
+                  's^)'
+                ^)
+              ^) else
+                ^(^)
+            ^) else
+              ^(^),
+            if ^(tt888^='ja'^) then
+              s_url:^='http://tt888.omroep.nl/tt888/%prid%'
+            else
+              ^(^)
+          ^)^,
+          let $a:^=x:request^(
+            {
+              'data':'http://ida.omroep.nl/app.php/%prid%?token^='^|^|json^(
+                'http://ida.omroep.nl/app.php/auth'
+              ^)/token^,
+              'error-handling':'4xx^=accept'
+            }
+          ^)[contains^(headers[1]^,'200'^)]/json/^(items^)^(^)^(^) return
+          if ^($a^) then
+            formats:^=[
+              for $x in reverse^(
+                $a[contentType^='odi'][format^='mp4']
+              ^)/json^(
+                replace^(
+                  url^,
+                  'jsonp'^,
+                  'json'
+                ^)
+              ^)/substring-before^(
+                url^,
+                '?'
+              ^) return
+              system^(
+                x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
+              ^) ! {
+                'format':'pg-'^|^|extract^(
+                  $x^,
+                  '.+/^([a-z]+^)'^,
+                  1
+                ^)^,
+                'extension':'m4v'^,
+                'resolution':extract^(
+                  .^,
+                  'Video:.+^, ^(\d+x\d+^)'^,
+                  1
+                ^)^,
+                'vbitrate':replace^(
+                  .^,
+                  '.+Video:.+?^(\d+^) kb.+'^,
+                  'v:$1k'^,
+                  's'
+                ^)^,
+                'abitrate':replace^(
+                  .^,
+                  '.+Audio:.+?^(\d+^) kb.+'^,
+                  'a:$1k'^,
+                  's'
+                ^)^,
+                'url':$x
+              }^,
+              let $b:^=$a[format^='hls']/replace^(
+                url^,
+                'jsonp'^,
+                'json'
+              ^) ! ^(
+                if ^(contains^(.^,'livestreams'^)^) then
+                  json^(.^)
+                else
+                  json^(.^)/url
+              ^) return ^(
+                {
+                  'format':'hls-master'^,
+                  'extension':'m3u8'^,
+                  'url':$b
+                }[url]^,
+                for $x in tail^(
+                  tokenize^(
+                    extract^(
+                      unparsed-text^($b^)^,
+                      '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
+                      1^,'ms'
+                    ^)^,
+                    '#EXT-X-STREAM-INF:'
+                  ^)
+                ^) ! {
+                  'format':'hls-'^|^|extract^(
+                    .^,
+                    'BANDWIDTH^=^(\d+^)\d{3}'^,
+                    1
+                  ^)^,
+                  'extension':'m3u8'^,
+                  'resolution':extract^(
+                    .^,
+                    'RESOLUTION^=^(.+^)^,'^,
+                    1
+                  ^)^,
+                  'vbitrate':extract^(
+                    .^,
+                    'video^=^(\d+^)\d{3}'^,
+                    1
+                  ^) ! ^(
+                    if ^(.^) then
+                      concat^(
+                        'v:'^,
+                        .^,
+                        'k'
+                      ^)
+                    else
+                      ''
+                  ^)^,
+                  'abitrate':replace^(
+                    .^,
+                    '.+audio.+?^(\d+^)\d{3}.+'^,
+                    'a:$1k'^,
+                    's'
+                  ^)^,
+                  'url':resolve-uri^(
+                    '.'^,
+                    $b
+                  ^)^|^|extract^(
+                    .^,
+                    '^(.+m3u8^)'^,
+                    1
+                  ^)
+                } order by $x/format return $x
+              ^)^,
+              for $x at $i in reverse^(
+                $a[contentType^='url'][format^='mp4']
+              ^) ! x:request^(
+                {
+                  'data':url^,
+                  'method':'HEAD'^,
+                  'error-handling':'xxx^=accept'
+                }
+              ^)[some $x in ^('200'^,'302'^) satisfies contains^(headers[1]^,$x^)]/^(
+                if ^(contains^(url^,'content-ip'^)^) then
+                  x:request^(
+                    {
+                      'post':serialize-json^(
+                        [
+                          {
+                            'file':url
+                          }
+                        ]
+                      ^)^,
+                      'url':'https://nos.nl/video/resolve/'
+                    }
+                  ^)//file
+                else
+                  url
+              ^) return
+              system^(
+                x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
+              ^) ! {
+                'format':replace^(
+                  $x^,
+                  '.+\.^(.+^)'^,
+                  '$1-'
+                ^)^|^|$i^,
+                'extension':'mp4'^,
+                'resolution':extract^(
+                  .^,
+                  'Video:.+^, ^(\d+x\d+^)'^,
+                  1
+                ^)^,
+                'vbitrate':replace^(
+                  .^,
+                  '.+Video:.+?^(\d+^) kb.+'^,
+                  'v:$1k'^,
+                  's'
+                ^)^,
+                'abitrate':replace^(
+                  .^,
+                  '.+Audio:.+?^(\d+^) kb.+'^,
+                  'a:$1k'^,
+                  's'
+                ^)^,
+                'url':$x
+              }
+            ]
+          else
+            ^(^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
-IF DEFINED json (
+IF DEFINED formats (
 	GOTO Formats
-) ELSE IF DEFINED v_url (
-	GOTO Select
 ) ELSE (
 	ECHO.
 	ECHO Video nog niet, of niet meer beschikbaar.
@@ -4032,15 +4062,13 @@ REM ============================================================================
 
 :Render
 IF DEFINED ss (
-	IF "%v_url:mms://=%"=="%v_url%" (
-		FOR /F "delims=" %%A IN ('^"%xidel%
-		-e ^"concat(
-		      '%v_url%?start^^^='^,
-		      round(%ss1%+%ss2%^)^,
-		      '^^^&end^^^='^,
-		      round(%to%^)
-		    ^)^"^"') DO SET "v_url=%%A"
-	)
+	FOR /F "delims=" %%A IN ('^"%xidel%
+	-e ^"concat(
+	      '%v_url%?start^^^='^,
+	      round(%ss1%+%ss2%^)^,
+	      '^^^&end^^^='^,
+	      round(%to%^)
+	    ^)^"^"') DO SET "v_url=%%A"
 )
 ECHO.
 ECHO Audio- of video-url:
@@ -4060,18 +4088,16 @@ REM ============================================================================
 :Play
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF DEFINED ss (
-	IF "%v_url:mms://=%"=="%v_url%" (
-		IF "%id%"=="3" (
-			FOR /F "delims=" %%A IN ('^"%xidel%
-			-e ^"concat(
-			      '?start^='^,
-			      round(%ss1%+%ss2%^)^,
-			      '^&end^='^,
-			      round(%to%^)
-			    ^)^"^"') DO %mpc% %v_url%%%A /close
-		)
-		IF "%id%"=="4" %ffmpeg% -v fatal -ss %ss1% -i %v_url% -ss %ss2% -t %t% -c copy -f nut - | %mpc% - /close
+	IF "%id%"=="3" (
+		FOR /F "delims=" %%A IN ('^"%xidel%
+		-e ^"concat(
+		      '?start^='^,
+		      round(%ss1%+%ss2%^)^,
+		      '^&end^='^,
+		      round(%to%^)
+		    ^)^"^"') DO %mpc% %v_url%%%A /close
 	)
+	IF "%id%"=="4" %ffmpeg% -v fatal -ss %ss1% -i %v_url% -ss %ss2% -t %t% -c copy -f nut - | %mpc% - /close
 ) ELSE IF DEFINED s_url (
 	ECHO.
 	SET /P "subs=Inclusief ondertiteling? [j/N] "
@@ -4097,7 +4123,6 @@ GOTO Input
 REM ================================================================================================
 
 :Download
-IF NOT "%v_url:mms://=%"=="%v_url%" SET "v_url=%v_url:mms://=mmsh://%"
 ECHO.
 ECHO Doelmap: %~dp0
 SET /P "remap=Wijzigen? [J/n] "
@@ -4168,17 +4193,17 @@ IF DEFINED s_url (
 ECHO.
 IF DEFINED ss1 (
 	IF DEFINED mux (
-		%ffmpeg% -hide_banner -ss %ss1% -i %v_url% %s_charenc% -ss %ss1% -i %s_url% -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -ss %ss1% -i %v_url% -ss %ss1% -i %s_url% -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 	) ELSE (
 		%ffmpeg% -hide_banner -ss %ss1% -i %v_url% -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss %ss1% -i %s_url% -ss %ss2% -t %t% "!map!%name%.srt"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss %ss1% -i %s_url% -ss %ss2% -t %t% "!map!%name%.srt"
 	)
 ) ELSE IF DEFINED ss2 (
 	IF DEFINED mux (
-		%ffmpeg% -hide_banner -i %v_url% %s_charenc% -i %s_url% -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -i %v_url% -i %s_url% -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 	) ELSE (
 		%ffmpeg% -hide_banner -i %v_url% -ss %ss2% -t %t% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i %s_url% -ss %ss2% -t %t% "!map!%name%.srt"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% -ss %ss2% -t %t% "!map!%name%.srt"
 	)
 ) ELSE (
 	SET /P "part=Fragment downloaden? [j/N] "
@@ -4215,48 +4240,48 @@ IF DEFINED ss1 (
 		IF DEFINED mux (
 			IF DEFINED ss1 (
 	IF DEFINED t (
-		%ffmpeg% -hide_banner -ss !ss1! -i %v_url% %s_charenc% -ss !ss1! -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -ss !ss1! -i %v_url% -ss !ss1! -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 	) ELSE (
-		%ffmpeg% -hide_banner -ss !ss1! -i %v_url% %s_charenc% -ss !ss1! -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -ss !ss1! -i %v_url% -ss !ss1! -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 	)
 			) ELSE IF DEFINED ss2 (
 	IF DEFINED t (
-		%ffmpeg% -hide_banner -i %v_url% %s_charenc% -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -i %v_url% -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 	) ELSE (
-		%ffmpeg% -hide_banner -i %v_url% %s_charenc% -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+		%ffmpeg% -hide_banner -i %v_url% -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 	)
 			) ELSE (
-	%ffmpeg% -hide_banner -i %v_url% %s_charenc% -i %s_url% -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+	%ffmpeg% -hide_banner -i %v_url% -i %s_url% -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 			)
 		) ELSE (
 			IF DEFINED ss1 (
 	IF DEFINED t (
 		%ffmpeg% -hide_banner -ss !ss1! -i %v_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i %s_url% -ss !ss2! -t !t! "!map!%name%.srt"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss1! -i %s_url% -ss !ss2! -t !t! "!map!%name%.srt"
 	) ELSE (
 		%ffmpeg% -hide_banner -ss !ss1! -i %v_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -ss !ss1! -i %s_url% -ss !ss2! "!map!%name%.srt"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss1! -i %s_url% -ss !ss2! "!map!%name%.srt"
 	)
 			) ELSE IF DEFINED ss2 (
 	IF DEFINED t (
 		%ffmpeg% -hide_banner -i %v_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i %s_url% -ss !ss2! -t !t! "!map!%name%.srt"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% -ss !ss2! -t !t! "!map!%name%.srt"
 	) ELSE (
 		%ffmpeg% -hide_banner -i %v_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i %s_url% -ss !ss2! "!map!%name%.srt"
+		IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% -ss !ss2! "!map!%name%.srt"
 	)
 			) ELSE (
 	%ffmpeg% -hide_banner -i %v_url% -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-	IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i %s_url% -t !t! "!map!%name%.srt"
+	IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% -t !t! "!map!%name%.srt"
 			)
 		)
 	) ELSE (
 		ECHO.
 		IF DEFINED mux (
-			%ffmpeg% -hide_banner -i %v_url% %s_charenc% -i %s_url% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+			%ffmpeg% -hide_banner -i %v_url% -i %s_url% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 		) ELSE (
 			%ffmpeg% -hide_banner -i %v_url% -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
-			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner %s_charenc% -i %s_url% "!map!%name%.srt"
+			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% "!map!%name%.srt"
 		)
 	)
 )

@@ -1196,8 +1196,11 @@ v_url := http://static.autojunk.nl/flv/2007/0323/120040.flv
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/0f871ca56ff739fddadd408904bfa1c6998bb451]
+[https://github.com/Reino17/BatchGemist/commit/d95e3374cfd6c8550908e6dd0571b7f4d0c64cd7]
+[https://github.com/Reino17/BatchGemist/commit/7aa16a291215513a1f010e61d6a11c234ca7e5a9]
+[https://github.com/Reino17/BatchGemist/commit/]
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://e.omroep.nl/tt888/VPWON_1269922" -t 14 "VPWON_1269922-frag.srt"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -t 14 "VPWON_1269922-frag.srt"
 1
 00:00:00,000 --> 00:00:03,013
 En in lenigheid zijn ze hun grote neef zeker de baas.
@@ -1209,9 +1212,10 @@ Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of
 3
 00:00:44,005 --> 00:00:47,004
 en leniger is dan die machtige roofdieren.
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 642 -t 14 "VPWON_1269922-frag.srt"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -ss 642 -t 14 "VPWON_1269922-frag.srt"
 1
 00:00:03,014 --> 00:00:09,009
 Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
@@ -1219,9 +1223,10 @@ Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of
 2
 00:00:09,014 --> 00:00:12,013
 en leniger is dan die machtige roofdieren.
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 630 -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 12 -t 14 "VPWON_1269922-frag.srt"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 630 -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -ss 12 -t 14 "VPWON_1269922-frag.srt"
 1
 00:00:03,014 --> 00:00:09,009
 Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
@@ -1232,19 +1237,19 @@ en leniger is dan die machtige roofdieren.
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://e.omroep.nl/tt888/VPWON_1269922" -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922-frag.mp4"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922-frag.mp4"
 Met --ss 642 vóór de eerste input krijg je wel het juiste videofragment, maar de ondertiteling wordt niks mee gedaan en start vanaf het begin.
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -ss 642 -i "http://e.omroep.nl/tt888/VPWON_1269922" -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922-frag.mp4"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -ss 642 -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922-frag.mp4"
 Met -ss 642 vóór elke input krijg je:
 [mp4 @ 0373e180] Application provided duration: -34986 / timestamp: 9014 is out of range for mov/mp4 format
 [mp4 @ 0373e180] pts has no value
 Je krijgt wel het juiste videofragment, maar de tijdsduur klopt niks van. De ondertiteling loopt wel synchroon, maar toch gaat ook hier iets mis, want de regel vóór #1 (#86 in de hele video) is vanaf het begin van het videofragment in beeld.
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 642 -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922_url-frag.mp4"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -ss 642 -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922_url-frag.mp4"
 Met -ss 642 ná de laatste input krijg je het juiste videofragment én ondertiteling die synchroon loopt, maar omdat er nu nauwkeurig gezocht moet worden, kost het enige tijd voordat 00:10:42 bereikt is. Niet optimaal dus.
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 630 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -ss 630 -i "http://e.omroep.nl/tt888/VPWON_1269922" -ss 12 -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922_url-frag.mp4"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 630 -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -ss 630 -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -ss 12 -t 14 -c copy -bsf:a aac_adtstoasc -c:s mov_text -metadata:s:s language=dut "VPWON_1269922_url-frag.mp4"
 Met -ss 630 vóór elke input én -ss 12 ná de laatste input krijg je het juiste videofragment én ondertiteling die synchroon loopt.
 Er wordt eerst snel gezocht naar 00:10:30 en daarna nauwkeurig naar 00:10:42. Hierdoor gaat het dus ook lekker snel.
 
@@ -1258,7 +1263,7 @@ mp4box.exe -add "VPWON_1269922.srt:lang=dut:name=" "NTR - Het verborgen leven va
 Timed Text (SRT) import - text track 1024 x 576, font Serif (size 18)
 Saving NTR - Het verborgen leven van de kat - De leeuw op jouw schoot (03012017).mp4: 0.500 secs Interleaving
 
-ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://e.omroep.nl/tt888/VPWON_1269922" -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "NTR - Het verborgen leven van de kat - De leeuw op jouw schoot (03012017).mkv"
+ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -i "http://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m65ec697756843b9300586e4698000000.cd7143b54f96a68505305f4c1caf51bd/p/32/10/10/19/VPWON_1269922/VPWON_1269922.ism/VPWON_1269922-audio=128000-video=1002000.m3u8" -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "NTR - Het verborgen leven van de kat - De leeuw op jouw schoot (03012017).mkv"
 Ondertitelingstreams in Matroska daarentegen zijn voor mijn smart tv (en voor de meeste smart tv's waarschijnlijk) geen enkel probleem.
 
 --------------------------------------------------------------------------------------------------------------------------------
@@ -1409,220 +1414,198 @@ Bij ECHO !json! ^| %xidel% - (:Formats) komt de json al via stdin. Dus read() ga
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.6.exe -s --color=never -e "unparsed-text-available('http://e.omroep.nl/tt888/POW_00942206')"		// ANSI (1252)
+xidel-0.9.6.exe -s --color=never -e "unparsed-text-available('http://tt888.omroep.nl/tt888/POW_00942206')"		// ANSI (1252)
 false
 
-xidel-0.9.6.exe -s --color=never -e "unparsed-text-available('http://e.omroep.nl/tt888/POW_00942206','LATIN1')"
+xidel-0.9.6.exe -s --color=never -e "unparsed-text-available('http://tt888.omroep.nl/tt888/POW_00942206','LATIN1')"
 true
 
 In dit geval is -sub_charenc CP1252 nodig voor FFMpeg, maar ondanks dat gaat het hier om een coderingsfout bij de NPO, omdat 'München' niet goed wordt weergegeven:
-xidel-0.9.6.exe -s --color=never -e "unparsed-text-lines('http://e.omroep.nl/tt888/POW_00942206','LATIN1')[9]"
+xidel-0.9.6.exe -s --color=never -e "unparsed-text-lines('http://tt888.omroep.nl/tt888/POW_00942206','LATIN1')[9]"
 Op de veiligheidsconferentie in MEunchen klinkt duidelijke taal over het Oekraiense conflict.
 
-xidel-0.9.6.exe -s --color=never -e "unparsed-text-available('http://e.omroep.nl/tt888/VPWON_1269922')"		// UTF-8
+xidel-0.9.6.exe -s --color=never -e "unparsed-text-available('http://tt888.omroep.nl/tt888/VPWON_1269922')"		// UTF-8
 true
 
 Hier is uiteraard geen -sub_charenc CP1252 nodig:
-xidel-0.9.6.exe -s --color=never -e "unparsed-text-lines('http://e.omroep.nl/tt888/VPWON_1269922')[349]"
+xidel-0.9.6.exe -s --color=never -e "unparsed-text-lines('http://tt888.omroep.nl/tt888/VPWON_1269922')[349]"
 Deze röntgenopnamen laten zien dat je huiskat de houding heeft van een tijger of leeuw...
+
+Update (26112017): Dit is niet meer van toepassing. De beschikbaarheids controle is niet meer nodig. De NPO heeft gewoon alle regels met 'extended ASCII'-tekens verwijderd...
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.6.exe -s --color=never "http://e.omroep.nl/metadata/POMS_VARA_6868273" --xquery "json(extract($raw,'\((.+)\)',1))/(name:=replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),' - ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':concat('http://www.npo.nl/',prid),'method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),prid:=prid,pubopties:=pubopties,streams:=streams,t:=if (tijdsduur instance of string) then hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur) else (),(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),if (tt888='ja') then (s_url:=concat('http://e.omroep.nl/tt888/',prid),if (unparsed-text-available($s_url)) then () else s_charenc:='-sub_charenc CP1252') else ())"
-name := VARA - De Wereld Draait Door - De TV Draait Door (10012017)
-prid := VARA_101381724
-pubopties := ["adaptive", "h264_bb", "h264_sb", "h264_std"]
-streams :=
-t := 189
-ss1 := 1920
-ss2 := 16
-to := 2125
-s_url := http://e.omroep.nl/tt888/VARA_101381724
+https://www.npo.nl/hunted/20-11-2017/AT_2084949/POMS_AT_11768999
 
-xidel-0.9.6.exe -s --color=never "http://e.omroep.nl/metadata/POW_00942206" --xquery "..."
-name := NOS - NOS Journaal (07022015)
-prid := POW_00942206
-pubopties := ["adaptive", "h264_bb", "h264_sb", "h264_std"]
-streams :=
-t := 1355
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POMS_AT_11768999" -e "json(extract($raw,'\((.+)\)',1)) ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/POMS_AT_11768999' else ())"
+duration := 00:01:59
+t := 119
+start := 00:02:01
+ss := 121
+ss1 := 120
+ss2 := 1
+end := 00:04:00
+to := 240
+expire := 20-11-2018 21:17:52 (nog 359 dagen en 7u36m9s)
+s_url := http://tt888.omroep.nl/tt888/POMS_AT_11768999
+
+https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POW_03375508" -e "[...]"
+duration := 00:20:22
+t := 1222
+start :=
+end :=
 to :=
-s_url := http://e.omroep.nl/tt888/POW_00942206
-s_charenc := -sub_charenc CP1252
+expire := 18-11-2018 20:21:17 (nog 357 dagen en 7u30m9s)
+s_url := http://tt888.omroep.nl/tt888/POW_03375508
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POW_03375508" -e "json(extract($raw,'\((.+)\)',1)) ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/POW_03375508' else ())"
+duration := 00:20:22
+t := 1222
+expire := 18-11-2018 20:21:17 (nog 357 dagen en 7u30m9s)
+s_url := http://tt888.omroep.nl/tt888/POW_03375508
+
+http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" -e "json(extract($raw,'\((.+)\)',1))"
+{
+  "STATUS": "ERROR",
+  "VERSION": "1.12.6",
+  "MDI": "npoapi",
+  "code": 440,
+  "error": "De opgevraagde aflevering is niet gevonden"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" -e "json(extract($raw,'\((.+)\)',1))[not(error)] ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/WO_AT_4993516' else ())"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 --xquery "json(
             extract(
               $raw,
-              '\((.+)\)',1
+              '\((.+)\)',
+              1
             )
-          )/(
-            name:=replace(
-              concat(
-                if (count(.//naam)=1) then
-                  .//naam
-                else
-                  join(.//naam,' en '),
-                ' - ',
-                if (ptype='episode') then (
-                  if (aflevering_titel) then (
-                    if (contains(titel,aflevering_titel)) then
-                      titel
-                    else (
-                      if (contains(aflevering_titel,titel)) then
-                        aflevering_titel
-                      else
-                        concat(
-                          titel,
-                          ' - ',
-                          aflevering_titel
-                        )
-                    )
-                  ) else
-                    titel
-                ) else
-                  concat(
-                    .//serie_titel,
-                    ' - ',
-                    titel
-                  ),
-                if (matches('%date%','^\d')) then
-                  ' (%date%)'
-                else
-                  replace(
-                    x:request(
-                      {
-                        'data':concat(
-                          'http://www.npo.nl/',
-                          prid
-                        ),
-                        'method':'HEAD'
-                      }
-                    )/url,
-                    '.+?(\d+)-(\d+)-(\d+).+',
-                    ' ($1$2$3)'
+          )[not(error)] ! (
+            if (tijdsduur) then (
+              duration:=tijdsduur,
+              t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),
+              if (start) then (
+                start:=start,
+                (hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (
+                  ss:=.,
+                  if (. mod 30=0) then (
+                    if (.=30) then
+                      ()
+                    else
+                      ss1:=. - 30,
+                    ss2:=30
+                  ) else (
+                    if (.<30) then
+                      ()
+                    else
+                      ss1:=. - (. mod 30),
+                    ss2:=. mod 30
                   )
-              ),
-              '[&quot;&apos;]',
-              ''''''
-            ),
-            prid:=prid,
-            pubopties:=pubopties,
-            streams:=streams,
-            t:=if (tijdsduur instance of string) then
-              hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur)
-            else
-              (),
-            (hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (
-              if (. mod 30=0) then (
-                if (.=30) then
-                  ()
-                else
-                  ss1:=. - 30,
-                ss2:=30
-              ) else (
-                if (.<30) then
-                  ()
-                else
-                  ss1:=. - (. mod 30),
-                ss2:=. mod 30
-              )
-            ),
-            to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),
-            if (tt888='ja') then (
-              s_url:=concat(
-                'http://e.omroep.nl/tt888/',
-                prid
-              ),
-              if (unparsed-text-available($s_url)) then
+                ),
+                end:=eind,
+                to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)
+              ) else
+                (),
+              if (publicatie_eind) then (
+                let $a:=dateTime(publicatie_eind) - current-dateTime() return
+                expire:=concat(
+                  replace(
+                    publicatie_eind,
+                    '(\d+)-(\d+)-(\d+)T(.+)\+.+',
+                    '$3-$2-$1 $4'
+                  ),
+                  ' (nog ',
+                  days-from-duration($a) ! (
+                    if (.=0) then
+                      ()
+                    else if (.=1) then
+                      .||' dag en '
+                    else
+                      .||' dagen en '
+                  ),
+                  hours-from-duration($a) ! (
+                    if (.=0) then
+                      ()
+                    else
+                      .||'u'
+                  ),
+                  minutes-from-duration($a) ! (
+                    if (.=0) then
+                      ()
+                    else
+                      .||'m'
+                  ),
+                  floor(seconds-from-duration($a)),
+                  's)'
+                )
+              ) else
                 ()
-              else
-                s_charenc:='-sub_charenc CP1252'
-            ) else 
+            ) else
+              (),
+            if (tt888='ja') then
+              s_url:='http://tt888.omroep.nl/tt888/WO_AT_4993516'
+            else
               ()
           )"
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.6.exe -s --color=never "http://www.eenvandaag.nl/broadcast/5567" --xquery "prid:=//script/extract(.,'prid: \"(.+)\"',1)[.],if (contains($url,'broadcast')) then () else (name:=concat('EenVandaag - ',replace(//meta[@name='twitter:title']/@content,'[&quot;&apos;]',''''''),replace(//meta[@name='twitter:player:stream']/@content,'.+std\.(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),//script/json(extract(.,'options: (.+?\})',1,'s'))/(t:=endAt - startAt,startAt ! (if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),to:=endAt),json(extract(unparsed-text(concat('http://e.omroep.nl/metadata/',$prid)),'\((.+)\)',1))/(pubopties:=pubopties,if (tt888='ja') then (s_url:=concat('http://e.omroep.nl/tt888/',prid),if (unparsed-text-available($s_url)) then () else s_charenc:='-sub_charenc CP1252') else ()))"
-prid := AT_2064397
+xidel-0.9.7.5391.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=52009553-3547-3298-88f9-4619441d9aa5/fmt=adaptive/" --xquery "$json/(material)()/(duration:=substring-before(duration,'.'),t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($b)),'s)'))"
+duration := 01:01:43
+t := 3703
+expire := 11-03-2017 20:35:44 (nog 5 dagen en 6u5m4s)
 
-xidel-0.9.6.exe -s --color=never "http://buitenland.eenvandaag.nl/tv-items/71453/tanks_in_europa_terug_naar_de_koude_oorlog_" --xquery "..."
-prid := AT_2064397
-name := EenVandaag - Tanks in Europa, terug naar de Koude Oorlog? (10012017)
-t := 275
-ss1 := 1020
-ss2 := 18
-to := 1313
-pubopties := ["adaptive", "h264_bb", "h264_sb", "h264_std"]
-s_url := http://e.omroep.nl/tt888/AT_2064397
+xidel-0.9.7.5447-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=00a3f1ec-1477-439f-a806-aa54555eb52d/fmt=adaptive/" --xquery "$json/(material)()/(duration:=substring-before(duration,'.'),t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($b)),'s)') else ())"				# Video zonder "Gratis tot"-datum.
+duration := 00:03:55
+t := 235
 
---xquery "prid:=//script/extract(
-            .,
-            'prid: \"(.+)\"',1
-          )[.],
-          if (contains($url,'broadcast')) then
-            ()
-          else (
-            name:=concat(
-              'EenVandaag - ',
-              replace(
-                //meta[@name='twitter:title']/@content,
-                '[&quot;&apos;]',
-                ''''''
-              ),
-              replace(
-                //meta[@name='twitter:player:stream']/@content,
-                '.+std\.(\d{4})(\d{2})(\d{2}).+',
-                ' ($3$2$1)'
-              )
-            ),
-            //script/json(
-              extract(
-                .,
-                'options: (.+?\})',1,'s'
-              )
-            )/(
-              t:=endAt - startAt,
-              startAt ! (
-                if (. mod 30=0) then (
-                  if (.=30) then
+--xquery "$json/(material)()/(
+            duration:=substring-before(duration,'.'),
+            t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),
+            if ((.//ddr_timeframes)()[model='AVOD']/stop) then
+              let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00')
+              let $b:=$a - current-dateTime() return
+              expire:=concat(
+                replace(
+                  $a,
+                  '(\d+)-(\d+)-(\d+)T(.+)',
+                  '$3-$2-$1 $4'
+                ),
+                ' (nog ',
+                days-from-duration($b) ! (
+                  if (.=0) then
+                    ()
+                  else if (.=1) then
+                    .||' dag en '
+                  else
+                    .||' dagen en '
+                ),
+                hours-from-duration($b) ! (
+                  if (.=0) then
                     ()
                   else
-                    ss1:=. - 30,
-                  ss2:=30
-                ) else (
-                  if (.<30) then
+                    .||'u'
+                ),
+                minutes-from-duration($b) ! (
+                  if (.=0) then
                     ()
                   else
-                    ss1:=. - (. mod 30),
-                  ss2:=. mod 30
-                )
-              ),
-              to:=endAt
-            ),
-            json(
-              extract(
-                unparsed-text(
-                  concat(
-                    'http://e.omroep.nl/metadata/',
-                    $prid
-                  )
+                    .||'m'
                 ),
-                '\((.+)\)',1
+                floor(
+                  seconds-from-duration($b)
+                ),
+                's)'
               )
-            )/(
-              pubopties:=pubopties,
-              if (tt888='ja') then (
-                s_url:=concat(
-                  'http://e.omroep.nl/tt888/',
-                  prid
-                ),
-                if (unparsed-text-available($s_url)) then
-                  ()
-                else
-                  s_charenc:='-sub_charenc CP1252'
-              ) else
-                ()
-            )
+            else
+              ()
           )"
 
 ================================================================================================================================
@@ -2754,8 +2737,11 @@ best := 1195
 [https://github.com/Reino17/BatchGemist/commit/65a431dc6c933e41934b389faddbd464211f40eb]
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
 [https://github.com/Reino17/BatchGemist/commit/f581a9cd374d082585c7037e51b132aeb2a8cb21]
+[https://github.com/Reino17/BatchGemist/commit/]
 
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(concat('http://ida.omroep.nl/app.php/POW_03375473?token=',json('http://ida.omroep.nl/app.php/auth')/token))"
+https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)"
 {
   "limited": false,
   "site": null,
@@ -2764,121 +2750,414 @@ xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(concat('http://ida.
       {
         "label": "Adaptive",
         "contentType": "odi",
-        "url": "https://odis.omroep.nl/video/ida/adaptive/e322a23c32794e472337db870017de9f/58ceb65e/POW_03375473/1?extension=m3u8&type=jsonp&callback=?",
+        "url": "https://odis.omroep.nl/video/ida/adaptive/97b27d0dff01c31a4956a9ce1e7749ba/5a11a295/POW_03375508/1?extension=m3u8&type=jsonp&callback=?",
         "format": "hls"
       },
       {
         "label": "Hoog",
         "contentType": "odi",
-        "url": "https://odis.omroep.nl/video/ida/h264_std/550783bfd04d5ccabe53d0afef5e3318/58ceb65e/POW_03375473/1?type=jsonp&callback=?",
+        "url": "https://odis.omroep.nl/video/ida/h264_std/28d1a767bb878c5e676081e49c1e2b22/5a11a295/POW_03375508/1?type=jsonp&callback=?",
         "format": "mp4"
       },
       {
         "label": "Normaal",
         "contentType": "odi",
-        "url": "https://odis.omroep.nl/video/ida/h264_bb/69f2f687d9d5819aff8a9a0b0dda78e2/58ceb65e/POW_03375473/1?type=jsonp&callback=?",
+        "url": "https://odis.omroep.nl/video/ida/h264_bb/1a9cca1e3b5e6c8bd13a6b255af097d8/5a11a295/POW_03375508/1?type=jsonp&callback=?",
         "format": "mp4"
       },
       {
         "label": "Laag",
         "contentType": "odi",
-        "url": "https://odis.omroep.nl/video/ida/h264_sb/5c6c5cce1ed1f84437fc60a9d3821ed5/58ceb65e/POW_03375473/1?type=jsonp&callback=?",
+        "url": "https://odis.omroep.nl/video/ida/h264_sb/a1daa8863b20f2c325a528f62e6809a1/5a11a295/POW_03375508/1?type=jsonp&callback=?",
         "format": "mp4"
       }
     ]
   ]
 }
 
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(concat('http://ida.omroep.nl/app.php/POW_03375473?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! replace(.,'jsonp','json')"
-https://odis.omroep.nl/video/ida/adaptive/784987522462209f0aaf5d9809e4957f/58ceb7c7/POW_03375473/1?extension=m3u8&type=json&callback=?
-https://odis.omroep.nl/video/ida/h264_std/4234c300141f959c59d842f09b154480/58ceb7c7/POW_03375473/1?type=json&callback=?
-https://odis.omroep.nl/video/ida/h264_bb/3446c82fdec0afd885ac1579585ff3db/58ceb7c7/POW_03375473/1?type=json&callback=?
-https://odis.omroep.nl/video/ida/h264_sb/6c6be968ddb97cc10b386700155e368d/58ceb7c7/POW_03375473/1?type=json&callback=?
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return $a"
+{
+  "label": "Adaptive",
+  "contentType": "odi",
+  "url": "https://odis.omroep.nl/video/ida/adaptive/f8a59606b478ad17a570d16b63e69b68/5a11a2f4/POW_03375508/1?extension=m3u8&type=jsonp&callback=?",
+  "format": "hls"
+}
+{
+  "label": "Hoog",
+  "contentType": "odi",
+  "url": "https://odis.omroep.nl/video/ida/h264_std/e97ff1ae0b6053ff2cdb2e20bcca4b2b/5a11a2f4/POW_03375508/1?type=jsonp&callback=?",
+  "format": "mp4"
+}
+{
+  "label": "Normaal",
+  "contentType": "odi",
+  "url": "https://odis.omroep.nl/video/ida/h264_bb/77b473cac24570279e4f61a1d00ad966/5a11a2f4/POW_03375508/1?type=jsonp&callback=?",
+  "format": "mp4"
+}
+{
+  "label": "Laag",
+  "contentType": "odi",
+  "url": "https://odis.omroep.nl/video/ida/h264_sb/edba1d8e969c9c61abddfec45b38b9cb/5a11a2f4/POW_03375508/1?type=jsonp&callback=?",
+  "format": "mp4"
+}
 
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(concat('http://ida.omroep.nl/app.php/POW_03375473?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! json(replace(.,'jsonp','json'))"
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Progressieve videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return reverse($a[contentType='odi'][format='mp4'])"
+{
+  "label": "Laag",
+  "contentType": "odi",
+  "url": "https://odis.omroep.nl/video/ida/h264_sb/ba810f4c5ac466519cb41f0e212dd880/5a11aa19/POW_03375508/1?type=jsonp&callback=?",
+  "format": "mp4"
+}
+{
+  "label": "Normaal",
+  "contentType": "odi",
+  "url": "https://odis.omroep.nl/video/ida/h264_bb/c1b55e9b67214da67c929b7255055b96/5a11aa19/POW_03375508/1?type=jsonp&callback=?",
+  "format": "mp4"
+}
+{
+  "label": "Hoog",
+  "contentType": "odi",
+  "url": "https://odis.omroep.nl/video/ida/h264_std/a2508a5a49bbbefd902ea61e720fb07f/5a11aa19/POW_03375508/1?type=jsonp&callback=?",
+  "format": "mp4"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))"
+{
+  "errorcode": 0,
+  "family": "download",
+  "path": "/urishieldv2/l27m5eda346d34bade49005a11a6d4000000.e9d42f1e29ea019c424825f4cfbc9f3b/ceresodi/h264/p/29/10/10/85/sb_POW_03375508.m4v",
+  "protocol": "https",
+  "server": "content10c3b.omroep.nl",
+  "wait": 0,
+  "querystring": {
+    "odiredirecturl": "/video/ida/h264_sb/a0f0e478f55a735e6ee053aaf0b1b970/5a11a6d3/POW_03375508/1?type=json&callback=?"
+  },
+  "url": "https://content10c3b.omroep.nl/urishieldv2/l27m5eda346d34bade49005a11a6d4000000.e9d42f1e29ea019c424825f4cfbc9f3b/ceresodi/h264/p/29/10/10/85/sb_POW_03375508.m4v?odiredirecturl=%2Fvideo%2Fida%2Fh264_sb%2Fa0f0e478f55a735e6ee053aaf0b1b970%2F5a11a6d3%2FPOW_03375508%2F1%3Ftype%3Djson%26callback%3D%3F"
+}
+{
+  "errorcode": 0,
+  "family": "download",
+  "path": "/urishieldv2/l27m1d4aec393d0246c0005a11a6d4000000.de10cc8db23466d09f244418e9e334cd/ceresodi/h264/p/29/10/10/85/bb_POW_03375508.m4v",
+  "protocol": "https",
+  "server": "content10c3c.omroep.nl",
+  "wait": 0,
+  "querystring": {
+    "odiredirecturl": "/video/ida/h264_bb/ae8b8c62445e7c1f9c3aa00efb2b0625/5a11a6d3/POW_03375508/1?type=json&callback=?"
+  },
+  "url": "https://content10c3c.omroep.nl/urishieldv2/l27m1d4aec393d0246c0005a11a6d4000000.de10cc8db23466d09f244418e9e334cd/ceresodi/h264/p/29/10/10/85/bb_POW_03375508.m4v?odiredirecturl=%2Fvideo%2Fida%2Fh264_bb%2Fae8b8c62445e7c1f9c3aa00efb2b0625%2F5a11a6d3%2FPOW_03375508%2F1%3Ftype%3Djson%26callback%3D%3F"
+}
+{
+  "errorcode": 0,
+  "family": "download",
+  "path": "/urishieldv2/l27m0f5cd4545b7165e3005a11a6d4000000.811ec309297eb3fbb226285374dba710/ceresodi/h264/p/29/10/10/85/std_POW_03375508.m4v",
+  "protocol": "https",
+  "server": "content10c3a.omroep.nl",
+  "wait": 0,
+  "querystring": {
+    "odiredirecturl": "/video/ida/h264_std/74c0490dcb3fd33ec66daa6b65957079/5a11a6d3/POW_03375508/1?type=json&callback=?"
+  },
+  "url": "https://content10c3a.omroep.nl/urishieldv2/l27m0f5cd4545b7165e3005a11a6d4000000.811ec309297eb3fbb226285374dba710/ceresodi/h264/p/29/10/10/85/std_POW_03375508.m4v?odiredirecturl=%2Fvideo%2Fida%2Fh264_std%2F74c0490dcb3fd33ec66daa6b65957079%2F5a11a6d3%2FPOW_03375508%2F1%3Ftype%3Djson%26callback%3D%3F"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return extract($x,'.+/([a-z]+)',1) ! (if (.='sb') then {'format':'pg-'||.,'extension':'m4v','resolution':'480x270','vbitrate':'v:200k','abitrate':'a:64k','url':$x} else if (.='bb') then {'format':'pg-'||.,'extension':'m4v','resolution':'640x360','vbitrate':'v:500k','abitrate':'a:128k','url':$x} else {'format':'pg-'||.,'extension':'m4v','resolution':'960x540','vbitrate':'v:1000k','abitrate':'a:128k','url':$x})]"
+[
+  {
+    "format": "pg-sb",
+    "extension": "m4v",
+    "resolution": "480x270",
+    "vbitrate": "v:200k",
+    "abitrate": "a:64k",
+    "url": "https://content1a.omroep.nl/urishieldv2/l27m10d44f956fe95e9d005a11a937000000.b8947aa634e301452fdbebd94ac4c133/ceresodi/h264/p/29/10/10/85/sb_POW_03375508.m4v"
+  },
+  {
+    "format": "pg-bb",
+    "extension": "m4v",
+    "resolution": "640x360",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://content10c3d.omroep.nl/urishieldv2/l27m3e1deec4482e3f84005a11a937000000.1d8b2505e591d87ed1321db0c4163120/ceresodi/h264/p/29/10/10/85/bb_POW_03375508.m4v"
+  },
+  {
+    "format": "pg-std",
+    "extension": "m4v",
+    "resolution": "960x540",
+    "vbitrate": "v:1000k",
+    "abitrate": "a:128k",
+    "url": "https://content10c3a.omroep.nl/urishieldv2/l27m50060a470f31d465005a11a937000000.bfce79ec7a9c7ac6675dca2efd4178e3/ceresodi/h264/p/29/10/10/85/std_POW_03375508.m4v"
+  }
+]
+
+Alleen de nieuwste video's hebben bovenstaande specificaties, dus als we het van alle video's exact willen weten:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1')"
+ffmpeg version N-87867-g0655810-Reino Copyright (c) 2000-2017 the FFmpeg developers
+[...]
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'https://content1a.omroep.nl/urishieldv2/l27m2b4dca9a4d2bb652005a15ffbd000000.edee54076d6b4c8b7a361f27735353d0/ceresodi/h264/1/avro/rest/2009/AVRO_1316544/sb.20090108.m4v':
+  Metadata:
+    major_brand     : M4V
+    minor_version   : 1
+    compatible_brands: M4V M4A mp42isom
+    creation_time   : 2009-01-08T19:34:47.000000Z
+  Duration: 00:50:00.19, start: 0.000000, bitrate: 238 kb/s
+    Stream #0:0(eng): Video: h264 (Constrained Baseline) (avc1 / 0x31637661), yuv420p(tv, smpte170m/smpte170m/bt709), 160x90, 184 kb/s, 25 fps, 25 tbr, 2500 tbn, 5k tbc (default)
+    Metadata:
+      creation_time   : 2009-01-08T19:34:47.000000Z
+      handler_name    : Apple Video Media Handler
+    Stream #0:1(eng): Audio: aac (LC) (mp4a / 0x6134706D), 24000 Hz, mono, fltp, 19 kb/s (default)
+    Metadata:
+      creation_time   : 2009-01-08T19:34:47.000000Z
+      handler_name    : Apple Sound Media Handler
+    Stream #0:2(und): Data: none (rtp  / 0x20707472), 26 kb/s (default)
+    Metadata:
+      creation_time   : 2009-01-07T20:24:26.000000Z
+      handler_name    : GPAC ISO Hint Handler
+    Stream #0:3(und): Data: none (rtp  / 0x20707472), 4 kb/s (default)
+    Metadata:
+      creation_time   : 2009-01-07T20:25:03.000000Z
+      handler_name    : GPAC ISO Hint Handler
+At least one output file must be specified
+
+ffmpeg version N-87867-g0655810-Reino Copyright (c) 2000-2017 the FFmpeg developers
+[...]
+Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'https://content1b.omroep.nl/urishieldv2/l27m0da0bf7218326b12005a15ffbd000000.a1ad85c9bb4689ec0bec22606b7f3e8e/ceresodi/h264/1/avro/rest/2009/AVRO_1316544/bb.20090108.m4v':
+  Metadata:
+    major_brand     : M4V
+    minor_version   : 1
+    compatible_brands: M4V M4A mp42isom
+    creation_time   : 2009-01-08T19:34:43.000000Z
+  Duration: 00:50:00.16, start: 0.000000, bitrate: 544 kb/s
+    Stream #0:0(eng): Video: h264 (Constrained Baseline) (avc1 / 0x31637661), yuv420p(tv, smpte170m/smpte170m/bt709), 320x180, 457 kb/s, 25 fps, 25 tbr, 2500 tbn, 5k tbc (default)
+    Metadata:
+      creation_time   : 2009-01-08T19:34:43.000000Z
+      handler_name    : Apple Video Media Handler
+    Stream #0:1(eng): Audio: aac (LC) (mp4a / 0x6134706D), 32000 Hz, stereo, fltp, 45 kb/s (default)
+    Metadata:
+      creation_time   : 2009-01-08T19:34:43.000000Z
+      handler_name    : Apple Sound Media Handler
+    Stream #0:2(und): Data: none (rtp  / 0x20707472), 31 kb/s (default)
+    Metadata:
+      creation_time   : 2009-01-07T20:24:28.000000Z
+      handler_name    : GPAC ISO Hint Handler
+    Stream #0:3(und): Data: none (rtp  / 0x20707472), 5 kb/s (default)
+    Metadata:
+      creation_time   : 2009-01-07T20:27:36.000000Z
+      handler_name    : GPAC ISO Hint Handler
+At least one output file must be specified
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||extract($x,'.+/([a-z]+)',1),'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+[
+  {
+    "format": "pg-sb",
+    "extension": "m4v",
+    "resolution": "160x90",
+    "vbitrate": "v:184k",
+    "abitrate": "a:19k",
+    "url": "https://content1a.omroep.nl/urishieldv2/l27m3db4104a7e0f0076005a15ff6b000000.6dd3ebf42959ddc67a376012cceea604/ceresodi/h264/1/avro/rest/2009/AVRO_1316544/sb.20090108.m4v"
+  },
+  {
+    "format": "pg-bb",
+    "extension": "m4v",
+    "resolution": "320x180",
+    "vbitrate": "v:457k",
+    "abitrate": "a:45k",
+    "url": "https://content1a.omroep.nl/urishieldv2/l27m1e9c1468040c08b9005a15ff6c000000.ae24273b9505a29df8ae7ded40512ac8/ceresodi/h264/1/avro/rest/2009/AVRO_1316544/bb.20090108.m4v"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||extract($x,'.+/([a-z]+)',1),'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+[
+  {
+    "format": "pg-sb",
+    "extension": "m4v",
+    "resolution": "480x270",
+    "vbitrate": "v:200k",
+    "abitrate": "a:64k",
+    "url": "https://content1b.omroep.nl/urishieldv2/l27m380de1a304c4aca6005a160dee000000.b97682d0ac1817a82fa66699455850f6/ceresodi/h264/p/29/10/10/85/sb_POW_03375508.m4v"
+  },
+  {
+    "format": "pg-bb",
+    "extension": "m4v",
+    "resolution": "640x360",
+    "vbitrate": "v:500k",
+    "abitrate": "a:127k",
+    "url": "https://content1a.omroep.nl/urishieldv2/l27m7bdd511c16dd7dfb005a160dee000000.3ae084b4bb2f5dda05030eb45284e2c0/ceresodi/h264/p/29/10/10/85/bb_POW_03375508.m4v"
+  },
+  {
+    "format": "pg-std",
+    "extension": "m4v",
+    "resolution": "960x540",
+    "vbitrate": "v:994k",
+    "abitrate": "a:127k",
+    "url": "https://content1b.omroep.nl/urishieldv2/l27m2f1f8c462aa498c9005a160dee000000.67bc84171c175b0fb1b199d2f1c620f1/ceresodi/h264/p/29/10/10/85/std_POW_03375508.m4v"
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Dynamische videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return $a[format='hls']/json(replace(url,'jsonp','json'))"
 {
   "errorcode": 0,
   "family": "adaptive",
-  "path": "/urishieldv2/l27m5b363f4253913a510058ceb7fe000000.a16938c557e80f080844b3d080e736cb/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473.m3u8",
+  "path": "/urishieldv2/l27m00be98fc21ce6133005a11a399000000.5ded0ca56df6470c9b1e6dea69e24e63/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508.m3u8",
   "protocol": "https",
-  "server": "adaptive-e10c1a.npostreaming.nl",
+  "server": "adaptive-e50c1a.npostreaming.nl",
   "wait": 0,
-  "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m5b363f4253913a510058ceb7fe000000.a16938c557e80f080844b3d080e736cb/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473.m3u8"
-}
-{
-  "errorcode": 0,
-  "family": "download",
-  "path": "/urishieldv2/l27m01c83c1d085006a00058ceb7fe000000.60bb14f0cb5d59895541ee10ef22fbfd/ceresodi/h264/p/03/10/10/42/std_POW_03375473.m4v",
-  "protocol": "https",
-  "server": "content10c1b.omroep.nl",
-  "wait": 0,
-  "querystring": {
-    "odiredirecturl": "/video/ida/h264_std/eb470360800742c5586a18492a54a5fb/58ceb7fe/POW_03375473/1?type=json&callback=?"
-  },
-  "url": "https://content10c1b.omroep.nl/urishieldv2/l27m01c83c1d085006a00058ceb7fe000000.60bb14f0cb5d59895541ee10ef22fbfd/ceresodi/h264/p/03/10/10/42/std_POW_03375473.m4v?odiredirecturl=%2Fvideo%2Fida%2Fh264_std%2Feb470360800742c5586a18492a54a5fb%2F58ceb7fe%2FPOW_03375473%2F1%3Ftype%3Djson%26callback%3D%3F"
-}
-{
-  "errorcode": 0,
-  "family": "download",
-  "path": "/urishieldv2/l27m49664c6357c8d1140058ceb7fe000000.085d219f799561434c58adbce4c77c0c/ceresodi/h264/p/03/10/10/42/bb_POW_03375473.m4v",
-  "protocol": "https",
-  "server": "content10c1c.omroep.nl",
-  "wait": 0,
-  "querystring": {
-    "odiredirecturl": "/video/ida/h264_bb/80e4a8af25e894ea01c13b54b6c00ad0/58ceb7fe/POW_03375473/1?type=json&callback=?"
-  },
-  "url": "https://content10c1c.omroep.nl/urishieldv2/l27m49664c6357c8d1140058ceb7fe000000.085d219f799561434c58adbce4c77c0c/ceresodi/h264/p/03/10/10/42/bb_POW_03375473.m4v?odiredirecturl=%2Fvideo%2Fida%2Fh264_bb%2F80e4a8af25e894ea01c13b54b6c00ad0%2F58ceb7fe%2FPOW_03375473%2F1%3Ftype%3Djson%26callback%3D%3F"
-}
-{
-  "errorcode": 0,
-  "family": "download",
-  "path": "/urishieldv2/l27m145df1c25e31ca3e0058ceb7fe000000.ce5a66f15f97b75c7298d07ccc1b1a16/ceresodi/h264/p/03/10/10/42/sb_POW_03375473.m4v",
-  "protocol": "https",
-  "server": "content10c1b.omroep.nl",
-  "wait": 0,
-  "querystring": {
-    "odiredirecturl": "/video/ida/h264_sb/a88dae0d70a213dcf758c65a8ce05312/58ceb7fe/POW_03375473/1?type=json&callback=?"
-  },
-  "url": "https://content10c1b.omroep.nl/urishieldv2/l27m145df1c25e31ca3e0058ceb7fe000000.ce5a66f15f97b75c7298d07ccc1b1a16/ceresodi/h264/p/03/10/10/42/sb_POW_03375473.m4v?odiredirecturl=%2Fvideo%2Fida%2Fh264_sb%2Fa88dae0d70a213dcf758c65a8ce05312%2F58ceb7fe%2FPOW_03375473%2F1%3Ftype%3Djson%26callback%3D%3F"
+  "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m00be98fc21ce6133005a11a399000000.5ded0ca56df6470c9b1e6dea69e24e63/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508.m3u8"
 }
 
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "for $x in json(concat('http://ida.omroep.nl/app.php/POW_03375473?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! replace(.,'jsonp','json') return if (unparsed-text-available($x)) then if (contains($x,'m3u8')) then let $a:=json($x)/url return ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}) else json($x)/{'format':concat('mp4-',extract(url,'.+/([a-z]+)',1)),'url':substring-before(url,'?')} else ()"
-{
-  "format": "meta",
-  "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0d923c3d0c55fbad0058ceba65000000.04620d778b54ed98a5917dce0f38d1a8/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473.m3u8"
-}
-{
-  "format": "284",
-  "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0d923c3d0c55fbad0058ceba65000000.04620d778b54ed98a5917dce0f38d1a8/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=64000-video=204000.m3u8"
-}
-{
-  "format": "673",
-  "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0d923c3d0c55fbad0058ceba65000000.04620d778b54ed98a5917dce0f38d1a8/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=128000-video=507000.m3u8"
-}
-{
-  "format": "887",
-  "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0d923c3d0c55fbad0058ceba65000000.04620d778b54ed98a5917dce0f38d1a8/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=128000-video=709000.m3u8"
-}
-{
-  "format": "1314",
-  "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0d923c3d0c55fbad0058ceba65000000.04620d778b54ed98a5917dce0f38d1a8/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=128000-video=1112000.m3u8"
-}
-{
-  "format": "mp4-std",
-  "url": "https://content10c1c.omroep.nl/urishieldv2/l27m6cc8ca5706074f0f0058ceba65000000.3b2ea7ed89e22046902a3894510b4e83/ceresodi/h264/p/03/10/10/42/std_POW_03375473.m4v"
-}
-{
-  "format": "mp4-bb",
-  "url": "https://content10c1c.omroep.nl/urishieldv2/l27m72fa6431141de5110058ceba66000000.a75ea9ad941be491240bcb38ea48601f/ceresodi/h264/p/03/10/10/42/bb_POW_03375473.m4v"
-}
-{
-  "format": "mp4-sb",
-  "url": "https://content10c1d.omroep.nl/urishieldv2/l27m5a0da9cf74fe99b90058ceba66000000.3c12379e97e0afcef4268b2065ecc609/ceresodi/h264/p/03/10/10/42/sb_POW_03375473.m4v"
-}
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() let $b:=$a[format='hls']/json(replace(url,'jsonp','json'))/url return tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:'))"
+PROGRAM-ID=1,BANDWIDTH=316000,CODECS="mp4a.40.2,avc1.42C01E",RESOLUTION=480x270,AUDIO="audio-96"
+POW_03375508-audio=96000-video=202000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=350000,CODECS="mp4a.40.2,avc1.42C01E",RESOLUTION=480x270,AUDIO="audio-128"
+POW_03375508-audio=128000-video=202000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=418000,CODECS="mp4a.40.2,avc1.42C01E",RESOLUTION=480x270,AUDIO="audio-192"
+POW_03375508-audio=192000-video=202000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=634000,CODECS="mp4a.40.2,avc1.42C01E",RESOLUTION=640x360,AUDIO="audio-96"
+POW_03375508-audio=96000-video=502000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=668000,CODECS="mp4a.40.2,avc1.42C01E",RESOLUTION=640x360,AUDIO="audio-128"
+POW_03375508-audio=128000-video=502000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=736000,CODECS="mp4a.40.2,avc1.42C01E",RESOLUTION=640x360,AUDIO="audio-192"
+POW_03375508-audio=192000-video=502000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=1269000,CODECS="mp4a.40.2,avc1.42C029",RESOLUTION=1024x576,AUDIO="audio-96"
+POW_03375508-audio=96000-video=1101000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=1303000,CODECS="mp4a.40.2,avc1.42C029",RESOLUTION=1024x576,AUDIO="audio-128"
+POW_03375508-audio=128000-video=1101000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=1371000,CODECS="mp4a.40.2,avc1.42C029",RESOLUTION=1024x576,AUDIO="audio-192"
+POW_03375508-audio=192000-video=1101000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=2008000,CODECS="mp4a.40.2,avc1.42C033",RESOLUTION=1024x576,AUDIO="audio-96"
+POW_03375508-audio=96000-video=1798000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=2042000,CODECS="mp4a.40.2,avc1.42C033",RESOLUTION=1024x576,AUDIO="audio-128"
+POW_03375508-audio=128000-video=1798000.m3u8
+
+PROGRAM-ID=1,BANDWIDTH=2110000,CODECS="mp4a.40.2,avc1.42C033",RESOLUTION=1024x576,AUDIO="audio-192"
+POW_03375508-audio=192000-video=1798000.m3u8
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [let $b:=$a[format='hls']/json(replace(url,'jsonp','json'))/url return ({'format':'hls-master','extension':'m3u8','url':$b},tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':replace(.,'.+video=(\d+)\d{3}.+','v:$1k','s'),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)})]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508.m3u8"
+  },
+  {
+    "format": "hls-316",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:202k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=202000.m3u8"
+  },
+  {
+    "format": "hls-350",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:202k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=202000.m3u8"
+  },
+  {
+    "format": "hls-418",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:202k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=202000.m3u8"
+  },
+  {
+    "format": "hls-634",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=502000.m3u8"
+  },
+  {
+    "format": "hls-668",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=502000.m3u8"
+  },
+  {
+    "format": "hls-736",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=502000.m3u8"
+  },
+  {
+    "format": "hls-1269",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1101k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=1101000.m3u8"
+  },
+  {
+    "format": "hls-1303",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1101k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=1101000.m3u8"
+  },
+  {
+    "format": "hls-1371",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1101k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=1101000.m3u8"
+  },
+  {
+    "format": "hls-2008",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1798k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=1798000.m3u8"
+  },
+  {
+    "format": "hls-2042",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1798k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=1798000.m3u8"
+  },
+  {
+    "format": "hls-2110",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1798k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m23c6cd2b2765099e005a11a55f000000.86e60e3b149a4103e03be5985c2b07ec/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=1798000.m3u8"
+  }
+]
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5391.exe -s --color=never --xquery "json(concat('http://ida.omroep.nl/app.php/LI_NL1_4188102?token=',json('http://ida.omroep.nl/app.php/auth')/token))"
+https://www.npo.nl/live/npo-1
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "json('http://ida.omroep.nl/app.php/LI_NL1_4188102?token='||json('http://ida.omroep.nl/app.php/auth')/token)"
 {
   "limited": false,
   "site": null,
@@ -2887,137 +3166,575 @@ xidel-0.9.7.5391.exe -s --color=never --xquery "json(concat('http://ida.omroep.n
       {
         "label": "Live",
         "contentType": "live",
-        "url": "http://livestreams.omroep.nl/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?hash=74d6d79ce8187d3d302630e80c13d72c&type=jsonp&protection=url",
+        "url": "https://livestreams.omroep.nl/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?hash=42615cc227b82ff2cdc961a4ef04cf2f&type=jsonp&protection=url",
         "format": "hls"
       }
     ]
   ]
 }
 
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(concat('http://ida.omroep.nl/app.php/LI_NL1_4188102?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! replace(.,'jsonp','json')"
-https://livestreams.omroep.nl/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?hash=94e5b4f8c2a28f401177774a8f57b0ca&type=json&protection=url
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/LI_NL1_4188102?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return $a"
+{
+  "label": "Live",
+  "contentType": "live",
+  "url": "https://livestreams.omroep.nl/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?hash=b1c4a83e93ac1ad5d4508a31d60a1b23&type=jsonp&protection=url",
+  "format": "hls"
+}
 
-XS4ALL (KPN netwerk):
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(concat('http://ida.omroep.nl/app.php/LI_NL1_4188102?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! json(replace(.,'jsonp','json'))"
-https://pedgewarer22b.video.kpnstreaming.nl/session/f335b464-0cd2-11e7-9129-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=685978f55d15bfa5c5fbeb83cd1d2962_1490034982_1490034982
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-Ziggo (niet KPN netwerk):
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "json(concat('http://ida.omroep.nl/app.php/LI_NL1_4188102?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! json(replace(.,'jsonp','json'))"
-https://smoote2c.omroep.nl/urishieldv2/l2cme32486b49b0058cc5afc000000.f81914eb9104e6d6/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/LI_NL1_4188102?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return ($a[label='Adaptive']/json(replace(url,'jsonp','json'))/url,$a[label='Live']/json(replace(url,'jsonp','json')))"
+https://pedgewarer23a.video.kpnstreaming.nl/session/e839e89a-cd49-11e7-a5ce-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=08ad3358703e6e5f71c51200614fb708_1511196696_1511196696
 
-xidel-0.9.7.5447-openssl.exe -s --color=never --xquery "for $x in json(concat('http://ida.omroep.nl/app.php/LI_NL1_4188102?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! replace(.,'jsonp','json') return if (unparsed-text-available($x)) then if (contains($x,'m3u8')) then let $a:=if (contains($x,'live')) then json($x) else json($x)/url return ({'format':'meta','url':$a},tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$a),extract(.,'(.+m3u8)',1))}) else json($x)/{'format':concat('mp4-',extract(url,'.+/([a-z]+)',1)),'url':substring-before(url,'?')} else ()"
-{
-  "format": "meta",
-  "url": "https://pedgewarer25b.video.kpnstreaming.nl/session/85d67362-0cd3-11e7-a22a-1458d0420170/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=49d410be2c8173458ef490d04931ff56_1490035228_1490035228"
-}
-{
-  "format": "348",
-  "url": "https://pedgewarer25b.video.kpnstreaming.nl/session/85d67362-0cd3-11e7-a22a-1458d0420170/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=200000.m3u8"
-}
-{
-  "format": "666",
-  "url": "https://pedgewarer25b.video.kpnstreaming.nl/session/85d67362-0cd3-11e7-a22a-1458d0420170/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=500000.m3u8"
-}
-{
-  "format": "878",
-  "url": "https://pedgewarer25b.video.kpnstreaming.nl/session/85d67362-0cd3-11e7-a22a-1458d0420170/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=700000.m3u8"
-}
-{
-  "format": "1196",
-  "url": "https://pedgewarer25b.video.kpnstreaming.nl/session/85d67362-0cd3-11e7-a22a-1458d0420170/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1000000.m3u8"
-}
-{
-  "format": "1620",
-  "url": "https://pedgewarer25b.video.kpnstreaming.nl/session/85d67362-0cd3-11e7-a22a-1458d0420170/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1400000.m3u8"
-}
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/LI_NL1_4188102?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return $a[format='hls']/replace(url,'jsonp','json') ! (if (contains(.,'livestreams')) then json(.) else json(.)/url)"
+https://pedgewarea23b.video.kpnstreaming.nl/session/6da8e188-cd4b-11e7-8a84-1458d041afa8/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=59e1d2e87ffa56cde5760e0de15d1f49_1511197350_1511197350
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/LI_NL1_4188102?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [let $b:=$a[format='hls']/replace(url,'jsonp','json') ! (if (contains(.,'livestreams')) then json(.) else json(.)/url) return ({'format':'hls-master','extension':'m3u8','url':$b},for $x in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)} order by $x/format return $x)]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://pedgewarer23b.video.kpnstreaming.nl/session/c323ceec-cd4c-11e7-ae73-9cb65498b840/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=2efd565caf5f37a7d0df86a7354db6ff_1511197923_1511197923"
+  },
+  {
+    "format": "hls-136",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer23b.video.kpnstreaming.nl/session/c323ceec-cd4c-11e7-ae73-9cb65498b840/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000.m3u8"
+  },
+  {
+    "format": "hls-348",
+    "extension": "m3u8",
+    "resolution": "384x216",
+    "vbitrate": "v:200k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer23b.video.kpnstreaming.nl/session/c323ceec-cd4c-11e7-ae73-9cb65498b840/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=200000.m3u8"
+  },
+  {
+    "format": "hls-666",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer23b.video.kpnstreaming.nl/session/c323ceec-cd4c-11e7-ae73-9cb65498b840/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=500000.m3u8"
+  },
+  {
+    "format": "hls-878",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:700k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer23b.video.kpnstreaming.nl/session/c323ceec-cd4c-11e7-ae73-9cb65498b840/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=700000.m3u8"
+  },
+  {
+    "format": "hls-1196",
+    "extension": "m3u8",
+    "resolution": "768x432",
+    "vbitrate": "v:1000k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer23b.video.kpnstreaming.nl/session/c323ceec-cd4c-11e7-ae73-9cb65498b840/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1000000.m3u8"
+  },
+  {
+    "format": "hls-2044",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1800k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer23b.video.kpnstreaming.nl/session/c323ceec-cd4c-11e7-ae73-9cb65498b840/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1800000.m3u8"
+  }
+]
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POW_03375473" --xquery "json(extract($raw,'\((.+)\)',1))"
-[...]
-  "pubopties": ["adaptive", "h264_bb", "h264_sb", "h264_std"],
-  "streams": [
-    {
-      "formaat": "adaptive",
-      "kwaliteit": 3,
-      "url": "npo+drm://plusvod.omroep.nl/POW_03375473"			# Deze moeten er uit gefilterd worden door alleen urls te accepteren die beginnen met 'http'.
-    },
-    {
-      "formaat": "adaptive",
-      "kwaliteit": 3,
-      "url": "npo+drm://internetvod.omroep.nl/POW_03375473"
-    }
-  ],
-[...]
+Progressieve videofragmenten
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POW_03375473" --xquery "json(extract($raw,'\((.+)\)',1)) ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',' - Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),' - ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':concat('http://www.npo.nl/',prid),'method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (start) then (t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30, ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30), ss2:=. mod 30)),to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (tt888='ja') then (s_url:=concat('http://tt888.omroep.nl/tt888/',prid),if (unparsed-text-available($s_url)) then () else s_charenc:='-sub_charenc CP1252') else (),let $a:=(if (medium='live' or pubopties) then for $x in json(concat('http://ida.omroep.nl/app.php/',prid,'?token=',json('http://ida.omroep.nl/app.php/auth')/token))//url ! replace(.,'jsonp','json') return if (unparsed-text-available($x)) then if (contains($x,'m3u8')) then let $b:=if (contains($x,'live')) then json($x) else json($x)/url return ({'format':'meta','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':concat(resolve-uri('.',$b),extract(.,'(.+m3u8)',1))}) else json($x)/{'format':concat('mp4-',extract(url,'.+/([a-z]+)',1)),'url':substring-before(url,'?')} else () else (),if (medium!='live' and streams) then let $b:=(streams)() return $b[starts-with(url,'http')]/{'format':if (type) then concat('mp4-',max($b/kwaliteit)+1) else concat(if (formaat='h264') then 'mp4' else formaat,'-',kwaliteit),'url':x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (ends-with(url,'asf')) then doc(url)//@href else if (contains(url,'content-ip')) then x:request({'post':serialize-json([{\"file\":url}]),'url':'http://nos.nl/video/resolve/'})//file else url)}[url] else ()) return if ($a) then if (count($a)=1) then v_url:=$a/url else (json:=[$a],let $b:=(for $x in $a[contains(format,'wmv')]/format order by $x return $x,for $x in $a[matches(format,'mp4-\d')]/format order by $x return $x,reverse($a[matches(format,'mp4-[a-z]')]/format),$a[format='meta']/format,for $x in $a[format castable as int]/format order by $x return $x) return (formats:=join($b,', '),best:=$b[last()])) else ())"
-name := NOS - NOS Journaal (18032017)
-s_url := http://tt888.omroep.nl/tt888/POW_03375473
-json := [{"format": "meta", "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0cc3c6300211fdb40058ced1e6000000.14ebc4b830a858e195761185115a28f5/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473.m3u8"}, {"format": "284", "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0cc3c6300211fdb40058ced1e6000000.14ebc4b830a858e195761185115a28f5/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=64000-video=204000.m3u8"}, {"format": "673", "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0cc3c6300211fdb40058ced1e6000000.14ebc4b830a858e195761185115a28f5/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=128000-video=507000.m3u8"}, {"format": "887", "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0cc3c6300211fdb40058ced1e6000000.14ebc4b830a858e195761185115a28f5/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=128000-video=709000.m3u8"}, {"format": "1314", "url": "https://adaptive-e10c1a.npostreaming.nl/urishieldv2/l27m0cc3c6300211fdb40058ced1e6000000.14ebc4b830a858e195761185115a28f5/p/03/10/10/20/POW_03375473/POW_03375473.ism/POW_03375473-audio=128000-video=1112000.m3u8"}, {"format": "mp4-std", "url": "https://content10c1b.omroep.nl/urishieldv2/l27m02f087475cba633a0058ced1e6000000.c5e4c925936ac22fe053293d39fcd9b7/ceresodi/h264/p/03/10/10/42/std_POW_03375473.m4v"}, {"format": "mp4-bb", "url": "https://content10c1a.omroep.nl/urishieldv2/l27m5502702769c1f6070058ced1e6000000.6eff0dfad4e5526203e115f9b7fd2e99/ceresodi/h264/p/03/10/10/42/bb_POW_03375473.m4v"}, {"format": "mp4-sb", "url": "https://content10c1d.omroep.nl/urishieldv2/l27m7c9af6b4573993c70058ced1e6000000.6f8e9d1ac7ee7c34ab2a0eed453b7af5/ceresodi/h264/p/03/10/10/42/sb_POW_03375473.m4v"}]
-formats := mp4-sb, mp4-bb, mp4-std, meta, 284, 673, 887, 1314
-best := 1314
+https://www.npo.nl/li-jie-voor-het-eerst-winnares-top-16-na-opgave-solja/05-02-2017/WO_NOS_7303921
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/LI_NL1_4188102" --xquery "..."
-name := NPO 1 - Livestream (19032017)
-json := [{"format": "meta", "url": "https://pedgewarer21a.video.kpnstreaming.nl/session/6b898b4c-0cd4-11e7-99ff-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=995bc2d679a345867cd43ffb8e08d82f_1490035613_1490035613"}, {"format": "348", "url": "https://pedgewarer21a.video.kpnstreaming.nl/session/6b898b4c-0cd4-11e7-99ff-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=200000.m3u8"}, {"format": "666", "url": "https://pedgewarer21a.video.kpnstreaming.nl/session/6b898b4c-0cd4-11e7-99ff-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=500000.m3u8"}, {"format": "878", "url": "https://pedgewarer21a.video.kpnstreaming.nl/session/6b898b4c-0cd4-11e7-99ff-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=700000.m3u8"}, {"format": "1196", "url": "https://pedgewarer21a.video.kpnstreaming.nl/session/6b898b4c-0cd4-11e7-99ff-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1000000.m3u8"}, {"format": "1620", "url": "https://pedgewarer21a.video.kpnstreaming.nl/session/6b898b4c-0cd4-11e7-99ff-9cb654975bc0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1400000.m3u8"}]
-formats := meta, 348, 666, 878, 1196, 1620
-best := 1620
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return $a"
+{
+  "label": "",
+  "contentType": "url",
+  "url": "npo://internetvod.omroep.nl/WO_NOS_7303921",
+  "format": "adaptive"
+}
+{
+  "label": "",
+  "contentType": "url",
+  "url": "http://download.omroep.nl/nos/content-ip/mp4/web03/2017/02/05/284055.mp4",
+  "format": "mp4"
+}
+{
+  "label": "",
+  "contentType": "url",
+  "url": "http://download.omroep.nl/nos/content-ip/ipod/2017/02/05/284055.mp4",
+  "format": "mp4"
+}
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_NOS_7583066" --xquery "..."
-name := NOS - Verwarring over nieuwe personeelsnorm verpleeghuizen (22022017)
-json := [{"format": "mp4-3", "url": "http://download.omroep.nl/nos/content/mp4/web03/2017/02/22/284989.mp4"}, {"format": "mp4-2", "url": "http://download.omroep.nl/nos/content/ipod/2017/02/22/284989.mp4"}]
-formats := mp4-2, mp4-3
-best := mp4-3
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return reverse($a[contentType='url'][format='mp4'])"
+{
+  "label": "",
+  "contentType": "url",
+  "url": "http://download.omroep.nl/nos/content-ip/ipod/2017/02/05/284055.mp4",
+  "format": "mp4"
+}
+{
+  "label": "",
+  "contentType": "url",
+  "url": "http://download.omroep.nl/nos/content-ip/mp4/web03/2017/02/05/284055.mp4",
+  "format": "mp4"
+}
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_NOS_7303921" --xquery "..."
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [reverse($a[contentType='url'][format='mp4']) ! {'format':'mp4-'||position(),'url':url}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "http://download.omroep.nl/nos/content-ip/ipod/2017/02/05/284055.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "http://download.omroep.nl/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [reverse($a[contentType='url'][format='mp4']) ! {'format':'mp4-'||position(),'url':x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url)}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "https://video.omroep.nl/secure/31f13ec2362aaa65edf1769220098241/5a19fcb9/nos/content-ip/ipod/2017/02/05/284055.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://video.omroep.nl/secure/6e17db6bf8b8f3f91f1b11d0a8dd510f/5a19fcb9/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return {'format':'mp4-'||$i,'url':$x}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "https://video.omroep.nl/secure/75080dd0bd54c97ff327c183f67d0162/5a1a0c74/nos/content-ip/ipod/2017/02/05/284055.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://video.omroep.nl/secure/23977b59e3a8f847b0e9aff48f9c961a/5a1a0c74/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+  }
+]
+
+https://www.npo.nl/nieuw-seizoen-hunted/13-07-2017/WO_AT_9826291
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/WO_AT_9826291?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return [for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return {'format':replace($x,'.+\.(.+)','$1-')||$i,'url':$x}]"
+[
+  {
+    "format": "m4v-1",
+    "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_288x162_1499953546.m4v"
+  },
+  {
+    "format": "m4v-2",
+    "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_544x306_1499953546.m4v"
+  },
+  {
+    "format": "m4v-3",
+    "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_704x396_1499953546.m4v"
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json('http://ida.omroep.nl/app.php/WO_AT_4993516?token='||json('http://ida.omroep.nl/app.php/auth')/token)/(items)()() return $a"
+Error:
+err:FODC0002: Internet/HTTP Error: 403
+when talking to: http://ida.omroep.nl/app.php/WO_AT_4993516?token=osbnuad2rubpqffiueir41v7u4
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_4993516?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})/json"
+{
+  "error": "De opgevraagde aflevering is niet gevonden"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_4993516?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]"
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_4993516?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then [for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return {'format':replace($x,'.+\.(.+)','$1-')||$i,'url':$x}] else ()"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then [for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':replace($x,'.+\.(.+)','$1-')||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}] else ()"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:104k",
+    "url": "https://video.omroep.nl/secure/fc0d60a42a718d7e8bc29017bb8cfcbe/5a1a0940/nos/content-ip/ipod/2017/02/05/284055.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "856x482",
+    "vbitrate": "v:1504k",
+    "abitrate": "a:129k",
+    "url": "https://video.omroep.nl/secure/644b31fb4696bdedf43d1bfa8fec864f/5a1a0940/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+  }
+]
+
+http://www.npo.nl/promo-victoria/06-01-2017/POMS_EO_6751605 
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/POMS_EO_6751605?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return [...]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "288x162",
+    "vbitrate": "v:198k",
+    "abitrate": "a:53k",
+    "url": "http://content.omroep.nl/eo/vod/mp4/PROMOVICTORIAmov_d0c0baec-264k.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "416x234",
+    "vbitrate": "v:493k",
+    "abitrate": "a:80k",
+    "url": "http://content.omroep.nl/eo/vod/mp4/PROMOVICTORIAmov_d0c0baec-628k.mp4"
+  },
+  {
+    "format": "mp4-3",
+    "extension": "mp4",
+    "resolution": "544x306",
+    "vbitrate": "v:694k",
+    "abitrate": "a:80k",
+    "url": "http://content.omroep.nl/eo/vod/mp4/PROMOVICTORIAmov_d0c0baec-828k.mp4"
+  },
+  {
+    "format": "mp4-4",
+    "extension": "mp4",
+    "resolution": "608x342",
+    "vbitrate": "v:972k",
+    "abitrate": "a:80k",
+    "url": "http://content.omroep.nl/eo/vod/mp4/PROMOVICTORIAmov_d0c0baec-1092k.mp4"
+  }
+]
+
+https://www.npo.nl/seksshop-bestolen-van-14-bijna-echte-meisjes/06-09-2017/WO_POWN_10684109
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_POWN_10684109?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then [for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':replace($x,'.+\.(.+)','$1-')||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}] else ()"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "vbitrate": "v:10004k",
+    "abitrate": "a:317k",
+    "url": "http://download.omroep.nl/powned/1353%20SEKSSHOP%20BESTOLEN.mp4"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Progressieve- en dynamische videostreams en progressieve videofragmenten samen
+
+https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then [for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||extract($x,'.+/([a-z]+)',1),'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/replace(url,'jsonp','json') ! (if (contains(.,'livestreams')) then json(.) else json(.)/url) return ({'format':'hls-master','extension':'m3u8','url':$b},for $x in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)} order by $x/format return $x),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':replace($x,'.+\.(.+)','$1-')||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}[url]] else ()"
+[
+  {
+    "format": "pg-sb",
+    "extension": "m4v",
+    "resolution": "480x270",
+    "vbitrate": "v:200k",
+    "abitrate": "a:64k",
+    "url": "https://content1a.omroep.nl/urishieldv2/l27m015e40b8507c938d005a1a94b8000000.cbbd552da8862589106e99343f2f267c/ceresodi/h264/p/29/10/10/85/sb_POW_03375508.m4v"
+  },
+  {
+    "format": "pg-bb",
+    "extension": "m4v",
+    "resolution": "640x360",
+    "vbitrate": "v:500k",
+    "abitrate": "a:127k",
+    "url": "https://content1b.omroep.nl/urishieldv2/l27m092be92516cfcbd2005a1a94b8000000.7381474792f0ba2b87c3c63b1bf89608/ceresodi/h264/p/29/10/10/85/bb_POW_03375508.m4v"
+  },
+  {
+    "format": "pg-std",
+    "extension": "m4v",
+    "resolution": "960x540",
+    "vbitrate": "v:994k",
+    "abitrate": "a:127k",
+    "url": "https://content1a.omroep.nl/urishieldv2/l27m07076fad050fcd80005a1a94b8000000.e772b426dfc96dd4515d969d61e866e1/ceresodi/h264/p/29/10/10/85/std_POW_03375508.m4v"
+  },
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508.m3u8"
+  },
+  {
+    "format": "hls-316",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:202k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=202000.m3u8"
+  },
+  {
+    "format": "hls-350",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:202k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=202000.m3u8"
+  },
+  {
+    "format": "hls-418",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:202k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=202000.m3u8"
+  },
+  {
+    "format": "hls-634",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=502000.m3u8"
+  },
+  {
+    "format": "hls-668",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=502000.m3u8"
+  },
+  {
+    "format": "hls-736",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=502000.m3u8"
+  },
+  {
+    "format": "hls-1269",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1101k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=1101000.m3u8"
+  },
+  {
+    "format": "hls-1303",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1101k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=1101000.m3u8"
+  },
+  {
+    "format": "hls-1371",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1101k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=1101000.m3u8"
+  },
+  {
+    "format": "hls-2008",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1798k",
+    "abitrate": "a:96k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=1798000.m3u8"
+  },
+  {
+    "format": "hls-2042",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1798k",
+    "abitrate": "a:128k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=1798000.m3u8"
+  },
+  {
+    "format": "hls-2110",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1798k",
+    "abitrate": "a:192k",
+    "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m58aa100e0d7ec778005a1a94bc000000.09270ed3bf4f5275d0d26db7f23e41d2/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=1798000.m3u8"
+  }
+]
+
+https://www.npo.nl/live/npo-1
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "[...]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/354ee790-d293-11e7-b04f-9cb65498e820/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=b11d3cd5cac9dc3812eba7413f99f883_1511777935_1511777935"
+  },
+  {
+    "format": "hls-136",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/354ee790-d293-11e7-b04f-9cb65498e820/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000.m3u8"
+  },
+  {
+    "format": "hls-348",
+    "extension": "m3u8",
+    "resolution": "384x216",
+    "vbitrate": "v:200k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/354ee790-d293-11e7-b04f-9cb65498e820/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=200000.m3u8"
+  },
+  {
+    "format": "hls-666",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/354ee790-d293-11e7-b04f-9cb65498e820/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=500000.m3u8"
+  },
+  {
+    "format": "hls-878",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:700k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/354ee790-d293-11e7-b04f-9cb65498e820/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=700000.m3u8"
+  },
+  {
+    "format": "hls-1196",
+    "extension": "m3u8",
+    "resolution": "768x432",
+    "vbitrate": "v:1000k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/354ee790-d293-11e7-b04f-9cb65498e820/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1000000.m3u8"
+  },
+  {
+    "format": "hls-2044",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1800k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/354ee790-d293-11e7-b04f-9cb65498e820/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1800000.m3u8"
+  }
+]
+
+https://www.npo.nl/li-jie-voor-het-eerst-winnares-top-16-na-opgave-solja/05-02-2017/WO_NOS_7303921
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "[...]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": null
+  },
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:104k",
+    "url": "https://video.omroep.nl/secure/d53dda9a8c5c3688918a7edc8f70f6dd/5a1a9533/nos/content-ip/ipod/2017/02/05/284055.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "856x482",
+    "vbitrate": "v:1504k",
+    "abitrate": "a:129k",
+    "url": "https://video.omroep.nl/secure/501bba084e92d96ccd9822e4a7589a30/5a1a9533/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then [for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||extract($x,'.+/([a-z]+)',1),'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/replace(url,'jsonp','json') ! (if (contains(.,'livestreams')) then json(.) else json(.)/url) return ({'format':'hls-master','extension':'m3u8','url':$b}[url],for $x in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)} order by $x/format return $x),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':replace($x,'.+\.(.+)','$1-')||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}] else ()"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:502k",
+    "abitrate": "a:104k",
+    "url": "https://video.omroep.nl/secure/d5145e606b2af5f549fbbdc104ff8731/5a1a95e2/nos/content-ip/ipod/2017/02/05/284055.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "856x482",
+    "vbitrate": "v:1504k",
+    "abitrate": "a:129k",
+    "url": "https://video.omroep.nl/secure/cea87e84a216f9e2e7cad53c3b6149fe/5a1a95e2/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "json(extract($raw,'\((.+)\)',1))[not(error)] ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',' - Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),' - ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':'http://www.npo.nl/%prid%','method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),eind:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/%prid%' else ()),let $a:=x:request({'data':'http://ida.omroep.nl/app.php/%prid%?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then formats:=[for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':'pg-'||extract($x,'.+/([a-z]+)',1),'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/replace(url,'jsonp','json') ! (if (contains(.,'livestreams')) then json(.) else json(.)/url) return ({'format':'hls-master','extension':'m3u8','url':$b}[url],for $x in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)} order by $x/format return $x),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':replace($x,'.+\.(.+)','$1-')||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}] else ()"
+name := NOS - NOS Journaal (18112017)
+duration := 00:20:22
+t := 1222
+expire := 18-11-2018 20:21:17 (nog 357 dagen en 7u4m32s)
+s_url := http://tt888.omroep.nl/tt888/POW_03375508
+formats := [{"format": "pg-sb", "extension": "m4v", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:64k", "url": "https://content1a.omroep.nl/urishieldv2/l27m7f355abb53ce4330005a1aa296000000.2e1fdf2ee82292207d7108f58d7ef710/ceresodi/h264/p/29/10/10/85/sb_POW_03375508.m4v"}, {"format": "pg-bb", "extension": "m4v", "resolution": "640x360", "vbitrate": "v:500k", "abitrate": "a:127k", "url": "https://content1b.omroep.nl/urishieldv2/l27m32e4e1f7542b3096005a1aa296000000.7a33ab8f10bfb71cfbe98dbbf4ca2325/ceresodi/h264/p/29/10/10/85/bb_POW_03375508.m4v"}, {"format": "pg-std", "extension": "m4v", "resolution": "960x540", "vbitrate": "v:994k", "abitrate": "a:127k", "url": "https://content1a.omroep.nl/urishieldv2/l27m604babe420f737de005a1aa296000000.9a71441eeacf3e7f91ecddc6ba5cf034/ceresodi/h264/p/29/10/10/85/std_POW_03375508.m4v"}, {"format": "hls-master", "extension": "m3u8", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508.m3u8"}, {"format": "hls-316", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:202k", "abitrate": "a:96k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=202000.m3u8"}, {"format": "hls-350", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:202k", "abitrate": "a:128k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=202000.m3u8"}, {"format": "hls-418", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:202k", "abitrate": "a:192k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=202000.m3u8"}, {"format": "hls-634", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:96k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=502000.m3u8"}, {"format": "hls-668", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:128k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=502000.m3u8"}, {"format": "hls-736", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:192k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=502000.m3u8"}, {"format": "hls-1269", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1101k", "abitrate": "a:96k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=1101000.m3u8"}, {"format": "hls-1303", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1101k", "abitrate": "a:128k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=1101000.m3u8"}, {"format": "hls-1371", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1101k", "abitrate": "a:192k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=1101000.m3u8"}, {"format": "hls-2008", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1798k", "abitrate": "a:96k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=96000-video=1798000.m3u8"}, {"format": "hls-2042", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1798k", "abitrate": "a:128k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=128000-video=1798000.m3u8"}, {"format": "hls-2110", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1798k", "abitrate": "a:192k", "url": "https://adaptive-e50c1a.npostreaming.nl/urishieldv2/l27m010b11293f6c6cf8005a1aa299000000.2f5652af052f1103fdf942bd8f5e45fa/p/29/10/10/37/POW_03375508/POW_03375508.ism/POW_03375508-audio=192000-video=1798000.m3u8"}]
+
+https://www.npo.nl/live/npo-1
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+name := NPO 1 - Livestream (26112017)
+formats := [{"format": "hls-master", "extension": "m3u8", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=579b2ad07b5468034d28dda5b724a36b_1511781574_1511781574"}, {"format": "hls-136", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000.m3u8"}, {"format": "hls-348", "extension": "m3u8", "resolution": "384x216", "vbitrate": "v:200k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=200000.m3u8"}, {"format": "hls-666", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=500000.m3u8"}, {"format": "hls-878", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:700k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=700000.m3u8"}, {"format": "hls-1196", "extension": "m3u8", "resolution": "768x432", "vbitrate": "v:1000k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1000000.m3u8"}, {"format": "hls-2044", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1800k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1800000.m3u8"}]
+
+https://www.npo.nl/nieuw-seizoen-hunted/13-07-2017/WO_AT_9826291
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+name := AVROTROS - Nieuw seizoen Hunted! (13072017)
+formats := [{"format": "m4v-1", "extension": "mp4", "resolution": "288x162", "vbitrate": "v:197k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_288x162_1499953546.m4v"}, {"format": "m4v-2", "extension": "mp4", "resolution": "544x306", "vbitrate": "v:688k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_544x306_1499953546.m4v"}, {"format": "m4v-3", "extension": "mp4", "resolution": "846x476", "vbitrate": "v:1269k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_704x396_1499953546.m4v"}]
+
+https://www.npo.nl/li-jie-voor-het-eerst-winnares-top-16-na-opgave-solja/05-02-2017/WO_NOS_7303921
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
 name := NOS - Li Jie voor het eerst winnares Top-16 na opgave Solja (05022017)
-json := [{"format": "mp4-3", "url": "https://video.omroep.nl/secure/f0604f4669956d624ffc736e7f38f6aa/58b8a024/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"}, {"format": "mp4-2", "url": "https://video.omroep.nl/secure/b885de0468bbabeade5f209aa82ec9ab/58b8a024/nos/content-ip/ipod/2017/02/05/284055.mp4"}]
-formats := mp4-2, mp4-3
-best := mp4-3
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:104k", "url": "https://video.omroep.nl/secure/dc1d4ec4ed12028685e23fed149c672e/5a1aa380/nos/content-ip/ipod/2017/02/05/284055.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "856x482", "vbitrate": "v:1504k", "abitrate": "a:129k", "url": "https://video.omroep.nl/secure/8accf5236fab284e636e459299b5418c/5a1aa380/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"}]
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_NTR_429477" --xquery "..."
-name := NTR - Ademhaling - De hele dag haal je adem. Maar wat gebeurt er dan eigenlijk in je lichaam? (04112002)
-json := [{"format": "meta", "url": "https://adaptive-e99c1b.npostreaming.nl/urishieldv2/l27m3d88198459ef1c1a0058ced2a2000000.80d072b6812e959855d915db415c6bb7/5/ntr/rest/2013/WO_NTR_429477/WO_NTR_429477.ism/WO_NTR_429477.m3u8"}, {"format": "255", "url": "https://adaptive-e99c1b.npostreaming.nl/urishieldv2/l27m3d88198459ef1c1a0058ced2a2000000.80d072b6812e959855d915db415c6bb7/5/ntr/rest/2013/WO_NTR_429477/WO_NTR_429477.ism/WO_NTR_429477-audio_eng=42282-video_eng=199000.m3u8"}, {"format": "597", "url": "https://adaptive-e99c1b.npostreaming.nl/urishieldv2/l27m3d88198459ef1c1a0058ced2a2000000.80d072b6812e959855d915db415c6bb7/5/ntr/rest/2013/WO_NTR_429477/WO_NTR_429477.ism/WO_NTR_429477-audio_eng=61584-video_eng=502000.m3u8"}, {"format": "1059", "url": "https://adaptive-e99c1b.npostreaming.nl/urishieldv2/l27m3d88198459ef1c1a0058ced2a2000000.80d072b6812e959855d915db415c6bb7/5/ntr/rest/2013/WO_NTR_429477/WO_NTR_429477.ism/WO_NTR_429477-audio_eng=87882-video_eng=912000.m3u8"}, {"format": "93", "url": "https://adaptive-e99c1b.npostreaming.nl/urishieldv2/l27m3d88198459ef1c1a0058ced2a2000000.80d072b6812e959855d915db415c6bb7/5/ntr/rest/2013/WO_NTR_429477/WO_NTR_429477.ism/WO_NTR_429477-audio_eng=87882.m3u8"}, {"format": "mp4-3", "url": "http://video.omroep.nl/ntr/schooltv/beeldbank/video/20021104_ademhaling01.mp4"}]
-formats := mp4-3, meta, 93, 255, 597, 1059
-best := 1059
+https://www.npo.nl/hunted/20-11-2017/AT_2084949/POMS_AT_11768999
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POMS_VARA_7595022" --xquery "..."
-name := VARA - De Wereld Draait Door - De TV Draait Door (23022017)
-t := 157
-ss1 := 1950
-ss2 := 27
-to := 2134
-s_url := http://tt888.omroep.nl/tt888/VARA_101381686
-json := [{"format": "meta", "url": "https://adaptive-e10c2b.npostreaming.nl/urishieldv2/l27m62a124e50890073d0058ced2da000000.d8af1f24e5ab2cc3a74278485e03fdb9/p/26/10/10/1e/VARA_101381686/VARA_101381686.ism/VARA_101381686.m3u8"}, {"format": "280", "url": "https://adaptive-e10c2b.npostreaming.nl/urishieldv2/l27m62a124e50890073d0058ced2da000000.d8af1f24e5ab2cc3a74278485e03fdb9/p/26/10/10/1e/VARA_101381686/VARA_101381686.ism/VARA_101381686-audio=64000-video=201000.m3u8"}, {"format": "667", "url": "https://adaptive-e10c2b.npostreaming.nl/urishieldv2/l27m62a124e50890073d0058ced2da000000.d8af1f24e5ab2cc3a74278485e03fdb9/p/26/10/10/1e/VARA_101381686/VARA_101381686.ism/VARA_101381686-audio=128000-video=502000.m3u8"}, {"format": "880", "url": "https://adaptive-e10c2b.npostreaming.nl/urishieldv2/l27m62a124e50890073d0058ced2da000000.d8af1f24e5ab2cc3a74278485e03fdb9/p/26/10/10/1e/VARA_101381686/VARA_101381686.ism/VARA_101381686-audio=128000-video=703000.m3u8"}, {"format": "1305", "url": "https://adaptive-e10c2b.npostreaming.nl/urishieldv2/l27m62a124e50890073d0058ced2da000000.d8af1f24e5ab2cc3a74278485e03fdb9/p/26/10/10/1e/VARA_101381686/VARA_101381686.ism/VARA_101381686-audio=128000-video=1104000.m3u8"}, {"format": "mp4-std", "url": "https://content50c2a.omroep.nl/urishieldv2/l27m0192e23907a75cf70058ced2da000000.eae4099bb0c7e8bcc92338e52c0fc6f3/s01/ceresodi/h264/p/26/10/10/3b/std_VARA_101381686.m4v"}, {"format": "mp4-bb", "url": "https://content50c1a.omroep.nl/urishieldv2/l27m46d7ed53685baaaa0058ced2da000000.a8b1f438cd1a537e12834dccb14e55fc/s04/ceresodi/h264/p/26/10/10/3b/bb_VARA_101381686.m4v"}, {"format": "mp4-sb", "url": "https://content50c1a.omroep.nl/urishieldv2/l27m1004131e3f29571f0058ced2da000000.d25782bb562c28aef56ed7b943e13ee9/s03/ceresodi/h264/p/26/10/10/3b/sb_VARA_101381686.m4v"}]
-formats := mp4-sb, mp4-bb, mp4-std, meta, 280, 667, 880, 1305
-best := 1305
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+name := AVROTROS - Hunted - ''Staan blijven!'' (20112017)
+duration := 00:01:59
+t := 119
+start := 00:02:01
+ss := 121
+ss1 := 120
+ss2 := 1
+end := 00:04:00
+to := 240
+expire := 20-11-2018 21:17:52 (nog 359 dagen en 7u31m55s)
+s_url := http://tt888.omroep.nl/tt888/POMS_AT_11768999
+formats := [{"format": "pg-sb", "extension": "m4v", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:64k", "url": "https://content10c2d.omroep.nl/urishieldv2/l27m14ef910730fa9e9a005a1aa96f000000.ed83cccd85d8b4e446151dd38ea71328/ceresodi/h264/p/29/10/10/86/sb_AT_2084949.m4v"}, {"format": "pg-bb", "extension": "m4v", "resolution": "640x360", "vbitrate": "v:500k", "abitrate": "a:127k", "url": "https://content10c2b.omroep.nl/urishieldv2/l27m6b81bdb77bff6229005a1aa96f000000.5378bd0ec75e6a2070ceed28d1d4d727/ceresodi/h264/p/29/10/10/86/bb_AT_2084949.m4v"}, {"format": "pg-std", "extension": "m4v", "resolution": "960x540", "vbitrate": "v:982k", "abitrate": "a:127k", "url": "https://content10c2c.omroep.nl/urishieldv2/l27m75548a64033fbc62005a1aa96f000000.3ea04a2bd1b98cfb43dc7895ed655c52/ceresodi/h264/p/29/10/10/86/std_AT_2084949.m4v"}, {"format": "hls-master", "extension": "m3u8", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949.m3u8"}, {"format": "hls-316", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:202k", "abitrate": "a:96k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=96000-video=202000.m3u8"}, {"format": "hls-350", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:202k", "abitrate": "a:128k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=128000-video=202000.m3u8"}, {"format": "hls-418", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:202k", "abitrate": "a:192k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=192000-video=202000.m3u8"}, {"format": "hls-634", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:96k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=96000-video=502000.m3u8"}, {"format": "hls-668", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:128k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=128000-video=502000.m3u8"}, {"format": "hls-736", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:192k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=192000-video=502000.m3u8"}, {"format": "hls-1272", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1104k", "abitrate": "a:96k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=96000-video=1104000.m3u8"}, {"format": "hls-1306", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1104k", "abitrate": "a:128k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=128000-video=1104000.m3u8"}, {"format": "hls-1374", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1104k", "abitrate": "a:192k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=192000-video=1104000.m3u8"}, {"format": "hls-2014", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1804k", "abitrate": "a:96k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=96000-video=1804000.m3u8"}, {"format": "hls-2048", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1804k", "abitrate": "a:128k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=128000-video=1804000.m3u8"}, {"format": "hls-2116", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1804k", "abitrate": "a:192k", "url": "https://adaptive-e10c3a.npostreaming.nl/urishieldv2/l27m38ff3902430b1d21005a1aa972000000.e932d954e39d5b1c1fa3d509f40f2c45/p/29/10/10/37/AT_2084949/AT_2084949.ism/AT_2084949-audio=192000-video=1804000.m3u8"}]
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" --xquery "..."
-name := AVROTROS en TROS - Promo Opgelicht?! (06-09-2016) (06092016)
-json := [{"format": "mp4-2", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/640x360_1000.m4v"}, {"format": "mp4-1", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/320x180_180.m4v"}, {"format": "mp4-3", "url": "http://content.omroep.nl/avrotros/transcoding/opgelicht/1473070014300/854x480_1500.m4v"}]
-formats := mp4-1, mp4-2, mp4-3
-best := mp4-3
+https://www.npo.nl/seksshop-bestolen-van-14-bijna-echte-meisjes/06-09-2017/WO_POWN_10684109
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POMS_NCRV_090735" --xquery "..."
-name := NCRV - Willem Wever - Hoe gaat geluid door een telefoon? (14012006)
-t := 144
-ss1 := 330
-ss2 := 12
-to := 486
-json := [{"format": "wmv-2", "url": "mms://blaster.omroep.nl/public/ug-od/ms4/08/media/tv/ncrv/willemwever/bb.20060114.asf?wmt=58b8b8ab&wmhash=7d746b0d"}, {"format": "wmv-1", "url": "mms://blaster.omroep.nl/public/ug-od/ms4/08/media/tv/ncrv/willemwever/sb.20060114.asf?wmt=58b8b8ab&wmhash=15467dda"}, {"format": "mp4-2", "url": "http://content.omroep.nl/tv/ncrv/willemwever/bb.20060114.mp4"}]
-formats := wmv-1, wmv-2, mp4-2
-best := mp4-2
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+name := PowNed - Seksshop bestolen van 14 ''bijna echte'' meisjes (06092017)
+duration := 00:01:45
+t := 105
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:10004k", "abitrate": "a:317k", "url": "http://download.omroep.nl/powned/1353%20SEKSSHOP%20BESTOLEN.mp4"}]
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_VPRO_043833" --xquery "..."
-name := VPRO - Zigeunermuziek doet pijn - Bob Entrop, VPRO, 2008 (58 min.) (21072010)
-v_url := mms://hurley.omroep.nl/public/ug-od/ms5/14/media/vpro/39594888/windowsmedia.asf?wmt=58bbebc8&wmhash=5bb334ff
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 --xquery "json(
             extract(
               $raw,
-              '\((.+)\)',1
+              '\((.+)\)',
+              1
             )
-          ) ! (
+          )[not(error)] ! (
             name:=if (medium='live') then
               concat(
                 titel,
@@ -3066,10 +3783,7 @@ v_url := mms://hurley.omroep.nl/public/ug-od/ms5/14/media/vpro/39594888/windowsm
                     replace(
                       x:request(
                         {
-                          'data':concat(
-                            'http://www.npo.nl/',
-                            prid
-                          ),
+                          'data':'http://www.npo.nl/%prid%',
                           'method':'HEAD'
                         }
                       )/url,
@@ -3080,199 +3794,10 @@ v_url := mms://hurley.omroep.nl/public/ug-od/ms5/14/media/vpro/39594888/windowsm
                 '[&quot;&apos;]',
                 ''''''
               ),
-            if (start) then (
+            if (tijdsduur) then (
+              duration:=tijdsduur,
               t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),
-              (hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (
-                if (. mod 30=0) then (
-                  if (.=30) then
-                    ()
-                  else
-                    ss1:=. - 30,
-                  ss2:=30
-                ) else (
-                  if (.<30) then
-                    ()
-                  else
-                    ss1:=. - (. mod 30),
-                  ss2:=. mod 30
-                )
-              ),
-              to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)
-            ) else
-              (),
-            if (tt888='ja') then (
-              s_url:=concat(
-                'http://tt888.omroep.nl/tt888/',
-                prid
-              ),
-              if (unparsed-text-available($s_url)) then
-                ()
-              else
-                s_charenc:='-sub_charenc CP1252'
-            ) else
-              (),
-            let $a:=(
-              if (medium='live' or pubopties) then
-                for $x in json(
-                  concat(
-                    'http://ida.omroep.nl/app.php/',
-                    prid,
-                    '?token=',
-                    json(
-                      'http://ida.omroep.nl/app.php/auth'
-                    )/token
-                  )
-                )//url ! replace(
-                  .,
-                  'jsonp',
-                  'json'
-                ) return
-                if (unparsed-text-available($x)) then
-                  if (contains($x,'m3u8')) then
-                    let $b:=if (contains($x,'live')) then
-                      json($x)
-                    else
-                      json($x)/url
-                    return (
-                      {
-                        'format':'meta',
-                        'url':$b
-                      },
-                      tail(
-                        tokenize(
-                          unparsed-text($b),
-                          '#EXT-X-STREAM-INF:'
-                        )
-                      ) ! {
-                        'format':string(
-                          extract(
-                            .,
-                            'BANDWIDTH=(\d+)',1
-                          ) idiv 1000
-                        ),
-                        'url':concat(
-                          resolve-uri('.',$b),
-                          extract(
-                            .,
-                            '(.+m3u8)',1
-                          )
-                        )
-                      }
-                    )
-                  else
-                    json($x)/{
-                      'format':concat(
-                        'mp4-',
-                        extract(
-                          url,
-                          '.+/([a-z]+)',1
-                        )
-                      ),
-                      'url':substring-before(
-                        url,
-                        '?'
-                      )
-                    }
-                else
-                  ()
-              else
-                (),
-              if (medium!='live' and streams) then
-                let $b:=(streams)() return
-                $b[starts-with(url,'http')]/{
-                  'format':if (type) then
-                    concat(
-                      'mp4-',
-                      max($b/kwaliteit)+1
-                    )
-                  else
-                    concat(
-                      if (formaat='h264') then
-                        'mp4'
-                      else
-                        formaat,
-                      '-',
-                      kwaliteit
-                    ),
-                  'url':x:request(
-                    {
-                      'data':url,
-                      'method':'HEAD',
-                      'error-handling':'xxx=accept'
-                    }
-                  )[some $x in ('200','302') satisfies contains(headers[1],$x)]/(
-                    if (ends-with(url,'asf')) then
-                      doc(url)//@href
-                    else if (contains(url,'content-ip')) then
-                      x:request(
-                        {
-                          'post':serialize-json(
-                            [
-                              {
-                                \"file\":url
-                              }
-                            ]
-                          ),
-                          'url':'http://nos.nl/video/resolve/'
-                        }
-                      )//file
-                    else
-                      url
-                  )
-                }[url]
-              else
-                ()
-            ) return
-            if ($a) then
-              if (count($a)=1) then
-                v_url:=$a/url
-              else (
-                json:=[$a],
-                let $b:=(
-                  for $x in $a[contains(format,'wmv')]/format order by $x return $x,
-                  for $x in $a[matches(format,'mp4-\d')]/format order by $x return $x,
-                  reverse(
-                    $a[matches(format,'mp4-[a-z]')]/format
-                  ),
-                  $a[format='meta']/format,
-                  for $x in $a[format castable as int]/format order by $x return $x
-                ) return (
-                  formats:=join($b,', '),
-                  best:=$b[last()]
-                )
-              )
-            else
-              ()
-          )"
-
-================================================================================================================================
-
-[https://github.com/Reino17/BatchGemist/commit/d95e3374cfd6c8550908e6dd0571b7f4d0c64cd7]
-[https://github.com/Reino17/BatchGemist/commit/7aa16a291215513a1f010e61d6a11c234ca7e5a9]
-
-xidel-0.9.7.5391.exe -s --color=never "http://e.omroep.nl/metadata/POMS_BNN_7200256" -e "json(extract($raw,'\((.+)\)',1)) ! (if (environment-variable('name')) then () else if (tijdsduur) then (duur:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),eind:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return tot:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else ())"
-duur := 00:00:57
-t := 57
-start := 00:36:26
-ss := 2186
-ss1 := 2160
-ss2 := 26
-eind := 00:37:23
-to := 2243
-tot := 17-03-2017 21:21:13 (nog 11 dagen en 5u2m46s)
-
---xquery "json(
-            extract(
-              $raw,
-              '\((.+)\)',1
-            )
-          ) ! (
-            if (environment-variable('name')) then
-              ()
-            else
-              if (tijdsduur) then (
-                duur:=tijdsduur,
-                t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),
+              if (start) then (
                 start:=start,
                 (hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (
                   ss:=.,
@@ -3290,163 +3815,377 @@ tot := 17-03-2017 21:21:13 (nog 11 dagen en 5u2m46s)
                     ss2:=. mod 30
                   )
                 ),
-                eind:=eind,
-                to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),
-                if (publicatie_eind) then (
-                  let $a:=dateTime(publicatie_eind) - current-dateTime() return
-                  tot:=concat(
-                    replace(
-                      publicatie_eind,
-                      '(\d+)-(\d+)-(\d+)T(.+)\+.+',
-                      '$3-$2-$1 $4'
-                    ),
-                    ' (nog ',
-                    days-from-duration($a) ! (
-                      if (.=0) then
-                        ()
-                      else if (.=1) then
-                        .||' dag en '
-                      else
-                        .||' dagen en '
-                    ),
-                    hours-from-duration($a) ! (
-                      if (.=0) then
-                        ()
-                      else
-                        .||'u'
-                    ),
-                    minutes-from-duration($a) ! (
-                      if (.=0) then
-                        ()
-                      else
-                        .||'m'
-                    ),
-                    floor(seconds-from-duration($a)),
-                    's)'
-                  )
-                ) else
-                  ()
+                end:=eind,
+                to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)
               ) else
                 (),
-          )"
-
---------------------------------------------------------------------------------------------------------------------------------
-
-xidel-0.9.7.5391.exe -s --color=never "http://buitenland.eenvandaag.nl/tv-items/71453/tanks_in_europa_terug_naar_de_koude_oorlog_" --xquery "prid:=//script/extract(.,'prid: \"(.+)\"',1)[.],if (contains($url,'broadcast')) then () else (name:=concat('EenVandaag - ',replace(//meta[@name='twitter:title']/@content,'[&quot;&apos;]',''''''),replace(//meta[@name='twitter:player:stream']/@content,'.+std\.(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),//script/json(extract(.,'options: (.+?\})',1,'s'))/(t:=endAt - startAt,duur:=$t * dayTimeDuration('PT1S') + time('00:00:00'),startAt ! (ss:=.,start:=. * dayTimeDuration('PT1S') + time('00:00:00'),if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),to:=endAt,eind:=$to * dayTimeDuration('PT1S') + time('00:00:00')))"
-prid := AT_2064397
-name := EenVandaag - Tanks in Europa, terug naar de Koude Oorlog? (10012017)
-t := 275
-duur := 00:04:35
-ss := 1038
-start := 00:17:18
-ss1 := 1020
-ss2 := 18
-to := 1313
-eind := 00:21:53
-
---xquery "prid:=//script/extract(
-            .,
-            'prid: \"(.+)\"',1
-          )[.],
-          if (contains($url,'broadcast')) then
-            ()
-          else (
-            name:=concat(
-              'EenVandaag - ',
-              replace(
-                //meta[@name='twitter:title']/@content,
-                '[&quot;&apos;]',
-                ''''''
-              ),
-              replace(
-                //meta[@name='twitter:player:stream']/@content,
-                '.+std\.(\d{4})(\d{2})(\d{2}).+',
-                ' ($3$2$1)'
-              )
-            ),
-            //script/json(
-              extract(
-                .,
-                'options: (.+?\})',1,
-                's'
-              )
-            )/(
-              t:=endAt - startAt,
-              duur:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
-              startAt ! (
-                ss:=.,
-                start:=. * dayTimeDuration('PT1S') + time('00:00:00'),
-                if (. mod 30=0) then (
-                  if (.=30) then
-                    ()
-                  else
-                    ss1:=. - 30,
-                  ss2:=30
-                ) else (
-                  if (.<30) then
-                    ()
-                  else
-                    ss1:=. - (. mod 30),
-                  ss2:=. mod 30
+              if (publicatie_eind) then (
+                let $a:=dateTime(publicatie_eind) - current-dateTime() return
+                expire:=concat(
+                  replace(
+                    publicatie_eind,
+                    '(\d+)-(\d+)-(\d+)T(.+)\+.+',
+                    '$3-$2-$1 $4'
+                  ),
+                  ' (nog ',
+                  days-from-duration($a) ! (
+                    if (.=0) then
+                      ()
+                    else if (.=1) then
+                      .||' dag en '
+                    else
+                      .||' dagen en '
+                  ),
+                  hours-from-duration($a) ! (
+                    if (.=0) then
+                      ()
+                    else
+                      .||'u'
+                  ),
+                  minutes-from-duration($a) ! (
+                    if (.=0) then
+                      ()
+                    else
+                      .||'m'
+                  ),
+                  floor(
+                    seconds-from-duration($a)
+                  ),
+                  's)'
                 )
-              ),
-              to:=endAt,
-              eind:=$to * dayTimeDuration('PT1S') + time('00:00:00')
-            )
-          )"
-
---------------------------------------------------------------------------------------------------------------------------------
-
-xidel-0.9.7.5391.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=52009553-3547-3298-88f9-4619441d9aa5/fmt=adaptive/" --xquery "$json/(material)()/(duur:=substring-before(duration,'.'),t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return tot:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($b)),'s)'))"
-duur := 01:01:43
-t := 3703
-tot := 11-03-2017 20:35:44 (nog 5 dagen en 6u5m4s)
-
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=00a3f1ec-1477-439f-a806-aa54555eb52d/fmt=adaptive/" --xquery "$json/(material)()/(duur:=substring-before(duration,'.'),t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return tot:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($b)),'s)') else ())"				# Video zonder "Gratis tot"-datum.
-duur := 00:03:55
-t := 235
-
---xquery "$json/(material)()/(
-            duur:=substring-before(duration,'.'),
-            t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),
-            if ((.//ddr_timeframes)()[model='AVOD']/stop) then
-              let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00')
-              let $b:=$a - current-dateTime() return
-              tot:=concat(
-                replace(
-                  $a,
-                  '(\d+)-(\d+)-(\d+)T(.+)',
-                  '$3-$2-$1 $4'
-                ),
-                ' (nog ',
-                days-from-duration($b) ! (
-                  if (.=0) then
-                    ()
-                  else if (.=1) then
-                    .||' dag en '
-                  else
-                    .||' dagen en '
-                ),
-                hours-from-duration($b) ! (
-                  if (.=0) then
-                    ()
-                  else
-                    .||'u'
-                ),
-                minutes-from-duration($b) ! (
-                  if (.=0) then
-                    ()
-                  else
-                    .||'m'
-                ),
-                floor(
-                  seconds-from-duration($b)
-                ),
-                's)'
-              )
+              ) else
+                ()
+            ) else
+              (),
+            if (tt888='ja') then
+              s_url:='http://tt888.omroep.nl/tt888/%prid%'
             else
               ()
-          )"
+          ),
+          let $a:=x:request(
+            {
+              'data':'http://ida.omroep.nl/app.php/%prid%?token='||json(
+                'http://ida.omroep.nl/app.php/auth'
+              )/token,
+              'error-handling':'4xx=accept'
+            }
+          )[contains(headers[1],'200')]/json/(items)()() return
+          if ($a) then
+            formats:=[
+              for $x in reverse(
+                $a[contentType='odi'][format='mp4']
+              )/json(
+                replace(
+                  url,
+                  'jsonp',
+                  'json'
+                )
+              )/substring-before(
+                url,
+                '?'
+              ) return
+              system(
+                x'cmd /c %ffmpeg% -i {$x} 2>&amp;1'
+              ) ! {
+                'format':'pg-'||extract(
+                  $x,
+                  '.+/([a-z]+)',
+                  1
+                ),
+                'extension':'m4v',
+                'resolution':extract(
+                  .,
+                  'Video:.+, (\d+x\d+)',
+                  1
+                ),
+                'vbitrate':replace(
+                  .,
+                  '.+Video:.+?(\d+) kb.+',
+                  'v:$1k',
+                  's'
+                ),
+                'abitrate':replace(
+                  .,
+                  '.+Audio:.+?(\d+) kb.+',
+                  'a:$1k',
+                  's'
+                ),
+                'url':$x
+              },
+              let $b:=$a[format='hls']/replace(
+                url,
+                'jsonp',
+                'json'
+              ) ! (
+                if (contains(.,'livestreams')) then
+                  json(.)
+                else
+                  json(.)/url
+              ) return (
+                {
+                  'format':'hls-master',
+                  'extension':'m3u8',
+                  'url':$b
+                }[url],
+                for $x in tail(
+                  tokenize(
+                    extract(
+                      unparsed-text($b),
+                      '(#EXT-X-STREAM-INF.+m3u8$)',
+                      1,'ms'
+                    ),
+                    '#EXT-X-STREAM-INF:'
+                  )
+                ) ! {
+                  'format':'hls-'||extract(
+                    .,
+                    'BANDWIDTH=(\d+)\d{3}',
+                    1
+                  ),
+                  'extension':'m3u8',
+                  'resolution':extract(
+                    .,
+                    'RESOLUTION=(.+),',
+                    1
+                  ),
+                  'vbitrate':extract(
+                    .,
+                    'video=(\d+)\d{3}',
+                    1
+                  ) ! (
+                    if (.) then
+                      concat(
+                        'v:',
+                        .,
+                        'k'
+                      )
+                    else
+                      ''
+                  ),
+                  'abitrate':replace(
+                    .,
+                    '.+audio.+?(\d+)\d{3}.+',
+                    'a:$1k',
+                    's'
+                  ),
+                  'url':resolve-uri(
+                    '.',
+                    $b
+                  )||extract(
+                    .,
+                    '(.+m3u8)',
+                    1
+                  )
+                } order by $x/format return $x
+              ),
+              for $x at $i in reverse(
+                $a[contentType='url'][format='mp4']
+              ) ! x:request(
+                {
+                  'data':url,
+                  'method':'HEAD',
+                  'error-handling':'xxx=accept'
+                }
+              )[some $x in ('200','302') satisfies contains(headers[1],$x)]/(
+                if (contains(url,'content-ip')) then
+                  x:request(
+                    {
+                      'post':serialize-json(
+                        [
+                          {
+                            'file':url
+                          }
+                        ]
+                      ),
+                      'url':'https://nos.nl/video/resolve/'
+                    }
+                  )//file
+                else
+                  url
+              ) return
+              system(
+                x'cmd /c %ffmpeg% -i {$x} 2>&amp;1'
+              ) ! {
+                'format':replace(
+                  $x,
+                  '.+\.(.+)',
+                  '$1-'
+                )||$i,
+                'extension':'mp4',
+                'resolution':extract(
+                  .,
+                  'Video:.+, (\d+x\d+)',
+                  1
+                ),
+                'vbitrate':replace(
+                  .,
+                  '.+Video:.+?(\d+) kb.+',
+                  'v:$1k',
+                  's'
+                ),
+                'abitrate':replace(
+                  .,
+                  '.+Audio:.+?(\d+) kb.+',
+                  'a:$1k',
+                  's'
+                ),
+                'url':$x
+              }
+            ]
+          else
+            ()"
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Nieuwe NPO api
+(de enige reden waarom ik deze nog niet gebruik is omdat FFmpeg SAMPLE-AES nog niet ondersteunt)
+
+https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://www.npo.nl/player/POW_03375508" -e "$json"
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb21zY29yZSI6eyJucG9JbmdlbG9nZCI6Im5vIiwibnBvTG9naW50eXBlIjoiYW5vbmllbSIsIm5wb0xvZ2luSWQiOiIifSwiaGFzU3Vic2NyaXB0aW9uIjoiIiwiaGFzUHJlbWl1bVN1YnNjcmlwdGlvbiI6IiIsImVsZW1lbnRJZCI6InBsYXllci1QT1dfMDMzNzU1MDgiLCJtZWRpYUlkIjoiUE9XXzAzMzc1NTA4IiwiaWF0IjoxNTExNTM2Mzg0LCJuYmYiOjE1MTE1MzYzODQsImV4cCI6MTUxMTU2NTE4NCwiY29uc3VtZXJJZCI6bnVsbCwiaXNQbGF5bGlzdCI6ZmFsc2UsInJlZmVycmVyVXJsIjpudWxsLCJza2lwQ2F0YWxvZyI6MH0.NrwdW7bv_iUQfck0lR0s2N9d-4i4GOQqQlBb9Vkzue8",
+  "embedUrl": "https://start-player.npo.nl/embed/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb21zY29yZSI6eyJucG9JbmdlbG9nZCI6Im5vIiwibnBvTG9naW50eXBlIjoiYW5vbmllbSIsIm5wb0xvZ2luSWQiOiIifSwiaGFzU3Vic2NyaXB0aW9uIjoiIiwiaGFzUHJlbWl1bVN1YnNjcmlwdGlvbiI6IiIsImVsZW1lbnRJZCI6InBsYXllci1QT1dfMDMzNzU1MDgiLCJtZWRpYUlkIjoiUE9XXzAzMzc1NTA4IiwiaWF0IjoxNTExNTM2Mzg0LCJuYmYiOjE1MTE1MzYzODQsImV4cCI6MTUxMTU2NTE4NCwiY29uc3VtZXJJZCI6bnVsbCwiaXNQbGF5bGlzdCI6ZmFsc2UsInJlZmVycmVyVXJsIjpudWxsLCJza2lwQ2F0YWxvZyI6MH0.NrwdW7bv_iUQfck0lR0s2N9d-4i4GOQqQlBb9Vkzue8",
+  "embedCode": "<script>var urlForIframe = \"https://start-player.npo.nl/embed/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjb21zY29yZSI6eyJucG9JbmdlbG9nZCI6Im5vIiwibnBvTG9naW50eXBlIjoiYW5vbmllbSIsIm5wb0xvZ2luSWQiOiIifSwiaGFzU3Vic2NyaXB0aW9uIjoiIiwiaGFzUHJlbWl1bVN1YnNjcmlwdGlvbiI6IiIsImVsZW1lbnRJZCI6InBsYXllci1QT1dfMDMzNzU1MDgiLCJtZWRpYUlkIjoiUE9XXzAzMzc1NTA4IiwiaWF0IjoxNTExNTM2Mzg0LCJuYmYiOjE1MTE1MzYzODQsImV4cCI6MTUxMTU2NTE4NCwiY29uc3VtZXJJZCI6bnVsbCwiaXNQbGF5bGlzdCI6ZmFsc2UsInJlZmVycmVyVXJsIjpudWxsLCJza2lwQ2F0YWxvZyI6MH0.NrwdW7bv_iUQfck0lR0s2N9d-4i4GOQqQlBb9Vkzue8\"; var elementId = \"player-POW_03375508\"; var mediaId = \"POW_03375508\";</script><script src=\"https://start-player.npo.nl/js/embed.js\"></script>"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://www.npo.nl/player/POW_03375508" -e "$json/doc(embedUrl)//script/extract(.,'var video =(.+);',1)[.] ! json(.)"
+{
+  "id": "POW_03375508",
+  "type": "broadcast",
+  "title": "NOS Journaal",
+  "subtitles": [
+    {
+      "label": "nl",
+      "default": false,
+      "language": "nl",
+      "src": "https://rs.poms.omroep.nl/v1/api/subtitles/POW_03375508/nl_NL/CAPTION.vtt"
+    }
+  ],
+  "episodeTitle": "NOS Journaal",
+  "franchiseTitle": "NOS Journaal 20.00 uur",
+  "description": "Met het laatste nieuws, gebeurtenissen van nationaal en internationaal belang en de weersverwachting voor de avond en komende dagen.",
+  "duration": 1222,
+  "age_rating": null,
+  "still_image_url": "https://images.poms.omroep.nl/image/s1280/c1280x720/975831.jpg",
+  "post_play_url": "https://images.poms.omroep.nl/image/s223/c223x125/975831.jpg",
+  "share_text": "Bekijk NOS Journaal: NOS Journaal op https://www.npo.nl/POW_03375508",
+  "share_url": "https://npo.nl/POW_03375508",
+  "broadcasters": ["NOS"],
+  "broadcastDate": "2017-11-18T19:00:00Z",
+  "nextAsset": null,
+  "qualityOptions": [					# Dit suggereert dat er 'ergens' HD videostreams beschikbaar moeten zijn, maar ik heb geen idee waar.
+    {
+      "bitrate": "0",
+      "label": "Hoogste",
+      "resolution": "1080p",
+      "platform": "npo"
+    },
+    {
+      "bitrate": "643000",
+      "label": "Hoog",
+      "resolution": "720p",
+      "platform": "npo"
+    },
+    {
+      "bitrate": "491000",
+      "label": "Medium",
+      "resolution": "576p",
+      "platform": "npo"
+    },
+    {
+      "bitrate": "248000",
+      "label": "Laag",
+      "resolution": "360p",
+      "platform": "npo"
+    }
+  ],
+  "visualRadio": null,
+  "episodeNumber": 46,
+  "seriesId": "NOSjnl2000",
+  "net": null,
+  "genres": "informatief,nieuws/actualiteiten",
+  "sterTitle": "nosjournaal",
+  "recommender": "ts-base",
+  "startAt": null
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://www.npo.nl/player/POW_03375508" -f "concat('https://start-player.npo.nl/video/POW_03375508/streams?profile=hls&quality=npo&tokenId=',$json/token)" -e "$json"
+{
+  "stream": {
+    "src": "https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/playlist.m3u8",
+    "type": "application/vnd.apple.mpegurl",
+    "protection": {
+      "keySystem": "com.apple.fps.1_0",
+      "certificateUrl": "https://s3-eu-west-1.amazonaws.com/24i-npo-stream/fairplay.cer",
+      "licenseUrl": "https://npo-drm-gateway.samgcloud.nepworldwide.nl/authentication?custom_data=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJucG8iLCJpYXQiOjE1MTE1MzcxODYsImRybV90eXBlIjoiZmFpcnBsYXkiLCJsaWNlbnNlX3Byb2ZpbGUiOiJ3ZWIiLCJjbGllbnRfaXAiOiI4MC4xMDEuNDkuNSJ9.ChFjaE9VTHhpmFv4vo855fQVOGg0SeYWZKED2BzlGFM"
+    }
+  },
+  "catchupAvailable": false
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+https://start-player.npo.nl/js/app.js:
+
+var n = {
+        "com.apple.fps.1_0": "hls",
+        "com.widevine.alpha": "dash-widevine",
+        "com.microsoft.playready": "dash-playready",
+        silverlight: "smooth"
+    },
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+ffmpeg-N-87867-g0655810-win32-static_legacy.exe -hide_banner -i "https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/playlist.m3u8"
+[hls,applehttp @ 04cade80] Opening 'https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/a1/a1.m3u8' for reading
+[hls,applehttp @ 04cade80] Opening 'https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/v2/v2.m3u8' for reading
+[hls,applehttp @ 04cade80] Opening 'https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/v3/v3.m3u8' for reading
+[hls,applehttp @ 04cade80] Opening 'https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/v4/v4.m3u8' for reading
+[hls,applehttp @ 04cade80] Opening 'https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/v5/v5.m3u8' for reading
+[hls,applehttp @ 04cade80] SAMPLE-AES encryption is not supported yet			# Zo lang gebruik ik deze nieuwe api nog niet.
+[hls,applehttp @ 04cade80] Failed to open segment of playlist 0
+[...]
+Format aac detected only with low score of 1, misdetection possible!
+[hls,applehttp @ 04cade80] No longer receiving playlist 0
+https://nl-ams-p6-am5.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTE1ODAzOTYsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvZnBzXC9URVNUXC9ucG9cL2hsc1wvUE9XXzAzMzc1NTA4In0.M8hK3u8N6UnS4BlLTOUC3Okrkr8OUv7mAZs_AKTtNGQ/vod/npo/fps/TEST/npo/hls/POW_03375508/playlist.m3u8: Invalid data found when processing input
+
+https://www.npo.nl/li-jie-voor-het-eerst-winnares-top-16-na-opgave-solja/05-02-2017/WO_NOS_7303921
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://www.npo.nl/player/WO_NOS_7303921" -f "concat('https://start-player.npo.nl/video/WO_NOS_7303921/streams?profile=hls&amp;quality=npo&amp;tokenId=',$json/token)" --xquery "[{'format':'hls-master','extension':'m3u8','url':$json//src},for $x in tail(tokenize(extract(unparsed-text($json//src),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':concat(resolve-uri('.',$json//src),extract(.,'(.+m3u8)',1))} order by $x/format return $x]"
+
+of
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json(concat('https://start-player.npo.nl/video/WO_NOS_7303921/streams?profile=hls&amp;quality=npo&amp;tokenId=',x:request({'data':'https://www.npo.nl/player/WO_NOS_7303921','method':'POST'})/json/token))//src return [{'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':concat(resolve-uri('.',$b),extract(.,'(.+m3u8)',1))} order by $x/format return $x]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://nl-ams-p13-am3.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTExNDQwMTUsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvdXNwXC9ucG9cL2hsc1wvV09fTk9TXzczMDM5MjFcL1dPX05PU183MzAzOTIxX3Y0LmlzbSJ9.-AivKmVS0xMnl7YyQrn8xsNdWKH2mndRoavTZopD98k/vod/npo/usp/npo/hls/WO_NOS_7303921/WO_NOS_7303921_v4.ism/playlist.m3u8"
+  },
+  {
+    "format": "hls-139",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:130k",
+    "url": "https://nl-ams-p13-am3.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTExNDQwMTUsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvdXNwXC9ucG9cL2hsc1wvV09fTk9TXzczMDM5MjFcL1dPX05PU183MzAzOTIxX3Y0LmlzbSJ9.-AivKmVS0xMnl7YyQrn8xsNdWKH2mndRoavTZopD98k/vod/npo/usp/npo/hls/WO_NOS_7303921/WO_NOS_7303921_v4.ism/WO_NOS_7303921_v4-audio_eng=130251.m3u8"
+  },
+  {
+    "format": "hls-687",
+    "extension": "m3u8",
+    "resolution": "856x482",
+    "vbitrate": "v:517k",
+    "abitrate": "a:130k",
+    "url": "https://nl-ams-p13-am3.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTExNDQwMTUsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvdXNwXC9ucG9cL2hsc1wvV09fTk9TXzczMDM5MjFcL1dPX05PU183MzAzOTIxX3Y0LmlzbSJ9.-AivKmVS0xMnl7YyQrn8xsNdWKH2mndRoavTZopD98k/vod/npo/usp/npo/hls/WO_NOS_7303921/WO_NOS_7303921_v4.ism/WO_NOS_7303921_v4-audio_eng=130251-video=517000.m3u8"
+  },
+  {
+    "format": "hls-1223",
+    "extension": "m3u8",
+    "resolution": "856x482",
+    "vbitrate": "v:1023k",			# En ik ga deze nieuwe api zeker niet gebruiken als ze het origineel (zie hier boven met bitrate 1504k) op deze manier hercoderen.
+    "abitrate": "a:130k",
+    "url": "https://nl-ams-p13-am3.cdn.streamgate.nl/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1MTExNDQwMTUsImNsaWVudF9pcCI6IjgwLjEwMS40OS41IiwidXJpIjoiXC92b2RcL25wb1wvdXNwXC9ucG9cL2hsc1wvV09fTk9TXzczMDM5MjFcL1dPX05PU183MzAzOTIxX3Y0LmlzbSJ9.-AivKmVS0xMnl7YyQrn8xsNdWKH2mndRoavTZopD98k/vod/npo/usp/npo/hls/WO_NOS_7303921/WO_NOS_7303921_v4.ism/WO_NOS_7303921_v4-audio_eng=130251-video=1023000.m3u8"
+  }
+]
 
 ================================================================================================================================
 
