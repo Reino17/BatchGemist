@@ -2939,8 +2939,8 @@ IF NOT "%url: =%"=="%url%" (
 	    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:tweakers.net=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --method^=POST "%url%"
-	--xquery ^"declare function local:extract^($json^){
-	            $json/[
+	--xquery ^"declare function local:extract^($arg^){
+	            $arg/[
 	              for $x in ^(progressive^)^(^) order by $x/height return
 	              system^(
 	                x'cmd /c ^"FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe^" -i {$x//src} 2^>^&amp^;1'
@@ -3035,7 +3035,11 @@ IF NOT "%url: =%"=="%url%" (
 	                    1
 	                  ^)[.]
 	                ^)/^(.//items^)^(^)/{
-	                  'name':'Tweakers- '^|^|replace^(title^,'[^&quot^;^&apos^;]'^,''''''^)^,
+	                  'name':'Tweakers: '^|^|replace^(
+	                    title^,
+	                    '[^&quot^;^&apos^;]'^,
+	                    ''''''
+	                  ^)^,
 	                  't':duration^,
 	                  'duration':duration * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
 	                  'formats':local:extract^(locations^)
@@ -3055,7 +3059,11 @@ IF NOT "%url: =%"=="%url%" (
 	                1
 	              ^)[.]
 	            ^)/^(.//items^)^(^)/^(
-	              name:^='Tweakers- '^|^|replace^(title^,'[^&quot^;^&apos^;]'^,''''''^)^,
+	              name:^='Tweakers: '^|^|replace^(
+	                title^,
+	                '[^&quot^;^&apos^;]'^,
+	                ''''''
+	              ^)^,
 	              t:^=duration^,
 	              duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
 	              formats:^=local:extract^(locations^)
@@ -3104,7 +3112,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                 replace^(
                   '%date%'^,
                   '.+?^(\d+^)-^(\d+^)-^(\d+^)'^,
-                  ' - Livestream ^($1$2$3^)'
+                  ': Livestream ^($1$2$3^)'
                 ^)
               ^)
             else
@@ -3117,7 +3125,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                       .//naam^,
                       ' en '
                     ^)^,
-                  ' - '^,
+                  ': '^,
                   if ^(ptype^='episode'^) then ^(
                     if ^(aflevering_titel^) then ^(
                       if ^(contains^(titel^,aflevering_titel^)^) then
@@ -3416,7 +3424,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
             name:^=replace^(
               concat^(
                 .//station^,
-                ' - '^,
+                ': '^,
                 abstracts/name^,
                 ' - '^,
                 if ^(.//classname^='uitzending'^) then
@@ -3685,7 +3693,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                         'Veronica'
                       else
                         upper-case^(.//sbs_station^)^,
-                      ' - '^,
+                      ': '^,
                       name^,
                       if ^(string-length^(.//sbs_episode^)^<^=7^) then
                         ' '^|^|.//sbs_episode
@@ -3700,7 +3708,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                   else
                     concat^(
                       .//sbs_program^,
-                      ' - '^,
+                      ': '^,
                       name^,
                       replace^(
                         published_at^,
@@ -3720,7 +3728,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                         upper-case^(.//sbs_station^)
                     else
                       .//sbs_program^,
-                    ' - '^,
+                    ': '^,
                     .//title^,
                     replace^(
                       .//sko_dt^,
@@ -3880,7 +3888,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
             name:^=name^|^|replace^(
               '%date%'^,
               '.+?^(\d+^)-^(\d+^)-^(\d+^)'^,
-              ' - Livestream ^($1$2$3^)'
+              ': Livestream ^($1$2$3^)'
             ^)^,
             formats:^=[
               for $x in ^(audiostreams^)^(^)[protocol^='http'] order by $x/bitrate return
@@ -4137,11 +4145,7 @@ IF NOT DEFINED duration (
 )
 FOR /F "delims=" %%A IN ('^"%xidel%
 -e ^"name:^=replace^(
-      replace^(
-        normalize-space^('%name%'^)^,
-        ':'^,
-        '-'
-      ^)^,
+      normalize-space^('%name%'^)^,
       '[^<^>/\\^|?*]'^,
       ''
     ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
@@ -4298,11 +4302,12 @@ FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 	IF /I "%%~xA"==".asf"  SET ext=.wmv
 )
 
+SET "name=%name::=-%"
 ECHO.
-ECHO Bestandsnaam: %name%
+ECHO Bestandsnaam: %name%%ext%
 SET /P "rename=Wijzigen? [J/n] "
 IF /I NOT "%rename%"=="n" (
-	ECHO Nieuwe bestandsnaam:
+	ECHO Nieuwe bestandsnaam ^(zonder extensie^):
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"replace(
 	      replace(
