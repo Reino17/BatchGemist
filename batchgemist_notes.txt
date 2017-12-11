@@ -1198,6 +1198,7 @@ v_url := http://static.autojunk.nl/flv/2007/0323/120040.flv
 [https://github.com/Reino17/BatchGemist/commit/0f871ca56ff739fddadd408904bfa1c6998bb451]
 [https://github.com/Reino17/BatchGemist/commit/d95e3374cfd6c8550908e6dd0571b7f4d0c64cd7]
 [https://github.com/Reino17/BatchGemist/commit/7aa16a291215513a1f010e61d6a11c234ca7e5a9]
+[https://github.com/Reino17/BatchGemist/commit/1d1490183c299f30f79d15633e8c8e3a4a239005]
 [https://github.com/Reino17/BatchGemist/commit/]
 
 ffmpeg-x86-N-82759-g1f5630a.exe -hide_banner -ss 642 -i "http://tt888.omroep.nl/tt888/VPWON_1269922" -t 14 "VPWON_1269922-frag.srt"
@@ -1437,7 +1438,7 @@ Update (26112017): Dit is niet meer van toepassing. De beschikbaarheids controle
 
 https://www.npo.nl/hunted/20-11-2017/AT_2084949/POMS_AT_11768999
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POMS_AT_11768999" -e "json(extract($raw,'\((.+)\)',1)) ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/POMS_AT_11768999' else ())"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POMS_AT_11768999" -e "json(extract($raw,'\((.+)\)',1)) ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/POMS_AT_11768999' else ())"
 duration := 00:01:59
 t := 119
 start := 00:02:01
@@ -1460,7 +1461,7 @@ to :=
 expire := 18-11-2018 20:21:17 (nog 357 dagen en 7u30m9s)
 s_url := http://tt888.omroep.nl/tt888/POW_03375508
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POW_03375508" -e "json(extract($raw,'\((.+)\)',1)) ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/POW_03375508' else ())"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POW_03375508" -e "json(extract($raw,'\((.+)\)',1)) ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/POW_03375508' else ())"
 duration := 00:20:22
 t := 1222
 expire := 18-11-2018 20:21:17 (nog 357 dagen en 7u30m9s)
@@ -1477,7 +1478,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT
   "error": "De opgevraagde aflevering is niet gevonden"
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" -e "json(extract($raw,'\((.+)\)',1))[not(error)] ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/WO_AT_4993516' else ())"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" -e "json(extract($raw,'\((.+)\)',1))[not(error)] ! (if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/WO_AT_4993516' else ())"
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1542,7 +1543,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT
                     else
                       .||'m'
                   ),
-                  floor(seconds-from-duration($a)),
+                  round(seconds-from-duration($a)),
                   's)'
                 )
               ) else
@@ -1557,18 +1558,33 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5391.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=52009553-3547-3298-88f9-4619441d9aa5/fmt=adaptive/" --xquery "$json/(material)()/(duration:=substring-before(duration,'.'),t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($b)),'s)'))"
-duration := 01:01:43
-t := 3703
-expire := 11-03-2017 20:35:44 (nog 5 dagen en 6u5m4s)
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=710a7062-ce11-34f0-b97d-b1628fa19c35/fmt=adaptive/" --xquery "$json/(material)()/(let $a:=duration return round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.),let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)'))"
+duration := 00:19:09
+t := 1149
+expire := 06-12-2018 05:50:45 (nog 359 dagen en 10u31m14s)
 
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=00a3f1ec-1477-439f-a806-aa54555eb52d/fmt=adaptive/" --xquery "$json/(material)()/(duration:=substring-before(duration,'.'),t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($b)),'s)') else ())"				# Video zonder "Gratis tot"-datum.
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=00a3f1ec-1477-439f-a806-aa54555eb52d/fmt=adaptive/" --xquery "$json/(material)()/(let $a:=duration return round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ())"				# Video zonder "Gratis tot"-datum.
 duration := 00:03:55
 t := 235
 
 --xquery "$json/(material)()/(
-            duration:=substring-before(duration,'.'),
-            t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),
+            let $a:=duration return
+            round(
+              seconds-from-time($a)
+            ) ! (
+              duration:=concat(
+                extract(
+                  $a,
+                  '(.+:)',
+                  1
+                ),
+                if (.<10) then
+                  '0'||.
+                else
+                  .
+              ),
+              t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.
+            ),
             if ((.//ddr_timeframes)()[model='AVOD']/stop) then
               let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00')
               let $b:=$a - current-dateTime() return
@@ -1599,7 +1615,7 @@ t := 235
                   else
                     .||'m'
                 ),
-                floor(
+                round(
                   seconds-from-duration($b)
                 ),
                 's)'
@@ -1612,7 +1628,7 @@ t := 235
 
 [https://github.com/Reino17/BatchGemist/commit/a18a79b733631d8d173190fce6c28d9599965484]
 [https://github.com/Reino17/BatchGemist/commit/7983bba09cce9be8c00be877d9d52b0ba34cee31]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/372b3c206d9d1709e580f5887c808e253c469aa3]
 
 Prettification:
 
@@ -3266,7 +3282,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 
 https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "json(extract($raw,'\((.+)\)',1))[not(error)] ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',' - Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),' - ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':'http://www.npo.nl/%prid%','method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),eind:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/%prid%' else ()),let $a:=x:request({'data':'http://ida.omroep.nl/app.php/%prid%?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then formats:=[for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':'pg-'||extract($x,'.+/([a-z]+)',1),'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/replace(url,'jsonp','json') ! (if (contains(.,'livestreams')) then json(.) else json(.)/url) return ({'format':'hls-master','extension':'m3u8','url':$b}[url],for $x in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)} order by $x/format return $x),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':replace($x,'.+\.(.+)','$1-')||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}] else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "json(extract($raw,'\((.+)\)',1))[not(error)] ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',' - Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),' - ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':'http://www.npo.nl/%prid%','method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),eind:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/%prid%' else ()),let $a:=x:request({'data':'http://ida.omroep.nl/app.php/%prid%?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return if ($a) then formats:=[for $x in reverse($a[contentType='odi'][format='mp4'])/json(replace(url,'jsonp','json'))/substring-before(url,'?') return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':'pg-'||extract($x,'.+/([a-z]+)',1),'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/replace(url,'jsonp','json') ! (if (contains(.,'livestreams')) then json(.) else json(.)/url) return ({'format':'hls-master','extension':'m3u8','url':$b}[url],for $x in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)} order by $x/format return $x),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':replace($x,'.+\.(.+)','$1-')||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}] else ()"
 name := NOS - NOS Journaal (18112017)
 duration := 00:20:22
 t := 1222
@@ -3437,7 +3453,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1920x1080", "
                     else
                       .||'m'
                   ),
-                  floor(
+                  round(
                     seconds-from-duration($a)
                   ),
                   's)'
@@ -3934,6 +3950,7 @@ hls-2107
 
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
 [https://github.com/Reino17/BatchGemist/commit/e69868def8a5576e733289d4f84e494f9611da2f]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'(Duration: .+?),',1)"
 Duration: 00:04:53.99
@@ -3941,16 +3958,30 @@ Duration: 00:04:53.99
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://pedgewarer23b.video.kpnstreaming.nl/session/dc48616a-d6b3-11e7-bb55-1458d0426038/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1800000.m3u8\" 2>&1'),'(Duration: .+?),',1)"
 Duration: N/A
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then concat(extract($a,'(.+:)',1),round(seconds-from-time($a))) else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then concat(extract($a,'(.+:)',1),round(seconds-from-time($a))) else ()"			# Rond af naar hele seconden.
 00:04:54
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),.),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.) else ()"
 duration := 00:04:54
 t := 294
 
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://download.omroep.nl/nos/content/video/2017/12/10/211306/web03.mp4\" 2>&1'),'(Duration: .+?),',1)"
+Duration: 00:01:06.08
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://download.omroep.nl/nos/content/video/2017/12/10/211306/web03.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then concat(extract($a,'(.+:)',1),round(seconds-from-time($a))) else ()"			# De '0' valt logischerwijs weg.
+00:01:6
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://download.omroep.nl/nos/content/video/2017/12/10/211306/web03.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.) else ()"
+duration := 00:01:06
+t := 66
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 -e "let $a:=extract(
       system(
-        'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'
+        'cmd /c %ffmpeg% -i %v_url% 2>&1'
       ),
       'Duration: (.+?),',
       1
@@ -3965,7 +3996,10 @@ t := 294
             '(.+:)',
             1
           ),
-          .
+          if (.<10) then
+            '0'||.
+          else
+            .
         ),
         t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.
       )
@@ -4137,7 +4171,7 @@ q := HD
 
 https://www.rtl.nl/video/d4e31e66-e403-33d5-8f44-a3886e42be51/
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=d4e31e66-e403-33d5-8f44-a3886e42be51/fmt=adaptive/" --xquery "$json/(name:=replace(concat(.//station,' - ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),q:=.//quality,(material)()/(duration:=substring-before(duration,'.'),t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($b)),'s)') else ()))" -f "$json/(if (meta/nr_of_videos_total=0) then () else concat(meta/videohost,material/videopath))" --xquery "let $a:=if ($q='HD') then ('a2t','a3t','nettv') else ('a2t','a3t') return formats:=[for $x at $i in ($a ! replace($url,'.+(/comp.+)m3u8',concat('http://pg.us.rtl.nl/rtlxl/network/',.,'/progressive$1mp4'))) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -user_agent \"BatchGemist 1.6-git\" -i {$x} 2>&amp;1') ! {'format':'pg-'||$a[$i],'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x,'teapot':true},{'format':'hls-master','extension':'m3u8','url':$url},for $x in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':extract(.,'(.+m3u8)',1)} order by $x/format return $x]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=d4e31e66-e403-33d5-8f44-a3886e42be51/fmt=adaptive/" --xquery "$json/(name:=replace(concat(.//station,' - ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),q:=.//quality,(material)()/(let $a:=duration return round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()))" -f "$json/(if (meta/nr_of_videos_total=0) then () else concat(meta/videohost,material/videopath))" --xquery "let $a:=if ($q='HD') then ('a2t','a3t','nettv') else ('a2t','a3t') return formats:=[for $x at $i in ($a ! replace($url,'.+(/comp.+)m3u8',concat('http://pg.us.rtl.nl/rtlxl/network/',.,'/progressive$1mp4'))) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -user_agent \"BatchGemist 1.6-git\" -i {$x} 2>&amp;1') ! {'format':'pg-'||$a[$i],'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x,'teapot':true},{'format':'hls-master','extension':'m3u8','url':$url},for $x in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':extract(.,'(.+m3u8)',1)} order by $x/format return $x]"
 name := RTL4 - RTL Nieuws - 19:30 uur (18112017)
 q := HD
 duration := 00:20:14
@@ -4169,11 +4203,23 @@ formats := [{"format": "pg-a2t", "extension": "mp4", "resolution": "704x400", "v
             ),
             q:=.//quality,
             (material)()/(
-              duration:=substring-before(
-                duration,
-                '.'
+              let $a:=duration return
+              round(
+                seconds-from-time($a)
+              ) ! (
+                duration:=concat(
+                  extract(
+                    $a,
+                    '(.+:)',
+                    1
+                  ),
+                  if (.<10) then
+                    '0'||.
+                  else
+                    .
+                ),
+                t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.
               ),
-              t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+floor(seconds-from-time(duration)),
               if ((.//ddr_timeframes)()[model='AVOD']/stop) then
                 let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00')
                 let $b:=$a - current-dateTime() return
@@ -4204,7 +4250,7 @@ formats := [{"format": "pg-a2t", "extension": "mp4", "resolution": "704x400", "v
                     else
                       .||'m'
                   ),
-                  floor(
+                  round(
                     seconds-from-duration($b)
                   ),
                   's)'
@@ -4370,7 +4416,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/ent
   "hasDRM": false									# Als dit 'true' is, dan kijken we niet eens verder, omdat de uiteindelijke video's niet zijn af te spelen.
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/w7ZW52xLgL5" -e "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else ())"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/w7ZW52xLgL5" -e "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ())"
 31-03-2020 05:55:00 (nog 960 dagen en 16u4m27s)
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -5393,7 +5439,7 @@ https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/kdxdhBykVTt_dbzyr6/
 
 http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return expire:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),floor(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] let $b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),' - ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,' - ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,' - ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),'https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then s_url:=. else ()),formats:=[if ($a//sbs_videotype='vod') then (for $x in $a/(sources)()[container='MP4'] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-master','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}) else for $x in $a/(sources)()[src] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':src},$b/({'format':'hls-master_hd','extension':'m3u8','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':replace(.,'.+BANDWIDTH=(\d+)\d{3}.+','hls-$1_hd','s'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'url':extract(.,'(.+m3u8)',1)})]))"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return expire:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] let $b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),' - ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,' - ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,' - ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),'https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then s_url:=. else ()),formats:=[if ($a//sbs_videotype='vod') then (for $x in $a/(sources)()[container='MP4'] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-master','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}) else for $x in $a/(sources)()[src] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':src},$b/({'format':'hls-master_hd','extension':'m3u8','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':replace(.,'.+BANDWIDTH=(\d+)\d{3}.+','hls-$1_hd','s'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'url':extract(.,'(.+m3u8)',1)})]))"
 expire := 31-03-2020 05:55:00 (nog 858 dagen en 6u14m17s)
 name := NET5 - Peking Express S01E01 (03042017)
 t := 3840
@@ -5494,7 +5540,7 @@ formats := [{"format": "pg-450", "extension": "mp4", "resolution": "320x180", "u
                     else
                       .||'m'
                   ),
-                  floor(
+                  round(
                     seconds-from-duration($a)
                   ),
                   's)'

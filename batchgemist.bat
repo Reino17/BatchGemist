@@ -3211,7 +3211,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     else
                       .^|^|'m'
                   ^)^,
-                  floor^(
+                  round^(
                     seconds-from-duration^($a^)
                   ^)^,
                   's^)'
@@ -3434,11 +3434,23 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
             ^)^,
             q:^=.//quality^,
             ^(material^)^(^)/^(
-              duration:^=substring-before^(
-                duration^,
-                '.'
+              let $a:^=duration return
+              round^(
+                seconds-from-time^($a^)
+              ^) ! ^(
+                duration:^=concat^(
+                  extract^(
+                    $a^,
+                    '^(.+:^)'^,
+                    1
+                  ^)^,
+                  if ^(.^<10^) then
+                    '0'^|^|.
+                  else
+                    .
+                ^)^,
+                t:^=hours-from-time^($a^)*3600+minutes-from-time^($a^)*60+.
               ^)^,
-              t:^=hours-from-time^(duration^)*3600+minutes-from-time^(duration^)*60+floor^(seconds-from-time^(duration^)^)^,
               if ^(^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop^) then
                 let $a:^=^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop * dayTimeDuration^('PT1S'^) + dateTime^('1970-01-01T00:00:00'^)
                 let $b:^=$a - current-dateTime^(^) return
@@ -3469,7 +3481,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                     else
                       .^|^|'m'
                   ^)^,
-                  floor^(
+                  round^(
                     seconds-from-duration^($b^)
                   ^)^,
                   's^)'
@@ -3629,7 +3641,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                     else
                       .^|^|'m'
                   ^)^,
-                  floor^(
+                  round^(
                     seconds-from-duration^($a^)
                   ^)^,
                   's^)'
@@ -4113,7 +4125,10 @@ IF NOT DEFINED duration (
 	            '^(.+:^)'^,
 	            1
 	          ^)^,
-	          .
+	          if ^(.^<10^) then
+	            '0'^|^|.
+	          else
+	            .
 	        ^)^,
 	        t:^=hours-from-time^($a^)*3600+minutes-from-time^($a^)*60+.
 	      ^)
