@@ -1612,6 +1612,7 @@ t := 235
 
 [https://github.com/Reino17/BatchGemist/commit/a18a79b733631d8d173190fce6c28d9599965484]
 [https://github.com/Reino17/BatchGemist/commit/7983bba09cce9be8c00be877d9d52b0ba34cee31]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 Prettification:
 
@@ -1678,6 +1679,9 @@ Officieel zijn dit de escape-characters: [^&<>|",;()=], maar een ^ vooraan moet 
 
 I.p.v. de " te moeten verdubbelen, kan ook xquery gebruikt worden (denk wel om de eerste &):
 xidel-0.9.6.exe -s --color=never --xquery "file:read-text-lines('batchgemist-1.6_notes.txt')[position()>1261][position()<88] ! replace(.,'([\^&amp;<>|&quot;,;=()])','^$1')" | clip
+
+Plus een TAB vóór elke lijn:
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "file:read-text-lines('batchgemist-1.6_notes.txt')[position()>3777][position()<27] ! concat('&#09;',replace(.,'([\^&amp;<>|&quot;,;=()])','^$1'))" | clip
 
 ================================================================================================================================
 
