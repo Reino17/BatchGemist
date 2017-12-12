@@ -331,7 +331,7 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:autojunk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "name:=concat('Autojunk - ',//meta[@property='og:title']/@content,replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/(if (iframe) then v_url:=replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else let $a:=[script/extract(.,'myfile = ''(.+)''',1,'*')[.] ! {'format':concat(replace(.,'.+\.(.+)','$1-'),position()),'url':.}] return if (count($a()/url)=1) then v_url:=$a()/url else (json:=$a,let $b:=$a()/format return (formats:=join($b,', '),best:=$b[last()])))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:tweakers.net=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --method^=POST "%url%" --xquery "declare function local:extract($arg){$arg/[for $x in (progressive)() order by $x/height return system(x'cmd /c %ffmpeg% -i {$x//src} 2>&amp;1') ! {'format':'pg-'||$x/height,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x//src},let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x)]}; if (count(//iframe)>1) then videos:=[//iframe/doc(@src)/{position():json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/{'name':'Tweakers: '||replace(title,'[&quot;&apos;]',''''''),'t':duration,'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),'formats':local:extract(locations)}}] else json((if (//iframe) then doc(//iframe/@src)//script else //script)/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/(name:='Tweakers: '||replace(title,'[&quot;&apos;]',''''''),t:=duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),formats:=local:extract(locations))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --method^=POST "%url%" --xquery "declare function local:extract($arg){$arg/[for $x in (progressive)() order by $x/height return system(x'cmd /c %ffmpeg% -i {$x//src} 2>&amp;1') ! {'format':'pg-'||$x/height,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x//src},let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x)]}; if (//iframe) then videos:=[//iframe/doc(@src)/{position():json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/{'name':'Tweakers: '||replace(title,'[&quot;&apos;]',''''''),'t':duration,'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),'formats':local:extract(locations)}}] else json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/(name:='Tweakers: '||replace(title,'[&quot;&apos;]',''''''),t:=duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),formats:=local:extract(locations))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE (
 	ECHO.
 	ECHO Ongeldige programma-url.
@@ -430,15 +430,21 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :Videos
-SETLOCAL
-ECHO.
-ECHO Beschikbare video's:
-ECHO.
-ECHO %videos% | %xidel% - -e "$json()/concat('  ',.(),'. ',.//name)"
-ECHO.
-SET /P "video=Kies gewenste video: [1] "
-IF NOT DEFINED video SET "video=1"
-FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - --xquery "$json()('%video%')/(if (goto) then (goto:=goto,prid:=prid) else (name:=name,duration:=duration,t:=t,if (url) then v_url:=url else formats:=formats))" --output-encoding^=oem --output-format^=cmd') DO %%A
+SETLOCAL ENABLEDELAYEDEXPANSION
+FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
+	IF "%%A"=="1" (
+		FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - --xquery "$json()('1')/(name:=name,duration:=duration,t:=t,if (url) then v_url:=url else formats:=formats)" --output-encoding^=oem --output-format^=cmd') DO %%A
+	) ELSE (
+		ECHO.
+		ECHO Beschikbare video's:
+		ECHO.
+		ECHO %videos% | %xidel% - -e "$json()/concat('  ',.(),'. ',.//name)"
+		ECHO.
+		SET /P "video=Kies gewenste video: [1] "
+		IF NOT DEFINED video SET "video=1"
+		FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - --xquery "$json()('!video!')/(if (goto) then (goto:=goto,prid:=prid) else (name:=name,duration:=duration,t:=t,if (url) then v_url:=url else formats:=formats))" --output-encoding^=oem --output-format^=cmd') DO %%A
+	)
+)
 
 IF DEFINED goto (
 	GOTO %goto%

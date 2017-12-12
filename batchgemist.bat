@@ -3025,7 +3025,7 @@ IF NOT "%url: =%"=="%url%" (
 	              ^)
 	            ]
 	          }^;
-	          if ^(count^(//iframe^)^>1^) then
+	          if ^(//iframe^) then
 	            videos:^=[
 	              //iframe/doc^(@src^)/{
 	                position^(^):json^(
@@ -3048,12 +3048,7 @@ IF NOT "%url: =%"=="%url%" (
 	            ]
 	          else
 	            json^(
-	              ^(
-	                if ^(//iframe^) then
-	                  doc^(//iframe/@src^)//script
-	                else
-	                  //script
-	              ^)/extract^(
+	              //script/extract^(
 	                .^,
 	                '''video''^,^(.+^)\^)^;'^,
 	                1
@@ -3995,35 +3990,50 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :Videos
-SETLOCAL
-ECHO.
-ECHO Beschikbare video's:
-ECHO.
-ECHO %videos% | %xidel% ^
-- -e ^"$json()/concat(^
-        '  ',^
-        .(),^
-        '. ',^
-        .//name^
-      )^"
-ECHO.
-SET /P "video=Kies gewenste video: [1] "
-IF NOT DEFINED video SET "video=1"
-FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel%
-- --xquery ^"$json^(^)^('%video%'^)/^(
-              if ^(goto^) then ^(
-                goto:^=goto^,
-                prid:^=prid
-              ^) else ^(
-                name:^=name^,
-                duration:^=duration^,
-                t:^=t^,
-                if ^(url^) then
-                  v_url:^=url
-                else
-                  formats:^=formats
-              ^)
-            ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
+SETLOCAL ENABLEDELAYEDEXPANSION
+FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
+	IF "%%A"=="1" (
+		FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel%
+		- --xquery ^"$json^(^)^('1'^)/^(
+		              name:^=name^,
+		              duration:^=duration^,
+		              t:^=t^,
+		              if ^(url^) then
+		                v_url:^=url
+		              else
+		                formats:^=formats
+		            ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
+	) ELSE (
+		ECHO.
+		ECHO Beschikbare video's:
+		ECHO.
+		ECHO %videos% | %xidel% ^
+		- -e ^"$json^(^)/concat^(^
+		        '  '^,^
+		        .^(^)^,^
+		        '. '^,^
+		        .//name^
+		      ^)^"
+		ECHO.
+		SET /P "video=Kies gewenste video: [1] "
+		IF NOT DEFINED video SET "video=1"
+		FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel%
+		- --xquery ^"$json^(^)^('!video!'^)/^(
+		              if ^(goto^) then ^(
+		                goto:^=goto^,
+		                prid:^=prid
+		              ^) else ^(
+		                name:^=name^,
+		                duration:^=duration^,
+		                t:^=t^,
+		                if ^(url^) then
+		                  v_url:^=url
+		                else
+		                  formats:^=formats
+		              ^)
+		            ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
+	)
+)
 
 IF DEFINED goto (
 	GOTO %goto%
