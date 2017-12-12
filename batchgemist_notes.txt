@@ -371,190 +371,6 @@ v_url := mms://hurley.omroep.nl/public/ug-od/ms5/14/media/vpro/39594888/windowsm
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/81962742f028bf76946fb9ea8f3dc7c7819964bd]
-
-http://nos.nl/artikel/2129259-nederlands-gasbesluit-kost-belgie-honderden-miljoenen.html (artikel met 1 video)
-http://nos.nl/video/2129265-gasbesluit-nederland-kost-belgen-honderden-miljoenen.html (1 video)
-http://nos.nl/artikel/2128692-het-eredivisieweekend-in-vogelvlucht.html (artikel met 1 beveiligde video)
-http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html (1 beveiligde video)
-http://nos.nl/artikel/2128751-nabestaanden-tegen-doodrijder-a2-voor-ons-is-geen-straf-te-hoog.html (artikel met 2 losse video's)
-http://nos.nl/artikel/2128795-van-oostveen-vertrekt-als-directeur-bij-knvb.html (artikel met 2 video's in slide)
-http://nos.nl/artikel/2128783-net-als-bij-dafne-verwachten-we-ook-veel-van-kiki.html (artikel met 4 beveiligde video's)
-
-xidel-0.9.6.exe -s --color=never "http://nos.nl/uitzending/18162-nos-journaal.html" --xquery "if (//div[@class='video-play']) then if (count(//div[@class='video-play'])=1) then doc(//div[@class='video-play']/a/@href)/(name:=concat('NOS - ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),json:=[//source/{'format':replace(@data-label,'.+?(\d+).','mp4-$1'),'url':if (contains(@src,'content-ip')) then x:request({'post':serialize-json([{\"file\":string(@src)}]),'url':'http://nos.nl/video/resolve/'})//file else @src}]) else json:=[//div[@class='video-play']/a/doc(@href)/{position()||'e':{'name':concat('NOS - ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats'://source/{'format':replace(@data-label,'.+?(\d+).','mp4-$1'),'url':if (contains(@src,'content-ip')) then x:request({'post':serialize-json([{\"file\":string(@src)}]),'url':'http://nos.nl/video/resolve/'})//file else @src}}}] else (name:=concat('NOS - ',if (//meta[@property='og:title']) then replace(//meta[@property='og:title']/@content,'[&quot;&apos;]','''''') else substring-after(//h1,'NOS '),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),json:=[//source/{'format':replace(@data-label,'.+?(\d+).','mp4-$1'),'url':if (contains(@src,'content-ip')) then x:request({'post':serialize-json([{\"file\":string(@src)}]),'url':'http://nos.nl/video/resolve/'})//file else @src}]),if ($json(1)/format) then let $a:=for $x in $json()/format order by $x return $x return (formats:=join($a,', '),best:=$a[last()]) else videos:=join($json()(),', ')"
-name := NOS - Journaal (29082016)
-json := [{"format": "mp4-360", "url": "http://download.omroep.nl/nos/content/mp4/web01/2016/08/29/18162/mp4_web01.mp4"}, {"format": "mp4-720", "url": "http://download.omroep.nl/nos/content/mp4/web02/2016/08/29/18162/mp4_web02.mp4"}, {"format": "mp4-480", "url": "http://download.omroep.nl/nos/content/mp4/web03/2016/08/29/18162/mp4_web03.mp4"}]
-formats := mp4-360, mp4-480, mp4-720
-best := mp4-720
-
-xidel-0.9.6.exe -s --color=never "http://nos.nl/artikel/2129259-nederlands-gasbesluit-kost-belgie-honderden-miljoenen.html" --xquery "..."
-name := NOS - Gasbesluit Nederland kost Belgen honderden miljoenen (31082016)
-json := [{"format": "mp4-360", "url": "http://download.omroep.nl/nos/content/video/2016/08/31/171583/vod01.mp4"}, {"format": "mp4-480", "url": "http://download.omroep.nl/nos/content/video/2016/08/31/171583/web03.mp4"}]
-formats := mp4-360, mp4-480
-best := mp4-480
-
-xidel-0.9.6.exe -s --color=never "http://nos.nl/video/2129265-gasbesluit-nederland-kost-belgen-honderden-miljoenen.html" --xquery "..."
-name := NOS - Gasbesluit Nederland kost Belgen honderden miljoenen (31082016)
-json := [{"format": "mp4-360", "url": "http://download.omroep.nl/nos/content/video/2016/08/31/171583/vod01.mp4"}, {"format": "mp4-480", "url": "http://download.omroep.nl/nos/content/video/2016/08/31/171583/web03.mp4"}]
-formats := mp4-360, mp4-480
-best := mp4-480
-
-xidel-0.9.6.exe -s --color=never "http://nos.nl/artikel/2128692-het-eredivisieweekend-in-vogelvlucht.html" --xquery "..."
-name := NOS - Het eredivisieweekend in vogelvlucht (29082016)
-json := [{"format": "mp4-360", "url": "https://video.omroep.nl/secure/4e9d66815ca103cc38e6aee137622a21/585e6b5f/nos/content-ip/video/2016/08/29/171451/vod01.mp4"}, {"format": "mp4-480", "url": "https://video.omroep.nl/secure/dd18c8f172f6be0f17195be6b369a543/585e6b5f/nos/content-ip/video/2016/08/29/171451/web03.mp4"}]
-formats := mp4-360, mp4-480
-best := mp4-480
-
-xidel-0.9.6.exe -s --color=never "http://nos.nl/artikel/2128751-nabestaanden-tegen-doodrijder-a2-voor-ons-is-geen-straf-te-hoog.html" --xquery "..."
-json := [{"1e": {"name": "NOS - Nabestaande: de kinderen zijn getekend voor het leven (29082016)", "
-formats": [{"format": "mp4-360", "url": "http://download.omroep.nl/nos/content/video/2016/08/29/171475/vod01.mp4"}, {"format": "mp4-480", "url": "http://download.omroep.nl/nos/content/video/2016/08/29/171475/web03.mp4"}]}}, {"2e": {"name": "NOS - Verklaring van verdachte dodelijk ongeluk A2: ''Ik moest gewoon hard rijden'' (29082016)", "formats": [{"format": "mp4-360", "url": "http://download.omroep.nl/nos/content/video/2016/08/29/171473/vod01.mp4"}, {"format": "mp4-480", "url": "http://download.omroep.nl/nos/content/video/2016/08/29/171473/web03.mp4"}]}}]
-videos := 1e, 2e
-
-xidel-0.9.6.exe -s --color=never "http://nos.nl/artikel/2128795-van-oostveen-vertrekt-als-directeur-bij-knvb.html" --xquery "..."
-json := [{"1e": {"name": "NOS - 2015: Van Oostveen geeft aan Hiddink te willen behouden voor KNVB (29082016)", "formats": [{"format": "mp4-360", "url": "http://download.omroep.nl/nos/content/video/2015/07/14/120145/vod01.mp4"}, {"format": "mp4-480", "url": "http://download.omroep.nl/nos/content/video/2015/07/14/120145/web03.mp4"}]}}, {"2e": {"name": "NOS - ''KNVB stapelt fout op fout'' (21082016)", "formats": [{"format": "mp4-360", "url": "http://download.omroep.nl/nos/content/video/2016/08/21/171068/vod01.mp4"}, {"format": "mp4-480", "url": "http://download.omroep.nl/nos/content/video/2016/08/21/171068/web03.mp4"}]}}]
-videos := 1e, 2e
-
-xidel-0.9.6.exe -s --color=never "http://nos.nl/artikel/2128783-net-als-bij-dafne-verwachten-we-ook-veel-van-kiki.html" --xquery "..."
-json := [{"1e": {"name": "NOS - Bertens komt net tekort voor titel in Gstaad (17072016)", "formats": [{"format": "mp4-360", "url": "https://video.omroep.nl/secure/97e014e44918d1ce0d4fbb6afe4a172a/585e6c6b/nos/content-ip/video/2016/07/17/168011/vod01.mp4"}, {"format": "mp4-480", "url": "https://video.omroep.nl/secure/41166b2fbb769e23af44dafd26572b10/585e6c6b/nos/content-ip/video/2016/07/17/168011/web03.mp4"}]}}, {"2e": {"name": "NOS - Bertens niet opgewassen tegen Halep (02072016)", "formats": [{"format": "mp4-360", "url": "https://video.omroep.nl/secure/6fc13aad534188e85e69c92df24be43d/585e6c6b/nos/content-ip/video/2016/07/02/166777/vod01.mp4"}, {"format": "mp4-480", "url": "https://video.omroep.nl/secure/c9733b44ea59b860f715cc50f6b83374/585e6c6b/nos/content-ip/video/2016/07/02/166777/web03.mp4"}]}}, {"3e": {"name": "NOS - Bertens in eerste ronde Rio onderuit (06082016)", "formats": [{"format": "mp4-360", "url": "https://video.omroep.nl/secure/0182bea4ab8217d03cbfb6dc0126c419/585e6c6b/nos/content-ip/video/2016/08/06/169289/vod01.mp4"}, {"format": "mp4-480", "url": "https://video.omroep.nl/secure/170ae8f74c109c4b647283d19c6e474c/585e6c6b/nos/content-ip/video/2016/08/06/169289/web03.mp4"}]}}, {"4e": {"name": "NOS - Bertens na snelle exit: zware omstandigheden (06082016)", "formats": [{"format": "mp4-360", "url": "https://video.omroep.nl/secure/2a65d3505c3086129bd9b32f214ae0e9/585e6c6b/nos/content-ip/video/2016/08/06/169295/vod01.mp4"}, {"format": "mp4-480", "url": "https://video.omroep.nl/secure/757c9d0af5af41d68b4a21ac4e62c86e/585e6c6b/nos/content-ip/video/2016/08/06/169295/web03.mp4"}]}}]
-videos := 1e, 2e, 3e, 4e
-
---xquery "if (//div[@class='video-play']) then
-            if (count(//div[@class='video-play'])=1) then
-              doc(
-                //div[@class='video-play']/a/@href
-              )/(
-                name:=concat(
-                  'NOS - ',
-                  replace(
-                  //meta[@property='og:title']/@content,
-                  '[&quot;&apos;]',
-                  ''''''
-                ),
-                  replace(
-                    //@datetime,
-                    '(\d+)-(\d+)-(\d+).+',
-                    ' ($3$2$1)'
-                  )
-                ),
-                json:=[
-                  //source/{
-                    'format':replace(
-                      @data-label,
-                      '.+?(\d+).',
-                      'mp4-$1'
-                    ),
-                    'url':if (contains(@src,'content-ip')) then
-                      x:request(
-                        {
-                          'post':serialize-json(
-                            [
-                              {
-                                \"file\":string(@src)
-                              }
-                            ]
-                          ),
-                          'url':'http://nos.nl/video/resolve/'
-                        }
-                      )//file
-                    else
-                      @src
-                  }
-                ]
-              )
-            else
-              json:=[
-                //div[@class='video-play']/a/doc(@href)/{
-                  position()||'e':{
-                    'name':concat(
-                      'NOS - ',
-                      replace(
-                        //meta[@property='og:title']/@content,
-                        '[&quot;&apos;]',
-                        ''''''
-                      ),
-                      replace(
-                        //@datetime,
-                        '(\d+)-(\d+)-(\d+).+',
-                        ' ($3$2$1)'
-                      )
-                    ),
-                    'formats'://source/{
-                      'format':replace(
-                        @data-label,
-                        '.+?(\d+).',
-                        'mp4-$1'
-                      ),
-                      'url':if (contains(@src,'content-ip')) then
-                        x:request(
-                          {
-                            'post':serialize-json(
-                              [
-                                {
-                                  \"file\":string(@src)
-                                }
-                              ]
-                            ),
-                            'url':'http://nos.nl/video/resolve/'
-                          }
-                        )//file
-                      else
-                        @src
-                    }
-                  }
-                }
-              ]
-          else (
-            name:=concat(
-              'NOS - ',
-              if (//meta[@property='og:title']) then
-                replace(
-                  //meta[@property='og:title']/@content,
-                  '[&quot;&apos;]',
-                  ''''''
-                )
-              else
-                substring-after(//h1,'NOS '),
-              replace(
-                //@datetime,
-                '(\d+)-(\d+)-(\d+).+',
-                ' ($3$2$1)'
-              )
-            ),
-            json:=[
-              //source/{
-                'format':replace(
-                  @data-label,
-                  '.+?(\d+).',
-                  'mp4-$1'
-                ),
-                'url':if (contains(@src,'content-ip')) then
-                  x:request(
-                    {
-                      'post':serialize-json(
-                        [
-                          {
-                            \"file\":string(@src)
-                          }
-                        ]
-                      ),
-                      'url':'http://nos.nl/video/resolve/'
-                    }
-                  )//file
-                else
-                  @src
-              }
-            ]
-          ),
-          if ($json(1)/format) then
-            let $a:=for $x in $json()/format order by $x return $x return (
-              formats:=join($a,', '),
-              best:=$a[last()]
-            )
-          else
-            videos:=join($json()(),', ')"
-
-================================================================================================================================
-
 [https://github.com/Reino17/BatchGemist/commit/8f8798c92ced113028ddfb01a4b7dbd3dabfbd5a]
 [https://github.com/Reino17/BatchGemist/commit/e38e7c24b240921304fc19832a1218d6ada89237]
 
@@ -6272,7 +6088,7 @@ http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-l
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/d40a3b85a7cfdc06263ad21e165f48e23ce47ed7]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/75c91336d899846f3d02691b26b8d7d07a169b5d]
 
 https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30 (losse video)
 
@@ -6690,7 +6506,7 @@ videos := [{"1": {"name": "Tweakers: Gameplay Overwatch", "t": 755, "duration": 
                 1
               )[.]
             )/(.//items)()/(
-              name:='Tweakers- '||replace(
+              name:='Tweakers: '||replace(
                 title,
                 '[&quot;&apos;]',
                 ''''''
@@ -6779,3 +6595,534 @@ prid := VPWON_1264902
           }
         }
       ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/81962742f028bf76946fb9ea8f3dc7c7819964bd]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html" -e "//video/(@data-stream,@data-path)"
+/live/npo/tvlive/npo3/npo3.isml/npo3.m3u8
+https://www-ipv4.nos.nl/livestream/resolve/
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html" -e "//video/x:request({'post':serialize-json({'stream':string(@data-stream)}),'url':@data-path})"
+{
+  "url": "https://www-ipv4.nos.nl/livestream/resolve/",
+  "type": "application/json",
+  "headers": [
+    "HTTP/1.1 200 OK",
+    "Server: nginx/1.13.7",
+    "Content-Type: application/json",
+    "Transfer-Encoding: chunked",
+    "Connection: keep-alive",
+    "Vary: Accept-Encoding",
+    "X-Powered-By: PHP/5.6.32",
+    "Cache-Control: no-cache",
+    "Access-Control-Allow-Origin: *",
+    "Access-Control-Allow-Methods: POST",
+    "Access-Control-Allow-Headers: origin, content-type, accept",
+    "Date: Sat, 09 Dec 2017 20:58:32 GMT",
+    "X-Instance-Name: nos1awb.omroep.nl",
+    "X-Clacks-Overhead: GNU Terry Pratchett",
+    ""
+  ],
+  "raw": "{\"url\":\"https:\\/\\/livestreams.omroep.nl\\/live\\/npo\\/tvlive\\/npo3\\/npo3.isml\\/npo3.m3u8?hash=6e4483077624c7e0404eb746ffffe5c9&protection=url&type=jsonp&callback=?\"}",
+  "json": {
+    "url": "https://livestreams.omroep.nl/live/npo/tvlive/npo3/npo3.isml/npo3.m3u8?hash=6e4483077624c7e0404eb746ffffe5c9&protection=url&type=jsonp&callback=?"
+  }
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html" -e "//video/x:request({'post':serialize-json({'stream':string(@data-stream)}),'url':@data-path})/json/json(substring-before(url,'p&callback'))"
+https://pedgewarea27a.video.kpnstreaming.nl/session/589bf968-dd24-11e7-b3e1-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3.m3u8?token=66ee915f4d247f22279f862a5f4b1e2f_1512939783_1512939783
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html" --xquery "let $a:=//video/x:request({'post':serialize-json({'stream':string(@data-stream)}),'url':@data-path})/json/json(substring-before(url,'p&amp;callback')) return [{'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x]"
+[
+  {
+    "format": "hls-master",
+    "extension": "m3u8",
+    "url": "https://pedgewarer22b.video.kpnstreaming.nl/session/78f4dbd4-dd25-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3.m3u8?token=d22a4c91b39bd0f0c3d169da5e692fa1_1512940267_1512940267"
+  },
+  {
+    "format": "hls-136",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer22b.video.kpnstreaming.nl/session/78f4dbd4-dd25-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000.m3u8"
+  },
+  {
+    "format": "hls-348",
+    "extension": "m3u8",
+    "resolution": "384x216",
+    "vbitrate": "v:200k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer22b.video.kpnstreaming.nl/session/78f4dbd4-dd25-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=200000.m3u8"
+  },
+  {
+    "format": "hls-666",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "v:500k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer22b.video.kpnstreaming.nl/session/78f4dbd4-dd25-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=500000.m3u8"
+  },
+  {
+    "format": "hls-878",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:700k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer22b.video.kpnstreaming.nl/session/78f4dbd4-dd25-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=700000.m3u8"
+  },
+  {
+    "format": "hls-1196",
+    "extension": "m3u8",
+    "resolution": "768x432",
+    "vbitrate": "v:1000k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer22b.video.kpnstreaming.nl/session/78f4dbd4-dd25-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=1000000.m3u8"
+  },
+  {
+    "format": "hls-2044",
+    "extension": "m3u8",
+    "resolution": "1024x576",
+    "vbitrate": "v:1800k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarer22b.video.kpnstreaming.nl/session/78f4dbd4-dd25-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=1800000.m3u8"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html" --xquery "name:=//h1||replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)'),let $a:=//video/x:request({'post':serialize-json({'stream':string(@data-stream)}),'url':@data-path})/json/json(substring-before(url,'p&amp;callback')) return formats:=[{'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x]"
+name := WB schaatsen Salt Lake City: 1500 meter (v): Livestream (09122017)
+formats := [{"format": "hls-master", "extension": "m3u8", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/8ba08948-dd27-11e7-991c-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3.m3u8?token=0d930455304dcf78b1b881d5873205de_1512941157_1512941157"}, {"format": "hls-136", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/8ba08948-dd27-11e7-991c-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000.m3u8"}, {"format": "hls-348", "extension": "m3u8", "resolution": "384x216", "vbitrate": "v:200k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/8ba08948-dd27-11e7-991c-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=200000.m3u8"}, {"format": "hls-666", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/8ba08948-dd27-11e7-991c-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=500000.m3u8"}, {"format": "hls-878", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:700k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/8ba08948-dd27-11e7-991c-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=700000.m3u8"}, {"format": "hls-1196", "extension": "m3u8", "resolution": "768x432", "vbitrate": "v:1000k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/8ba08948-dd27-11e7-991c-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=1000000.m3u8"}, {"format": "hls-2044", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1800k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/8ba08948-dd27-11e7-991c-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo3/npo3.isml/npo3-audio_nld=128000-video=1800000.m3u8"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "name:=//h1||replace(
+            '%date%',
+            '.+?(\d+)-(\d+)-(\d+)',
+            ': Livestream ($1$2$3)'
+          ),
+          let $a:=//video/x:request(
+            {
+              'post':serialize-json(
+                {
+                  'stream':string(@data-stream)
+                }
+              ),
+              'url':@data-path
+            }
+          )/json/json(
+            substring-before(
+              url,
+              'p&amp;callback'
+            )
+          ) return
+          formats:=[
+            {
+              'format':'hls-master',
+              'extension':'m3u8',
+              'url':$a
+            },
+            for $x in tail(
+              tokenize(
+                extract(
+                  unparsed-text($a),
+                  '(#EXT-X-STREAM-INF.+m3u8$)',
+                  1,'ms'
+                ),
+                '#EXT-X-STREAM-INF:'
+              )
+            ) ! {
+              'format':'hls-'||extract(
+                .,
+                'BANDWIDTH=(\d+)\d{3}',
+                1
+              ),
+              'extension':'m3u8',
+              'resolution':extract(
+                .,
+                'RESOLUTION=(.+),',
+                1
+              ),
+              'vbitrate':extract(
+                .,
+                'video=(\d+)\d{3}',
+                1
+              ) ! (
+                if (.) then
+                  concat(
+                    'v:',
+                    .,
+                    'k'
+                  )
+                else
+                  ''
+              ),
+              'abitrate':replace(
+                .,
+                '.+audio.+?(\d+)\d{3}.+',
+                'a:$1k',
+                's'
+              ),
+              'url':resolve-uri(
+                '.',
+                $a
+              )||extract(
+                .,
+                '(.+m3u8)',
+                1
+              )
+            } order by $x/format return $x
+          ]"
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+https://nos.nl/video/2205876-eredivisieweekend-in-vogelvogelvlucht.html (1 video, met de formaten in de goede volgorde)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2205876-eredivisieweekend-in-vogelvogelvlucht.html" -e "extract($raw,'(<source.+)</video>',1)"
+<source src="https://download.omroep.nl/nos/content/video/2017/12/04/210943/vod01.mp4" type="video/mp4" data-label="Laag - 360p"  /><source src="https://download.omroep.nl/nos/content/video/2017/12/04/210943/web03.mp4" type="video/mp4" data-label="Normaal - 480p"  />
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2205876-eredivisieweekend-in-vogelvogelvlucht.html" --xquery "[for $x at $i in //source return {'format':'mp4-'||$i,'url':$x/@src}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "https://download.omroep.nl/nos/content/video/2017/12/04/210943/vod01.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://download.omroep.nl/nos/content/video/2017/12/04/210943/web03.mp4"			# Geen 'content-ip', dus ze hoeven blijkbaar niet meer door de resolver.
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+https://nos.nl/video/2206753-dit-was-de-week-brexit-doorbraak-julio-poch-en-jeruzalem.html (1 video, met de formaten in de verkeerde volgorde)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2206753-dit-was-de-week-brexit-doorbraak-julio-poch-en-jeruzalem.html" -e "extract($raw,'(<source.+)</video>',1)"
+<source src="https://download.omroep.nl/nos/content/video/2017/12/09/211205/web03.mp4" type="video/mp4" data-label="Normaal - 480p"  /><source src="https://download.omroep.nl/nos/content/video/2017/12/09/211205/vod01.mp4" type="video/mp4" data-label="Laag - 360p"  />
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2206753-dit-was-de-week-brexit-doorbraak-julio-poch-en-jeruzalem.html" --xquery "[for $x at $i in //source return {'format':'mp4-'||$i,'url':$x/@src}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/web03.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/vod01.mp4"			# De urls moeten dus net andersom.
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2206753-dit-was-de-week-brexit-doorbraak-julio-poch-en-jeruzalem.html" --xquery "[for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i return {'format':'mp4-'||$i,'url':$x/@src}]"			# Sorteer op getal van @data-label.
+[
+  {
+    "format": "mp4-1",
+    "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/vod01.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/web03.mp4"
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+https://nos.nl/uitzending/29678-nos-journaal.html (1 video, met de formaten in de verkeerde volgorde)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/uitzending/29678-nos-journaal.html" -e "extract($raw,'(<source.+)</video>',1)"
+<source src="https://download.omroep.nl/nos/content/mp4/web01/2017/12/09/29678/mp4_web01_backup.mp4" type="video/mp4" data-label="Laag - 360p"  /><source src="https://download.omroep.nl/nos/content/mp4/web02/2017/12/09/29678/mp4_web02_backup.mp4" type="video/mp4" data-label="Hoog - 720p"  /><source src="https://download.omroep.nl/nos/content/mp4/web03/2017/12/09/29678/mp4_web03_backup.mp4" type="video/mp4" data-label="Normaal - 480p"  />
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/uitzending/29678-nos-journaal.html" --xquery "[for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i return {'format':'mp4-'||$i,'url':$x/@src}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "https://download.omroep.nl/nos/content/mp4/web01/2017/12/09/29678/mp4_web01_backup.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://download.omroep.nl/nos/content/mp4/web03/2017/12/09/29678/mp4_web03_backup.mp4"
+  },
+  {
+    "format": "mp4-3",
+    "url": "https://download.omroep.nl/nos/content/mp4/web02/2017/12/09/29678/mp4_web02_backup.mp4"
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html (1 beveiligde video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html" --xquery "[for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i return {'format':'mp4-'||$i,'url':if (contains($x/@src,'content-ip')) then x:request({'post':serialize-json([{'file':string($x/@src)}]),'url':'https://nos.nl/video/resolve/'})//file else $x/@src}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "https://video.omroep.nl/secure/37658a17661ad7c21cb4a83042286e9b/5a2d6751/nos/content-ip/video/2016/08/29/171451/vod01.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://video.omroep.nl/secure/fe0ca45d6ba6e216e0266e4ba5256cf4/5a2d6751/nos/content-ip/video/2016/08/29/171451/web03.mp4"
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html" --xquery "[for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'content-ip')) then x:request({'post':serialize-json([{'file':string($x/@src)}]),'url':'https://nos.nl/video/resolve/'})//file else $x/@src return {'format':'mp4-'||$i,'url':$a}]"
+[
+  {
+    "format": "mp4-1",
+    "url": "https://video.omroep.nl/secure/e797fd6c31e83143d6618c548ed47652/5a2d69f8/nos/content-ip/video/2016/08/29/171451/vod01.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "url": "https://video.omroep.nl/secure/7a2b862166f4fd878f23aeba82261022/5a2d69f8/nos/content-ip/video/2016/08/29/171451/web03.mp4"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html" --xquery "[for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'content-ip')) then x:request({'post':serialize-json([{'file':string($x/@src)}]),'url':'https://nos.nl/video/resolve/'})//file else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:530k",
+    "abitrate": "a:125k",
+    "url": "https://video.omroep.nl/secure/5f8377f815eefc894b9e93bcc324d3b8/5a2d6b28/nos/content-ip/video/2016/08/29/171451/vod01.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "856x482",
+    "vbitrate": "v:1572k",
+    "abitrate": "a:125k",
+    "url": "https://video.omroep.nl/secure/e7c6c4d2d42ddded5a2e2e8a677e956f/5a2d6b29/nos/content-ip/video/2016/08/29/171451/web03.mp4"
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+https://nos.nl/artikel/2206752-week-in-beeld-catalanen-californie-en-commotie-om-jeruzalem.html (artikel met 1 video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2206752-week-in-beeld-catalanen-californie-en-commotie-om-jeruzalem.html" --xquery "[//div[@class='video-play']/a/doc(@href)/{position():{'name':concat('NOS: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'content-ip')) then x:request({'post':serialize-json([{'file':string($x/@src)}]),'url':'https://nos.nl/video/resolve/'})//file else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}}}]"
+[
+  {
+    "1": {
+      "name": "NOS: Dit was de week: brexit-doorbraak, Julio Poch en Jeruzalem (09122017)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "640x360",
+          "vbitrate": "v:507k",
+          "abitrate": "a:125k",
+          "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/vod01.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "856x482",
+          "vbitrate": "v:1494k",
+          "abitrate": "a:125k",
+          "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/web03.mp4"
+        }
+      ]
+    }
+  }
+]
+
+https://nos.nl/artikel/2128692-het-eredivisieweekend-in-vogelvlucht.html (artikel met 1 beveiligde video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2128692-het-eredivisieweekend-in-vogelvlucht.html" --xquery "[...]"
+[
+  {
+    "1": {
+      "name": "NOS: Het eredivisieweekend in vogelvlucht (29082016)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "640x360",
+          "vbitrate": "v:530k",
+          "abitrate": "a:125k",
+          "url": "https://video.omroep.nl/secure/46dc02105cbf6c4e617a485dcff69198/5a2d2bda/nos/content-ip/video/2016/08/29/171451/vod01.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "856x482",
+          "vbitrate": "v:1572k",
+          "abitrate": "a:125k",
+          "url": "https://video.omroep.nl/secure/b261db92a0ba9cd50e99b77d34dec5fe/5a2d2bda/nos/content-ip/video/2016/08/29/171451/web03.mp4"
+        }
+      ]
+    }
+  }
+]
+
+https://nos.nl/artikel/2206740-code-oranje-voor-zondag-gladde-wegen-door-sneeuwval.html (artikel met 2 video's)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2206740-code-oranje-voor-zondag-gladde-wegen-door-sneeuwval.html" --xquery "[...]"
+[
+  {
+    "1": {
+      "name": "NOS: Plezier en problemen door winters weer (09122017)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "640x360",
+          "vbitrate": "v:525k",
+          "abitrate": "a:106k",
+          "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/vod01.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "856x482",
+          "vbitrate": "v:1540k",
+          "abitrate": "a:106k",
+          "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/web03.mp4"
+        }
+      ]
+    }
+  },
+  {
+    "2": {
+      "name": "NOS: Strooiploegen gaan op pad (09122017)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "640x360",
+          "vbitrate": "v:520k",
+          "abitrate": "a:108k",
+          "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211219/vod01.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "856x482",
+          "vbitrate": "v:1527k",
+          "abitrate": "a:108k",
+          "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211219/web03.mp4"
+        }
+      ]
+    }
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2206753-dit-was-de-week-brexit-doorbraak-julio-poch-en-jeruzalem.html" --xquery "declare function local:extract($arg){[for $x at $i in $arg order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'content-ip')) then x:request({'post':serialize-json([{'file':string($x/@src)}]),'url':'https://nos.nl/video/resolve/'})//file else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]}; if (//div[@class='video-play']) then videos:=[//div[@class='video-play']/a/doc(@href)/{position():{'name':concat('NOS: ',replace(//h1,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':local:extract(//source)}}] else (name:=concat('NOS: ',replace(//h1,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),formats:=local:extract(//source))"
+name := NOS: Dit was de week: brexit-doorbraak, Julio Poch en Jeruzalem (09122017)
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:507k", "abitrate": "a:125k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "856x482", "vbitrate": "v:1494k", "abitrate": "a:125k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/web03.mp4"}]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/uitzending/29678-nos-journaal.html" --xquery "[...]"
+name := NOS: NOS Journaal (09122017)
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:400k", "abitrate": "a:61k", "url": "https://download.omroep.nl/nos/content/mp4/web01/2017/12/09/29678/mp4_web01_backup.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "854x480", "vbitrate": "v:1399k", "abitrate": "a:94k", "url": "https://download.omroep.nl/nos/content/mp4/web03/2017/12/09/29678/mp4_web03_backup.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:2999k", "abitrate": "a:94k", "url": "https://download.omroep.nl/nos/content/mp4/web02/2017/12/09/29678/mp4_web02_backup.mp4"}]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html" --xquery "[...]"
+name := NOS: Het eredivisieweekend in vogelvlucht (29082016)
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:530k", "abitrate": "a:125k", "url": "https://video.omroep.nl/secure/2f777c35a206a11df5294cf7e4f2a8e6/5a2d73ff/nos/content-ip/video/2016/08/29/171451/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "856x482", "vbitrate": "v:1572k", "abitrate": "a:125k", "url": "https://video.omroep.nl/secure/a94699bd40e54d6aa985789756e071c4/5a2d7401/nos/content-ip/video/2016/08/29/171451/web03.mp4"}]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2206752-week-in-beeld-catalanen-californie-en-commotie-om-jeruzalem.html" --xquery "[...]"
+videos := [{"1": {"name": "NOS: Dit was de week: brexit-doorbraak, Julio Poch en Jeruzalem (09122017)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:507k", "abitrate": "a:125k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "856x482", "vbitrate": "v:1494k", "abitrate": "a:125k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/web03.mp4"}]}}]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2206740-code-oranje-voor-zondag-gladde-wegen-door-sneeuwval.html" --xquery "[...]"
+videos := [{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:525k", "abitrate": "a:106k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "856x482", "vbitrate": "v:1540k", "abitrate": "a:106k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/web03.mp4"}]}}, {"2": {"name": "NOS: Strooiploegen gaan op pad (09122017)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:520k", "abitrate": "a:108k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211219/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "856x482", "vbitrate": "v:1527k", "abitrate": "a:108k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211219/web03.mp4"}]}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "declare function local:extract($arg){
+            [
+              for $x at $i in $arg order by extract(
+                $x/@data-label,
+                '(\d+)p',
+                1
+              ) count $i
+              let $a:=if (
+                contains(
+                  $x/@src,
+                  'content-ip'
+                )
+              ) then
+                x:request(
+                  {
+                    'post':serialize-json(
+                      [
+                        {
+                          'file':string($x/@src)
+                        }
+                      ]
+                    ),
+                    'url':'https://nos.nl/video/resolve/'
+                  }
+                )//file
+              else
+                $x/@src
+              return
+              system(
+                x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$a} 2>&amp;1'
+              ) ! {
+                'format':'mp4-'||$i,
+                'extension':'mp4',
+                'resolution':extract(
+                  .,
+                  'Video:.+, (\d+x\d+)',
+                  1
+                ),
+                'vbitrate':replace(
+                  .,
+                  '.+Video:.+?(\d+) kb.+',
+                  'v:$1k',
+                  's'
+                ),
+                'abitrate':replace(
+                  .,
+                  '.+Audio:.+?(\d+) kb.+',
+                  'a:$1k',
+                  's'
+                ),
+                'url':$a
+              }
+            ]
+          };
+          if (//div[@class='video-play']) then
+            videos:=[
+              //div[@class='video-play']/a/doc(@href)/{
+                position():{
+                  'name':concat(
+                    'NOS: ',
+                    replace(
+                      //h1,
+                      '[&quot;&apos;]',
+                      ''''''
+                    ),
+                    replace(
+                      //@datetime,
+                      '(\d+)-(\d+)-(\d+).+',
+                      ' ($3$2$1)'
+                    )
+                  ),
+                  'formats':local:extract(//source)
+                }
+              }
+            ]
+          else (
+            name:=concat(
+              'NOS: ',
+              replace(
+                //h1,
+                '[&quot;&apos;]',
+                ''''''
+              ),
+              replace(
+                //@datetime,
+                '(\d+)-(\d+)-(\d+).+',
+                ' ($3$2$1)'
+              )
+            ),
+            formats:=local:extract(//source)
+          )"
