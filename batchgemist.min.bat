@@ -206,8 +206,10 @@ IF NOT "%url: =%"=="%url%" (
 	ECHO.
 	ECHO.
 	GOTO Input
-) ELSE IF "%url%"=="radio" (
+) ELSE IF "%url%"=="npo-radio" (
 	GOTO NPORadio
+) ELSE IF "%url%"=="npo-gids" (
+	GOTO NPOGids
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -413,8 +415,12 @@ ECHO Beschikbare radiozenders:
 ECHO.
 %xidel% "http://radio-app.omroep.nl/player/script/player.js" --xquery "for $x in json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'] order by $x/id return concat('  ',$x/id,'. ',$x/name)"
 ECHO.
-SET /P "id=Voer nummer in van gewenste radiozender: [1] "
-IF NOT DEFINED id SET "id=1"
+SET /P "id=Voer nummer in van gewenste radiozender: "
+IF NOT DEFINED id (
+	ECHO.
+	ENDLOCAL
+	GOTO Input
+)
 FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/player.js" --xquery "json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'][id=%id%]/(name:=name||replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)'),formats:=[for $x in (audiostreams)()[protocol='http'] order by $x/bitrate return $x/{'format':concat(audiocodec,'-',bitrate),'abitrate':concat('a:',bitrate,'k'),'url':url},(videostreams)()[protocol='prid']/(let $a:=json(concat('http://ida.omroep.nl/app.php/',url,'?token=',json('http://ida.omroep.nl/app.php/auth')/token))/json(replace(.//url,'jsonp','json')) return ({'format':'hls-master','extension':'m3u8','url':$a},for $x in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+),',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract(.,'(.+m3u8)',1)} order by $x/format return $x))])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
@@ -425,6 +431,42 @@ IF DEFINED formats (
 	ECHO.
 	ENDLOCAL
 	GOTO NPORadio
+)
+
+REM ================================================================================================
+
+:NPOGids
+SETLOCAL
+ECHO.
+ECHO Voer datum in als dd-mm-jjjj:
+FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=replace(read(),'(\d+)-(\d+)-(\d+)','$3-$2-$1') return if ($a castable as date) then date2:=$a else ()" --output-format^=cmd^"') DO %%A
+IF NOT DEFINED date2 (
+	ECHO.
+	ECHO Ongeldige datum.
+	ECHO.
+	ENDLOCAL
+	GOTO NPOGids
+)
+
+ECHO.
+%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by $x[1]/extract(url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]],$width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),('tijdstip','zender','titel') ! $x(.)),'  ')"
+ECHO.
+SET /P "id=Voer nummer in van gewenst programma: "
+IF NOT DEFINED id (
+	ECHO.
+	ENDLOCAL
+	GOTO Input
+)
+FOR /F "delims=" %%A IN ('^"%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by $x[1]/extract(url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]] return prid:=$json(%id%)/extract(url,'.+/(.+)',1)" --output-format^=cmd^"') DO %%A
+
+IF DEFINED prid (
+	GOTO NPO
+) ELSE (
+	ECHO.
+	ECHO Ongeldig nummer.
+	ECHO.
+	ENDLOCAL
+	GOTO NPOGids
 )
 
 REM ================================================================================================
@@ -523,6 +565,7 @@ IF EXIST %mpc% (
 	ECHO   4. Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.
 )
 ECHO.
+SET id=
 SET /P "id=Voer keuze in: [1] "
 IF NOT DEFINED id (
 	GOTO Render
@@ -790,7 +833,9 @@ ECHO   [Gebruik]
 ECHO     Surf naar ‚‚n van de ondersteunde websites en kopieer de programma-url van een gewenst
 ECHO     programma. Start dit batch-script en plak deze url d.m.v. rechtermuis-knop + plakken (Ctrl+V
 ECHO     werkt hier niet).
-ECHO     Voer 'radio' in voor een opsomming van alle NPO radiozenders en maak je keuze.
+ECHO     Voer 'npo-radio' in voor een opsomming van alle NPO radiozenders.
+ECHO     Voer 'npo-gids' in voor een opsomming van alle tv-programma's die op NPO1, NPO2 en NPO3 zijn
+ECHO     geweest.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
 ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie/bitrate.
@@ -799,10 +844,9 @@ ECHO     dynamische videostreams en eindigen op 'm3u8'. Formaten die beginnen me
 ECHO     progressieve videostreams en eindigen op 'mp4/m4v'.
 ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
-ECHO     Vervolgens krijg je de keuze om de gegenereerde audio/video-url weer te geven, te downloaden,
-ECHO.
 PAUSE
 ECHO.
+ECHO     Vervolgens krijg je de keuze om de gegenereerde audio/video-url weer te geven, te downloaden,
 ECHO     of te openen met MPC-HC/BE (als je die hebt toegevoegd onder ":Check"). Optie 1 tussen blok-
 ECHO     haken is voorgeselecteerd. In dat geval kun je dan gewoon op ENTER drukken.
 ECHO     Voor de ja/nee-vragen die dan volgen geldt dit ook. De keuze met hoofdletter is voor-

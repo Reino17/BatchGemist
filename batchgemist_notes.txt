@@ -7128,3 +7128,617 @@ videos := [{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017
             ),
             formats:=local:extract(//source)
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://apps-api.uitzendinggemist.nl
+
+https://www.epochconverter.com/:
+"The Unix epoch (or Unix time or POSIX time or Unix timestamp) is the number of seconds that have elapsed since January 1, 1970."
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/broadcasted_at"
+1511933400
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/broadcasted_at * dayTimeDuration('PT1S')"
+P17499DT5H30M
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/broadcasted_at * dayTimeDuration('PT1S') + time('00:00:00')"
+05:30:00
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/(broadcasted_at * dayTimeDuration('PT1S') + time('00:00:00')) ! extract(.,'(.+):',1)"
+05:30
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/format-time(broadcasted_at * dayTimeDuration('PT1S') + time('00:00:00'),'[H01]:[m01]')"
+05:30
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Sorteer op 'broadcasted_at', converteer deze naar tijd (hele minuten) en creëer een nieuwe tijdelijke JSON:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "[for $x in $json()/episode order by $x/broadcasted_at return $x/{'tijdstip':format-time(broadcasted_at * dayTimeDuration('PT1S') + time('00:00:00'),'[H01]:[m01]'),'zender':broadcasted_on,'titel':if (name) then if (series/name=name) then series/name else concat(series/name,': ',name) else series/name,'url':'https://www.npo.nl/'||mid}]"
+[
+  {
+    "tijdstip": "07:30",
+    "zender": "ZAPP",
+    "titel": "Studio Snugger: Aflevering 74",
+    "url": "https://www.npo.nl/VPWON_1266900"
+  },
+  {
+    "tijdstip": "05:30",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03366659"
+  },
+  {
+    "tijdstip": "05:50",
+    "zender": "ZAPPE",
+    "titel": "Sesamstraat: Slim/Dom",
+    "url": "https://www.npo.nl/VPWON_1279349"
+  },
+  {
+    "tijdstip": "06:00",
+    "zender": "NED2",
+    "titel": "NOS Journaal met gebarentolk",
+    "url": "https://www.npo.nl/POW_03367184"
+  },
+  [...]
+  {
+    "tijdstip": "23:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03376030"
+  },
+  {
+    "tijdstip": "00:05",
+    "zender": "NED2",
+    "titel": "De Nachtzoen: Erik van Os",
+    "url": "https://www.npo.nl/VPWON_1273795"
+  }
+]
+
+M.b.v. 'x:request' kunnen we de volledige url ook achterhalen (duurt wel eventjes):
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "[for $x in $json()/episode order by $x/broadcasted_at return $x/{'tijdstip':format-time(broadcasted_at * dayTimeDuration('PT1S') + time('00:00:00'),'[H01]:[m01]'),'zender':broadcasted_on,'titel':if (name) then if (series/name=name) then series/name else concat(series/name,': ',name) else series/name,'url':x:request({'data':'https://www.npo.nl/'||mid,'user-agent':'BatchGemist 1.6-git','method':'HEAD'})/url}]"
+[
+  {
+    "tijdstip": "07:30",
+    "zender": "ZAPP",
+    "titel": "Studio Snugger: Aflevering 74",
+    "url": "https://www.npo.nl/studio-snugger/26-11-2017/VPWON_1266900"
+  },
+  {
+    "tijdstip": "05:30",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/29-11-2017/POW_03366659"
+  },
+  {
+    "tijdstip": "05:50",
+    "zender": "ZAPPE",
+    "titel": "Sesamstraat: Slim/Dom",
+    "url": "https://www.npo.nl/sesamstraat/29-11-2017/VPWON_1279349"
+  },
+  {
+    "tijdstip": "06:00",
+    "zender": "NED2",
+    "titel": "NOS Journaal met gebarentolk",
+    "url": "https://www.npo.nl/nos-journaal-met-gebarentolk/29-11-2017/POW_03367184"
+  },
+  [...]
+  {
+    "tijdstip": "23:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/29-11-2017/POW_03376030"
+  },
+  {
+    "tijdstip": "00:05",
+    "zender": "NED2",
+    "titel": "De Nachtzoen: Erik van Os",
+    "url": "https://www.npo.nl/de-nachtzoen/30-11-2017/VPWON_1273795"
+  }
+]
+
+Ondanks dat we gesorteerd hebben op 'broadcasted_at' staat "Studio Snugger: Aflevering 74" met "07:30" vreemd genoeg bovenaan. Hoe kan dit?
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "[for $x in $json()/episode order by $x/broadcasted_at return $x/{'tijdstip':broadcasted_at * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00'),'zender':broadcasted_on,'titel':if (name) then if (series/name=name) then series/name else concat(series/name,': ',name) else series/name,'url':'https://www.npo.nl/'||mid}]"
+[
+  {
+    "tijdstip": "2017-11-26T07:30:00",
+    "zender": "ZAPP",
+    "titel": "Studio Snugger: Aflevering 74",
+    "url": "https://www.npo.nl/VPWON_1266900"
+  },
+  {
+    "tijdstip": "2017-11-29T05:30:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03366659"
+  },
+  {
+    "tijdstip": "2017-11-29T05:50:00",
+    "zender": "ZAPPE",
+    "titel": "Sesamstraat: Slim/Dom",
+    "url": "https://www.npo.nl/VPWON_1279349"
+  },
+  [...]
+]
+
+Ah! Het is gewoon een herhaling van 3 dagen eerder. Die kunnen we er uit filteren:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "(date(extract($url,'.+/(.+)\.json',1)) - dateTime('1970-01-01T00:00:00')) div dayTimeDuration('PT1S')"
+1511913600
+
+'2017-11-29' staat dus gelijk aan '1511913600' Unix time.
+Laat alleen objecten met 'broadcasted_at' groter of gelijk aan '1511913600' zien:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "let $date:=(date(extract($url,'.+/(.+)\.json',1)) - dateTime('1970-01-01T00:00:00')) div dayTimeDuration('PT1S') return [for $x in $json()/episode order by $x/broadcasted_at return $x[broadcasted_at >= $date]/{'tijdstip':format-time(broadcasted_at * dayTimeDuration('PT1S') + time('00:00:00'),'[H01]:[m01]'),'zender':broadcasted_on,'titel':if (name) then if (series/name=name) then series/name else concat(series/name,': ',name) else series/name,'url':'https://www.npo.nl/'||mid}]"
+[
+  {
+    "tijdstip": "05:30",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03366659"
+  },
+  {
+    "tijdstip": "05:50",
+    "zender": "ZAPPE",
+    "titel": "Sesamstraat: Slim/Dom",
+    "url": "https://www.npo.nl/VPWON_1279349"
+  },
+  {
+    "tijdstip": "06:00",
+    "zender": "NED2",
+    "titel": "NOS Journaal met gebarentolk",
+    "url": "https://www.npo.nl/POW_03367184"
+  },
+  {
+    "tijdstip": "06:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03366920"
+  },
+  [...]
+  {
+    "tijdstip": "23:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03376030"
+  },
+  {
+    "tijdstip": "00:05",
+    "zender": "NED2",
+    "titel": "De Nachtzoen: Erik van Os",
+    "url": "https://www.npo.nl/VPWON_1273795"
+  }
+]
+
+Toch klopt er nog iets niet. "https://www.npo.nl/gids?date=2017-11-29&type=tv" geeft aan dat het eerste NOS Journaal om 06:30 werd uitgezonden. Wintertijd/Tijdzone kwestie?
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/format-time((broadcasted_at+3600) * dayTimeDuration('PT1S') + time('00:00:00'),'[H01]:[m01]')"
+06:30
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/format-time(broadcasted_at * dayTimeDuration('PT1S') + time('01:00:00'),'[H01]:[m01]')"
+06:30
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "$json()[last()]/episode/format-time(broadcasted_at * dayTimeDuration('PT1S') + duration('PT1H') + time('00:00:00'),'[H01]:[m01]')"
+06:30
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "let $date:=(date(extract($url,'.+/(.+)\.json',1)) - dateTime('1970-01-01T00:00:00')) div dayTimeDuration('PT1S') return [for $x in $json()/episode order by $x/broadcasted_at return $x[broadcasted_at >= $date]/{'tijdstip':format-time(broadcasted_at * dayTimeDuration('PT1S') + time('01:00:00'),'[H01]:[m01]'),'zender':broadcasted_on,'titel':if (name) then if (series/name=name) then series/name else concat(series/name,': ',name) else series/name,'url':'https://www.npo.nl/'||mid}]"
+[
+  {
+    "tijdstip": "06:30",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03366659"
+  },
+  {
+    "tijdstip": "06:50",
+    "zender": "ZAPPE",
+    "titel": "Sesamstraat: Slim/Dom",
+    "url": "https://www.npo.nl/VPWON_1279349"
+  },
+  {
+    "tijdstip": "07:00",
+    "zender": "NED2",
+    "titel": "NOS Journaal met gebarentolk",
+    "url": "https://www.npo.nl/POW_03367184"
+  },
+  {
+    "tijdstip": "07:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03366920"
+  },
+  [...]
+  {
+    "tijdstip": "00:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/POW_03376030"
+  },
+  {
+    "tijdstip": "01:05",
+    "zender": "NED2",
+    "titel": "De Nachtzoen: Erik van Os",
+    "url": "https://www.npo.nl/VPWON_1273795"
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+De informatie uit deze tijdelijke JSON zetten we vervolgens netjes naast en onder elkaar.
+$width detecteert de maximale kolombreedte. Hier plakken we nog 2 spaties aan vast. De 2 spaties achter de url halen we nog weg met een regex:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://apps-api.uitzendinggemist.nl/broadcasts/2017-11-29.json" --xquery "let $date:=(date(extract($url,'.+/(.+)\.json',1)) - dateTime('1970-01-01T00:00:00')) div dayTimeDuration('PT1S'),$json:=[for $x in $json()/episode order by $x/broadcasted_at return $x[broadcasted_at >= $date]/{'tijdstip':format-time(broadcasted_at * dayTimeDuration('PT1S') + time('01:00:00'),'[H01]:[m01]'),'zender':broadcasted_on,'titel':if (name) then if (series/name=name) then series/name else concat(series/name,': ',name) else series/name,'url':'https://www.npo.nl/'||mid}],$width:=$json(1)() ! max($json()(.) ! string-length(.)) for $x in $json() return replace(string-join(for $y at $i in $json(1)() return substring(string-join(($x($y),for $x in 1 to $width[$i]+2 return ' ')),1,$width[$i]+2)),'\s+$','')"
+06:30  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03366659
+06:50  ZAPPE  Sesamstraat: Slim/Dom                                             https://www.npo.nl/VPWON_1279349
+07:00  NED2   NOS Journaal met gebarentolk                                      https://www.npo.nl/POW_03367184
+07:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03366920
+07:10  NED1   Goedemorgen Nederland                                             https://www.npo.nl/POW_03598363
+07:29  NED2   NOS Journaal met gebarentolk                                      https://www.npo.nl/POW_03367581
+07:29  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03367375
+07:40  NED1   Goedemorgen Nederland                                             https://www.npo.nl/POW_03598275
+07:45  ZAPPE  De Boterhamshow                                                   https://www.npo.nl/VPWON_1274086
+08:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03370938
+08:00  NED2   NOS Journaal met gebarentolk                                      https://www.npo.nl/POW_03371202
+08:10  NED1   Goedemorgen Nederland                                             https://www.npo.nl/POW_03598100
+08:30  NED2   NOS Journaal                                                      https://www.npo.nl/POW_03371663
+08:30  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03371426
+08:40  NED1   Goedemorgen Nederland                                             https://www.npo.nl/POW_03598185
+08:45  NED2   NOS Jeugdjournaal met gebarentolk                                 https://www.npo.nl/POW_03353433
+08:45  ZAPP   NOS Jeugdjournaal                                                 https://www.npo.nl/POW_03353233
+09:00  NED2   NOS Journaal met gebarentolk                                      https://www.npo.nl/POW_03372288
+09:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03372023
+09:15  NED2   De Ochtendkus: Tijn Touber                                        https://www.npo.nl/KN_1694173
+09:15  NED1   Nederland in Beweging: Nederland in Beweging!                     https://www.npo.nl/POW_03406603
+09:40  NED1   MAX Geheugentrainer                                               https://www.npo.nl/POW_03406130
+10:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03576129
+10:15  NED1   Kook mee met MAX: Pompoenpasta uit de oven                        https://www.npo.nl/POW_03619657
+11:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03372809
+11:15  ZAPPE  Sesamstraat: 10 voor...: Bert & Ernie                             https://www.npo.nl/VPWON_1279805
+11:25  ZAPPE  George & Paul: Bad                                                https://www.npo.nl/VPWON_1284082
+12:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03373118
+12:15  ZAPPE  Apennoten: Pepernoten Blues                                       https://www.npo.nl/KN_1694657
+13:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03373512
+13:00  NED2   NOS Journaal                                                      https://www.npo.nl/POW_03373572
+14:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03373943
+15:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03374209
+15:30  NED3   Zapp Sinterklaasfeest: Zapp Sinterklaasfeest 2017                 https://www.npo.nl/POW_03724032
+16:00  NED2   NOS Journaal                                                      https://www.npo.nl/POW_03374496
+16:05  NED1   NPO Radio 5 Evergreen Top 1000                                    https://www.npo.nl/POW_03725237
+17:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03374834
+17:10  NED1   Tijd voor MAX: Wat hebben Herman Koch en Wanda Reisel verzonnen?  https://www.npo.nl/POW_03568987
+17:20  ZAPP   Hip voor Nop: Lara en Jesse                                       https://www.npo.nl/VPWON_1277394
+17:45  ZAPP   Freeks wilde wereld: Braziliaanse cowboys                         https://www.npo.nl/VPWON_1283243
+17:50  NED2   Geloof en een Hoop Liefde: Venray                                 https://www.npo.nl/VPWON_1274664
+18:00  ZAPP   Het Sinterklaasjournaal                                           https://www.npo.nl/VPWON_1277921
+18:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03375165
+18:15  ZAPP   Checkpoint                                                        https://www.npo.nl/VPWON_1283189
+18:15  NED1   EenVandaag                                                        https://www.npo.nl/AT_2083097
+18:30  NED2   Hallo Nederland                                                   https://www.npo.nl/POW_03564007
+18:30  ZAPP   SpangaS: Gemis                                                    https://www.npo.nl/KN_1694432
+18:40  ZAPP   Het Klokhuis: Medisch illustrator                                 https://www.npo.nl/VPWON_1260541
+18:45  NED1   NOS Sportjournaal                                                 https://www.npo.nl/POW_03615460
+18:50  NED2   BinnensteBuiten                                                   https://www.npo.nl/KN_1694385
+19:00  ZAPP   NOS Jeugdjournaal                                                 https://www.npo.nl/POW_03353763
+19:00  NED1   De Wereld Draait Door                                             https://www.npo.nl/BV_101384237
+19:20  NED2   Omdat ik het zeg!                                                 https://www.npo.nl/VPWON_1274348
+19:30  NED3   Je Zal Het Maar Hebben: Kim Verhart                               https://www.npo.nl/BV_101385486
+19:50  NED3   3 Op Reis Midweek: Urban Jungle (3/5)                             https://www.npo.nl/BV_101385312
+19:55  NED2   Met het Mes op Tafel                                              https://www.npo.nl/POW_03617787
+20:00  NED1   NOS Journaal 20.00 uur                                            https://www.npo.nl/POW_03375754
+20:25  NED3   Papadag: Familylife - Zeepaardjes                                 https://www.npo.nl/AT_2085888
+20:30  NED2   Kijken in de Ziel: Gesprekken over rouw                           https://www.npo.nl/VPWON_1284478
+20:35  NED1   Van A naar B: BOSNIE HERZEGOVINA                                  https://www.npo.nl/KN_1694120
+21:15  NED2   ZEMBLA: De 'spooktaxi's' van Uber                                 https://www.npo.nl/BV_101384726
+21:30  NED1   Liefs Uit...: Willemijn en Bennett                                https://www.npo.nl/KN_1694147
+22:00  NED2   Nieuwsuur                                                         https://www.npo.nl/VPWON_1273430
+22:05  NED3   3Doc: Gay Babyboom                                                https://www.npo.nl/BV_101386067
+22:20  NED1   Jonge Valken: Aflevering 6                                        https://www.npo.nl/POW_03619688
+22:55  NED3   PowNews Flits                                                     https://www.npo.nl/POW_03663343
+22:55  NED2   2Doc:: My own private war                                         https://www.npo.nl/VPWON_1283570
+23:00  NED1   Pauw                                                              https://www.npo.nl/BV_101384368
+23:10  NED3   NOS op 3 Special                                                  https://www.npo.nl/POW_03731455
+23:20  NED3   Reggie Yates: Dying for a six pack                                https://www.npo.nl/BV_101386077
+00:00  NED1   NOS Journaal                                                      https://www.npo.nl/POW_03376030
+01:05  NED2   De Nachtzoen: Erik van Os                                         https://www.npo.nl/VPWON_1273795
+
+Toch laat http://apps-api.uitzendinggemist.nl lang niet alle programma's zien, dus stappen we over op https://www.npo.nl/gids?date=xxxx-xx-xx&type=tv.
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+https://www.npo.nl/gids?date=xxxx-xx-xx&type=tv
+
+Beperk de resultaten tot die van NPO1, NPO2 en NPO3. Sorteer op datum (uit de url) én tijdstip:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} order by $x/extract(url,'.+/(.+)/',1),$x/tijdstip return $x]"
+[
+  {
+    "tijdstip": "06:10",
+    "zender": "NED1",
+    "titel": "MAX Geheugentrainer",
+    "url": "https://www.npo.nl/max-geheugentrainer/11-12-2017/POW_03406137"
+  },
+  {
+    "tijdstip": "06:30",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/11-12-2017/POW_03366667"
+  },
+  {
+    "tijdstip": "06:30",
+    "zender": "NED3",
+    "titel": "Pingu",
+    "url": "https://www.npo.nl/pingu/11-12-2017/POW_00066190"
+  },
+  {
+    "tijdstip": "06:35",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/11-12-2017/POW_03366667"
+  },
+  [...]
+  {
+    "tijdstip": "05:20",
+    "zender": "NED3",
+    "titel": "Tekst-TV",
+    "url": "https://www.npo.nl/tekst-tv/12-12-2017/POW_03181560"
+  },
+  {
+    "tijdstip": "05:25",
+    "zender": "NED2",
+    "titel": "Nieuwsuur",
+    "url": "https://www.npo.nl/nieuwsuur/12-12-2017/VPWON_1273442"
+  },
+  {
+    "tijdstip": "05:50",
+    "zender": "NED1",
+    "titel": "Nederland in Beweging",
+    "url": "https://www.npo.nl/nederland-in-beweging/12-12-2017/POW_03406611"
+  }
+]			# 189 objecten.
+
+Beperk de resultaten tot programma's die daadwerkelijk terug te kijken zijn door programma's zonder 'play-icoontje' er uit te filteren:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} order by $x/extract(url,'.+/(.+)/',1),$x/tijdstip return $x]"
+[
+  {
+    "tijdstip": "06:10",
+    "zender": "NED1",
+    "titel": "MAX Geheugentrainer",
+    "url": "https://www.npo.nl/max-geheugentrainer/11-12-2017/POW_03406137"
+  },
+  {
+    "tijdstip": "06:30",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/11-12-2017/POW_03366667"
+  },
+  {
+    "tijdstip": "06:30",
+    "zender": "NED3",
+    "titel": "Pingu",
+    "url": "https://www.npo.nl/pingu/11-12-2017/POW_00066190"
+  },
+  {
+    "tijdstip": "06:35",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/11-12-2017/POW_03366667"
+  },
+  [...]
+  {
+    "tijdstip": "04:55",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/12-12-2017/POW_03375762"
+  },
+  {
+    "tijdstip": "05:25",
+    "zender": "NED2",
+    "titel": "Nieuwsuur",
+    "url": "https://www.npo.nl/nieuwsuur/12-12-2017/VPWON_1273442"
+  },
+  {
+    "tijdstip": "05:50",
+    "zender": "NED1",
+    "titel": "Nederland in Beweging",
+    "url": "https://www.npo.nl/nederland-in-beweging/12-12-2017/POW_03406611"
+  }
+]			# 178 objecten.
+
+Laat de herhalingen (zoals het NOS Journaal van 06:35 hierboven) achterwege door alle dubbele prid's er uit te filteren:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by $x[1]/extract(url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]]"
+of
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by extract($url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]]"
+[
+  {
+    "tijdstip": "06:10",
+    "zender": "NED1",
+    "titel": "MAX Geheugentrainer",
+    "url": "https://www.npo.nl/max-geheugentrainer/11-12-2017/POW_03406137"
+  },
+  {
+    "tijdstip": "06:30",
+    "zender": "NED3",
+    "titel": "Pingu",
+    "url": "https://www.npo.nl/pingu/11-12-2017/POW_00066190"
+  },
+  {
+    "tijdstip": "06:30",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/11-12-2017/POW_03366667"
+  },
+  {
+    "tijdstip": "06:35",
+    "zender": "NED3",
+    "titel": "Mullewapp",
+    "url": "https://www.npo.nl/mullewapp/11-12-2017/POW_00488230"
+  },
+  [...]
+  {
+    "tijdstip": "00:00",
+    "zender": "NED1",
+    "titel": "NOS Journaal",
+    "url": "https://www.npo.nl/nos-journaal/12-12-2017/POW_03376038"
+  },
+  {
+    "tijdstip": "00:00",
+    "zender": "NED2",
+    "titel": "Podium Witteman",
+    "url": "https://www.npo.nl/podium-witteman/12-12-2017/VPWON_1277003"
+  },
+  {
+    "tijdstip": "01:00",
+    "zender": "NED2",
+    "titel": "De Nachtzoen",
+    "url": "https://www.npo.nl/de-nachtzoen/12-12-2017/VPWON_1273805"
+  }
+]			# 129 objecten.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Print een overzicht van de eerste 3 attributen van elke object, met telkens 2 spaties ertussen:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by $x[1]/extract(url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]] for $x in $json() return join(('tijdstip','zender','titel') ! $x(.),'  ')"
+06:10  NED1  MAX Geheugentrainer
+06:30  NED3  Pingu
+06:30  NED1  NOS Journaal
+06:35  NED3  Mullewapp
+06:35  NED2  Hallo Nederland
+06:39  NED3  Olly, het kleine witte busje
+06:50  NED3  Sesamstraat
+07:00  NED1  NOS Journaal
+[...]
+22:50  NED3  Danny Demonstreert
+22:55  NED2  The Legacy
+23:00  NED1  Jinek
+00:00  NED1  NOS Journaal
+00:00  NED2  Podium Witteman
+01:00  NED2  De Nachtzoen
+
+Print een uitgelijnd overzicht van alle attributen van elke object, met telkens 2 spaties ertussen:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by $x[1]/extract(url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]],$width:=$json(1)() ! max($json()(.) ! string-length(.)) for $x in $json() return replace(string-join(for $y at $i in $json(1)() return substring(string-join(($x($y),for $x in 1 to $width[$i]+2 return ' ')),1,$width[$i]+2)),'\s+$','')"
+06:10  NED1  MAX Geheugentrainer                         https://www.npo.nl/max-geheugentrainer/11-12-2017/POW_03406137
+06:30  NED3  Pingu                                       https://www.npo.nl/pingu/11-12-2017/POW_00066190
+06:30  NED1  NOS Journaal                                https://www.npo.nl/nos-journaal/11-12-2017/POW_03366667
+06:35  NED3  Mullewapp                                   https://www.npo.nl/mullewapp/11-12-2017/POW_00488230
+06:35  NED2  Hallo Nederland                             https://www.npo.nl/hallo-nederland/11-12-2017/POW_03564014
+06:39  NED3  Olly, het kleine witte busje                https://www.npo.nl/olly-het-kleine-witte-busje/11-12-2017/POW_00930009
+06:50  NED3  Sesamstraat                                 https://www.npo.nl/sesamstraat/11-12-2017/VPWON_1279354
+07:00  NED1  NOS Journaal                                https://www.npo.nl/nos-journaal/11-12-2017/POW_03366928
+[...]
+22:50  NED3  Danny Demonstreert                          https://www.npo.nl/danny-demonstreert/11-12-2017/VPWON_1277234
+22:55  NED2  The Legacy                                  https://www.npo.nl/the-legacy/11-12-2017/POW_03386198
+23:00  NED1  Jinek                                       https://www.npo.nl/jinek/11-12-2017/KN_1694843
+00:00  NED1  NOS Journaal                                https://www.npo.nl/nos-journaal/12-12-2017/POW_03376038
+00:00  NED2  Podium Witteman                             https://www.npo.nl/podium-witteman/12-12-2017/VPWON_1277003
+01:00  NED2  De Nachtzoen                                https://www.npo.nl/de-nachtzoen/12-12-2017/VPWON_1273805
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Print een opgesomd overzicht van de eerste 3 attributen van elke object, met telkens 2 spaties ertussen:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by $x[1]/extract(url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]] for $x at $i in $json() return '  '||join(($i||'.',('tijdstip','zender','titel') ! $x(.)),'  ')"
+  1.  06:10  NED1  MAX Geheugentrainer
+  2.  06:30  NED3  Pingu
+  3.  06:30  NED1  NOS Journaal
+  4.  06:35  NED3  Mullewapp
+  5.  06:35  NED2  Hallo Nederland
+  6.  06:39  NED3  Olly, het kleine witte busje
+  7.  06:50  NED3  Sesamstraat
+  8.  07:00  NED1  NOS Journaal
+  9.  07:00  NED2  NOS Journaal met gebarentolk
+  10.  07:05  NED3  Zappelin Go
+  11.  07:10  NED3  Woezel & Pip Overal Vriendjes!
+  12.  07:10  NED1  Goedemorgen Nederland
+  [...]
+  124.  22:50  NED3  Danny Demonstreert
+  125.  22:55  NED2  The Legacy
+  126.  23:00  NED1  Jinek
+  127.  00:00  NED1  NOS Journaal
+  128.  00:00  NED2  Podium Witteman
+  129.  01:00  NED2  De Nachtzoen
+
+Print een opgesomd en uitgelijnd overzicht van de eerste 3 attributen van elke object, met telkens 2 spaties ertussen:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'url':@href} group by $url:=$x/extract(url,'.+/(.+)',1) order by $x[1]/extract(url,'.+/(.+)/',1),$x[1]/tijdstip return $x[1]],$width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),('tijdstip','zender','titel') ! $x(.)),'  ')"
+  1.    06:10  NED1  MAX Geheugentrainer
+  2.    06:30  NED3  Pingu
+  3.    06:30  NED1  NOS Journaal
+  4.    06:35  NED3  Mullewapp
+  5.    06:35  NED2  Hallo Nederland
+  6.    06:39  NED3  Olly, het kleine witte busje
+  7.    06:50  NED3  Sesamstraat
+  8.    07:00  NED1  NOS Journaal
+  9.    07:00  NED2  NOS Journaal met gebarentolk
+  10.   07:05  NED3  Zappelin Go
+  11.   07:10  NED3  Woezel & Pip Overal Vriendjes!
+  12.   07:10  NED1  Goedemorgen Nederland
+  [...]
+  124.  22:50  NED3  Danny Demonstreert
+  125.  22:55  NED2  The Legacy
+  126.  23:00  NED1  Jinek
+  127.  00:00  NED1  NOS Journaal
+  128.  00:00  NED2  Podium Witteman
+  129.  01:00  NED2  De Nachtzoen
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "let $json:=[
+                for $x in //div[
+                  @id=(
+                    'channel-NED1',
+                    'channel-NED2',
+                    'channel-NED3'
+                  )
+                ]//a[.//span[@class='npo-epg-play']]/{
+                  'tijdstip':.//span[@class='npo-epg-time'],
+                  'zender':@data-channel,
+                  'titel':.//span[@class='npo-epg-title'],
+                  'url':@href
+                }
+                group by $url:=$x/extract(
+                           url,
+                           '.+/(.+)',
+                           1
+                         )
+                order by $x[1]/extract(
+                           url,
+                           '.+/(.+)/',
+                           1
+                         ),
+                         $x[1]/tijdstip
+                return $x[1]
+              ],
+              $width:=string-length(
+                count($json())
+              )
+          for $x at $i in $json() return
+          '  '||join(
+            (
+              substring(
+                concat(
+                  $i,
+                  '.',
+                  string-join(
+                    (1 to $width) ! ' '
+                  )
+                ),
+                1,
+                $width+1
+              ),
+              (
+                'tijdstip',
+                'zender',
+                'titel'
+              ) ! $x(.)
+            ),
+            '  '
+          )"
