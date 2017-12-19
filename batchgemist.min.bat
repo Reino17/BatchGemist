@@ -352,7 +352,7 @@ IF DEFINED videos (
 	)
 ) ELSE (
 	ECHO.
-	ECHO Video niet (meer^) beschikbaar.
+	ECHO Video niet ^(meer^) beschikbaar.
 	ECHO.
 	ECHO.
 	ENDLOCAL
@@ -377,7 +377,7 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :rtlXL
-FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/" --xquery "$json/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),q:=.//quality,(material)()/(let $a:=duration return round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00') let $b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()))" -f "$json/(if (meta/nr_of_videos_total=0) then () else concat(meta/videohost,material/videopath))" --xquery "let $a:=if ($q='HD') then ('a2t','a3t','nettv') else ('a2t','a3t') return formats:=[for $x at $i in ($a ! replace($url,'.+(/comp.+)m3u8',concat('http://pg.us.rtl.nl/rtlxl/network/',.,'/progressive$1mp4'))) return system(x'cmd /c %ffmpeg% -user_agent \"BatchGemist %ver%\" -i {$x} 2>&amp;1') ! {'format':'pg-'||$a[$i],'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x,'teapot':true},{'format':'hls-master','extension':'m3u8','url':$url},for $x in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':extract(.,'(.+m3u8)',1)} order by $x/format return $x]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/" --xquery "$json/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),q:=.//quality,(material)()/(let $a:=duration return round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00'),$b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()))" -f "$json/(if (meta/nr_of_videos_total=0) then () else concat(meta/videohost,material/videopath))" --xquery "let $a:=if ($q='HD') then ('a2t','a3t','nettv') else ('a2t','a3t') return formats:=[for $x at $i in ($a ! replace($url,'.+(/comp.+)m3u8',concat('http://pg.us.rtl.nl/rtlxl/network/',.,'/progressive$1mp4'))) return system(x'cmd /c %ffmpeg% -user_agent \"BatchGemist %ver%\" -i {$x} 2>&amp;1') ! {'format':'pg-'||$a[$i],'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x,'teapot':true},{'format':'hls-master','extension':'m3u8','url':$url},for $x in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'vbitrate':extract(.,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace(.,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':extract(.,'(.+m3u8)',1)} order by $x/format return $x]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
 	GOTO Formats
@@ -392,7 +392,7 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :Kijk
-FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return expire:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"^(.+?^)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] let $b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),': ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,': ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,': ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),'https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then s_url:=. else ()),formats:=[if ($a//sbs_videotype='vod') then (for $x in $a/(sources)()[container='MP4'] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-master','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}) else for $x in $a/(sources)()[src] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':src},$b/({'format':'hls-master_hd','extension':'m3u8','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':replace(.,'.+BANDWIDTH=(\d+)\d{3}.+','hls-$1_hd','s'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'url':extract(.,'(.+m3u8)',1)})]))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return expire:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"^(.+?^)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)],$b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),': ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,': ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,': ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),'https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then s_url:=. else ()),formats:=[if ($a//sbs_videotype='vod') then (for $x in $a/(sources)()[container='MP4'] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-master','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||extract(.,'BANDWIDTH=(\d+)\d{3}',1),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+?),',1),'url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}) else for $x in $a/(sources)()[src] order by $x/size return $x/{'format':'pg-'||avg_bitrate idiv 1000,'extension':'mp4','resolution':concat(width,'x',height),'url':src},$b/({'format':'hls-master_hd','extension':'m3u8','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':replace(.,'.+BANDWIDTH=(\d+)\d{3}.+','hls-$1_hd','s'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=(.+)',1),'url':extract(.,'(.+m3u8)',1)})]))" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
 	GOTO Formats
@@ -469,12 +469,12 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 	IF "%%A"=="1" (
 		ECHO Beschikbaar formaat:
 		ECHO.
-		ECHO %formats% | %xidel% - --xquery "let $a:=('extension','resolution','vbitrate','abitrate') let $b:=$a ^! max($json()(.) ^! string-length(.)) let $c:=string-join((1 to sum($b)) ^! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+		ECHO %formats% | %xidel% - --xquery "let $a:=('extension','resolution','vbitrate','abitrate'),$b:=$a ^! max($json()(.) ^! string-length(.)),$c:=string-join((1 to sum($b)) ^! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "v_url:=$json()/url" --output-format^=cmd') DO %%A
 	) ELSE (
 		ECHO Beschikbare formaten:
 		ECHO.
-		ECHO %formats% | %xidel% - --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') let $b:=$a ^! max($json()(.) ^! string-length(.)) let $c:=string-join((1 to sum($b)) ^! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+		ECHO %formats% | %xidel% - --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate'),$b:=$a ^! max($json()(.) ^! string-length(.)),$c:=string-join((1 to sum($b)) ^! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
 		ECHO.
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[last()]/format"') DO (
 			SET /P "format=Voer gewenst formaat in: [%%A] "
@@ -505,10 +505,10 @@ FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(normalize-space('%name%'),'[<>/\
 ECHO.
 IF DEFINED duration (
 	ECHO Naam:       %name%
-	ECHO Tijdsduur:  %duration% (%t%%duration:~8,4%s^)
+	ECHO Tijdsduur:  %duration% ^(%t%%duration:~8,4%s^)
 	IF DEFINED ss (
-		ECHO Begin:      %start% (%ss%s^)
-		ECHO Einde:      %end% (%to%s^)
+		ECHO Begin:      %start% ^(%ss%s^)
+		ECHO Einde:      %end% ^(%to%s^)
 	)
 	IF DEFINED expire ECHO Gratis tot: %expire%
 ) ELSE (
@@ -613,7 +613,7 @@ IF /I "%remap%"=="n" (
 	SET "map=%~dp0"
 ) ELSE (
 	ECHO Opslaan in:
-	FOR /F "delims=" %%A IN ('^"%xidel% --xquery "let $a:=extract(read(),'(.:\\|\\\\)(.+)',(1,2)) let $b:=concat($a[1],replace(if (ends-with($a[2],'\')) then $a[2] else $a[2]||'\','[<>/|?*:^]','')) return ($b,file:create-dir($b))" --output-encoding^=oem^"') DO SET "map=%%A"
+	FOR /F "delims=" %%A IN ('^"%xidel% --xquery "let $a:=extract(read(),'(.:\\|\\\\)(.+)',(1,2)),$b:=concat($a[1],replace(if (ends-with($a[2],'\')) then $a[2] else $a[2]||'\','[<>/|?*:^]','')) return ($b,file:create-dir($b))" --output-encoding^=oem^"') DO SET "map=%%A"
 )
 
 FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
@@ -664,9 +664,9 @@ IF DEFINED ss1 (
 ) ELSE (
 	SET /P "part=Fragment downloaden? [j/N] "
 	IF /I "!part!"=="j" (
-		ECHO Voer begintijd in (in seconden, of als uu:mm:ss[.xxx]^):
+		ECHO Voer begintijd in ^(in seconden, of als uu:mm:ss[.xxx]^):
 		FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=read() return if ($a) then let $a:=if ($a castable as time) then hours-from-time($a)*3600+minutes-from-time($a)*60+seconds-from-time($a) else $a return if ($a=0) then () else if ($a mod 30=0) then (if ($a=30) then () else ss1:=$a - 30,ss2:=30) else (if ($a<30) then () else ss1:=$a - ($a mod 30),ss2:=$a mod 30) else ()" --output-format^=cmd^"') DO %%A
-		ECHO Voer tijdsduur in (in seconden, of als uu:mm:ss[.xxx]^):
+		ECHO Voer tijdsduur in ^(in seconden, of als uu:mm:ss[.xxx]^):
 		SET /P t=
 		IF DEFINED mux (
 			IF DEFINED ss1 (

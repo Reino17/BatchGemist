@@ -3061,7 +3061,7 @@ IF DEFINED videos (
 	)
 ) ELSE (
 	ECHO.
-	ECHO Video niet (meer^) beschikbaar.
+	ECHO Video niet ^(meer^) beschikbaar.
 	ECHO.
 	ECHO.
 	ENDLOCAL
@@ -3433,8 +3433,9 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 t:^=hours-from-time^($a^)*3600+minutes-from-time^($a^)*60+.
               ^)^,
               if ^(^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop^) then
-                let $a:^=^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop * dayTimeDuration^('PT1S'^) + dateTime^('1970-01-01T00:00:00'^)
-                let $b:^=$a - current-dateTime^(^) return
+                let $a:^=^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop * dayTimeDuration^('PT1S'^) + dateTime^('1970-01-01T00:00:00'^)^,
+                    $b:^=$a - current-dateTime^(^)
+                return
                 expire:^=concat^(
                   replace^(
                     $a^,
@@ -3631,33 +3632,34 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
             else
               ^(^)^,
             let $a:^=doc^(
-              'http:'^|^|embed_video_url
-            ^)[//@data-video-id]/x:request^(
-              {
-                'headers':
-                  'Accept: application/json^;pk^='^|^|
-                  extract^(
-                    unparsed-text^(
-                      //script[
-                        contains^(
-                          @src^,
-                          //@data-account
-                        ^)
-                      ]/@src
+                  'http:'^|^|embed_video_url
+                ^)[//@data-video-id]/x:request^(
+                  {
+                    'headers':
+                      'Accept: application/json^;pk^='^|^|
+                      extract^(
+                        unparsed-text^(
+                          //script[
+                            contains^(
+                              @src^,
+                              //@data-account
+                            ^)
+                          ]/@src
+                        ^)^,
+                        'policyKey:\^"^(.+?^)\^"'^,
+                        1
+                      ^)^,
+                    'url':concat^(
+                      'https://edge.api.brightcove.com/playback/v1/accounts/'^,
+                      //@data-account^,
+                      '/videos/'^,
+                      //@data-video-id
                     ^)^,
-                    'policyKey:\^"^(.+?^)\^"'^,
-                    1
-                  ^)^,
-                'url':concat^(
-                  'https://edge.api.brightcove.com/playback/v1/accounts/'^,
-                  //@data-account^,
-                  '/videos/'^,
-                  //@data-video-id
-                ^)^,
-                'error-handling':'xxx^=accept'
-              }
-            ^)/json[not^(.//error_code^)]
-            let $b:^=json^(embed_api_url^)[videoId] return ^(
+                    'error-handling':'xxx^=accept'
+                  }
+                ^)/json[not^(.//error_code^)]^,
+                $b:^=json^(embed_api_url^)[videoId]
+            return ^(
               if ^($a^) then
                 $a/^(
                   name:^=if ^(.//sbs_videotype^='vod'^) then
@@ -4037,13 +4039,18 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		ECHO Beschikbaar formaat:
 		ECHO.
 		ECHO %formats% | %xidel% ^
-		- --xquery ^"let $a:^=^('extension'^,'resolution'^,'vbitrate'^,'abitrate'^)^
-		            let $b:^=$a ^^! max(^
-		              $json^(^)^(.^) ^^! string-length^(.^)^
-		            ^)^
-		            let $c:^=string-join(^
-		              ^(1 to sum^($b^)^) ^^! ' '^
-		            ^)^
+		- --xquery ^"let $a:^=^(^
+		                  'extension'^,^
+		                  'resolution'^,^
+		                  'vbitrate'^,^
+		                  'abitrate'^
+		                ^)^,^
+		                $b:^=$a ^^! max(^
+		                  $json^(^)^(.^) ^^! string-length^(.^)^
+		                ^)^,^
+		                $c:^=string-join(^
+		                  ^(1 to sum^($b^)^) ^^! ' '^
+		                ^)^
 		            for $x in $json^(^) return^
 		            '  '^|^|string-join^(^
 		              for $y at $i in $a return^
@@ -4058,13 +4065,19 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		ECHO Beschikbare formaten:
 		ECHO.
 		ECHO %formats% | %xidel% ^
-		- --xquery ^"let $a:^=^('format'^,'extension'^,'resolution'^,'vbitrate'^,'abitrate'^)^
-		            let $b:^=$a ^^! max(^
-		              $json^(^)^(.^) ^^! string-length^(.^)^
-		            ^)^
-		            let $c:^=string-join(^
-		              ^(1 to sum^($b^)^) ^^! ' '^
-		            ^)^
+		- --xquery ^"let $a:^=^(^
+		                  'format'^,^
+		                  'extension'^,^
+		                  'resolution'^,^
+		                  'vbitrate'^,^
+		                  'abitrate'^
+		                ^)^,^
+		                $b:^=$a ^^! max(^
+		                  $json^(^)^(.^) ^^! string-length^(.^)^
+		                ^)^,^
+		                $c:^=string-join(^
+		                  ^(1 to sum^($b^)^) ^^! ' '^
+		                ^)^
 		            for $x in $json^(^) return^
 		            '  '^|^|string-join^(^
 		              for $y at $i in $a return^
@@ -4140,10 +4153,10 @@ FOR /F "delims=" %%A IN ('^"%xidel%
 ECHO.
 IF DEFINED duration (
 	ECHO Naam:       %name%
-	ECHO Tijdsduur:  %duration% (%t%%duration:~8,4%s^)
+	ECHO Tijdsduur:  %duration% ^(%t%%duration:~8,4%s^)
 	IF DEFINED ss (
-		ECHO Begin:      %start% (%ss%s^)
-		ECHO Einde:      %end% (%to%s^)
+		ECHO Begin:      %start% ^(%ss%s^)
+		ECHO Einde:      %end% ^(%to%s^)
 	)
 	IF DEFINED expire ECHO Gratis tot: %expire%
 ) ELSE (
@@ -4262,21 +4275,22 @@ IF /I "%remap%"=="n" (
 	ECHO Opslaan in:
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	--xquery ^"let $a:^=extract(
-	            read(^)^,
-	            '(.:\\^|\\\\^)(.+^)'^,
-	            (1^,2^)
-	          ^)
-	          let $b:^=concat(
-	            $a[1]^,
-	            replace(
-	              if (ends-with($a[2]^,'\'^)^) then
-	                $a[2]
-	              else
-	                $a[2]^|^|'\'^,
-	              '[^<^>/^|?*:^^]'^,
-	              ''
-	            ^)
-	          ^) return (
+	                read(^)^,
+	                '(.:\\^|\\\\^)(.+^)'^,
+	                (1^,2^)
+	              ^),
+	              $b:^=concat(
+	                $a[1]^,
+	                replace(
+	                  if (ends-with($a[2]^,'\'^)^) then
+	                    $a[2]
+	                  else
+	                    $a[2]^|^|'\'^,
+	                  '[^<^>/^|?*:^^]'^,
+	                  ''
+	                ^)
+	              ^)
+	          return (
 	            $b^,
 	            file:create-dir($b^)
 	          ^)^" --output-encoding^=oem^"') DO SET "map=%%A"
@@ -4339,7 +4353,7 @@ IF DEFINED ss1 (
 ) ELSE (
 	SET /P "part=Fragment downloaden? [j/N] "
 	IF /I "!part!"=="j" (
-		ECHO Voer begintijd in (in seconden, of als uu:mm:ss[.xxx]^):
+		ECHO Voer begintijd in ^(in seconden, of als uu:mm:ss[.xxx]^):
 		FOR /F "delims=" %%A IN ('^"%xidel%
 		-e ^"let $a:^=read(^) return
 		    if ($a^) then
@@ -4366,7 +4380,7 @@ IF DEFINED ss1 (
 		        ^)
 		    else
 		      (^)^" --output-format^=cmd^"') DO %%A
-		ECHO Voer tijdsduur in (in seconden, of als uu:mm:ss[.xxx]^):
+		ECHO Voer tijdsduur in ^(in seconden, of als uu:mm:ss[.xxx]^):
 		SET /P t=
 		IF DEFINED mux (
 			IF DEFINED ss1 (
