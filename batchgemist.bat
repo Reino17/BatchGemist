@@ -3202,182 +3202,207 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
               ^) else
                 ^(^)
             ^) else
-              ^(^),
+              ^(^)^,
             if ^(tt888^='ja'^) then
               s_url:^='http://tt888.omroep.nl/tt888/%prid%'
             else
               ^(^)
           ^)^,
           let $a:^=x:request^(
-            {
-              'data':'http://ida.omroep.nl/app.php/%prid%?token^='^|^|json^(
-                'http://ida.omroep.nl/app.php/auth'
-              ^)/token^,
-              'error-handling':'4xx^=accept'
-            }
-          ^)[contains^(headers[1]^,'200'^)]/json/^(items^)^(^)^(^) return
-          if ^($a^) then
-            formats:^=[
-              for $x in reverse^(
-                $a[contentType^='odi'][format^='mp4']
-              ^)/json^(
-                replace^(
-                  url^,
-                  'jsonp'^,
-                  'json'
-                ^)
-              ^)/substring-before^(
-                url^,
-                '?'
-              ^) return
-              system^(
-                x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
-              ^) ! {
-                'format':'pg-'^|^|extract^(
-                  $x^,
-                  '.+/^([a-z]+^)'^,
-                  1
-                ^)^,
-                'extension':'m4v'^,
-                'resolution':extract^(
-                  .^,
-                  'Video:.+^, ^(\d+x\d+^)'^,
-                  1
-                ^)^,
-                'vbitrate':replace^(
-                  .^,
-                  '.+Video:.+?^(\d+^) kb.+'^,
-                  'v:$1k'^,
-                  's'
-                ^)^,
-                'abitrate':replace^(
-                  .^,
-                  '.+Audio:.+?^(\d+^) kb.+'^,
-                  'a:$1k'^,
-                  's'
-                ^)^,
-                'url':$x
-              }^,
-              let $b:^=$a[format^='hls']/replace^(
-                url^,
-                'jsonp'^,
-                'json'
-              ^) ! ^(
-                if ^(contains^(.^,'livestreams'^)^) then
-                  json^(.^)
-                else
-                  json^(.^)/url
-              ^) return ^(
                 {
-                  'format':'hls-master'^,
-                  'extension':'m3u8'^,
-                  'url':$b
-                }[url]^,
-                for $x in tail^(
-                  tokenize^(
-                    extract^(
-                      unparsed-text^($b^)^,
-                      '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
-                      1^,'ms'
+                  'data':'http://ida.omroep.nl/app.php/%prid%?token^='^|^|json^(
+                    'http://ida.omroep.nl/app.php/auth'
+                  ^)/token^,
+                  'error-handling':'4xx^=accept'
+                }
+              ^)[
+                contains^(
+                  headers[1]^,
+                  '200'
+                ^)
+              ]/json/^(items^)^(^)^(^)^,
+              $b:^=^(
+                for $x in reverse^(
+                  $a[contentType^='odi'][format^='mp4']
+                ^)/x:request^(
+                  {
+                    'data':replace^(
+                      url^,
+                      'jsonp'^,
+                      'json'
                     ^)^,
-                    '#EXT-X-STREAM-INF:'
+                    'error-handling':'4xx^=accept'
+                  }
+                ^)[
+                  contains^(
+                    headers[1]^,
+                    '200'
                   ^)
+                ]/json/substring-before^(
+                  url^,
+                  '?'
+                ^) return
+                system^(
+                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
                 ^) ! {
-                  'format':'hls-'^|^|extract^(
-                    .^,
-                    'BANDWIDTH^=^(\d+^)\d{3}'^,
+                  'format':'pg-'^|^|extract^(
+                    $x^,
+                    '.+/^([a-z]+^)'^,
                     1
                   ^)^,
-                  'extension':'m3u8'^,
+                  'extension':'m4v'^,
                   'resolution':extract^(
                     .^,
-                    'RESOLUTION^=^(.+^)^,'^,
+                    'Video:.+^, ^(\d+x\d+^)'^,
                     1
                   ^)^,
-                  'vbitrate':extract^(
+                  'vbitrate':replace^(
                     .^,
-                    'video^=^(\d+^)\d{3}'^,
-                    1
-                  ^) ! ^(
-                    if ^(.^) then
-                      concat^(
-                        'v:'^,
-                        .^,
-                        'k'
-                      ^)
-                    else
-                      ''
+                    '.+Video:.+?^(\d+^) kb.+'^,
+                    'v:$1k'^,
+                    's'
                   ^)^,
                   'abitrate':replace^(
                     .^,
-                    '.+audio.+?^(\d+^)\d{3}.+'^,
+                    '.+Audio:.+?^(\d+^) kb.+'^,
                     'a:$1k'^,
                     's'
                   ^)^,
-                  'url':resolve-uri^(
-                    '.'^,
-                    $b
-                  ^)^|^|extract^(
-                    .^,
-                    '^(.+m3u8^)'^,
-                    1
+                  'url':$x
+                }^,
+                let $b:^=$a[format^='hls']/x:request^(
+                  {
+                    'data':replace^(
+                      url^,
+                      'jsonp'^,
+                      'json'
+                    ^)^,
+                    'error-handling':'4xx^=accept'
+                  }
+                ^)[
+                  contains^(
+                    headers[1]^,
+                    '200'
                   ^)
-                } order by $x/format return $x
-              ^)^,
-              for $x at $i in reverse^(
-                $a[contentType^='url'][format^='mp4']
-              ^) ! x:request^(
-                {
-                  'data':url^,
-                  'method':'HEAD'^,
-                  'error-handling':'xxx^=accept'
-                }
-              ^)[some $x in ^('200'^,'302'^) satisfies contains^(headers[1]^,$x^)]/^(
-                if ^(contains^(url^,'content-ip'^)^) then
-                  x:request^(
-                    {
-                      'post':serialize-json^(
-                        [
-                          {
-                            'file':url
-                          }
-                        ]
+                ]/^(
+                  if ^(doc^) then
+                    json^(doc^)
+                  else
+                    json/url
+                ^) return ^(
+                  {
+                    'format':'hls-master'^,
+                    'extension':'m3u8'^,
+                    'url':$b
+                  }[url]^,
+                  for $x in tail^(
+                    tokenize^(
+                      extract^(
+                        unparsed-text^($b^)^,
+                        '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
+                        1^,'ms'
                       ^)^,
-                      'url':'https://nos.nl/video/resolve/'
-                    }
-                  ^)//file
-                else
-                  url
-              ^) return
-              system^(
-                x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
-              ^) ! {
-                'format':replace^(
-                  $x^,
-                  '.+\.^(.+^)'^,
-                  '$1-'
-                ^)^|^|$i^,
-                'extension':'mp4'^,
-                'resolution':extract^(
-                  .^,
-                  'Video:.+^, ^(\d+x\d+^)'^,
-                  1
+                      '#EXT-X-STREAM-INF:'
+                    ^)
+                  ^) ! {
+                    'format':'hls-'^|^|extract^(
+                      .^,
+                      'BANDWIDTH^=^(\d+^)\d{3}'^,
+                      1
+                    ^)^,
+                    'extension':'m3u8'^,
+                    'resolution':extract^(
+                      .^,
+                      'RESOLUTION^=^(.+^)^,'^,
+                      1
+                    ^)^,
+                    'vbitrate':extract^(
+                      .^,
+                      'video^=^(\d+^)\d{3}'^,
+                      1
+                    ^) ! ^(
+                      if ^(.^) then
+                        concat^(
+                          'v:'^,
+                          .^,
+                          'k'
+                        ^)
+                      else
+                        ''
+                    ^)^,
+                    'abitrate':replace^(
+                      .^,
+                      '.+audio.+?^(\d+^)\d{3}.+'^,
+                      'a:$1k'^,
+                      's'
+                    ^)^,
+                    'url':resolve-uri^(
+                      '.'^,
+                      $b
+                    ^)^|^|extract^(
+                      .^,
+                      '^(.+m3u8^)'^,
+                      1
+                    ^)
+                  } order by $x/format return $x
                 ^)^,
-                'vbitrate':replace^(
-                  .^,
-                  '.+Video:.+?^(\d+^) kb.+'^,
-                  'v:$1k'^,
-                  's'
-                ^)^,
-                'abitrate':replace^(
-                  .^,
-                  '.+Audio:.+?^(\d+^) kb.+'^,
-                  'a:$1k'^,
-                  's'
-                ^)^,
-                'url':$x
-              }
-            ]
+                for $x at $i in reverse^(
+                  $a[contentType^='url'][format^='mp4']
+                ^) ! x:request^(
+                  {
+                    'data':url^,
+                    'method':'HEAD'^,
+                    'error-handling':'xxx^=accept'
+                  }
+                ^)[some $x in ^('200'^,'302'^) satisfies contains^(headers[1]^,$x^)]/^(
+                  if ^(contains^(url^,'content-ip'^)^) then
+                    x:request^(
+                      {
+                        'post':serialize-json^(
+                          [
+                            {
+                              'file':url
+                            }
+                          ]
+                        ^)^,
+                        'url':'https://nos.nl/video/resolve/'
+                      }
+                    ^)//file
+                  else
+                    url
+                ^) return
+                system^(
+                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
+                ^) ! {
+                  'format':replace^(
+                    $x^,
+                    '.+\.^(.+^)'^,
+                    '$1-'
+                  ^)^|^|$i^,
+                  'extension':'mp4'^,
+                  'resolution':extract^(
+                    .^,
+                    'Video:.+^, ^(\d+x\d+^)'^,
+                    1
+                  ^)^,
+                  'vbitrate':replace^(
+                    .^,
+                    '.+Video:.+?^(\d+^) kb.+'^,
+                    'v:$1k'^,
+                    's'
+                  ^)^,
+                  'abitrate':replace^(
+                    .^,
+                    '.+Audio:.+?^(\d+^) kb.+'^,
+                    'a:$1k'^,
+                    's'
+                  ^)^,
+                  'url':$x
+                }
+              ^)
+          return
+          if ^($b^) then
+            formats:^=[$b]
           else
             ^(^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
