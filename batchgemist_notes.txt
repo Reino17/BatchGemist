@@ -8062,7 +8062,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x234", "vb
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/9f009d9146b4b2a1f0acde6c2cd5b2aa231f1f75]
 
 http://nl.funnyclips.cc/populair/21987-new-kids-vuurwerk
 
@@ -8100,3 +8100,23 @@ D:\Storage\Media\Encoding, Decoding\Binaries>xidel-0.9.7.5706-openssl.exe -s --c
               }
             }
           ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "var:={'a':1,'b':2},$var() ! eval(x'{.}:=$var/{.}')"
+var := {"a": 1, "b": 2}
+a := 1
+b := 2
+
+xidel-0.9.7.5706-openssl.exe -s --color=never AndereTijden.json -e "var:=$json()('1'),$var() ! eval(x'{.}:=$var/{.}')"
+var := {"name": "100 jaar Russische Revolutie", "prid": "VPWON_1274590", "goto": ":NPO"}
+name := 100 jaar Russische Revolutie
+prid := VPWON_1274590
+goto := NPO
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --extract-exclude=var at.json -e "var:=$json()('1'),$var() ! eval(x'{.}:=$var/{.}')"
+name := 100 jaar Russische Revolutie
+prid := VPWON_1274590
+goto := NPO

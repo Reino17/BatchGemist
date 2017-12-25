@@ -4152,54 +4152,35 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :Videos
-SETLOCAL ENABLEDELAYEDEXPANSION
+SETLOCAL
 FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
 	IF "%%A"=="1" (
-		FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel%
-		- --xquery ^"$json^(^)^('1'^)/^(
-		              name:^=name^,
-		              duration:^=duration^,
-		              t:^=t^,
-		              if ^(url^) then
-		                v_url:^=url
-		              else
-		                formats:^=formats
-		            ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
+		SET "video=1"
 	) ELSE (
 		ECHO.
 		ECHO Beschikbare video's:
 		ECHO.
-		ECHO %videos% | %xidel% ^
-		- -e ^"$json^(^)/concat^(^
-		        '  '^,^
-		        .^(^)^,^
-		        '. '^,^
-		        replace^(^
-		          .//name^,^
-		          ''''''^,^
-		          ''''^
-		        ^)^
-		      ^)^"
+		ECHO %videos% | %xidel% - ^
+		-e ^"$json^(^)/concat^(^
+		      '  '^,^
+		      .^(^)^,^
+		      '. '^,^
+		      replace^(^
+		        .//name^,^
+		        ''''''^,^
+		        ''''^
+		      ^)^
+		    ^)^"
 		ECHO.
 		SET /P "video=Kies gewenste video: [1] "
 		IF NOT DEFINED video SET "video=1"
-		FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel%
-		- --xquery ^"$json^(^)^('!video!'^)/^(
-		              if ^(goto^) then ^(
-		                goto:^=goto^,
-		                prid:^=prid
-		              ^) else ^(
-		                name:^=name^,
-		                duration:^=duration^,
-		                t:^=t^,
-		                if ^(url^) then
-		                  v_url:^=url
-		                else
-		                  formats:^=formats
-		              ^)
-		            ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
 	)
 )
+FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% --extract-exclude=obj -
+--xquery ^"obj:^=$json^(^)^('%video%'^)^,
+          $obj^(^) ! eval^(
+            x'${.}:^=$obj/{.}'
+          ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
 
 IF DEFINED goto (
 	GOTO %goto%
@@ -4218,76 +4199,76 @@ IF DEFINED goto (
 REM ================================================================================================
 
 :Formats
-SETLOCAL ENABLEDELAYEDEXPANSION
+SETLOCAL
 ECHO.
 FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 	IF "%%A"=="1" (
 		ECHO Beschikbaar formaat:
 		ECHO.
-		ECHO %formats% | %xidel% ^
-		- --xquery ^"let $a:^=^(^
-		                  'extension'^,^
-		                  'resolution'^,^
-		                  'vbitrate'^,^
-		                  'abitrate'^
-		                ^)^,^
-		                $b:^=$a ^^! max(^
-		                  $json^(^)^(.^) ^^! string-length^(.^)^
-		                ^)^,^
-		                $c:^=string-join(^
-		                  ^(1 to sum^($b^)^) ^^! ' '^
-		                ^)^
-		            for $x in $json^(^) return^
-		            '  '^|^|string-join^(^
-		              for $y at $i in $a return^
-		              substring^(^
-		                $x^($y^)^|^|$c^,^
-		                1^,^
-		                $b[$i]+2^
+		ECHO %formats% | %xidel% - ^
+		--xquery ^"let $a:^=^(^
+		                'extension'^,^
+		                'resolution'^,^
+		                'vbitrate'^,^
+		                'abitrate'^
+		              ^)^,^
+		              $b:^=$a ! max(^
+		                $json^(^)^(.^) ! string-length^(.^)^
+		              ^)^,^
+		              $c:^=string-join(^
+		                ^(1 to sum^($b^)^) ! ' '^
 		              ^)^
-		            ^)^"
-		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "v_url:=$json()/url" --output-format^=cmd') DO %%A
+		          for $x in $json^(^) return^
+		          '  '^|^|string-join^(^
+		            for $y at $i in $a return^
+		            substring^(^
+		              $x^($y^)^|^|$c^,^
+		              1^,^
+		              $b[$i]+2^
+		            ^)^
+		          ^)^"
+		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "format:=$json()/format" --output-format^=cmd') DO %%A
 	) ELSE (
 		ECHO Beschikbare formaten:
 		ECHO.
-		ECHO %formats% | %xidel% ^
-		- --xquery ^"let $a:^=^(^
-		                  'format'^,^
-		                  'extension'^,^
-		                  'resolution'^,^
-		                  'vbitrate'^,^
-		                  'abitrate'^
-		                ^)^,^
-		                $b:^=$a ^^! max(^
-		                  $json^(^)^(.^) ^^! string-length^(.^)^
-		                ^)^,^
-		                $c:^=string-join(^
-		                  ^(1 to sum^($b^)^) ^^! ' '^
-		                ^)^
-		            for $x in $json^(^) return^
-		            '  '^|^|string-join^(^
-		              for $y at $i in $a return^
-		              substring^(^
-		                $x^($y^)^|^|$c^,^
-		                1^,^
-		                $b[$i]+2^
+		ECHO %formats% | %xidel% - ^
+		--xquery ^"let $a:^=^(^
+		                'format'^,^
+		                'extension'^,^
+		                'resolution'^,^
+		                'vbitrate'^,^
+		                'abitrate'^
+		              ^)^,^
+		              $b:^=$a ! max(^
+		                $json^(^)^(.^) ! string-length^(.^)^
+		              ^)^,^
+		              $c:^=string-join(^
+		                ^(1 to sum^($b^)^) ! ' '^
 		              ^)^
-		            ^)^"
+		          for $x in $json^(^) return^
+		          '  '^|^|string-join^(^
+		            for $y at $i in $a return^
+		            substring^(^
+		              $x^($y^)^|^|$c^,^
+		              1^,^
+		              $b[$i]+2^
+		            ^)^
+		          ^)^"
 		ECHO.
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[last()]/format"') DO (
 			SET /P "format=Voer gewenst formaat in: [%%A] "
 			IF NOT DEFINED format SET "format=%%A"
 		)
-		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% ^
-		- -e ^"$json^(^)[format^='!format!']/^(
-		        v_url:^=url^,
-		        if ^(teapot^) then
-		          ffmpeg_ua:^='-user_agent \^"BatchGemist %ver%\^"'
-		        else
-		          ^(^)
-		      ^)^" --output-format^=cmd') DO %%A
 	)
 )
+FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% -
+-e ^"$json^(^)[format^='%format%']/^(
+        v_url:^=url^,
+        if ^(teapot^) then
+          ffmpeg_ua:^='-user_agent \^"BatchGemist %ver%\^"'
+        else
+          ^(^)
+      ^)^" --output-format^=cmd') DO %%A
 
 IF DEFINED v_url (
 	GOTO Select
@@ -4302,7 +4283,7 @@ IF DEFINED v_url (
 REM ================================================================================================
 
 :Select
-SETLOCAL DISABLEDELAYEDEXPANSION
+SETLOCAL
 IF NOT DEFINED duration (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"let $a:^=extract^(
