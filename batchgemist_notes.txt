@@ -8123,7 +8123,7 @@ goto := NPO
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/b0069c866ff8edbe3516033f93fc11b8537e3a7c]
 
 http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50
 
