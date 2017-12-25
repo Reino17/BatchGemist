@@ -344,7 +344,7 @@ IF NOT "%url: =%"=="%url%" (
 	              'extension':'m3u8'^,
 	              'resolution':extract^(
 	                .^,
-	                'RESOLUTION^=^(.+^)^,'^,
+	                'RESOLUTION^=^([\dx]+^)'^,
 	                1
 	              ^)^,
 	              'vbitrate':extract^(
@@ -2966,7 +2966,7 @@ IF NOT "%url: =%"=="%url%" (
 	                  'extension':'m3u8'^,
 	                  'resolution':extract^(
 	                    .^,
-	                    'RESOLUTION^=^(.+?^)^,'^,
+	                    'RESOLUTION^=^([\dx]+^)'^,
 	                    1
 	                  ^)^,
 	                  'vbitrate':extract^(
@@ -3309,7 +3309,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     'extension':'m3u8'^,
                     'resolution':extract^(
                       .^,
-                      'RESOLUTION^=^(.+^)^,'^,
+                      'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
                     'vbitrate':extract^(
@@ -3564,7 +3564,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
               'extension':'m3u8'^,
               'resolution':extract^(
                 .^,
-                'RESOLUTION^=^(.+^)'^,
+                'RESOLUTION^=^([\dx]+^)'^,
                 1
               ^)^,
               'vbitrate':extract^(
@@ -3784,7 +3784,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                     'extension':'m3u8'^,
                     'resolution':extract^(
                       .^,
-                      'RESOLUTION^=^(.+?^)^,'^,
+                      'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
                     'url':resolve-uri^(
@@ -3828,7 +3828,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                     'extension':'m3u8'^,
                     'resolution':extract^(
                       .^,
-                      'RESOLUTION^=^(.+^)'^,
+                      'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
                     'url':extract^(
@@ -3947,7 +3947,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                     'extension':'m3u8'^,
                     'resolution':extract^(
                       .^,
-                      'RESOLUTION^=^(.+^)^,'^,
+                      'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
                     'vbitrate':extract^(
