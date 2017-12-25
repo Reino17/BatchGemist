@@ -2160,7 +2160,7 @@ name := AT5 - ''Bekende voetballers kopen massaal huizen op in Amsterdam'' (2801
 [https://github.com/Reino17/BatchGemist/commit/f581a9cd374d082585c7037e51b132aeb2a8cb21]
 [https://github.com/Reino17/BatchGemist/commit/1d1490183c299f30f79d15633e8c8e3a4a239005]
 [https://github.com/Reino17/BatchGemist/commit/87db54e6178903fc6c8ba312d0724062f037c00a]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/c6ef00d49969a54a1bbe083387e7c5b7bfc228bf]
 
 http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
 
@@ -7804,3 +7804,258 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
             ),
             '  '
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.comedycentral.nl/nieuws/95726-20-photoshop-trolls-die-geweldig-zijn-ingegaan-op-slechte-verzoeken
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.comedycentral.nl/nieuws/95726-20-photoshop-trolls-die-geweldig-zijn-ingegaan-op-slechte-verzoeken" -e "if (count(//@data-mrss)=1) then [{'1':{'name':'Comedy Central: '||//div[@class='episode_information']/h2,'prid':extract(//@data-mrss,'(local.+)',1),'goto':'MTV'}}] else ()"
+[
+  {
+    "1": {
+      "name": "Comedy Central: Kim K. the hobbit",
+      "prid": "local_playlist_video-b8757f36ec7e521608c7",
+      "goto": "MTV"
+    }
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+http://www.comedycentral.nl/nieuws/94952-hoe-south-park-begon-als-kerstkaart-waarop-jezus-een-sneeuwpop-vermoordt?video=028c18bfc6d7e84effbf
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.comedycentral.nl/nieuws/94952-hoe-south-park-begon-als-kerstkaart-waarop-jezus-een-sneeuwpop-vermoordt?video=028c18bfc6d7e84effbf" -e "if (count(//@data-mrss)=1) then [{'1':{'name':'Comedy Central: '||//div[@class='episode_information']/h2,'prid':extract(//@data-mrss,'(local.+)',1),'goto':'MTV'}}] else [//li[@data-mrss]/{position():{'name':'Comedy Central: '||.//img/@alt,'prid':extract(@data-mrss,'(local.+)',1),'goto':'MTV'}}]"
+[
+  {
+    "1": {
+      "name": "Comedy Central: Special Olympics",
+      "prid": "local_playlist_video-028c18bfc6d7e84effbf",
+      "goto": "MTV"
+    }
+  },
+  {
+    "2": {
+      "name": "Comedy Central: Beetje coke",
+      "prid": "local_playlist_video-b9e50eea447af29d7d3b",
+      "goto": "MTV"
+    }
+  },
+  {
+    "3": {
+      "name": "Comedy Central: Lekkere kostuums",
+      "prid": "local_playlist_video-87e2c3389f2f340c657e",
+      "goto": "MTV"
+    }
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+http://www.comedycentral.nl/shows/2655-modern-family/bonus
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.comedycentral.nl/shows/2655-modern-family/bonus" -e "if (count(//@data-mrss)=1) then [{'1':{'name':'Comedy Central: '||//div[@class='episode_information']/h2,'prid':extract(//@data-mrss,'(local.+)',1),'goto':'MTV'}}] else [//li[@data-mrss]/{position():{'name':'Comedy Central: '||(if (@data-franchise) then concat(@data-franchise,' - ',.//img/@alt) else .//img/@alt),'prid':extract(@data-mrss,'(local.+)',1),'goto':'MTV'}}]"
+[
+  {
+    "1": {
+      "name": "Comedy Central: Modern Family - Ik ga omhoog",
+      "prid": "local_playlist-eec97f29ea8548aa355f",
+      "goto": "MTV"
+    }
+  },
+  {
+    "2": {
+      "name": "Comedy Central: Modern Family - Doei doei, hi",
+      "prid": "local_playlist-fc8b28df1d9a361cd728",
+      "goto": "MTV"
+    }
+  },
+  {
+    "3": {
+      "name": "Comedy Central: Modern Family - puppy",
+      "prid": "local_playlist-1ad36400f6ac56dfbc85",
+      "goto": "MTV"
+    }
+  },
+  [...]
+  {
+    "44": {
+      "name": "Comedy Central: Modern Family - Nooit naaktfoto's mailen",
+      "prid": "local_playlist-5d3a6dc68f006730a57d",
+      "goto": "MTV"
+    }
+  },
+  [...]
+  {
+    "47": {
+      "name": "Comedy Central: Modern Family - Een appeltini zoen",
+      "prid": "local_playlist-91da6411b74e764eded8",
+      "goto": "MTV"
+    }
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.comedycentral.nl/shows/2655-modern-family/bonus" --xquery "if (count(//@data-mrss)=1) then [{'1':{'name':'Comedy Central: '||replace(//div[@class='episode_information']/h2,'[&quot;&apos;]',''''''),'prid':extract(//@data-mrss,'(local.+)',1),'goto':'MTV'}}] else [//li[@data-mrss]/{position():{'name':'Comedy Central: '||replace(if (@data-franchise) then concat(@data-franchise,' - ',.//img/@alt) else .//img/@alt,'[&quot;&apos;]',''''''),'prid':extract(@data-mrss,'(local.+)',1),'goto':'MTV'}}]"
+[
+  [...]
+  {
+    "44": {
+      "name": "Comedy Central: Modern Family - Nooit naaktfoto''s mailen",
+      "prid": "local_playlist-5d3a6dc68f006730a57d",
+      "goto": "MTV"
+    }
+  },
+  [...]
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+http://theroast.comedycentral.nl/long-form/view/e6a156f82b49f14a7e82
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://theroast.comedycentral.nl/long-form/view/e6a156f82b49f14a7e82" --xquery "if (//@data-mrss) then if (count(//@data-mrss)=1) then [{'1':{'name':'Comedy Central: '||replace(//div[@class='episode_information']/h2,'[&quot;&apos;]',''''''),'prid':extract(//@data-mrss,'(local.+)',1),'goto':'MTV'}}] else [//li[@data-mrss]/{position():{'name':'Comedy Central: '||replace(if (@data-franchise) then concat(@data-franchise,' - ',.//img/@alt) else .//img/@alt,'[&quot;&apos;]',''''''),'prid':extract(@data-mrss,'(local.+)',1),'goto':'MTV'}}] else [{'1':{'name':'Comedy Central: '||replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),'prid':json(//script/extract(.,'playObject = (.+?);',1,'s')[.])/concat(type,'-',token),'goto':'MTV'}}]"
+[
+  {
+    "1": {
+      "name": "Comedy Central: The Roast of Giel Beelen",
+      "prid": "local_playlist-e6a156f82b49f14a7e82",
+      "goto": "MTV"
+    }
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "videos:=if (//@data-mrss) then
+            if (count(//@data-mrss)=1) then [
+              {
+                '1':{
+                  'name':'Comedy Central: '||replace(
+                    //div[@class='episode_information']/h2,
+                    '[&quot;&apos;]',
+                    ''''''
+                  ),
+                  'prid':extract(
+                    //@data-mrss,
+                    '(local.+)',
+                    1
+                  ),
+                  'goto':'MTV'
+                }
+              }
+            ] else [
+              //li[@data-mrss]/{
+                position():{
+                  'name':'Comedy Central: '||replace(
+                    if (@data-franchise) then
+                      concat(
+                        @data-franchise,
+                        ' - ',
+                        .//img/@alt
+                      )
+                    else
+                      .//img/@alt,
+                    '[&quot;&apos;]',
+                    ''''''
+                  ),
+                  'prid':extract(
+                    @data-mrss,
+                    '(local.+)',
+                    1
+                  ),
+                  'goto':'MTV'
+                }
+              }
+            ]
+          else [
+            {
+              '1':{
+                'name':'Comedy Central: '||replace(
+                  //meta[@property='og:title']/@content,
+                  '[&quot;&apos;]',
+                  ''''''
+                ),
+                'prid':json(
+                  //script/extract(
+                    .,
+                    'playObject = (.+?);',
+                    1,'s'
+                  )[.]
+                )/concat(
+                  type,
+                  '-',
+                  token
+                ),
+                'goto':'MTV'
+              }
+            }
+          ]"
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+MTV api extractor:
+
+http://www.comedycentral.nl/shows/2655-modern-family/bonus (44e video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:local_playlist-5d3a6dc68f006730a57d" -f "//media:content/@url" -e "[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':concat('v:',@bitrate,'k'),'url':src}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "416x234",
+    "vbitrate": "v:159k",
+    "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_160k_b30_seg0_416x234_96000.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "416x234",
+    "vbitrate": "v:565k",
+    "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_576k_b30_seg0_416x234_470000.mp4"
+  },
+  {
+    "format": "mp4-3",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:1246k",
+    "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_640px_1296k_m31_seg0_640x360_1151000.mp4"
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%" --xquery "name:=replace('%name:^=%','[&quot;&apos;]','''''')||replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),t:=//media:content/@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "//media:content/@url" -e "formats:=[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':concat('v:',@bitrate,'k'),'url':src}]"
+name := Comedy Central: Modern Family - Nooit naaktfoto''s mailen (12022016)
+t := 48
+duration := 00:00:48
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x234", "vbitrate": "v:159k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_160k_b30_seg0_416x234_96000.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "416x234", "vbitrate": "v:565k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_576k_b30_seg0_416x234_470000.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:1246k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_640px_1296k_m31_seg0_640x360_1151000.mp4"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "name:=replace(
+            '%name:^=%',
+            '[&quot;&apos;]',
+            ''''''
+          )||replace(
+            //pubDate,
+            '(\d+)-(\d+)-(\d+).+',
+            ' ($3$2$1)'
+          ),
+          t:=//media:content/@duration,
+          duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')"
+-f "//media:content/@url"
+-e "formats:=[
+      //rendition/{
+        'format':'mp4-'||position(),
+        'extension':'mp4',
+        'resolution':concat(
+          @width,
+          'x',
+          @height
+        ),
+        'vbitrate':concat(
+          'v:',
+          @bitrate,
+          'k'
+        ),
+        'url':src
+      }
+    ]"

@@ -2577,75 +2577,70 @@ IF NOT "%url: =%"=="%url%" (
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:comedycentral.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"let $a:^=if (count(//@data-mrss^)^=1^) then
-	      concat(
-	        //h1^,
-	        ' - '^,
-	        (//h2^)[1]
-	      ^)
-	    else
-	      //li[
-	        contains(
-	          a/@href^,
-	          extract(
-	            $url^,
-	            '.+^=(.+^)^|.+/(\d+^)'^,(1^,2^)
-	          ^)[.]
-	        ^)
-	      ] ! (
-	        if (@data-franchise^) then
-	          concat(
-	            @data-franchise^,
-	            ' - '^,
-	            a/@title
-	          ^)
-	        else
-	          replace(
-	            @data-title^,
-	            ':'^,
-	            ''
-	          ^)
-	      ^)
-	    return
-	    doc(
-	      if (count(//@data-mrss^)^=1^) then
-	        //@data-mrss
-	      else
-	        //li[
-	          contains(
-	            a/@href^,
-	            extract(
-	              $url^,
-	              '.+^=(.+^)^|.+/(\d+^)'^,(1^,2^)
-	            ^)[.]
-	          ^)
-	        ]/@data-mrss
-	    ^)/(
-	      name:^=concat(
-	        'Comedy Central - '^,
-	        $a^,
-	        replace(
-	          //pubDate^,
-	          '(\d+^)-(\d+^)-(\d+^).+'^,
-	          ' ($3$2$1^)'
-	        ^)
-	      ^)^,
-	      doc(
-	        //media:content/@url
-	      ^)/(
-	        if (//rendition^) then (
-	          json:^=[
-	            //rendition/{
-	              'format':concat('mp4-'^,@bitrate^)^,
-	              'url':src
+	--xquery ^"videos:^=if ^(//@data-mrss^) then
+	            if ^(count^(//@data-mrss^)^=1^) then [
+	              {
+	                '1':{
+	                  'name':'Comedy Central: '^|^|replace^(
+	                    //div[@class^='episode_information']/h2^,
+	                    '[^&quot^;^&apos^;]'^,
+	                    ''''''
+	                  ^)^,
+	                  'prid':extract^(
+	                    //@data-mrss^,
+	                    '^(local.+^)'^,
+	                    1
+	                  ^)^,
+	                  'goto':'MTV'
+	                }
+	              }
+	            ] else [
+	              //li[@data-mrss]/{
+	                position^(^):{
+	                  'name':'Comedy Central: '^|^|replace^(
+	                    if ^(@data-franchise^) then
+	                      concat^(
+	                        @data-franchise^,
+	                        ' - '^,
+	                        .//img/@alt
+	                      ^)
+	                    else
+	                      .//img/@alt^,
+	                    '[^&quot^;^&apos^;]'^,
+	                    ''''''
+	                  ^)^,
+	                  'prid':extract^(
+	                    @data-mrss^,
+	                    '^(local.+^)'^,
+	                    1
+	                  ^)^,
+	                  'goto':'MTV'
+	                }
+	              }
+	            ]
+	          else [
+	            {
+	              '1':{
+	                'name':'Comedy Central: '^|^|replace^(
+	                  //meta[@property^='og:title']/@content^,
+	                  '[^&quot^;^&apos^;]'^,
+	                  ''''''
+	                ^)^,
+	                'prid':json^(
+	                  //script/extract^(
+	                    .^,
+	                    'playObject ^= ^(.+?^)^;'^,
+	                    1^,'s'
+	                  ^)[.]
+	                ^)/concat^(
+	                  type^,
+	                  '-'^,
+	                  token
+	                ^)^,
+	                'goto':'MTV'
+	              }
 	            }
-	          ]^,
-	          formats:^=join($json(^)/format^,'^, '^)^,
-	          best:^=$json(^)[last(^)]/format
-	        ^) else
-	          (^)
-	      ^)
-	    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nl.funnyclips.cc=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"let $a:^=//meta[@property^='og:title']/@content return
@@ -4123,6 +4118,50 @@ IF DEFINED prid (
 
 REM ================================================================================================
 
+:MTV
+FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%"
+--xquery ^"name:^=replace^(
+            '%name:^^^=%'^,
+            '[^&quot^;^&apos^;]'^,
+            ''''''
+          ^)^|^|replace^(
+            //pubDate^,
+            '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+            ' ^($3$2$1^)'
+          ^)^,
+          t:^=//media:content/@duration^,
+          duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^"
+-f ^"//media:content/@url^"
+-e ^"formats:^=[
+      //rendition/{
+        'format':'mp4-'^|^|position^(^)^,
+        'extension':'mp4'^,
+        'resolution':concat^(
+          @width^,
+          'x'^,
+          @height
+        ^)^,
+        'vbitrate':concat^(
+          'v:'^,
+          @bitrate^,
+          'k'
+        ^)^,
+        'url':src
+      }
+    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+
+IF DEFINED formats (
+	GOTO Formats
+) ELSE (
+	ECHO.
+	ECHO Video nog niet, of niet meer beschikbaar.
+	ECHO.
+	ECHO.
+	GOTO Input
+)
+
+REM ================================================================================================
+
 :Videos
 SETLOCAL ENABLEDELAYEDEXPANSION
 FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
@@ -4146,7 +4185,11 @@ FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
 		        '  '^,^
 		        .^(^)^,^
 		        '. '^,^
-		        .//name^
+		        replace^(^
+		          .//name^,^
+		          ''''''^,^
+		          ''''^
+		        ^)^
 		      ^)^"
 		ECHO.
 		SET /P "video=Kies gewenste video: [1] "
