@@ -2591,7 +2591,7 @@ IF NOT "%url: =%"=="%url%" (
 	                    '^(local.+^)'^,
 	                    1
 	                  ^)^,
-	                  'goto':'MTV'
+	                  'goto':'MTVapi'
 	                }
 	              }
 	            ] else [
@@ -2614,7 +2614,7 @@ IF NOT "%url: =%"=="%url%" (
 	                    '^(local.+^)'^,
 	                    1
 	                  ^)^,
-	                  'goto':'MTV'
+	                  'goto':'MTVapi'
 	                }
 	              }
 	            ]
@@ -2637,7 +2637,7 @@ IF NOT "%url: =%"=="%url%" (
 	                  '-'^,
 	                  token
 	                ^)^,
-	                'goto':'MTV'
+	                'goto':'MTVapi'
 	              }
 	            }
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
@@ -2660,58 +2660,56 @@ IF NOT "%url: =%"=="%url%" (
 	                  'http.+^(local.+^)'''^,
 	                  1
 	                ^)[.]^,
-	                'goto':'MTV'
+	                'goto':'MTVapi'
 	              }
 	            }
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:mtv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"json(
-	      //script/extract(
-	        .^,
-	        'pagePlaylist ^= (.+^)^;'^,1
-	      ^)[.]
-	    ^)(^)[
-	      id^=extract(
-	        $url^,
-	        '.+/(\d+^)-'^,1
-	      ^)
-	    ]/(
-	      let $a:^=if (subtitle!^=null^) then
-	        concat(
-	          title^,
-	          ' - '^,
-	          subtitle
-	        ^)
+	-e ^"let $a:^=//meta[@property^='search:duration']/@content return
+	    duration:^=substring^(
+	      '00:00:00'^,
+	      1^,
+	      8-string-length^($a^)
+	    ^)^|^|$a^,
+	    t:^=hours-from-time^($duration^)*3600+minutes-from-time^($duration^)*60+seconds-from-time^($duration^)^"
+	-f ^"//@data-tffeed[1]^"
+	-e ^"name:^=$json//data/concat^(
+	      'MTV: '^,
+	      if ^(^(artists^)^(^)^) then
+	        ^(artists^)^(1^)/name^|^|' - '
 	      else
-	        title
-	      return
-	      doc(mrss^)/(
-	        name:^=concat(
-	          $a^,
-	          replace(
-	            //pubDate^,
-	            '(\d+^)-(\d+^)-(\d+^).+'^,
-	            ' ($3$2$1^)'
-	          ^)
-	        ^)^,
-	        doc(
-	          //media:content/@url
-	        ^)/(
-	          if (//rendition^) then (
-	            json:^=[
-	              //rendition/{
-	                'format':concat('mp4-'^,@bitrate^)^,
-	                'url':src
-	              }
-	            ]^,
-	            formats:^=join($json(^)/format^,'^, '^)^,
-	            best:^=$json(^)[last(^)]/format
-	          ^) else
-	            (^)
-	        ^)
+	        ^(^)^,
+	      title^,
+	      replace^(
+	        displayDate^,
+	        '^(\d+^)/^(\d+^)/^(\d+^)'^,
+	        ' ^($2$1$3^)'
 	      ^)
-	    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	    ^)^"
+	-f ^"concat^(
+	      'http://media.mtvnservices.com/pmt/e1/access/index.html?uri^='^,
+	      $json//data/id^,
+	      '^&configtype^=edge'
+	    ^)^"
+	-f ^"$json//content^"
+	-e ^"formats:^=[
+	      //rendition/{
+	        'format':'mp4-'^|^|position^(^)^,
+	        'extension':'mp4'^,
+	        'resolution':concat^(
+	          @width^,
+	          'x'^,
+	          @height
+	        ^)^,
+	        'vbitrate':concat^(
+	          'v:'^,
+	          @bitrate^,
+	          'k'
+	        ^)^,
+	        'url':src
+	      }
+	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:foxtv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"date:^=replace(
@@ -4107,7 +4105,7 @@ IF DEFINED prid (
 
 REM ================================================================================================
 
-:MTV
+:MTVapi
 FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%"
 --xquery ^"name:^=replace^(
             '%name:^^^=%'^,
