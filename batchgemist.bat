@@ -2643,38 +2643,27 @@ IF NOT "%url: =%"=="%url%" (
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nl.funnyclips.cc=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"let $a:^=//meta[@property^='og:title']/@content return
-	    doc(
-	      //script/extract(
-	        .^,
-	        '\{\}^, ''(.+^)'''^,1
-	      ^)[.]
-	    ^)/(
-	      name:^=concat(
-	        'Funny Clips - '^,
-	        $a^,
-	        replace(
-	          //pubDate^,
-	          '(\d+^)-(\d+^)-(\d+^).+'^,
-	          ' ($3$2$1^)'
-	        ^)
-	      ^)^,
-	      doc(
-	        //media:content/@url
-	      ^)/(
-	        if (//rendition^) then (
-	          json:^=[
-	            //rendition/{
-	              'format':concat('mp4-'^,@bitrate^)^,
-	              'url':src
+	--xquery ^"videos:^=[
+	            {
+	              '1':{
+	                'name':'FunnyClips: '^|^|replace^(
+	                  concat^(
+	                    //h3[@class^='franchise_title']/text^(^)[1]^,
+	                    ' - '^,
+	                    //h2[@class^='title']
+	                  ^)^,
+	                  '[^&quot^;^&apos^;]'^,
+	                  ''''''
+	                ^)^,
+	                'prid'://script/extract^(
+	                  .^,
+	                  'http.+^(local.+^)'''^,
+	                  1
+	                ^)[.]^,
+	                'goto':'MTV'
+	              }
 	            }
-	          ]^,
-	          formats:^=join($json(^)/format^,'^, '^)^,
-	          best:^=$json(^)[last(^)]/format
-	        ^) else
-	          (^)
-	      ^)
-	    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:mtv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"json(

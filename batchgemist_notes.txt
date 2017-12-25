@@ -7807,7 +7807,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/1a4fb6e6ab86243b70f3814b25d0a76f70396fcc]
 
 http://www.comedycentral.nl/nieuws/95726-20-photoshop-trolls-die-geweldig-zijn-ingegaan-op-slechte-verzoeken
 
@@ -8059,3 +8059,44 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x234", "vb
         'url':src
       }
     ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://nl.funnyclips.cc/populair/21987-new-kids-vuurwerk
+
+D:\Storage\Media\Encoding, Decoding\Binaries>xidel-0.9.7.5706-openssl.exe -s --color=never "http://nl.funnyclips.cc/populair/21987-new-kids-vuurwerk" --xquery "[{'1':{'name':'FunnyClips: '||replace(concat(//h3[@class='franchise_title']/text()[1],' - ',//h2[@class='title']),'[&quot;&apos;]',''''''),'prid'://script/extract(.,'http.+(local.+)''',1)[.],'goto':'MTV'}}]"
+[
+  {
+    "1": {
+      "name": "FunnyClips: New Kids - Vuurwerk",
+      "prid": "local_playlist-d115b1bd8017a785d364",
+      "goto": "MTV"
+    }
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "videos:=[
+            {
+              '1':{
+                'name':'FunnyClips: '||replace(
+                  concat(
+                    //h3[@class='franchise_title']/text()[1],
+                    ' - ',
+                    //h2[@class='title']
+                  ),
+                  '[&quot;&apos;]',
+                  ''''''
+                ),
+                'prid'://script/extract(
+                  .,
+                  'http.+(local.+)''',
+                  1
+                )[.],
+                'goto':'MTV'
+              }
+            }
+          ]"
