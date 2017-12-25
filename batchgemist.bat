@@ -412,7 +412,7 @@ IF NOT "%url: =%"=="%url%" (
 	                $x/@src
 	              return
 	              system^(
-	                x'cmd /c ^"FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe^" -i {$a} 2^>^&amp^;1'
+	                x'cmd /c %ffmpeg% -i {$a} 2^>^&amp^;1'
 	              ^) ! {
 	                'format':'mp4-'^|^|$i^,
 	                'extension':'mp4'^,
@@ -2923,7 +2923,7 @@ IF NOT "%url: =%"=="%url%" (
 	            $arg/[
 	              for $x in ^(progressive^)^(^) order by $x/height return
 	              system^(
-	                x'cmd /c ^"FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe^" -i {$x//src} 2^>^&amp^;1'
+	                x'cmd /c %ffmpeg% -i {$x//src} 2^>^&amp^;1'
 	              ^) ! {
 	                'format':'pg-'^|^|$x/height^,
 	                'extension':'mp4'^,
@@ -3525,7 +3525,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
               ^)
             ^) return
             system^(
-              x'cmd /c ^"FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe^" -user_agent \^"BatchGemist %ver%\^" -i {$x} 2^>^&amp^;1'
+              x'cmd /c %ffmpeg% -user_agent \^"BatchGemist %ver%\^" -i {$x} 2^>^&amp^;1'
             ^) ! {
               'format':'pg-'^|^|$a[$i]^,
               'extension':'mp4'^,
@@ -4433,15 +4433,15 @@ IF /I "%remap%"=="n" (
 ) ELSE (
 	ECHO Opslaan in:
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	--xquery ^"let $a:^=extract(
-	                read(^)^,
-	                '(.:\\^|\\\\^)(.+^)'^,
-	                (1^,2^)
+	--xquery ^"let $a:^=extract^(
+	                read^(^)^,
+	                '^(.:\\^|\\\\^)^(.+^)'^,
+	                ^(1^,2^)
 	              ^),
-	              $b:^=concat(
+	              $b:^=concat^(
 	                $a[1]^,
-	                replace(
-	                  if (ends-with($a[2]^,'\'^)^) then
+	                replace^(
+	                  if ^(ends-with^($a[2]^,'\'^)^) then
 	                    $a[2]
 	                  else
 	                    $a[2]^|^|'\'^,
@@ -4449,9 +4449,9 @@ IF /I "%remap%"=="n" (
 	                  ''
 	                ^)
 	              ^)
-	          return (
+	          return ^(
 	            $b^,
-	            file:create-dir($b^)
+	            file:create-dir^($b^)
 	          ^)^" --output-encoding^=oem^"') DO SET "map=%%A"
 )
 
@@ -4470,9 +4470,9 @@ SET /P "rename=Wijzigen? [J/n] "
 IF /I NOT "%rename%"=="n" (
 	ECHO Nieuwe bestandsnaam ^(zonder extensie^):
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"replace(
-	      replace(
-	        read(^)^,
+	-e ^"replace^(
+	      replace^(
+	        read^(^)^,
 	        ':'^,
 	        '-'
 	      ^)^
@@ -4514,31 +4514,31 @@ IF DEFINED ss1 (
 	IF /I "!part!"=="j" (
 		ECHO Voer begintijd in ^(in seconden, of als uu:mm:ss[.xxx]^):
 		FOR /F "delims=" %%A IN ('^"%xidel%
-		-e ^"let $a:^=read(^) return
-		    if ($a^) then
-		      let $a:^=if ($a castable as time^) then
-		        hours-from-time($a^)*3600+minutes-from-time($a^)*60+seconds-from-time($a^)
+		-e ^"let $a:^=read^(^) return
+		    if ^($a^) then
+		      let $a:^=if ^($a castable as time^) then
+		        hours-from-time^($a^)*3600+minutes-from-time^($a^)*60+seconds-from-time^($a^)
 		      else
 		        $a
 		      return
-		      if ($a^=0^) then
-		        (^)
+		      if ^($a^=0^) then
+		        ^(^)
 		      else
-		        if ($a mod 30^=0^) then (
-		          if ($a^=30^) then
-		            (^)
+		        if ^($a mod 30^=0^) then ^(
+		          if ^($a^=30^) then
+		            ^(^)
 		          else
 		            ss1:^=$a - 30^,
 		          ss2:^=30
-		        ^) else (
-		          if ($a^<30^) then
-		            (^)
+		        ^) else ^(
+		          if ^($a^<30^) then
+		            ^(^)
 		          else
-		            ss1:^=$a - ($a mod 30^)^,
+		            ss1:^=$a - ^($a mod 30^)^,
 		          ss2:^=$a mod 30
 		        ^)
 		    else
-		      (^)^" --output-format^=cmd^"') DO %%A
+		      ^(^)^" --output-format^=cmd^"') DO %%A
 		ECHO Voer tijdsduur in ^(in seconden, of als uu:mm:ss[.xxx]^):
 		SET /P t=
 		IF DEFINED mux (

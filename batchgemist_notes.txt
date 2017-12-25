@@ -2159,7 +2159,7 @@ name := AT5 - ''Bekende voetballers kopen massaal huizen op in Amsterdam'' (2801
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
 [https://github.com/Reino17/BatchGemist/commit/f581a9cd374d082585c7037e51b132aeb2a8cb21]
 [https://github.com/Reino17/BatchGemist/commit/1d1490183c299f30f79d15633e8c8e3a4a239005]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/87db54e6178903fc6c8ba312d0724062f037c00a]
 
 http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
 
