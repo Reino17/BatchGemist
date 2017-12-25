@@ -277,19 +277,15 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPO
 ) ELSE IF NOT "%url:anderetijden.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"if ^(count^(//figure[@data-mid]^)^=1^) then
-	      prid:^=//figure[@data-mid]/@data-mid
-	    else
-	      videos:^=[
-	        //figure[@data-mid]/{
-	          position^(^):{
-	            'name':.//h2^,
-	            'prid':@data-mid^,
-	            'goto':'NPO'
-	          }
+	-e ^"videos:^=[
+	      //figure[@data-mid]/{
+	        position^(^):{
+	          'name':.//h2^,
+	          'prid':@data-mid^,
+	          'goto':'NPO'
 	        }
-	      ]^" --output-format^=cmd^"') DO %%A
-	IF DEFINED prid GOTO NPO
+	      }
+	    ]^" --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:schooltv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"prid:^=//div/@data-mid^,

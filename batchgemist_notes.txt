@@ -6567,6 +6567,20 @@ videos := [{"1": {"name": "Tweakers: Gameplay Overwatch", "t": 755, "duration": 
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/8e5b38387ba8ff93cdd28a9ceb4e92147299034a]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+https://anderetijden.nl/artikel/6779/De-Onbegrepen-Dammer
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://anderetijden.nl/artikel/6779/De-Onbegrepen-Dammer" -e "[//figure[@data-mid]/{position():{'name':.//h2,'prid':@data-mid,'goto':'NPO'}}]"
+[
+  {
+    "1": {
+      "name": "Andere Tijden Sport: Jannes van der Wal",
+      "prid": "VPWON_1264902",
+      "goto": "NPO"
+    }
+  }
+]
 
 https://anderetijden.nl/programma/1/Andere-Tijden/aflevering/721/100-jaar-Russische-Revolutie
 
@@ -6616,33 +6630,17 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://anderetijden.nl/programma
   }
 ]
 
--e "[
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "videos:=[
       //figure[@data-mid]/{
         position():{
           'name':.//h2,
           'prid':@data-mid,
-          'goto':':NPO'
+          'goto':'NPO'
         }
       }
     ]"
-
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://anderetijden.nl/artikel/6779/De-Onbegrepen-Dammer" -e "if (count(//figure[@data-mid])=1) then prid:=//figure[@data-mid]/@data-mid else videos:=[//figure[@data-mid]/{position():{'name':.//h2,'prid':@data-mid,'goto':'NPO'}}]"
-prid := VPWON_1264902
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
--e "if (count(//figure[@data-mid])=1) then
-      prid:=//figure[@data-mid]/@data-mid
-    else
-      videos:=[
-        //figure[@data-mid]/{
-          position():{
-            'name':.//h2,
-            'prid':@data-mid,
-            'goto':'NPO'
-          }
-        }
-      ]"
 
 ================================================================================================================================
 
