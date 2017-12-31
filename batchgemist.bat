@@ -322,11 +322,11 @@ IF NOT "%url: =%"=="%url%" (
 	          ^) return
 	          formats:^=[
 	            {
-	              'format':'hls-master'^,
+	              'format':'hls-0'^,
 	              'extension':'m3u8'^,
 	              'url':$a
 	            }^,
-	            for $x in tail^(
+	            for $x at $i in tail^(
 	              tokenize^(
 	                extract^(
 	                  unparsed-text^($a^)^,
@@ -335,20 +335,21 @@ IF NOT "%url: =%"=="%url%" (
 	                ^)^,
 	                '#EXT-X-STREAM-INF:'
 	              ^)
-	            ^) ! {
-	              'format':'hls-'^|^|extract^(
-	                .^,
-	                'BANDWIDTH^=^(\d+^)\d{3}'^,
-	                1
-	              ^)^,
+	            ^) order by extract^(
+	              $x^,
+	              'BANDWIDTH^=^(\d+^)'^,
+	              1
+	            ^) count $i return
+	            {
+	              'format':'hls-'^|^|$i^,
 	              'extension':'m3u8'^,
 	              'resolution':extract^(
-	                .^,
+	                $x^,
 	                'RESOLUTION^=^([\dx]+^)'^,
 	                1
 	              ^)^,
 	              'vbitrate':extract^(
-	                .^,
+	                $x^,
 	                'video^=^(\d+^)\d{3}'^,
 	                1
 	              ^) ! ^(
@@ -362,7 +363,7 @@ IF NOT "%url: =%"=="%url%" (
 	                  ''
 	              ^)^,
 	              'abitrate':replace^(
-	                .^,
+	                $x^,
 	                '.+audio.+?^(\d+^)\d{3}.+'^,
 	                'a:$1k'^,
 	                's'
@@ -371,11 +372,11 @@ IF NOT "%url: =%"=="%url%" (
 	                '.'^,
 	                $a
 	              ^)^|^|extract^(
-	                .^,
+	                $x^,
 	                '^(.+m3u8^)'^,
 	                1
 	              ^)
-	            } order by $x/format return $x
+	            }
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nos.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
@@ -2695,18 +2696,14 @@ IF NOT "%url: =%"=="%url%" (
 	-f ^"$json//content^"
 	-e ^"formats:^=[
 	      //rendition/{
-	        'format':'mp4-'^|^|position^(^)^,
+	        'format':'flv-'^|^|position^(^)^,
 	        'extension':'mp4'^,
 	        'resolution':concat^(
 	          @width^,
 	          'x'^,
 	          @height
 	        ^)^,
-	        'vbitrate':concat^(
-	          'v:'^,
-	          @bitrate^,
-	          'k'
-	        ^)^,
+	        'bitrate':@bitrate^|^|'k',^,
 	        'url':src
 	      }
 	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
@@ -2899,11 +2896,13 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --method^=POST "%url%"
 	--xquery ^"declare function local:extract^($arg^){
 	            $arg/[
-	              for $x in ^(progressive^)^(^) order by $x/height return
+	              for $x at $i in reverse^(
+	                ^(progressive^)^(^)
+	              ^) return
 	              system^(
 	                x'cmd /c %ffmpeg% -i {$x//src} 2^>^&amp^;1'
 	              ^) ! {
-	                'format':'pg-'^|^|$x/height^,
+	                'format':'pg-'^|^|$i^,
 	                'extension':'mp4'^,
 	                'resolution':extract^(
 	                  .^,
@@ -2924,35 +2923,42 @@ IF NOT "%url: =%"=="%url%" (
 	                ^)^,
 	                'url':$x//src
 	              }^,
-	              let $a:^=^(adaptive^)^(^)[ends-with^(src^,'m3u8'^)]/src return ^(
+	              let $a:^=^(adaptive^)^(^)[
+	                ends-with^(
+	                  src^,
+	                  'm3u8'
+	                ^)
+	              ]/src return ^(
 	                {
-	                  'format':'hls-master'^,
+	                  'format':'hls-0'^,
 	                  'extension':'m3u8'^,
 	                  'url':$a
 	                }^,
-	                for $x in tail^(
+	                for $x at $i in tail^(
 	                  tokenize^(
 	                    extract^(
 	                      unparsed-text^($a^)^,
 	                      '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
-	                      1^,'ms'
+	                      1^,
+	                      'ms'
 	                    ^)^,
 	                    '#EXT-X-STREAM-INF:'
 	                  ^)
-	                ^) ! {
-	                  'format':'hls-'^|^|extract^(
-	                    .^,
-	                    'BANDWIDTH^=^(\d+^)\d{3}'^,
-	                    1
-	                  ^)^,
+	                ^) order by extract^(
+	                  $x^,
+	                  'BANDWIDTH^=^(\d+^)'^,
+	                  1
+	                ^) count $i return
+	                {
+	                  'format':'hls-'^|^|$i^,
 	                  'extension':'m3u8'^,
 	                  'resolution':extract^(
-	                    .^,
+	                    $x^,
 	                    'RESOLUTION^=^([\dx]+^)'^,
 	                    1
 	                  ^)^,
 	                  'vbitrate':extract^(
-	                    .^,
+	                    $x^,
 	                    'video^=^(\d+^)\d{3}'^,
 	                    1
 	                  ^) ! ^(
@@ -2966,7 +2972,7 @@ IF NOT "%url: =%"=="%url%" (
 	                      ''
 	                  ^)^,
 	                  'abitrate':replace^(
-	                    .^,
+	                    $x^,
 	                    '.+audio.+?^(\d+^)\d{3}.+'^,
 	                    'a:$1k'^,
 	                    's'
@@ -2975,11 +2981,11 @@ IF NOT "%url: =%"=="%url%" (
 	                    '.'^,
 	                    $a
 	                  ^)^|^|extract^(
-	                    .^,
+	                    $x^,
 	                    '^(.+m3u8^)'^,
 	                    1
 	                  ^)
-	                } order by $x/format return $x
+	                }
 	              ^)
 	            ]
 	          }^;
@@ -3200,7 +3206,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                 ^)
               ]/json/^(items^)^(^)^(^)^,
               $b:^=^(
-                for $x in reverse^(
+                for $x at $i in reverse^(
                   $a[contentType^='odi'][format^='mp4']
                 ^)/x:request^(
                   {
@@ -3223,11 +3229,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                 system^(
                   x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
                 ^) ! {
-                  'format':'pg-'^|^|extract^(
-                    $x^,
-                    '.+/^([a-z]+^)'^,
-                    1
-                  ^)^,
+                  'format':'pg-'^|^|$i^,
                   'extension':'m4v'^,
                   'resolution':extract^(
                     .^,
@@ -3269,11 +3271,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     json/url
                 ^) return ^(
                   {
-                    'format':'hls-master'^,
+                    'format':'hls-0'^,
                     'extension':'m3u8'^,
                     'url':$b
                   }[url]^,
-                  for $x in tail^(
+                  for $x at $i in tail^(
                     tokenize^(
                       extract^(
                         unparsed-text^($b^)^,
@@ -3282,20 +3284,21 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                       ^)^,
                       '#EXT-X-STREAM-INF:'
                     ^)
-                  ^) ! {
-                    'format':'hls-'^|^|extract^(
-                      .^,
-                      'BANDWIDTH^=^(\d+^)\d{3}'^,
-                      1
-                    ^)^,
+                  ^) order by extract^(
+                    $x^,
+                    'BANDWIDTH^=^(\d+^)'^,
+                    1
+                  ^) count $i return
+                  {
+                    'format':'hls-'^|^|$i^,
                     'extension':'m3u8'^,
                     'resolution':extract^(
-                      .^,
+                      $x^,
                       'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
                     'vbitrate':extract^(
-                      .^,
+                      $x^,
                       'video^=^(\d+^)\d{3}'^,
                       1
                     ^) ! ^(
@@ -3309,7 +3312,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                         ''
                     ^)^,
                     'abitrate':replace^(
-                      .^,
+                      $x^,
                       '.+audio.+?^(\d+^)\d{3}.+'^,
                       'a:$1k'^,
                       's'
@@ -3318,11 +3321,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                       '.'^,
                       $b
                     ^)^|^|extract^(
-                      .^,
+                      $x^,
                       '^(.+m3u8^)'^,
                       1
                     ^)
-                  } order by $x/format return $x
+                  }
                 ^)^,
                 for $x at $i in reverse^(
                   $a[contentType^='url'][format^='mp4']
@@ -3352,12 +3355,12 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                 system^(
                   x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
                 ^) ! {
-                  'format':replace^(
+                  'format':'mp4-'^|^|$i^,
+                  'extension':extract^(
                     $x^,
                     '.+\.^(.+^)'^,
-                    '$1-'
-                  ^)^|^|$i^,
-                  'extension':'mp4'^,
+                    1
+                  ^)^,
                   'resolution':extract^(
                     .^,
                     'Video:.+^, ^(\d+x\d+^)'^,
@@ -3477,14 +3480,9 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 ^(^)
             ^)
           ^)^"
--f ^"$json/^(
-      if ^(meta/nr_of_videos_total^=0^) then
-        ^(^)
-      else
-        concat^(
-          meta/videohost^,
-          material/videopath
-        ^)
+-f ^"$json[not^(meta/nr_of_videos_total^=0^)]/concat^(
+      meta/videohost^,
+      material/videopath
     ^)^"
 --xquery ^"let $a:^=if ^($q^='HD'^) then
             ^('a2t'^,'a3t'^,'nettv'^)
@@ -3505,7 +3503,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
             system^(
               x'cmd /c %ffmpeg% -user_agent \^"BatchGemist %ver%\^" -i {$x} 2^>^&amp^;1'
             ^) ! {
-              'format':'pg-'^|^|$a[$i]^,
+              'format':'pg-'^|^|$i^,
               'extension':'mp4'^,
               'resolution':extract^(
                 .^,
@@ -3528,29 +3526,30 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
               'teapot':true
             }^,
             {
-              'format':'hls-master'^,
+              'format':'hls-0'^,
               'extension':'m3u8'^,
               'url':$url
             }^,
-            for $x in tail^(
+            for $x at $i in tail^(
               tokenize^(
                 $raw^,
                 '#EXT-X-STREAM-INF:'
               ^)
-            ^) ! {
-              'format':'hls-'^|^|extract^(
-                .^,
-                'BANDWIDTH^=^(\d+^)\d{3}'^,
-                1
-              ^)^,
+            ^) order by extract^(
+              $x^,
+              'BANDWIDTH^=^(\d+^)'^,
+              1
+            ^) count $i return
+            {
+              'format':'hls-'^|^|$i^,
               'extension':'m3u8'^,
               'resolution':extract^(
-                .^,
+                $x^,
                 'RESOLUTION^=^([\dx]+^)'^,
                 1
               ^)^,
               'vbitrate':extract^(
-                .^,
+                $x^,
                 'video^=^(\d+^)\d{3}'^,
                 1
               ^) ! ^(
@@ -3564,17 +3563,17 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                   ''
               ^)^,
               'abitrate':replace^(
-                .^,
+                $x^,
                 '.+audio.+?^(\d+^)\d{3}.+'^,
                 'a:$1k'^,
                 's'
               ^)^,
               'url':extract^(
-                .^,
+                $x^,
                 '^(.+m3u8^)'^,
                 1
               ^)
-            } order by $x/format return $x
+            }
           ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
@@ -3727,14 +3726,16 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
               ^)^,
               formats:^=[
                 if ^($a//sbs_videotype^='vod'^) then ^(
-                  for $x in $a/^(sources^)^(^)[container^='MP4'] order by $x/size return $x/{
-                    'format':'pg-'^|^|avg_bitrate idiv 1000^,
+                  for $x at $i in $a/^(sources^)^(^)[container^='MP4'] order by $x/size count $i return
+                  $x/{
+                    'format':'pg-'^|^|$i^,
                     'extension':'mp4'^,
                     'resolution':concat^(
                       width^,
                       'x'^,
                       height
                     ^)^,
+                    'bitrate':avg_bitrate idiv 1000^|^|'k'^,
                     'url':replace^(
                       stream_name^,
                       'mp4:'^,
@@ -3746,7 +3747,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                     ^)
                   }^,
                   {
-                    'format':'hls-master'^,
+                    'format':'hls-0'^,
                     'extension':'m3u8'^,
                     'url':$a/^(sources^)^(^)/src
                   }^,
@@ -3758,17 +3759,20 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                       '#EXT-X-STREAM-INF:'
                     ^)
                   ^) ! {
-                    'format':'hls-'^|^|extract^(
-                      .^,
-                      'BANDWIDTH^=^(\d+^)\d{3}'^,
-                      1
-                    ^)^,
+                    'format':'hls-'^|^|position^(^)^,
                     'extension':'m3u8'^,
                     'resolution':extract^(
                       .^,
                       'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
+                    'bitrate':round^(
+                      extract^(
+                        .^,
+                        'BANDWIDTH^=^(\d+^)'^,
+                        1
+                      ^) div 1000
+                    ^)^|^|'k'^,
                     'url':resolve-uri^(
                       '.'^,
                       $a/^(sources^)^(^)/src
@@ -3779,47 +3783,53 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                     ^)
                   }
                 ^) else
-                  for $x in $a/^(sources^)^(^)[src] order by $x/size return $x/{
-                    'format':'pg-'^|^|avg_bitrate idiv 1000^,
+                  for $x at $i in $a/^(sources^)^(^)[src] order by $x/size count $i return
+                  $x/{
+                    'format':'pg-'^|^|$i^,
                     'extension':'mp4'^,
                     'resolution':concat^(
                       width^,
                       'x'^,
                       height
                     ^)^,
+                    'bitrate':avg_bitrate idiv 1000^|^|'k'^,
                     'url':src
                   }^,
-                $b/^(
-                  {
-                    'format':'hls-master_hd'^,
-                    'extension':'m3u8'^,
-                    'url':playlist
-                  }^,
-                  tail^(
-                    tokenize^(
-                      unparsed-text^(playlist^)^,
-                      '#EXT-X-STREAM-INF:'
-                    ^)
-                  ^) ! {
-                    'format':replace^(
-                      .^,
-                      '.+BANDWIDTH^=^(\d+^)\d{3}.+'^,
-                      'hls-$1_hd'^,
-                      's'
-                    ^)^,
-                    'extension':'m3u8'^,
-                    'resolution':extract^(
-                      .^,
-                      'RESOLUTION^=^([\dx]+^)'^,
-                      1
-                    ^)^,
-                    'url':extract^(
-                      .^,
-                      '^(.+m3u8^)'^,
-                      1
-                    ^)
-                  }
-                ^)
+                  $b/^(
+                    {
+                      'format':'hls-0_hd'^,
+                      'extension':'m3u8'^,
+                      'url':playlist
+                    }^,
+                    tail^(
+                      tokenize^(
+                        unparsed-text^(playlist^)^,
+                        '#EXT-X-STREAM-INF:'
+                      ^)
+                    ^) ! {
+                      'format':concat^(
+                        'hls-'^,
+                        position^(^)^,
+                        '_hd'
+                      ^)^,
+                      'extension':'m3u8'^,
+                      'resolution':extract^(
+                        .^,
+                        'RESOLUTION^=^([\dx]+^)'^,
+                        1
+                      ^)^,
+                      'bitrate':extract^(
+                        .^,
+                        'BANDWIDTH^=^(\d+^)\d{3}'^,
+                        1
+                      ^)^|^|'k'^,
+                      'url':extract^(
+                        .^,
+                        '^(.+m3u8^)'^,
+                        1
+                      ^)
+                    }
+                  ^)
               ]
             ^)
           ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
@@ -3875,12 +3885,12 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
               ': Livestream ^($1$2$3^)'
             ^)^,
             formats:^=[
-              for $x in ^(audiostreams^)^(^)[protocol^='http'] order by $x/bitrate return
+              for $x at $i in ^(audiostreams^)^(^)[protocol^='http'] order by $x/bitrate count $i return
               $x/{
                 'format':concat^(
                   audiocodec^,
                   '-'^,
-                  bitrate
+                  $i
                 ^)^,
                 'abitrate':concat^(
                   'a:'^,
@@ -3907,11 +3917,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                   ^)
                 ^) return ^(
                   {
-                    'format':'hls-master'^,
+                    'format':'hls-0'^,
                     'extension':'m3u8'^,
                     'url':$a
                   }^,
-                  for $x in tail^(
+                  for $x at $i in tail^(
                     tokenize^(
                       extract^(
                         unparsed-text^($a^)^,
@@ -3920,20 +3930,21 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                       ^)^,
                       '#EXT-X-STREAM-INF:'
                     ^)
-                  ^) ! {
-                    'format':'hls-'^|^|extract^(
-                      .^,
-                      'BANDWIDTH^=^(\d+^)\d{3}'^,
-                      1
-                    ^)^,
+                  ^) order by extract^(
+                    $x^,
+                    'BANDWIDTH^=^(\d+^)'^,
+                    1
+                  ^) count $i return
+                  {
+                    'format':'hls-'^|^|$i^,
                     'extension':'m3u8'^,
                     'resolution':extract^(
-                      .^,
+                      $x^,
                       'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
                     'vbitrate':extract^(
-                      .^,
+                      $x^,
                       'video^=^(\d+^)\d{3}'^,
                       1
                     ^) ! ^(
@@ -3947,7 +3958,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                         ''
                     ^)^,
                     'abitrate':replace^(
-                      .^,
+                      $x^,
                       '.+audio.+?^(\d+^)\d{3}.+'^,
                       'a:$1k'^,
                       's'
@@ -3956,11 +3967,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                       '.'^,
                       $a
                     ^)^|^|extract^(
-                      .^,
+                      $x^,
                       '^(.+m3u8^)'^,
                       1
                     ^)
-                  } order by $x/format return $x
+                  }
                 ^)
               ^)
             ]
@@ -4121,18 +4132,14 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:s
 -f ^"//media:content/@url^"
 -e ^"formats:^=[
       //rendition/{
-        'format':'mp4-'^|^|position^(^)^,
+        'format':'flv-'^|^|position^(^)^,
         'extension':'mp4'^,
         'resolution':concat^(
           @width^,
           'x'^,
           @height
         ^)^,
-        'vbitrate':concat^(
-          'v:'^,
-          @bitrate^,
-          'k'
-        ^)^,
+        'bitrate':@bitrate^|^|'k'^,
         'url':src
       }
     ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
@@ -4204,25 +4211,22 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		ECHO Beschikbaar formaat:
 		ECHO.
 		ECHO %formats% | %xidel% - ^
-		--xquery ^"let $a:^=^(^
-		                'extension'^,^
-		                'resolution'^,^
-		                'vbitrate'^,^
-		                'abitrate'^
-		              ^)^,^
-		              $b:^=$a ! max(^
-		                $json^(^)^(.^) ! string-length^(.^)^
-		              ^)^,^
-		              $c:^=string-join(^
-		                ^(1 to sum^($b^)^) ! ' '^
-		              ^)^
+		--xquery ^"let $a:^=tail^(^
+		                $json^(^)^(^)^)[.!^='url'] ! max^(^
+		                  $json^(^)^(.^) ! string-length^(.^)^
+		                ^)^,^
+		                $b:^=string-join^(^
+		                  ^(1 to sum^($a^)^) ! ' '^
+		                ^)^
 		          for $x in $json^(^) return^
 		          '  '^|^|string-join^(^
-		            for $y at $i in $a return^
+		            for $y at $i in tail^(^
+		              $json^(^)^(^)^
+		            ^)[.!^='url'] return^
 		            substring^(^
-		              $x^($y^)^|^|$c^,^
+		              $x^($y^)^|^|$b^,^
 		              1^,^
-		              $b[$i]+2^
+		              $a[$i]+2^
 		            ^)^
 		          ^)^"
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "format:=$json()/format" --output-format^=cmd') DO %%A
@@ -4230,26 +4234,19 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		ECHO Beschikbare formaten:
 		ECHO.
 		ECHO %formats% | %xidel% - ^
-		--xquery ^"let $a:^=^(^
-		                'format'^,^
-		                'extension'^,^
-		                'resolution'^,^
-		                'vbitrate'^,^
-		                'abitrate'^
-		              ^)^,^
-		              $b:^=$a ! max(^
+		--xquery ^"let $a:^=$json^(^)[last^(^)]^(^)[.!^='url'] ! max^(^
 		                $json^(^)^(.^) ! string-length^(.^)^
 		              ^)^,^
-		              $c:^=string-join(^
-		                ^(1 to sum^($b^)^) ! ' '^
+		              $b:^=string-join^(^
+		                ^(1 to sum^($a^)^) ! ' '^
 		              ^)^
 		          for $x in $json^(^) return^
 		          '  '^|^|string-join^(^
-		            for $y at $i in $a return^
+		            for $y at $i in $json^(^)[last^(^)]^(^)[.!^='url'] return^
 		            substring^(^
-		              $x^($y^)^|^|$c^,^
+		              $x^($y^)^|^|$b^,^
 		              1^,^
-		              $b[$i]+2^
+		              $a[$i]+2^
 		            ^)^
 		          ^)^"
 		ECHO.
