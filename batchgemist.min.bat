@@ -222,10 +222,10 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:npo.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/(.+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/([\w_]+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:gemi.st=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/(.+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/([\w_]+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:uitzendinggemist.net/aflevering=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'user-agent':'%user-agent%','method':'HEAD'})/url" --output-format^=cmd^"') DO %%A

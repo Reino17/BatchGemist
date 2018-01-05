@@ -232,7 +232,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
 	      '%url%'^,
-	      '.+/(.+\d+^)'^,
+	      '.+/([\w_]+^)'^,
 	      1
 	    ^)^,
 	    date:^=replace(
@@ -245,7 +245,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract(
 	      '%url%'^,
-	      '.+/(.+\d+^)'^,
+	      '.+/([\w_]+^)'^,
 	      1
 	    ^)^,
 	    date:^=replace(
