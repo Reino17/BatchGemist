@@ -533,12 +533,12 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 	IF "%%A"=="1" (
 		ECHO Beschikbaar formaat:
 		ECHO.
-		ECHO %formats% | %xidel% - --xquery "let $a:=tail($json()())[.!='url'] ! max($json()(.) ! string-length(.)),$b:=string-join((1 to sum($a)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in tail($json()())[.!='url'] return substring($x($y)||$b,1,$a[$i]+2))"
+		ECHO %formats% | %xidel% - --xquery "let $a:=('extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "format:=$json()/format" --output-format^=cmd') DO %%A
 	) ELSE (
 		ECHO Beschikbare formaten:
 		ECHO.
-		ECHO %formats% | %xidel% - --xquery "let $a:=$json()[last()]()[.!='url'] ! max($json()(.) ! string-length(.)),$b:=string-join((1 to sum($a)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $json()[last()]()[.!='url'] return substring($x($y)||$b,1,$a[$i]+2))"
+		ECHO %formats% | %xidel% - --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
 		ECHO.
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[last()]/format"') DO (
 			SET /P "format=Voer gewenst formaat in: [%%A] "

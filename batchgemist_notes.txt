@@ -3673,6 +3673,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json(concat('htt
 
 [https://github.com/Reino17/BatchGemist/commit/e9d866ede38cc08037c5bd457aa0c1c40466e3cf]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
+[https://github.com/Reino17/BatchGemist/]
 
 'VPWON_1274590.json':
 
@@ -3726,13 +3727,20 @@ resolution
 vbitrate
 abitrate
 
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "$json()[last()]()[.!='url']"
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate'))"
+format
+extension
+resolution
+vbitrate
+abitrate
+
+xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate'))"
 format
 extension
 resolution
 bitrate
 
-xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "tail($json()())[.!='url']"
+xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "('extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate'))"
 extension
 resolution
 vbitrate
@@ -3742,7 +3750,7 @@ abitrate
 
 Opsomming beschikbare formaten:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "for $x in $json() return join($json()[last()]()[.!='url'] ! $x(.))"
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.))"
 pg-1 m4v 480x270 v:200k a:64k
 pg-2 m4v 640x360 v:500k a:128k
 pg-3 m4v 960x540 v:1000k a:128k
@@ -3760,7 +3768,7 @@ hls-10 m3u8 1024x576 v:1795k a:96k
 hls-11 m3u8 1024x576 v:1795k a:128k
 hls-12 m3u8 1024x576 v:1795k a:192k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "for $x in $json() return join($json()[last()]()[.!='url'] ! $x(.))"
+xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.))"
 pg-1 mp4 320x180 450k
 pg-2 mp4 512x288 866k
 pg-3 mp4 640x360 1116k
@@ -3786,7 +3794,7 @@ hls-8_hd m3u8 1920x1080 7000k
 
 Het gebruik van een TAB heeft niet het gewenste resultaat:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "for $x in $json() return join($json()[last()]()[.!='url'] ! $x(.),'&#x9;')"
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.),'&#x9;')"
 pg-1    m4v     480x270 v:200k  a:64k
 pg-2    m4v     640x360 v:500k  a:128k
 pg-3    m4v     960x540 v:1000k a:128k
@@ -3804,7 +3812,7 @@ hls-10  m3u8    1024x576        v:1795k a:96k
 hls-11  m3u8    1024x576        v:1795k a:128k
 hls-12  m3u8    1024x576        v:1795k a:192k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "for $x in $json() return join($json()[last()]()[.!='url'] ! $x(.),'&#x9;')"
+xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.),'&#x9;')"
 pg-1    mp4     320x180 450k
 pg-2    mp4     512x288 866k
 pg-3    mp4     640x360 1116k
@@ -3830,7 +3838,7 @@ hls-8_hd        m3u8    1920x1080       7000k
 
 De maximale kolombreedte voor elk van de eigenschappen:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "$json()[last()]()[.!='url'] ! max($json()(.) ! string-length(.))"
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) return $a ! max($json()(.) ! string-length(.))"
 6
 4
 8
@@ -3839,7 +3847,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "$json
 
 De maximale kolombreedte toegepast, plus 2 spaties tussenruimte:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=$json()[last()]()[.!='url'] ! max($json()(.) ! string-length(.)) for $x in $json() return string-join(for $y at $i in $json()[last()]()[.!='url'] return substring(string-join(($x($y),for $x in 1 to $a[$i]+2 return ' ')),1,$a[$i]+2))"
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)) for $x in $json() return string-join(for $y at $i in $a return substring(string-join(($x($y),for $x in 1 to $b[$i]+2 return ' ')),1,$b[$i]+2))"
 pg-1    m4v   480x270   v:200k   a:64k
 pg-2    m4v   640x360   v:500k   a:128k
 pg-3    m4v   960x540   v:1000k  a:128k
@@ -3859,7 +3867,7 @@ hls-12  m3u8  1024x576  v:1795k  a:192k
 
 Alternatief van Benito, plus 2 extra spaties aan het begin:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=$json()[last()]()[.!='url'] ! max($json()(.) ! string-length(.)),$b:=string-join((1 to sum($a)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $json()[last()]()[.!='url'] return substring($x($y)||$b,1,$a[$i]+2))"
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
   pg-1    m4v   480x270   v:200k   a:64k
   pg-2    m4v   640x360   v:500k   a:128k
   pg-3    m4v   960x540   v:1000k  a:128k
@@ -3877,7 +3885,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $
   hls-11  m3u8  1024x576  v:1795k  a:128k
   hls-12  m3u8  1024x576  v:1795k  a:192k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=$json()[last()]()[.!='url'] ! max($json()(.) ! string-length(.)),$b:=string-join((1 to sum($a)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $json()[last()]()[.!='url'] return substring($x($y)||$b,1,$a[$i]+2))"
+xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
   pg-1      mp4   320x180    450k
   pg-2      mp4   512x288    866k
   pg-3      mp4   640x360    1116k
@@ -3899,43 +3907,35 @@ xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:
   hls-7_hd  m3u8  1600x900   5750k
   hls-8_hd  m3u8  1920x1080  7000k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "let $a:=tail($json()())[.!='url'] ! max($json()(.) ! string-length(.)),$b:=string-join((1 to sum($a)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in tail($json()())[.!='url'] return substring($x($y)||$b,1,$a[$i]+2))"
+xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "let $a:=('extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
   mp4  1920x1080  v:10004k  a:317k
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
---xquery "let $a:=$json()[last()]()[.!='url'] ! max(
+--xquery "let $a:=(
+                'format',		# Bij één object wordt deze niet getoond.
+                'extension',
+                'resolution',
+                if ($json()[last()]/bitrate) then
+                  'bitrate'
+                else (
+                  'vbitrate',
+                  'abitrate'
+                )
+              ),
+              $b:=$a ! max(
                 $json()(.) ! string-length(.)
               ),
-              $b:=string-join(
-                (1 to sum($a)) ! ' '
+              $c:=string-join(
+                (1 to sum($b)) ! ' '
               )
           for $x in $json() return
           '  '||string-join(
-            for $y at $i in $json()[last()]()[.!='url'] return
+            for $y at $i in $a return
             substring(
-              $x($y)||$b,
+              $x($y)||$c,
               1,
-              $a[$i]+2
-            )
-          )"
-
---xquery "let $a:=tail(
-                $json()())[.!='url'] ! max(
-                  $json()(.) ! string-length(.)
-                ),
-                $b:=string-join(
-                  (1 to sum($a)) ! ' '
-                )
-          for $x in $json() return
-          '  '||string-join(
-            for $y at $i in tail(
-              $json()()
-            )[.!='url'] return
-            substring(
-              $x($y)||$b,
-              1,
-              $a[$i]+2
+              $b[$i]+2
             )
           )"
 
@@ -4004,7 +4004,7 @@ t := 66
 [https://github.com/Reino17/BatchGemist/commit/5a6d0bf7b023ad1a7263c3a4fe846f800bedd6e8]
 [https://github.com/Reino17/BatchGemist/commit/bfac669aff1b9e0a30a904e9e88021c702b0c6c2]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/b4559b4bfd69efbb13e9256e301c5479cdb4d65e]
 
 https://www.rtl.nl/video/d4e31e66-e403-33d5-8f44-a3886e42be51/
 

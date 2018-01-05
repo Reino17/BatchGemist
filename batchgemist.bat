@@ -4227,22 +4227,29 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		ECHO Beschikbaar formaat:
 		ECHO.
 		ECHO %formats% | %xidel% - ^
-		--xquery ^"let $a:^=tail^(^
-		                $json^(^)^(^)^)[.!^='url'] ! max^(^
-		                  $json^(^)^(.^) ! string-length^(.^)^
-		                ^)^,^
-		                $b:^=string-join^(^
-		                  ^(1 to sum^($a^)^) ! ' '^
+		--xquery ^"let $a:^=^(^
+		                'extension'^,^
+		                'resolution'^,^
+		                if ^($json^(^)[last^(^)]/bitrate^) then^
+		                  'bitrate'^
+		                else ^(^
+		                  'vbitrate'^,^
+		                  'abitrate'^
 		                ^)^
+		              ^)^,^
+		              $b:^=$a ! max^(^
+		                $json^(^)^(.^) ! string-length^(.^)^
+		              ^)^,^
+		              $c:^=string-join^(^
+		                ^(1 to sum^($b^)^) ! ' '^
+		              ^)^
 		          for $x in $json^(^) return^
 		          '  '^|^|string-join^(^
-		            for $y at $i in tail^(^
-		              $json^(^)^(^)^
-		            ^)[.!^='url'] return^
+		            for $y at $i in $a return^
 		            substring^(^
-		              $x^($y^)^|^|$b^,^
+		              $x^($y^)^|^|$c^,^
 		              1^,^
-		              $a[$i]+2^
+		              $b[$i]+2^
 		            ^)^
 		          ^)^"
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "format:=$json()/format" --output-format^=cmd') DO %%A
@@ -4250,19 +4257,30 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		ECHO Beschikbare formaten:
 		ECHO.
 		ECHO %formats% | %xidel% - ^
-		--xquery ^"let $a:^=$json^(^)[last^(^)]^(^)[.!^='url'] ! max^(^
+		--xquery ^"let $a:^=^(^
+		                'format'^,^
+		                'extension'^,^
+		                'resolution'^,^
+		                if ^($json^(^)[last^(^)]/bitrate^) then^
+		                  'bitrate'^
+		                else ^(^
+		                  'vbitrate'^,^
+		                  'abitrate'^
+		                ^)^
+		              ^)^,^
+		              $b:^=$a ! max^(^
 		                $json^(^)^(.^) ! string-length^(.^)^
 		              ^)^,^
-		              $b:^=string-join^(^
-		                ^(1 to sum^($a^)^) ! ' '^
+		              $c:^=string-join^(^
+		                ^(1 to sum^($b^)^) ! ' '^
 		              ^)^
 		          for $x in $json^(^) return^
 		          '  '^|^|string-join^(^
-		            for $y at $i in $json^(^)[last^(^)]^(^)[.!^='url'] return^
+		            for $y at $i in $a return^
 		            substring^(^
-		              $x^($y^)^|^|$b^,^
+		              $x^($y^)^|^|$c^,^
 		              1^,^
-		              $a[$i]+2^
+		              $b[$i]+2^
 		            ^)^
 		          ^)^"
 		ECHO.
@@ -4295,7 +4313,9 @@ SETLOCAL
 IF NOT DEFINED duration (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"let $a:^=extract^(
-	      system^('cmd /c %ffmpeg% -i %v_url% 2^>^&1'^)^,
+	      system^(
+	        'cmd /c %ffmpeg% -i %v_url% 2^>^&1'
+	      ^)^,
 	      'Duration: ^(.+?^)^,'^,
 	      1
 	    ^) return
