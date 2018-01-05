@@ -2724,58 +2724,133 @@ IF NOT "%url: =%"=="%url%" (
 	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:foxtv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"date:^=replace(
-	      extract(
-	        $raw^,
-	        'publishingDate^=(\d{8}^)'^,1
-	      ^)^,
-	      '(\d{4}^)(\d{2}^)(\d{2}^)'^,
-	      ' ($3$2$1^)'
-	    ^)^"
-	-f ^"extract(
-	      $raw^,
-	      'tp:releaseUrl^=\^"(.+^^^)\^"'^,1
-	    ^)^"
-	--xquery ^"name:^=concat(
-	            'FOX - '^,
-	            replace(
-	              //param[@name^='fullTitle']/@value^,
-	              '[^&quot^;^&apos^;]'^,
-	              ''''''
-	            ^)^,
-	            $date
-	          ^)^,
-	          s_url:^=//textstream[@lang^='nl'][@type^='text/srt']/@src^"
-	-f ^"//video/@src^"
-	--xquery ^"json:^=[
-	            {
-	              'format':'meta'^,
-	              'url':$url
-	            }^,
-	            tail(
-	              tokenize(
-	                $raw^,
-	                '#EXT-X-STREAM-INF:'
+	--xquery ^"doc^(
+	            'https://players.fichub.com/api/v1.1/get-player?callback^=sdkcb_1^&amp^;data^='^|^|string-to-base64Binary^(
+	              replace^(
+	                serialize-json^(
+	                  {^|
+	                    json^(
+	                      //script/extract^(
+	                        .^,
+	                        '''#player''^, ^(.+?\}^)^,'^,
+	                        1^,'s'
+	                      ^)[.]
+	                    ^)^,
+	                    {'instance_id':1}
+	                  ^|}
+	                ^)^,
+	                '\s'^,
+	                ''
 	              ^)
-	            ^) ! {
-	              'format':string(
-	                extract(
-	                  .^,
-	                  'BANDWIDTH^=(\d+^)'^,1
-	                ^) idiv 1000
-	              ^)^,
-	              'url':extract(
+	            ^)
+	          ^)/json^(
+	            extract^(
+	              .^,
+	              '^(\{.+\}^)'^,
+	              1
+	            ^)
+	          ^)/parse-html^(payload^) ! ^(
+	            name:^=json^(
+	              extract^(
 	                .^,
-	                '(.+m3u8^)'^,1
+	                'sola: ^(.+?\}^)'^,
+	                1^,'s'
 	              ^)
-	            }
-	          ]^,
-	          let $a:^=(
-	            $json(^)[format^='meta']/format^,
-	            for $x in $json(^)[format!^='meta']/format order by $x return $x
-	          ^) return (
-	            formats:^=join($a^,'^, '^)^,
-	            best:^=$a[last(^)]
+	            ^)/concat^(
+	              'FOX: '^,
+	              if ^(showTitle^) then
+	                showTitle^|^|' - '
+	              else
+	                ^(^)^,
+	              videoTitle^,
+	              replace^(
+	                createdDate^,
+	                '^(\d{4}^)^(\d{2}^)^(\d{2}^).+'^,
+	                ' ^($3$2$1^)'
+	              ^)
+	            ^)^,
+	            let $a:^=json^(
+	                  extract^(
+	                    .^,
+	                    'releaseUrl: ^(.+?\}^)'^,
+	                    1^,'s'
+	                  ^)
+	                ^)/concat^(
+	                  'https://'^,
+	                  link^,
+	                  '/s/'^,
+	                  player^,
+	                  '/'^,
+	                  id^,
+	                  '?mbr^=true^&amp^;policy^='^,
+	                  policy^,
+	                  '^&amp^;switch^='^,
+	                  switch
+	                ^)^,
+	                $b:^=doc^($a^)
+	            return ^(
+	              t:^=extract^(
+	                $b//ref/@dur^,
+	                '^(\d+^)\d{3}'^,
+	                1
+	              ^)^,
+	              duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+	              if ^($b//textstream^) then
+	                s_url:^=$b//textstream[@lang^='nl'][@type^='text/srt']/@src
+	              else
+	                ^(^)^,
+	              formats:^=[
+	                for $x at $i in $b//video order by $x/@system-bitrate count $i return
+	                $x/{
+	                  'format':'pg-'^|^|$i^,
+	                  'extension':'mp4'^,
+	                  'resolution':concat^(
+	                    @width^,
+	                    'x'^,
+	                    @height
+	                  ^)^,
+	                  'bitrate':round^(
+	                    @system-bitrate div 1000
+	                  ^)^|^|'k'^,
+	                  'url':@src
+	                }^,
+	                doc^($a^|^|'^&amp^;manifest^=m3u'^)//video/^(
+	                  {
+	                    'format':'hls-0'^,
+	                    'extension':'m3u8'^,
+	                    'url':@src
+	                  }^,
+	                  for $x at $i in tail^(
+	                    tokenize^(
+	                      unparsed-text^(@src^)^,
+	                      '#EXT-X-STREAM-INF:'
+	                    ^)
+	                  ^) order by extract^(
+	                    $x^,
+	                    'BANDWIDTH^=^(\d+^)'^,
+	                    1
+	                  ^) count $i return {
+	                    'format':'hls-'^|^|$i^,
+	                    'extension':'m3u8'^,
+	                    'resolution':extract^(
+	                      $x^,
+	                      'RESOLUTION^=^([\dx]+^)'^,
+	                      1
+	                    ^)^,
+	                    'bitrate':extract^(
+	                      $x^,
+	                      'BANDWIDTH^=^(\d+^)\d{3}'^,
+	                      1
+	                    ^)^|^|'k'^,
+	                    'url':extract^(
+	                      $x^,
+	                      '^(.+m3u8^)'^,
+	                      1
+	                    ^)
+	                  }
+	                ^)
+	              ]
+	            ^)
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:foxsports.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"

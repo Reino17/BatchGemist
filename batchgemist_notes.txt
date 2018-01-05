@@ -830,72 +830,6 @@ videos := 1e, 2e, 3e, 4e
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/6629f05abc5f8a27eea61ef967241a4bd880e98c]
-
-xidel-0.9.6.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "date:=replace(extract($raw,'publishingDate=(\d{8})',1),'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')" -f "extract($raw,'tp:releaseUrl=\"(.+^)\"',1)" --xquery "name:=concat('FOX - ',replace(//param[@name='fullTitle']/@value,'[&quot;&apos;]',''''''),$date),s_url:=//textstream[@lang='nl'][@type='text/srt']/@src" -f "//video/@src" --xquery "json:=[{'format':'meta','url':$url},tail(tokenize($raw,'#EXT-X-STREAM-INF:')) ! {'format':string(extract(.,'BANDWIDTH=(\d+)',1) idiv 1000),'url':extract(.,'(.+m3u8)',1)}],let $a:=($json()[format='meta']/format,for $x in $json()[format!='meta']/format order by $x return $x) return (formats:=join($a,', '),best:=$a[last()])"
-date :=  (16122016)
-name := FOX - Inglorious Bastards - The Simpsons - S24E8 (16122016)
-s_url := http://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~nl~~~1.srt
-json := [{"format": "meta", "url": "http://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/master.m3u8?__b__=1200"}, {"format": "1281", "url": "http://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_3_av.m3u8"}, {"format": "4033", "url": "http://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_0_av.m3u8"}, {"format": "2493", "url": "http://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_1_av.m3u8"}, {"format": "1870", "url": "http://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_2_av.m3u8"}, {"format": "655", "url": "http://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_4_av.m3u8"}, {"format": "458", "url": "http://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_5_av.m3u8"}]
-formats := meta, 458, 655, 1281, 1870, 2493, 4033
-best := 4033
-
--e "date:=replace(
-      extract(
-        $raw,
-        'publishingDate=(\d{8})',1
-      ),
-      '(\d{4})(\d{2})(\d{2})',
-      ' ($3$2$1)'
-    )"
--f "extract(
-      $raw,
-      'tp:releaseUrl=\"(.+^)\"',1
-    )"
---xquery "name:=concat(
-            'FOX - ',
-            replace(
-              //param[@name='fullTitle']/@value,
-              '[&quot;&apos;]',
-              ''''''
-            ),
-            $date
-          ),
-          s_url:=//textstream[@lang='nl'][@type='text/srt']/@src"
--f "//video/@src"
---xquery "json:=[
-            {
-              'format':'meta',
-              'url':$url
-            },
-            tail(
-              tokenize(
-                $raw,
-                '#EXT-X-STREAM-INF:'
-              )
-            ) ! {
-              'format':string(
-                extract(
-                  .,
-                  'BANDWIDTH=(\d+)',1
-                ) idiv 1000
-              ),
-              'url':extract(
-                .,
-                '(.+m3u8)',1
-              )
-            }
-          ],
-          let $a:=(
-            $json()[format='meta']/format,
-            for $x in $json()[format!='meta']/format order by $x return $x
-          ) return (
-            formats:=join($a,', '),
-            best:=$a[last()]
-          )"
-
-================================================================================================================================
-
 [https://github.com/Reino17/BatchGemist/commit/8980d9b6732eac5e7f031645353c03a0d5ac1691]
 
 xidel-0.9.6.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" -e "let $a:=[//script/reverse(extract(.,'(http.+mp4)',1,'*')[.]) ! {'format':concat('mp4-',position()),'url':.}] return (name:=concat('ABHD - ',//div[@id='playerObject']//a,replace($a(1)/url,'.+?/(\d+)/(\d{2})(\d{2}).+',' ($3$2$1)')),if (count($a()/url)=1) then v_url:=$a()/url else (json:=$a,let $b:=$a()/format return (formats:=join($b,', '),best:=$b[last()])))"
@@ -8733,3 +8667,449 @@ formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "bi
         'url':src
       }
     ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/6629f05abc5f8a27eea61ef967241a4bd880e98c]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.])"
+{
+  "template": "sire/default",
+  "clip": 10447,
+  "country": "NL",
+  "product": "FOX"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "{|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}"
+{
+  "template": "sire/default",
+  "clip": 10447,
+  "country": "NL",
+  "product": "FOX",
+  "instance_id": 1
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')"
+{"template":"sire/default","clip":10447,"country":"NL","product":"FOX","instance_id":1}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s',''))"
+eyJ0ZW1wbGF0ZSI6InNpcmUvZGVmYXVsdCIsImNsaXAiOjEwNDQ3LCJjb3VudHJ5IjoiTkwiLCJwcm9kdWN0IjoiRk9YIiwiaW5zdGFuY2VfaWQiOjF9
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! (json(extract(.,'sola: (.+?\})',1,'s')),json(extract(.,'releaseUrl: (.+?\})',1,'s')))"
+{
+  "configPath": "http://ma535-r.analytics.edgesuite.net/config/beacon-7025.xml",
+  "brand": "FOX",
+  "product": "FOX",
+  "channel": "FOX",
+  "region": "NL",
+  "showTitle": "The Simpsons",
+  "seasonNumber": "24",
+  "episodeTitle": "To Cur With Love",
+  "videoTitle": "Inglorious Bastards",
+  "genre": "Comedy",
+  "pcode": "",
+  "profileid": "",
+  "appversion": "Alpha",
+  "subtitleflag": "",
+  "subtitlelang": "",
+  "nconn": "",
+  "devbrand": "",
+  "devorientation": "",
+  "fullscreen": "",
+  "device": "",
+  "audiolang": "",
+  "browser": "",
+  "browserVer": "",
+  "os": "",
+  "osVer": "",
+  "showId": "105338",
+  "episodeId": "110194",
+  "episodeNumber": "8",
+  "referenceId": "IngloriousBastards1053382481",
+  "createdDate": "20161216103019"
+}
+{
+  "link": "link.theplatform.eu",
+  "player": "XRRASC",
+  "id": "ISCTuIY4ksv1",
+  "policy": "46235044",
+  "switch": "foxnl"
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! json(extract(.,'sola: (.+?\})',1,'s'))/concat('FOX: ',if (showTitle) then showTitle||' - ' else (),videoTitle,replace(createdDate,'(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)'))"
+FOX: The Simpsons - Inglorious Bastards (16122016)
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Progressieve videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! json(extract(.,'releaseUrl: (.+?\})',1,'s'))/concat('https://',link,'/s/',player,'/',id,'?mbr=true&policy=',policy,'&switch=',switch)"
+https://link.theplatform.eu/s/XRRASC/ISCTuIY4ksv1?mbr=true&policy=46235044&switch=foxnl
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! json(extract(.,'releaseUrl: (.+?\})',1,'s'))/unparsed-text(concat('https://',link,'/s/',player,'/',id,'?mbr=true&policy=',policy,'&switch=',switch))"
+<smil xmlns="http://www.w3.org/2005/SMIL21/Language">
+<head>
+	<metadata>
+	<seq>
+	<ref src="https://ads.freewheel.tv/" no-skip="true" tags="midroll">
+	</ref>
+	</seq>
+	</metadata>
+</head>
+<body>
+<seq>
+	<ref src="https://ads.freewheel.tv/" no-skip="false" tags="preroll">
+	</ref>
+<par>
+<switch>
+	<video src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085170_mp4_video_1920x0_4016000_primary_audio_6.mp4" system-bitrate="4039815" height="1080" width="1920"/>
+	<video src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085169_mp4_video_1280x0_2432000_primary_audio_5.mp4" system-bitrate="2499366" height="720" width="1280"/>
+	<video src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085168_mp4_video_1280x0_1800000_primary_audio_4.mp4" system-bitrate="1876509" height="720" width="1280"/>
+	<video src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085167_mp4_video_960x0_1200000_primary_audio_3.mp4" system-bitrate="1286896" height="540" width="960"/>
+	<video src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085166_mp4_video_640x0_568000_primary_audio_2.mp4" system-bitrate="661741" height="360" width="640"/>
+	<video src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085165_mp4_video_480x0_400000_primary_audio_1.mp4" system-bitrate="463979" height="270" width="480"/>
+	<ref src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085170_mp4_video_1920x0_4016000_primary_audio_6.mp4" title="Inglorious Bastards" dur="67640ms" guid="IngloriousBastards1053382481" type="video/mp4" height="1080" width="1920">
+		<param name="fWAssetVideoCustomID" value=""/>
+		<param name="captionLanguages[0]" value="pt"/>
+		<param name="captionLanguages[1]" value="nl"/>
+		<param name="channel" value=""/>
+		<param name="clipTitleLOC" value="Inglorious Bastards"/>
+		<param name="containsCaption" value="true"/>
+		<param name="episodeNumber" value="8"/>
+		<param name="externalAdvertiserId" value="IngloriousBastards1053382481"/>
+		<param name="fullTitle" value="Inglorious Bastards - The Simpsons - S24E8"/>
+		<param name="globalIDNumber" value=""/>
+		<param name="originalLanguage" value="en"/>
+		<param name="programName" value=""/>
+		<param name="programmeId" value="105338"/>
+		<param name="pubType" value=""/>
+		<param name="region" value=""/>
+		<param name="seasonNumber" value="24"/>
+		<param name="versionNumber" value="1"/>
+	</ref>
+</switch>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~pt~~~1.srt" lang="pt" type="text/srt"/>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~nl~~~1.srt" lang="nl" type="text/srt"/>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~pt~~~1.webvtt" lang="pt" type="text/vtt"/>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~nl~~~1.webvtt" lang="nl" type="text/vtt"/>
+</par>
+	<ref src="https://ads.freewheel.tv/" no-skip="true" tags="postroll">
+	</ref>
+</seq>
+</body>
+</smil>
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" -e "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! json(extract(.,'releaseUrl: (.+?\})',1,'s'))/doc(concat('https://',link,'/s/',player,'/',id,'?mbr=true&policy=',policy,'&switch=',switch)) ! (t:=extract(.//ref/@dur,'(\d+)\d{3}',1),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),if (.//textstream) then s_url:=.//textstream[@lang='nl'][@type='text/srt']/@src else ())"
+t := 67
+duration := 00:01:07
+s_url := https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~nl~~~1.srt
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" --xquery "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&amp;data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! json(extract(.,'releaseUrl: (.+?\})',1,'s'))/doc(concat('https://',link,'/s/',player,'/',id,'?mbr=true&amp;policy=',policy,'&amp;switch=',switch))/[for $x at $i in //video order by $x/@system-bitrate count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':round(@system-bitrate div 1000)||'k','url':@src}]"
+[
+  {
+    "format": "pg-1",
+    "extension": "mp4",
+    "resolution": "480x270",
+    "bitrate": "464k",
+    "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085165_mp4_video_480x0_400000_primary_audio_1.mp4"
+  },
+  {
+    "format": "pg-2",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "bitrate": "662k",
+    "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085166_mp4_video_640x0_568000_primary_audio_2.mp4"
+  },
+  {
+    "format": "pg-3",
+    "extension": "mp4",
+    "resolution": "960x540",
+    "bitrate": "1287k",
+    "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085167_mp4_video_960x0_1200000_primary_audio_3.mp4"
+  },
+  {
+    "format": "pg-4",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "bitrate": "1877k",
+    "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085168_mp4_video_1280x0_1800000_primary_audio_4.mp4"
+  },
+  {
+    "format": "pg-5",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "bitrate": "2499k",
+    "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085169_mp4_video_1280x0_2432000_primary_audio_5.mp4"
+  },
+  {
+    "format": "pg-6",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "bitrate": "4040k",
+    "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085170_mp4_video_1920x0_4016000_primary_audio_6.mp4"
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Dynamische videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" --xquery "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&amp;data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! json(extract(.,'releaseUrl: (.+?\})',1,'s'))/unparsed-text(concat('https://',link,'/s/',player,'/',id,'?mbr=true&amp;policy=',policy,'&amp;switch=',switch,'&amp;manifest=m3u'))"
+<smil xmlns="http://www.w3.org/2005/SMIL21/Language">
+<head>
+	<metadata>
+	<seq>
+	<ref src="https://ads.freewheel.tv/" no-skip="true" tags="midroll">
+	</ref>
+	</seq>
+	</metadata>
+</head>
+<body>
+<seq>
+	<ref src="https://ads.freewheel.tv/" no-skip="false" tags="preroll">
+	</ref>
+<par>
+	<video src="https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/master.m3u8?__b__=1200" title="Inglorious Bastards" dur="67640ms" guid="IngloriousBastards1053382481" type="application/x-mpegURL" height="1080" width="1920">
+		<param name="fWAssetVideoCustomID" value=""/>
+		<param name="captionLanguages[0]" value="pt"/>
+		<param name="captionLanguages[1]" value="nl"/>
+		<param name="channel" value=""/>
+		<param name="clipTitleLOC" value="Inglorious Bastards"/>
+		<param name="containsCaption" value="true"/>
+		<param name="episodeNumber" value="8"/>
+		<param name="externalAdvertiserId" value="IngloriousBastards1053382481"/>
+		<param name="fullTitle" value="Inglorious Bastards - The Simpsons - S24E8"/>
+		<param name="globalIDNumber" value=""/>
+		<param name="originalLanguage" value="en"/>
+		<param name="programName" value=""/>
+		<param name="programmeId" value="105338"/>
+		<param name="pubType" value=""/>
+		<param name="region" value=""/>
+		<param name="seasonNumber" value="24"/>
+		<param name="versionNumber" value="1"/>
+	</video>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~pt~~~1.srt" lang="pt" type="text/srt"/>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~nl~~~1.srt" lang="nl" type="text/srt"/>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~pt~~~1.webvtt" lang="pt" type="text/vtt"/>
+	<textstream src="https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~nl~~~1.webvtt" lang="nl" type="text/vtt"/>
+</par>
+	<ref src="https://ads.freewheel.tv/" no-skip="true" tags="postroll">
+	</ref>
+</seq>
+</body>
+</smil>
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" --xquery "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&amp;data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! json(extract(.,'releaseUrl: (.+?\})',1,'s'))/doc(concat('https://',link,'/s/',player,'/',id,'?mbr=true&amp;policy=',policy,'&amp;switch=',switch,'&amp;manifest=m3u'))//video/[{'format':'hls-0','extension':'m3u8','url':@src},for $x at $i in tail(tokenize(unparsed-text(@src),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'bitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract($x,'(.+m3u8)',1)}]"
+[
+  {
+    "format": "hls-0",
+    "extension": "m3u8",
+    "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/master.m3u8?__b__=1200"
+  },
+  {
+    "format": "hls-1",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "bitrate": "458k",
+    "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_5_av.m3u8"
+  },
+  {
+    "format": "hls-2",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "bitrate": "655k",
+    "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_4_av.m3u8"
+  },
+  {
+    "format": "hls-3",
+    "extension": "m3u8",
+    "resolution": "960x540",
+    "bitrate": "1281k",
+    "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_3_av.m3u8"
+  },
+  {
+    "format": "hls-4",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "bitrate": "1870k",
+    "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_2_av.m3u8"
+  },
+  {
+    "format": "hls-5",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "bitrate": "2493k",
+    "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_1_av.m3u8"
+  },
+  {
+    "format": "hls-6",
+    "extension": "m3u8",
+    "resolution": "1920x1080",
+    "bitrate": "4033k",
+    "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_0_av.m3u8"
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Alles samen
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" --xquery "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&amp;data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! (json(extract(.,'sola: (.+?\})',1,'s'))/concat('FOX: ',if (showTitle) then showTitle||' - ' else (),videoTitle,replace(createdDate,'(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),let $a:=json(extract(.,'releaseUrl: (.+?\})',1,'s'))/concat('https://',link,'/s/',player,'/',id,'?mbr=true&amp;policy=',policy,'&amp;switch=',switch) return ($a,$a||'&amp;manifest=m3u'))"
+FOX: The Simpsons - Inglorious Bastards (16122016)
+https://link.theplatform.eu/s/XRRASC/ISCTuIY4ksv1?mbr=true&policy=46235044&switch=foxnl
+https://link.theplatform.eu/s/XRRASC/ISCTuIY4ksv1?mbr=true&policy=46235044&switch=foxnl&manifest=m3u
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8" --xquery "doc('https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&amp;data='||string-to-base64Binary(replace(serialize-json({|json(//script/extract(.,'''#player'', (.+?\}),',1,'s')[.]),{'instance_id':1}|}),'\s','')))/json(extract(.,'(\{.+\})',1))/parse-html(payload) ! (name:=json(extract(.,'sola: (.+?\})',1,'s'))/concat('FOX: ',if (showTitle) then showTitle||' - ' else (),videoTitle,replace(createdDate,'(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),let $a:=json(extract(.,'releaseUrl: (.+?\})',1,'s'))/concat('https://',link,'/s/',player,'/',id,'?mbr=true&amp;policy=',policy,'&amp;switch=',switch),$b:=doc($a) return (t:=extract($b//ref/@dur,'(\d+)\d{3}',1),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),if ($b//textstream) then s_url:=$b//textstream[@lang='nl'][@type='text/srt']/@src else (),formats:=[for $x at $i in $b//video order by $x/@system-bitrate count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':round(@system-bitrate div 1000)||'k','url':@src},doc($a||'&amp;manifest=m3u')//video/({'format':'hls-0','extension':'m3u8','url':@src},for $x at $i in tail(tokenize(unparsed-text(@src),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'bitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract($x,'(.+m3u8)',1)})]))"
+name := FOX: The Simpsons - Inglorious Bastards (16122016)
+t := 67
+duration := 00:01:07
+s_url := https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~nl~~~1.srt
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "bitrate": "464k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085165_mp4_video_480x0_400000_primary_audio_1.mp4"}, {"format": "pg-2", "extension":"mp4", "resolution": "640x360", "bitrate": "662k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085166_mp4_video_640x0_568000_primary_audio_2.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "960x540", "bitrate": "1287k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085167_mp4_video_960x0_1200000_primary_audio_3.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "1280x720", "bitrate": "1877k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085168_mp4_video_1280x0_1800000_primary_audio_4.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "1280x720", "bitrate": "2499k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085169_mp4_video_1280x0_2432000_primary_audio_5.mp4"}, {"format": "pg-6", "extension": "mp4", "resolution": "1920x1080", "bitrate": "4040k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_75286085170_mp4_video_1920x0_4016000_primary_audio_6.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/master.m3u8?__b__=1200"}, {"format": "hls-1", "extension": "m3u8", "resolution": "480x270", "bitrate": "458k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_5_av.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "640x360", "bitrate": "655k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_4_av.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "960x540", "bitrate": "1281k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_3_av.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "bitrate": "1870k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_2_av.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1280x720", "bitrate": "2493k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_1_av.m3u8"}, {"format": "hls-6", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "4033k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/117/964/Inglorious_Bastards~~105338~24~8~en~~~1_en_752860851,70_mp4_video_1920x0_4016000_primary_audio_6,69_mp4_video_1280x0_2432000_primary_audio_5,68_mp4_video_1280x0_1800000_primary_audio_4,67_mp4_video_960x0_1200000_primary_audio_3,66_mp4_video_640x0_568000_primary_audio_2,65_mp4_video_480x0_400000_primary_audio_1,.mp4.csmil/index_0_av.m3u8"}]
+
+https://www.foxtv.nl/videos/wintermaanden
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxtv.nl/videos/wintermaanden" --xquery "[...]"
+name := FOX: Wintermaanden (21112017)
+t := 60
+duration := 00:01:00
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "bitrate": "461k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101497_mp4_video_480x0_400000_primary_audio_eng_1.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "640x360", "bitrate": "659k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101498_mp4_video_640x0_568000_primary_audio_eng_2.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "960x540", "bitrate": "1280k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101499_mp4_video_960x0_1200000_primary_audio_eng_3.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "1280x720", "bitrate": "1870k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101500_mp4_video_1280x0_1800000_primary_audio_eng_4.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "1280x720", "bitrate": "2495k", "url": "https://sire-foxnl-pmd.fichub.com/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101501_mp4_video_1280x0_2432000_primary_audio_eng_5.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101,500_mp4_video_1280x0_1800000_primary_audio_eng_4,501_mp4_video_1280x0_2432000_primary_audio_eng_5,499_mp4_video_960x0_1200000_primary_audio_eng_3,498_mp4_video_640x0_568000_primary_audio_eng_2,497_mp4_video_480x0_400000_primary_audio_eng_1,.mp4.csmil/master.m3u8?__b__=1200"}, {"format": "hls-1", "extension": "m3u8", "resolution": "480x270", "bitrate": "455k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101,500_mp4_video_1280x0_1800000_primary_audio_eng_4,501_mp4_video_1280x0_2432000_primary_audio_eng_5,499_mp4_video_960x0_1200000_primary_audio_eng_3,498_mp4_video_640x0_568000_primary_audio_eng_2,497_mp4_video_480x0_400000_primary_audio_eng_1,.mp4.csmil/index_4_av.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "640x360", "bitrate": "652k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101,500_mp4_video_1280x0_1800000_primary_audio_eng_4,501_mp4_video_1280x0_2432000_primary_audio_eng_5,499_mp4_video_960x0_1200000_primary_audio_eng_3,498_mp4_video_640x0_568000_primary_audio_eng_2,497_mp4_video_480x0_400000_primary_audio_eng_1,.mp4.csmil/index_3_av.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "960x540", "bitrate": "1274k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101,500_mp4_video_1280x0_1800000_primary_audio_eng_4,501_mp4_video_1280x0_2432000_primary_audio_eng_5,499_mp4_video_960x0_1200000_primary_audio_eng_3,498_mp4_video_640x0_568000_primary_audio_eng_2,497_mp4_video_480x0_400000_primary_audio_eng_1,.mp4.csmil/index_2_av.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "bitrate": "1864k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101,500_mp4_video_1280x0_1800000_primary_audio_eng_4,501_mp4_video_1280x0_2432000_primary_audio_eng_5,499_mp4_video_960x0_1200000_primary_audio_eng_3,498_mp4_video_640x0_568000_primary_audio_eng_2,497_mp4_video_480x0_400000_primary_audio_eng_1,.mp4.csmil/index_0_av.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1280x720", "bitrate": "2489k", "url": "https://sireclipsfoxnl-vh.akamaihd.net/i/mpx/FIC_SIRE_Fox/855/236/Wintermaanden~NLD_FOX~~~~nl~mux~5~1_146924101,500_mp4_video_1280x0_1800000_primary_audio_eng_4,501_mp4_video_1280x0_2432000_primary_audio_eng_5,499_mp4_video_960x0_1200000_primary_audio_eng_3,498_mp4_video_640x0_568000_primary_audio_eng_2,497_mp4_video_480x0_400000_primary_audio_eng_1,.mp4.csmil/index_1_av.m3u8"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "doc(
+            'https://players.fichub.com/api/v1.1/get-player?callback=sdkcb_1&amp;data='||string-to-base64Binary(
+              replace(
+                serialize-json(
+                  {|
+                    json(
+                      //script/extract(
+                        .,
+                        '''#player'', (.+?\}),',
+                        1,'s'
+                      )[.]
+                    ),
+                    {'instance_id':1}
+                  |}
+                ),
+                '\s',
+                ''
+              )
+            )
+          )/json(
+            extract(
+              .,
+              '(\{.+\})',
+              1
+            )
+          )/parse-html(payload) ! (
+            name:=json(
+              extract(
+                .,
+                'sola: (.+?\})',
+                1,'s'
+              )
+            )/concat(
+              'FOX: ',
+              if (showTitle) then
+                showTitle||' - '
+              else
+                (),
+              videoTitle,
+              replace(
+                createdDate,
+                '(\d{4})(\d{2})(\d{2}).+',
+                ' ($3$2$1)'
+              )
+            ),
+            let $a:=json(
+                  extract(
+                    .,
+                    'releaseUrl: (.+?\})',
+                    1,'s'
+                  )
+                )/concat(
+                  'https://',
+                  link,
+                  '/s/',
+                  player,
+                  '/',
+                  id,
+                  '?mbr=true&amp;policy=',
+                  policy,
+                  '&amp;switch=',
+                  switch
+                ),
+                $b:=doc($a)
+            return (
+              t:=extract(
+                $b//ref/@dur,
+                '(\d+)\d{3}',
+                1
+              ),
+              duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
+              if ($b//textstream) then
+                s_url:=$b//textstream[@lang='nl'][@type='text/srt']/@src
+              else
+                (),
+              formats:=[
+                for $x at $i in $b//video order by $x/@system-bitrate count $i return
+                $x/{
+                  'format':'pg-'||$i,
+                  'extension':'mp4',
+                  'resolution':concat(
+                    @width,
+                    'x',
+                    @height
+                  ),
+                  'bitrate':round(
+                    @system-bitrate div 1000
+                  )||'k',
+                  'url':@src
+                },
+                doc($a||'&amp;manifest=m3u')//video/(
+                  {
+                    'format':'hls-0',
+                    'extension':'m3u8',
+                    'url':@src
+                  },
+                  for $x at $i in tail(
+                    tokenize(
+                      unparsed-text(@src),
+                      '#EXT-X-STREAM-INF:'
+                    )
+                  ) order by extract(
+                    $x,
+                    'BANDWIDTH=(\d+)',
+                    1
+                  ) count $i return {
+                    'format':'hls-'||$i,
+                    'extension':'m3u8',
+                    'resolution':extract(
+                      $x,
+                      'RESOLUTION=([\dx]+)',
+                      1
+                    ),
+                    'bitrate':extract(
+                      $x,
+                      'BANDWIDTH=(\d+)\d{3}',
+                      1
+                    )||'k',
+                    'url':extract(
+                      $x,
+                      '(.+m3u8)',
+                      1
+                    )
+                  }
+                )
+              ]
+            )
+          )"
