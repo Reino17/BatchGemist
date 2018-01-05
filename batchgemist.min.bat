@@ -674,12 +674,12 @@ REM ============================================================================
 :Download
 ECHO.
 ECHO Doelmap: %~dp0
-SET /P "remap=Wijzigen? [J/n] "
-IF /I "%remap%"=="n" (
-	SET "map=%~dp0"
-) ELSE (
+SET /P "remap=Wijzigen? [j/N] "
+IF /I "%remap%"=="j" (
 	ECHO Opslaan in:
-	FOR /F "delims=" %%A IN ('^"%xidel% --xquery "let $a:=extract(read(),'(.:\\|\\\\)(.+)',(1,2)),$b:=concat($a[1],replace(if (ends-with($a[2],'\')) then $a[2] else $a[2]||'\','[<>/|?*:^]','')) return ($b,file:create-dir($b))" --output-encoding^=oem^"') DO SET "map=%%A"
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=read() return if ($a) then let $b:=extract($a,'([a-zA-Z]:\\|\\\\)?(.+)',(1,2)),$c:=concat(if ($b[1]) then $b[1] else file:current-dir(),replace(replace(if (ends-with($b[2],'\')) then $b[2] else $b[2]||'\',':','-'),'[<>/|?*^]','')) return ($c,file:create-dir($c)) else '%~dp0'" --output-encoding^=oem^"') DO SET "map=%%A"
+) ELSE (
+	SET "map=%~dp0"
 )
 
 FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
@@ -693,11 +693,11 @@ FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 SET "name=%name::=-%"
 ECHO.
 ECHO Bestandsnaam: %name%%ext%
-SET /P "rename=Wijzigen? [J/n] "
-IF /I NOT "%rename%"=="n" (
+SET /P "rename=Wijzigen? [j/N] "
+IF /I "%rename%"=="j" (
 	ECHO Nieuwe bestandsnaam ^(zonder extensie^):
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(read(),':','-'),'[<>/\\|?*^]','')" --output-encoding^=oem^"') DO SET "name=%%A"
-) 
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=read() return if ($a) then replace(replace($a,':','-'),'[<>/\\|?*^]','') else '%name%'" --output-encoding^=oem^"') DO SET "name=%%A"
+)
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 IF DEFINED s_url (
