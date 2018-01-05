@@ -2854,53 +2854,70 @@ IF NOT "%url: =%"=="%url%" (
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:foxsports.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-f ^"concat(
-	      'http://www.foxsports.nl/videodata/'^,
-	      //@data-videoid^,
-	      '.xml'
-	    ^)^"
-	-e ^"name:^=concat(
-	      'FOX Sports - '^,
-	      //title^,
-	      replace(
-	        //publicationDate^,
-	        '(\d{4}^)(\d{2}^)(\d{2}^).+'^,
-	        ' ($3$2$1^)'
-	      ^)
-	    ^)^"
-	-f ^"//videoSource[@format^='HLS']/uri^"
-	--xquery ^"json:^=[
+	-f ^"{
+	      'data':concat^(
+	        'https://'^,
+	        $host^,
+	        '/videodata/'^,
+	        //@data-videoid^,
+	        '.xml'
+	      ^)^,
+	      'input-format':'xml-strict'
+	    }^"
+	--xquery ^"name:^=concat^(
+	            'FOX Sports: '^,
+	            //title^,
+	            replace^(
+	              //publicationDate^,
+	              '^(\d{4}^)^(\d{2}^)^(\d{2}^).+'^,
+	              ' ^($3$2$1^)'
+	            ^)
+	          ^)^,
+	          t:^=//duration^,
+	          duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+	          let $a:^=doc^(
+	                //videoSource[@format^='IIS']/uri
+	              ^)//StreamIndex[@Type^='video']/QualityLevel/concat^(
+	                @MaxWidth^,
+	                'x'^,
+	                @MaxHeight
+	              ^)^,
+	              $b:^=//videoSource[@format^='HLS']/uri
+	          return
+	          formats:^=[
 	            {
-	              'format':'meta'^,
-	              'url':$url
+	              'format':'hls-0'^,
+	              'extension':'m3u8'^,
+	              'url':$b
 	            }^,
-	            tail(
-	              tokenize(
-	                $raw^,
+	            for $x at $i in tail^(
+	              tokenize^(
+	                unparsed-text^($b^)^,
 	                '#EXT-X-STREAM-INF:'
 	              ^)
-	            ^) ! {
-	              'format':string(
-	                extract(
-	                  .^,'BANDWIDTH^=(\d+^)'^,1
-	                ^) idiv 1000
-	              ^)^,
-	              'url':concat(
-	                resolve-uri('.'^)^,
-	                extract(
-	                  .^,
-	                  '(.+m3u8^)'^,1
-	                ^)
+	            ^) order by extract^(
+	              $x^,
+	              'BANDWIDTH^=^(\d+^)'^,
+	              1
+	            ^) count $i return {
+	              'format':'hls-'^|^|$i^,
+	              'extension':'m3u8'^,
+	              'resolution':reverse^($a^)[$i]^,
+	              'bitrate':extract^(
+	                $x^,
+	                'BANDWIDTH^=^(\d+^)\d{3}'^,
+	                1
+	              ^)^|^|'k'^,
+	              'url':resolve-uri^(
+	                '.'^,
+	                $b
+	              ^)^|^|extract^(
+	                $x^,
+	                '^(.+m3u8^)'^,
+	                1
 	              ^)
 	            }
-	          ]^,
-	          let $a:^=(
-	            $json(^)[format^='meta']/format^,
-	            for $x in $json(^)[format!^='meta']/format order by $x return $x
-	          ^) return (
-	            formats:^=join($a^,'^, '^)^,
-	            best:^=$a[last(^)]
-	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:abhd.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"let $a:^=[
