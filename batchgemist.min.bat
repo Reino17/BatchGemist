@@ -170,6 +170,14 @@ SET check=
 IF NOT EXIST %xidel% (
 	SET check=1
 	ECHO %xidel% niet gevonden.
+) ELSE (
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "extract(system('%xidel% --version'),'\.(\d{4})\.',1)"^"') DO (
+		IF %%A LSS 5651 (
+			SET check=1
+			ECHO %xidel% gevonden, maar versie is te oud.
+		)
+	)
+	SET "XIDEL_OPTIONS=--silent"
 )
 IF NOT EXIST %ffmpeg% (
 	SET check=1
@@ -186,7 +194,7 @@ IF DEFINED check (
 	GOTO Help
 )
 
-SET "XIDEL_OPTIONS=--silent"
+SET "user-agent=Mozilla/5.0 ^(compatible; Xidel^)"
 GOTO Input
 
 REM ================================================================================================
@@ -211,7 +219,7 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF "%url%"=="npo-gids" (
 	GOTO NPOGids
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:npo.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/(.+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
@@ -220,7 +228,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/(.+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:uitzendinggemist.net/aflevering=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'user-agent':'BatchGemist %ver%','method':'HEAD'})/url" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'user-agent':'%user-agent%','method':'HEAD'})/url" --output-format^=cmd^"') DO %%A
 	GOTO Process
 ) ELSE IF NOT "%url:2doc.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=(//@data-media-id)[1],date:=replace((//@datetime)[1],'(\d+)-(\d+)-(\d+)','$3$2$1')" --output-format^=cmd^"') DO %%A
@@ -250,10 +258,10 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%','video/([\w-]+)',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "uuid:=extract(//div[@class='videoContainer']//@src,'=(.+)/',1)" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "uuid:=extract(//div[@class='videoContainer']//@src,'=(.+)/',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "uuid:=//iframe/extract(@src,'uuid=(.+?)/',1)[.]" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "uuid:=//iframe/extract(@src,'uuid=(.+?)/',1)[.]" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:kijk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','(?:video|videos)/(\w+)',1)" --output-format^=cmd^"') DO %%A
@@ -378,7 +386,7 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :rtlXL
-FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/" --xquery "$json/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),q:=.//quality,(material)()/(let $a:=duration return round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00'),$b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()))" -f "$json[not(meta/nr_of_videos_total=0)]/concat(meta/videohost,material/videopath)" --xquery "let $a:=if ($q='HD') then ('a2t','a3t','nettv') else ('a2t','a3t') return formats:=[for $x at $i in ($a ! replace($url,'.+(/comp.+)m3u8',concat('http://pg.us.rtl.nl/rtlxl/network/',.,'/progressive$1mp4'))) return system(x'cmd /c %ffmpeg% -user_agent \"BatchGemist %ver%\" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x,'teapot':true},{'format':'hls-0','extension':'m3u8','url':$url},for $x at $i in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':extract($x,'(.+m3u8)',1)}]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/" --xquery "$json/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),q:=.//quality,(material)()/(let $a:=duration return round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * dayTimeDuration('PT1S') + dateTime('1970-01-01T00:00:00'),$b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()))" -f "$json[not(meta/nr_of_videos_total=0)]/concat(meta/videohost,material/videopath)" --xquery "let $a:=if ($q='HD') then ('a2t','a3t','nettv') else ('a2t','a3t') return formats:=[for $x at $i in ($a ! replace($url,'.+(/comp.+)m3u8',concat('http://pg.us.rtl.nl/rtlxl/network/',.,'/progressive$1mp4'))) return system(x'cmd /c %ffmpeg% -user_agent \"%user-agent%\" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x,'teapot':true},{'format':'hls-0','extension':'m3u8','url':$url},for $x at $i in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':extract($x,'(.+m3u8)',1)}]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
 	GOTO Formats
@@ -538,7 +546,7 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		)
 	)
 )
-FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[format='%format%']/(v_url:=url,if (teapot) then ffmpeg_ua:='-user_agent \"BatchGemist %ver%\"' else ())" --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[format='%format%']/(v_url:=url,if (teapot) then ffmpeg_ua:='-user_agent \"%user-agent%\"' else ())" --output-format^=cmd') DO %%A
 
 IF DEFINED v_url (
 	GOTO Select
@@ -788,7 +796,7 @@ REM ============================================================================
 :Versie
 ECHO.
 ECHO BatchGemist %ver%
-%xidel% -e "replace(system('%xidel:"=% --version'),'(.+)\r\n.+(\.\d+)\..+','$1$2','s')"
+%xidel% -e "replace(system('%xidel:"=% --version'),'(.+)\r\n.+(\.\d{4}).+','$1$2','s')"
 %xidel% -e "replace(system('%ffmpeg:"=% -version'),'(.+?) (?:version )?([\w.-]+).+','$1 $2','s')"
 ECHO.
 ECHO.

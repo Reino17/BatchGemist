@@ -2161,7 +2161,7 @@ name := AT5 - ''Bekende voetballers kopen massaal huizen op in Amsterdam'' (2801
 [https://github.com/Reino17/BatchGemist/commit/1d1490183c299f30f79d15633e8c8e3a4a239005]
 [https://github.com/Reino17/BatchGemist/commit/87db54e6178903fc6c8ba312d0724062f037c00a]
 [https://github.com/Reino17/BatchGemist/commit/c6ef00d49969a54a1bbe083387e7c5b7bfc228bf]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
 
@@ -3672,7 +3672,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json(concat('htt
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/e9d866ede38cc08037c5bd457aa0c1c40466e3cf]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 'VPWON_1274590.json':
 
@@ -4003,7 +4003,7 @@ t := 66
 
 [https://github.com/Reino17/BatchGemist/commit/5a6d0bf7b023ad1a7263c3a4fe846f800bedd6e8]
 [https://github.com/Reino17/BatchGemist/commit/bfac669aff1b9e0a30a904e9e88021c702b0c6c2]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 https://www.rtl.nl/video/d4e31e66-e403-33d5-8f44-a3886e42be51/
 
@@ -4357,7 +4357,7 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "704x400", "vbi
 [https://github.com/Reino17/BatchGemist/commit/60b11d43e9be9fa49289914d3e8458cf53456b01]
 [https://github.com/Reino17/BatchGemist/commit/ae8be184a02c3ef1f7ca2b13acd4f23bc313efbb]
 [https://github.com/Reino17/BatchGemist/commit/0cdfeede4b7cf2505a88847c2d128d5c3667b59f]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "prid:=extract('http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1/','(?:video|videos)/(\w+)',1)"
 prid := w7ZW52xLgL5
@@ -5799,7 +5799,7 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bit
 
 [https://github.com/Reino17/BatchGemist/commit/e9b1a15d92b26b518770012bde1815f9f86697d8]
 [https://github.com/Reino17/BatchGemist/commit/9b61484ba4c82af8ed77f79b65dafb8c0644b6e2]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "for $x in json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'] order by $x/id return concat('  ',$x/id,'. ',$x/name)"
   1. NPO Radio 1
@@ -6335,7 +6335,7 @@ http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-l
 
 [https://github.com/Reino17/BatchGemist/commit/d40a3b85a7cfdc06263ad21e165f48e23ce47ed7]
 [https://github.com/Reino17/BatchGemist/commit/75c91336d899846f3d02691b26b8d7d07a169b5d]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30 (losse video)
 
@@ -6854,7 +6854,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://anderetijden.nl/programma
 
 [https://github.com/Reino17/BatchGemist/commit/81962742f028bf76946fb9ea8f3dc7c7819964bd]
 [https://github.com/Reino17/BatchGemist/commit/5afb9883c481444ccd6b2b82563e63675a62cca4]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html
 
@@ -8000,7 +8000,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/1a4fb6e6ab86243b70f3814b25d0a76f70396fcc]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 http://www.comedycentral.nl/nieuws/95726-20-photoshop-trolls-die-geweldig-zijn-ingegaan-op-slechte-verzoeken
 
@@ -8313,7 +8313,7 @@ goto := NPO
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/b0069c866ff8edbe3516033f93fc11b8537e3a7c]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 
 http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50
 

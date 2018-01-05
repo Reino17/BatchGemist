@@ -170,6 +170,21 @@ SET check=
 IF NOT EXIST %xidel% (
 	SET check=1
 	ECHO %xidel% niet gevonden.
+) ELSE (
+	FOR /F "delims=" %%A IN ('^"%xidel%
+	-e ^"extract^(
+	      system^(
+	        '%xidel% --version'
+	      ^)^,
+	      '\.^(\d{4}^)\.'^,
+	      1
+	    ^)^"^"') DO (
+		IF %%A LSS 5651 (
+			SET check=1
+			ECHO %xidel% gevonden, maar versie is te oud.
+		)
+	)
+	SET "XIDEL_OPTIONS=--silent"
 )
 IF NOT EXIST %ffmpeg% (
 	SET check=1
@@ -186,7 +201,7 @@ IF DEFINED check (
 	GOTO Help
 )
 
-SET "XIDEL_OPTIONS=--silent"
+SET "user-agent=Mozilla/5.0 ^(compatible; Xidel^)"
 GOTO Input
 
 REM ================================================================================================
@@ -211,7 +226,7 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF "%url%"=="npo-gids" (
 	GOTO NPOGids
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:npo.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
@@ -261,7 +276,7 @@ IF NOT "%url: =%"=="%url%" (
 	          else
 	            'http://www.kijk.nl/video/$1'
 	        ^)^,
-	        'user-agent':'BatchGemist %ver%'^,
+	        'user-agent':'%user-agent%'^,
 	        'method':'HEAD'
 	      }
 	    ^)/url^" --output-format^=cmd^"') DO %%A
@@ -499,7 +514,7 @@ IF NOT "%url: =%"=="%url%" (
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%"
 	-e ^"uuid:^=extract(
 	      //div[@class^='videoContainer']//@src^,
 	      '^=(.+^)/'^,
@@ -507,7 +522,7 @@ IF NOT "%url: =%"=="%url%" (
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "BatchGemist %ver%" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%"
 	-e ^"uuid:^=//iframe/extract(
 	      @src^,
 	      'uuid^=(.+?^)/'^,
@@ -3501,7 +3516,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
               ^)
             ^) return
             system^(
-              x'cmd /c %ffmpeg% -user_agent \^"BatchGemist %ver%\^" -i {$x} 2^>^&amp^;1'
+              x'cmd /c %ffmpeg% -user_agent \^"%user-agent%\^" -i {$x} 2^>^&amp^;1'
             ^) ! {
               'format':'pg-'^|^|$i^,
               'extension':'mp4'^,
@@ -4260,7 +4275,7 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% -
 -e ^"$json^(^)[format^='%format%']/^(
         v_url:^=url^,
         if ^(teapot^) then
-          ffmpeg_ua:^='-user_agent \^"BatchGemist %ver%\^"'
+          ffmpeg_ua:^='-user_agent \^"%user-agent%\^"'
         else
           ^(^)
       ^)^" --output-format^=cmd') DO %%A
@@ -4610,7 +4625,7 @@ ECHO.
 ECHO BatchGemist %ver%
 %xidel% -e ^"replace(^
               system('%xidel:"=% --version'),^
-              '(.+)\r\n.+(\.\d+)\..+',^
+              '(.+)\r\n.+(\.\d{4}).+',^
               '$1$2',^
               's'^
             )^"
