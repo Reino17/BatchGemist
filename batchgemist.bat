@@ -3538,7 +3538,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 's'
               ^)^,
               'url':$x^,
-              'teapot':true
+              'ff_param':'-user_agent \^"%user-agent%\^"'
             }^,
             {
               'format':'hls-0'^,
@@ -3587,7 +3587,8 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 $x^,
                 '^(.+m3u8^)'^,
                 1
-              ^)
+              ^)^,
+              'ff_param':'-seekable 0'
             }
           ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
@@ -4274,10 +4275,7 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% -
 -e ^"$json^(^)[format^='%format%']/^(
         v_url:^=url^,
-        if ^(teapot^) then
-          ffmpeg_ua:^='-user_agent \^"%user-agent%\^"'
-        else
-          ^(^)
+        ff_param:^=ff_param
       ^)^" --output-format^=cmd') DO %%A
 
 IF DEFINED v_url (
@@ -4425,14 +4423,14 @@ IF DEFINED ss (
 	SET /P "subs=Inclusief ondertiteling? [j/N] "
 	IF /I "!subs!"=="j" (
 		IF "%id%"=="3" %mpc% !v_url! /sub %s_url% /close
-		IF "%id%"=="4" %ffmpeg% -v fatal %ffmpeg_ua% -i !v_url! -c copy -f nut - | %mpc% - /sub %s_url% /close
+		IF "%id%"=="4" %ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /sub %s_url% /close
 	) ELSE (
 		IF "%id%"=="3" %mpc% !v_url! /close
-		IF "%id%"=="4" %ffmpeg% -v fatal %ffmpeg_ua% -i !v_url! -c copy -f nut - | %mpc% - /close
+		IF "%id%"=="4" %ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /close
 	)
 ) ELSE (
 	IF "%id%"=="3" %mpc% !v_url! /close
-	IF "%id%"=="4" %ffmpeg% -v fatal %ffmpeg_ua% -i !v_url! -c copy -f nut - | %mpc% - /close
+	IF "%id%"=="4" %ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /close
 )
 ECHO.
 ECHO.
@@ -4580,47 +4578,47 @@ IF DEFINED ss1 (
 		IF DEFINED mux (
 			IF DEFINED ss1 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -ss !ss1! -i !v_url! -ss !ss1! -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner %ff_param% -ss !ss1! -i !v_url! -ss !ss1! -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 				) ELSE (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -ss !ss1! -i !v_url! -ss !ss1! -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner %ff_param% -ss !ss1! -i !v_url! -ss !ss1! -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 				)
 			) ELSE IF DEFINED ss2 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner %ff_param% -i !v_url! -i %s_url% -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 				) ELSE (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+					%ffmpeg% -hide_banner %ff_param% -i !v_url! -i %s_url% -ss !ss2! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 				)
 			) ELSE (
-				%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -i %s_url% -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+				%ffmpeg% -hide_banner %ff_param% -i !v_url! -i %s_url% -t !t! -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 			)
 		) ELSE (
 			IF DEFINED ss1 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -ss !ss1! -i !v_url! -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					%ffmpeg% -hide_banner %ff_param% -ss !ss1! -i !v_url! -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
 					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss1! -i %s_url% -ss !ss2! -t !t! "!map!%name%.srt"
 				) ELSE (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -ss !ss1! -i !v_url! -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					%ffmpeg% -hide_banner %ff_param% -ss !ss1! -i !v_url! -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
 					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -ss !ss1! -i %s_url% -ss !ss2! "!map!%name%.srt"
 				)
 			) ELSE IF DEFINED ss2 (
 				IF DEFINED t (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					%ffmpeg% -hide_banner %ff_param% -i !v_url! -ss !ss2! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
 					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% -ss !ss2! -t !t! "!map!%name%.srt"
 				) ELSE (
-					%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+					%ffmpeg% -hide_banner %ff_param% -i !v_url! -ss !ss2! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
 					IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% -ss !ss2! "!map!%name%.srt"
 				)
 			) ELSE (
-				%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+				%ffmpeg% -hide_banner %ff_param% -i !v_url! -t !t! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
 				IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% -t !t! "!map!%name%.srt"
 			)
 		)
 	) ELSE (
 		ECHO.
 		IF DEFINED mux (
-			%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -i %s_url% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
+			%ffmpeg% -hide_banner %ff_param% -i !v_url! -i %s_url% -c copy -bsf:a aac_adtstoasc -c:s srt -metadata:s:s language=dut "!map!%name%.mkv"
 		) ELSE (
-			%ffmpeg% -hide_banner %ffmpeg_ua% -i !v_url! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
+			%ffmpeg% -hide_banner %ff_param% -i !v_url! -c copy -bsf:a aac_adtstoasc "!map!%name%%ext%"
 			IF DEFINED subs ECHO. & %ffmpeg% -hide_banner -i %s_url% "!map!%name%.srt"
 		)
 	)
