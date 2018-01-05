@@ -171,6 +171,7 @@ IF NOT EXIST %xidel% (
 	SET check=1
 	ECHO %xidel% niet gevonden.
 ) ELSE (
+	SET "XIDEL_OPTIONS=--silent"
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"extract^(
 	      system^(
@@ -184,7 +185,6 @@ IF NOT EXIST %xidel% (
 			ECHO %xidel% gevonden, maar versie is te oud.
 		)
 	)
-	SET "XIDEL_OPTIONS=--silent"
 )
 IF NOT EXIST %ffmpeg% (
 	SET check=1
