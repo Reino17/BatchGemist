@@ -2531,28 +2531,62 @@ IF NOT "%url: =%"=="%url%" (
 	            best:^=$a[last(^)]
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:24kitchen.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"name:^=concat(
-	      '24Kitchen - '^,
-	      //h1[@class^='fn title']
+	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "%url%"
+	-e ^"json^(
+	      //script/extract^(
+	        .^,
+	        'graph.+?^(\[.+\]^)'^,
+	        1^,'s'
+	      ^)
+	    ^)^(1^)/^(
+	      name:^=concat^(
+	        '24Kitchen: '^,
+	        name^,
+	        replace^(
+	          datePublished^,
+	          '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+	          ' ^($3$2$1^)'
+	        ^)
+	      ^)
 	    ^)^"
-	-f ^"extract(
-	      $raw^,
-	      'tp:releaseUrl^=\^"(.+^^^)\^"'^,1
+	-f ^"json^(
+	      //script[@type^='application/json']
+	    ^)/^(
+	      let $a:^=^(mcplayers^)^(^) return
+	      ^(mcplayers^)^($a^)
 	    ^)^"
-	--xquery ^"json:^=[
-	            //video/{
-	              'format':concat(
-	                'mp4-'^,
-	                @system-bitrate idiv 1000
-	              ^)^,
-	              'url':@src
-	            }
-	          ]^,
-	          let $a:^=for $x in $json(^)/format order by $x return $x return (
-	            formats:^=join($a^,'^, '^)^,
-	            best:^=$a[last(^)]
-	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	-e ^"let $a:^=x:request^(
+	      {
+	        'data':$json//src^,
+	        'method':'HEAD'
+	      }
+	    ^)/url return
+	    formats:^=[
+	      system^(
+	        x'cmd /c %ffmpeg% -i {$a} 2^>^&1'
+	      ^) ! {
+	        'format':'mp4-1'^,
+	        'extension':'mp4'^,
+	        'resolution':extract^(
+	          .^,
+	          'Video:.+^, ^(\d+x\d+^)'^,
+	          1
+	        ^)^,
+	        'vbitrate':replace^(
+	          .^,
+	          '.+Video:.+?^(\d+^) kb.+'^,
+	          'v:$1k'^,
+	          's'
+	        ^)^,
+	        'abitrate':replace^(
+	          .^,
+	          '.+Audio:.+?^(\d+^) kb.+'^,
+	          'a:$1k'^,
+	          's'
+	        ^)^,
+	        'url':$a
+	      }
+	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:dumpert.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist %ver%" "%url%"
 	--xquery ^"let $a:^=json(

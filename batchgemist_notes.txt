@@ -8672,7 +8672,7 @@ formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "bi
 
 [https://github.com/Reino17/BatchGemist/commit/6629f05abc5f8a27eea61ef967241a4bd880e98c]
 [https://github.com/Reino17/BatchGemist/commit/55f3e82ee1985e74ac36bd1296d7e74c1e57f18a]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/3e80e235fdb45f0b427e50581920be09fb92dbe0]
 
 http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8
 
@@ -9339,3 +9339,217 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://lb-fox-vod.
               )
             }
           ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))"
+[
+  {
+    "@type": "Recipe",
+    "name": "Lemon pudding van oma Ruth",
+    "url": "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth",
+    "recipeInstructions": "Verwarm een oven voor op 170 graden Celsius. Vet een ruime ovenschaal in. Rasp ondertussen de citroenen en spilts de eieren. Meng nu de zachte boter met de kristalsuiker en het citroenrasp. Meng nu het geel van de eieren en het zelfrijzende bakmeel erbij. Als dit erdoor zit meng je het sap van de citroenen en de melk toe.\n\nKlop nu de overgebleven eiwitten op en spatel dit door het mengsel. Giet nu uit in de ingevette ovenschaal en zet deze in een groot bakblik. Giet het bakblik vol met water tot ongeveer 2/3 van de hoogte van je ovenschaal. Gaar nu de lemonpudding in ongeveer 45 minuten.",
+    "description": "Oma Ruth combineert de Australische, Britse en Hollandse keuken. Dit keer laat ze aan Danny Jansen zien hoe je een heerlijke lemon pudding maakt.",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https://www.24kitchen.nl/files/styles/social_media_share/public/2017-12/ZAODK_S03E07_RUTH_LemonPudding_Bewerkt.jpg?itok=ravLJrVy",
+      "width": "1024",
+      "height": "780"
+    },
+    "datePublished": "2018-01-02T19:00:00+0100",
+    "totalTime": "P0DT1H0M",
+    "recipeIngredient": ["60 g zachte boter", "120 g kristalsuiker", "2 citroenen", "60 g zelfrijzend bakmeel", "300 ml melk", "2 eieren"],
+    "recipeCategory": "Nagerecht",
+    "recipeCuisine": "Australisch",
+    "author": {
+      "@type": "Organization",
+      "@id": "https://www.24kitchen.nl",
+      "name": "24Kitchen",
+      "url": "https://www.24kitchen.nl",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.24kitchen.nl/themes/kitchen/24k-logo.png",
+        "width": "54",
+        "height": "60"
+      }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "3.73171",
+      "reviewCount": "41"
+    }
+  },
+  {
+    "@type": "WebSite",
+    "@id": "https://www.24kitchen.nl",
+    "name": "24Kitchen",
+    "url": "https://www.24kitchen.nl/",
+    "publisher": {
+      "@type": "Organization",
+      "@id": "https://www.24kitchen.nl",
+      "name": "24Kitchen",
+      "url": "https://www.24kitchen.nl",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.24kitchen.nl/themes/kitchen/24k-logo.png",
+        "width": "54",
+        "height": "60"
+      }
+    }
+  }
+]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'))"
+24Kitchen: Lemon pudding van oma Ruth (02012018)
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script[@type='application/json'])"
+{
+  [...]
+  "mcplayers": {
+    "node-field_video_id-23073-0": "https://dpg-api.mychannels.com/v1/productions/23721/mc_player_pl
+aylist.json?single_production=true"
+  },
+  [...]
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "let $a:=json(//script[@type='application/json']) return $a/(mcplayers)() ! ($a/mcplayers)(.)"
+of
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))"
+https://dpg-api.mychannels.com/v1/productions/23721/mc_player_playlist.json?single_production=true
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "$json"
+{
+  "items": [
+    {
+      "id": 23721,
+      "title": "ZAODK_S03E07_RUTH",
+      "poster": "https://mychannels.imgix.net/imgix/ab71a585-6013-4c51-aefc-b743ff756add/ZAODK_S03E07_RUTH_LemonPudding_Bewerkt.jpg?max-h=615&max-w=1093&fit=crop&crop=focalpoint&auto=format,compress&fm=jpg&fp-x=0.5&fp-y=0.5",
+      "description": {
+        "productionId": 23721,
+        "productionTitle": "ZAODK_S03E07_RUTH",
+        "productionDuration": 0,
+        "productionOrigin": "origin_partner",
+        "productionPublicationDate": "2017-12-28 11:51:00 +0100",
+        "minotoId": null,
+        "ooyalaContentId": null,
+        "showId": 755,
+        "showTitle": "Zoals Alleen Oma Dat Kan",
+        "channelId": 299,
+        "channelTitle": "24 Kitchen",
+        "channelSlug": "24kitchen",
+        "networkId": 0,
+        "networkTitle": "Network is deprecated",
+        "organisationId": 7,
+        "organisationTitle": "24Kitchen",
+        "theme": "Cooking & Food",
+        "marketing_level": 1
+      },
+      "live": false,
+      "duration": 0,
+      "adsEnabled": true,
+      "audioonly": false,
+      "account": "account",
+      "locations": {
+        "adaptive": [],
+        "progressive": [
+          {
+            "label": "720p",
+            "sources": [
+              {
+                "type": "video/mp4",
+                "src": "https://link.theplatform.com/s/BhQjCC/media/WGKtJfnfxmni?formats=mpeg4"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "x:request({'data':$json//src,'method':'HEAD'})/url"
+https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_400x226_110k.mp4			# 400x226?!
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "x:request({'data':$json//src,'method':'HEAD'})/url"
+https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4
+
+Xidel's standaard user-agent werkt niet. "Mozilla/5.0 Firefox" ook niet. "Mozilla/5.0 Firefox/57.0" op z'n minst dus wel. Zeer kieskeurig!
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}"
+{
+  "format": "mp4-1",
+  "extension": "mp4",
+  "resolution": "1280x720",
+  "vbitrate": "v:1679k",
+  "abitrate": "a:125k",
+  "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"
+}
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/(name:=concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')))" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return formats:=[system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
+name := 24Kitchen: Lemon pudding van oma Ruth (02012018)
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:1679k", "abitrate": "a:125k", "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "json(
+      //script/extract(
+        .,
+        'graph.+?(\[.+\])',
+        1,'s'
+      )
+    )(1)/(
+      name:=concat(
+        '24Kitchen: ',
+        name,
+        replace(
+          datePublished,
+          '(\d+)-(\d+)-(\d+).+',
+          ' ($3$2$1)'
+        )
+      )
+    )"
+-f "json(
+      //script[@type='application/json']
+    )/(
+      let $a:=(mcplayers)() return
+      (mcplayers)($a)
+    )"
+-e "let $a:=x:request(
+      {
+        'data':$json//src,
+        'method':'HEAD'
+      }
+    )/url return
+    formats:=[
+      system(
+        x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1'
+      ) ! {
+        'format':'mp4-1',
+        'extension':'mp4',
+        'resolution':extract(
+          .,
+          'Video:.+, (\d+x\d+)',
+          1
+        ),
+        'vbitrate':replace(
+          .,
+          '.+Video:.+?(\d+) kb.+',
+          'v:$1k',
+          's'
+        ),
+        'abitrate':replace(
+          .,
+          '.+Audio:.+?(\d+) kb.+',
+          'a:$1k',
+          's'
+        ),
+        'url':$a
+      }
+    ]"
