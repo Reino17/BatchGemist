@@ -3040,40 +3040,69 @@ IF NOT "%url: =%"=="%url%" (
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:abhd.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"let $a:^=[
-	      //script/reverse(
-	        extract(
-	          .^,
-	          '(http.+mp4^)'^,1^,'*'
-	        ^)[.]
-	      ^) !
-	        {
-	          'format':concat(
-	            'mp4-'^,
-	            position(^)
+	--xquery ^"let $a:^={
+	                'Jan':'01'^,
+	                'Feb':'02'^,
+	                'Mar':'03'^,
+	                'Apr':'04'^,
+	                'May':'05'^,
+	                'Jun':'06'^,
+	                'Jul':'07'^,
+	                'Aug':'08'^,
+	                'Sep':'09'^,
+	                'Okt':'10'^,
+	                'Nov':'11'^,
+	                'Dec':'12'
+	              }^,
+	              $b:^=extract^(
+	                //div[@id^='playerObject']/span[1]^,
+	                '^(\d+^)^(.+?^)^(\d+^)'^,
+	                ^(1^,2^,3^)
+	              ^)
+	          return
+	          name:^=concat^(
+	            'ABHD: '^,
+	            //div[@id^='playerObject']//a^,
+	            ' ^('^,
+	            $b[1]^,
+	            $a^($b[2]^)^,
+	            '20'^,
+	            $b[3]^,
+	            '^)'
 	          ^)^,
-	          'url':.
-	        }
-	    ] return (
-	      name:^=concat(
-	        'ABHD - '^,
-	        //div[@id^='playerObject']//a^,
-	        replace(
-	          $a(1^)/url^,
-	          '.+?/(\d+^)/(\d{2}^)(\d{2}^).+'^,
-	          ' ($3$2$1^)'
-	        ^)
-	      ^)^,
-	      if (count($a(^)/url^)^=1^) then
-	        v_url:^=$a(^)/url
-	      else (
-	        json:^=$a^,
-	        let $b:^=$a(^)/format return (
-	          formats:^=join($b^,'^, '^)^,
-	          best:^=$b[last(^)]
-	        ^)
-	      ^)
-	    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	          formats:^=[
+	            for $x at $i in //script/reverse^(
+	              extract^(
+	                .^,
+	                'myfile ^= ''^(.+^)'''^,
+	                1^,'*'
+	              ^)[.]
+	            ^) return
+	            system^(
+	              x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
+	            ^) ! {
+	              'format':'mp4-'^|^|$i^,
+	              'extension':'mp4'^,
+	              'resolution':extract^(
+	                .^,
+	                'Video:.+^, ^(\d+x\d+^)'^,
+	                1
+	              ^)^,
+	              'vbitrate':replace^(
+	                .^,
+	                '.+Video:.+?^(\d+^) kb.+'^,
+	                'v:$1k'^,
+	                's'
+	              ^)^,
+	              'abitrate':replace^(
+	                .^,
+	                '.+Audio:.+?^(\d+^) kb.+'^,
+	                'a:$1k'^,
+	                's'
+	              ^)^,
+	              'url':$x
+	            }
+	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:autojunk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"name:^=concat(

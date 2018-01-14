@@ -830,55 +830,6 @@ videos := 1e, 2e, 3e, 4e
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/8980d9b6732eac5e7f031645353c03a0d5ac1691]
-
-xidel-0.9.6.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" -e "let $a:=[//script/reverse(extract(.,'(http.+mp4)',1,'*')[.]) ! {'format':concat('mp4-',position()),'url':.}] return (name:=concat('ABHD - ',//div[@id='playerObject']//a,replace($a(1)/url,'.+?/(\d+)/(\d{2})(\d{2}).+',' ($3$2$1)')),if (count($a()/url)=1) then v_url:=$a()/url else (json:=$a,let $b:=$a()/format return (formats:=join($b,', '),best:=$b[last()])))"
-name := ABHD - Opel Astra OPC 2012 (25062012)
-v_url := http://static.autojunk.nl/flv/2012/0625/120055_hq.mp4
-
-xidel-0.9.6.exe -s --color=never "http://www.abhd.nl/video/opel-astra-j-2009-2015-occasion/" -e "..."
-name := ABHD - Opel Astra J (2009-2015) occasion (10112016)
-json := [{"format": "mp4-1", "url": "http://static.autojunk.nl/flv/2016/1110/095704_hq.mp4"}, {"format": "mp4-2", "url": "http://static.autojunk.nl/flv/2016/1110/095704_720p.mp4"}]
-formats := mp4-1, mp4-2
-best := mp4-2
-
--e "let $a:=[
-      //script/reverse(
-        extract(
-          .,
-          '(http.+mp4)',1,'*'
-        )[.]
-      ) !
-        {
-          'format':concat(
-            'mp4-',
-            position()
-          ),
-          'url':.
-        }
-    ] return (
-      name:=concat(
-        'ABHD - ',
-        //div[@id='playerObject']//a,
-        replace(
-          $a(1)/url,
-          '.+?/(\d+)/(\d{2})(\d{2}).+',
-          ' ($3$2$1)'
-        )
-      ),
-      if (count($a()/url)=1) then
-        v_url:=$a()/url
-      else (
-        json:=$a,
-        let $b:=$a()/format return (
-          formats:=join($b,', '),
-          best:=$b[last()]
-        )
-      )
-    )"
-
-================================================================================================================================
-
 [https://github.com/Reino17/BatchGemist/commit/1f8593bf0c029471086af9c3c4c9a5a35a941dcc]
 
 xidel-0.9.6.exe -s --color=never "http://www.autojunk.nl/2016/12/the-fate-of-the-furious" -e "name:=concat('Autojunk - ',//meta[@property='og:title']/@content,replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/(if (iframe) then v_url:=replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else let $a:=[script/extract(.,'myfile = ''(.+)''',1,'*')[.] ! {'format':concat(replace(.,'.+\.(.+)','$1-'),position()),'url':.}] return if (count($a()/url)=1) then v_url:=$a()/url else (json:=$a,let $b:=$a()/format return (formats:=join($b,', '),best:=$b[last()])))"
@@ -10010,3 +9961,119 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
         'prid':@data-ts-destination
       }
     ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/8980d9b6732eac5e7f031645353c03a0d5ac1691]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.abhd.nl/video/opel-astra-opc-2012/ (video in 1 formaat)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" -e "let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(//div[@id='playerObject']/span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return concat('ABHD: ',//div[@id='playerObject']//a,' (',$b[1],$a($b[2]),'20',$b[3],')')"
+ABHD: Opel Astra OPC 2012 (25062012)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" --xquery "[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "848x480",
+    "vbitrate": "v:1192k",
+    "abitrate": "a:127k",
+    "url": "https://static.autojunk.nl/flv/2012/0625/120055_hq.mp4"
+  }
+]
+
+https://www.abhd.nl/video/hyundai-i30-n/ (video in 2 formaten)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/hyundai-i30-n/" --xquery "[...]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "848x480",
+    "vbitrate": "v:1190k",
+    "abitrate": "a:195k",
+    "url": "https://static.autojunk.nl/flv/2017/1114/115719_hq.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "vbitrate": "v:1980k",
+    "abitrate": "a:195k",
+    "url": "https://static.autojunk.nl/flv/2017/1114/115719_720p.mp4"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/renault-clio-iii-rs-occasion/" --xquery "let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(//div[@id='playerObject']/span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return name:=concat('ABHD: ',//div[@id='playerObject']//a,' (',$b[1],$a($b[2]),'20',$b[3],')'),formats:=[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+name := ABHD: Hyundai i30 N (14112017)
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "848x480", "vbitrate": "v:1190k", "abitrate": "a:195k", "url": "https://static.autojunk.nl/flv/2017/1114/115719_hq.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:1980k", "abitrate": "a:195k", "url": "https://static.autojunk.nl/flv/2017/1114/115719_720p.mp4"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "let $a:={
+                'Jan':'01',
+                'Feb':'02',
+                'Mar':'03',
+                'Apr':'04',
+                'May':'05',
+                'Jun':'06',
+                'Jul':'07',
+                'Aug':'08',
+                'Sep':'09',
+                'Okt':'10',
+                'Nov':'11',
+                'Dec':'12'
+              },
+              $b:=extract(
+                //div[@id='playerObject']/span[1],
+                '(\d+)(.+?)(\d+)',
+                (1,2,3)
+              )
+          return
+          name:=concat(
+            'ABHD: ',
+            //div[@id='playerObject']//a,
+            ' (',
+            $b[1],
+            $a($b[2]),
+            '20',
+            $b[3],
+            ')'
+          ),
+          formats:=[
+            for $x at $i in //script/reverse(
+              extract(
+                .,
+                'myfile = ''(.+)''',
+                1,'*'
+              )[.]
+            ) return
+            system(
+              x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1'
+            ) ! {
+              'format':'mp4-'||$i,
+              'extension':'mp4',
+              'resolution':extract(
+                .,
+                'Video:.+, (\d+x\d+)',
+                1
+              ),
+              'vbitrate':replace(
+                .,
+                '.+Video:.+?(\d+) kb.+',
+                'v:$1k',
+                's'
+              ),
+              'abitrate':replace(
+                .,
+                '.+Audio:.+?(\d+) kb.+',
+                'a:$1k',
+                's'
+              ),
+              'url':$x
+            }
+          ]"
