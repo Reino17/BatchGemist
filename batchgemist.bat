@@ -2789,10 +2789,11 @@ IF NOT "%url: =%"=="%url%" (
 	                ^)^,
 	                $b:^=doc^($a^)
 	            return ^(
-	              t:^=extract^(
-	                $b//ref/@dur^,
-	                '^(\d+^)\d{3}'^,
-	                1
+	              t:^=round^(
+	                substring-before^(
+	                  $b//ref/@dur^,
+	                  'ms'
+	                ^) div 1000
 	              ^)^,
 	              duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
 	              if ^($b//textstream^) then
