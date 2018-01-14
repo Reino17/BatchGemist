@@ -3105,49 +3105,65 @@ IF NOT "%url: =%"=="%url%" (
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:autojunk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"name:^=concat(
-	      'Autojunk - '^,
-	      //meta[@property^='og:title']/@content^,
-	      replace(
-	        //span[@class^='posted']^,
-	        '.+?(\d+^)-(\d+^)-(\d+^).+'^,
-	        ' ($1$2$3^)'
-	      ^)
-	    ^)^,
-	    //div[@id^='playerWrapper']/(
-	      if (iframe^) then
-	        v_url:^=replace(
-	          iframe/@src^,
-	          '.+/(.+^)'^,
-	          'https://youtu.be/$1'
-	        ^)
-	      else
-	        let $a:^=[
-	          script/extract(
-	            .^,'myfile ^= ''(.+^)'''^,1^,'*'
-	          ^)[.] !
-	            {
-	              'format':concat(
-	                replace(
+	--xquery ^"name:^=concat^(
+	            'Autojunk: '^,
+	            //meta[@property^='og:title']/@content^,
+	            replace^(
+	              //span[@class^='posted']^,
+	              '.+?^(\d+^)-^(\d+^)-^(\d+^).+'^,
+	              ' ^($1$2$3^)'
+	            ^)
+	          ^)^,
+	          //div[@id^='playerWrapper']/^(
+	            if ^(iframe^) then
+	              v_url:^=replace^(
+	                iframe/@src^,
+	                '.+/^(.+^)'^,
+	                'https://youtu.be/$1'
+	              ^)
+	            else
+	              formats:^=[
+	                for $x at $i in script/extract^(
 	                  .^,
-	                  '.+\.(.+^)'^,
-	                  '$1-'
-	                ^)^,
-	                position(^)
-	              ^)^,
-	              'url':.
-	            }
-	        ] return
-	        if (count($a(^)/url^)^=1^) then
-	          v_url:^=$a(^)/url
-	        else (
-	          json:^=$a^,
-	          let $b:^=$a(^)/format return (
-	            formats:^=join($b^,'^, '^)^,
-	            best:^=$b[last(^)]
-	          ^)
-	        ^)
-	    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	                  'myfile ^= ''^(.+^)'''^,
+	                  1^,'*'
+	                ^)[.]
+	                let $a:^=extract^(
+	                  $x^,
+	                  '.+\.^(.+^)'^,
+	                  1
+	                ^)
+	                return
+	                system^(
+	                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
+	                ^) ! {
+	                  'format':concat^(
+	                    $a^,
+	                    '-'^,
+	                    $i
+	                  ^)^,
+	                  'extension':$a^,
+	                  'resolution':extract^(
+	                    .^,
+	                    'Video:.+^, ^(\d+x\d+^)'^,
+	                    1
+	                  ^)^,
+	                  'vbitrate':replace^(
+	                    .^,
+	                    '.+Video:.+?^(\d+^) kb.+'^,
+	                    'v:$1k'^,
+	                    's'
+	                  ^)^,
+	                  'abitrate':replace^(
+	                    .^,
+	                    '.+Audio:.+?^(\d+^) kb.+'^,
+	                    'a:$1k'^,
+	                    's'
+	                  ^)^,
+	                  'url':$x
+	                }
+	              ]
+	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:tweakers.net=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --method^=POST "%url%"
 	--xquery ^"declare function local:extract^($arg^){

@@ -830,72 +830,6 @@ videos := 1e, 2e, 3e, 4e
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/1f8593bf0c029471086af9c3c4c9a5a35a941dcc]
-
-xidel-0.9.6.exe -s --color=never "http://www.autojunk.nl/2016/12/the-fate-of-the-furious" -e "name:=concat('Autojunk - ',//meta[@property='og:title']/@content,replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/(if (iframe) then v_url:=replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else let $a:=[script/extract(.,'myfile = ''(.+)''',1,'*')[.] ! {'format':concat(replace(.,'.+\.(.+)','$1-'),position()),'url':.}] return if (count($a()/url)=1) then v_url:=$a()/url else (json:=$a,let $b:=$a()/format return (formats:=join($b,', '),best:=$b[last()])))"
-name := Autojunk - The Fate of the Furious (09122016)
-json := [{"format": "mp4-1", "url": "http://static.autojunk.nl/flv/2016/1209/185214.mp4"}, {"format": "mp4-2", "url": "http://static.autojunk.nl/flv/2016/1209/185214_720p.mp4"}]
-formats := mp4-1, mp4-2
-best := mp4-2
-
-xidel-0.9.6.exe -s --color=never "http://www.autojunk.nl/2016/12/ferrari-488-gtb-by-xxx-performance-w-capristo-exhaust" -e "..."
-name := Autojunk - Ferrari 488 GTB by xXx Performance w/ Capristo Exhaust (10122016)
-v_url := https://youtu.be/Y9snaArzog8
-
-xidel-0.9.6.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" -e "..."
-name := Autojunk - Peugeot 206 rally crash (15112009)
-v_url := http://static.autojunk.nl/flv/2009/1115/135833.mp4
-
-xidel-0.9.6.exe -s --color=never "http://www.autojunk.nl/2007/03/7-seconden-op-de-ring" -e "..."
-name := Autojunk - 7 seconden op de ring (23032007)
-v_url := http://static.autojunk.nl/flv/2007/0323/120040.flv
-
--e "name:=concat(
-      'Autojunk - ',
-      //meta[@property='og:title']/@content,
-      replace(
-        //span[@class='posted'],
-        '.+?(\d+)-(\d+)-(\d+).+',
-        ' ($1$2$3)'
-      )
-    ),
-    //div[@id='playerWrapper']/(
-      if (iframe) then
-        v_url:=replace(
-          iframe/@src,
-          '.+/(.+)',
-          'https://youtu.be/$1'
-        )
-      else
-        let $a:=[
-          script/extract(
-            .,'myfile = ''(.+)''',1,'*'
-          )[.] !
-            {
-              'format':concat(
-                replace(
-                  .,
-                  '.+\.(.+)',
-                  '$1-'
-                ),
-                position()
-              ),
-              'url':.
-            }
-        ] return
-        if (count($a()/url)=1) then
-          v_url:=$a()/url
-        else (
-          json:=$a,
-          let $b:=$a()/format return (
-            formats:=join($b,', '),
-            best:=$b[last()]
-          )
-        )
-    )"
-
-================================================================================================================================
-
 [https://github.com/Reino17/BatchGemist/commit/0f871ca56ff739fddadd408904bfa1c6998bb451]
 [https://github.com/Reino17/BatchGemist/commit/d95e3374cfd6c8550908e6dd0571b7f4d0c64cd7]
 [https://github.com/Reino17/BatchGemist/commit/7aa16a291215513a1f010e61d6a11c234ca7e5a9]
@@ -9965,7 +9899,7 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/8980d9b6732eac5e7f031645353c03a0d5ac1691]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/842af77531df053079114f8b2b4750c14ade2368]
 
 http://www.abhd.nl/video/opel-astra-opc-2012/ (video in 1 formaat)
 
@@ -10077,3 +10011,124 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "848x480", "vb
               'url':$x
             }
           ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/1f8593bf0c029471086af9c3c4c9a5a35a941dcc]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.autojunk.nl/2009/11/peugeot-206-rally-crash (video in 1 formaat)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" -e "concat('Autojunk: ',//meta[@property='og:title']/@content,replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)'))"
+Autojunk: Peugeot 206 rally crash (15112009)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "320x240",
+    "vbitrate": "v:170k",
+    "abitrate": "a:97k",
+    "url": "https://static.autojunk.nl/flv/2009/1115/135833.mp4"
+  }
+]
+
+Voor het geval er nog Autojunk video's zijn die eindigen op *.flv:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2007/03/7-seconden-op-de-ring" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+
+https://www.autojunk.nl/2018/01/straight-piped-nissan-350z-burnout-and-loud-revs (embedded youtube video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/straight-piped-nissan-350z-burnout-and-loud-revs" --xquery "//div[@id='playerWrapper']/(if (iframe) then replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else [for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
+https://youtu.be/XFVlBm16cRk
+
+https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo (video in 2 formaten)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo" --xquery "[...]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "640x352",
+    "vbitrate": "v:562k",
+    "abitrate": "a:126k",
+    "url": "https://static.autojunk.nl/flv/2018/0114/074345.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "vbitrate": "v:1980k",
+    "abitrate": "a:190k",
+    "url": "https://static.autojunk.nl/flv/2018/0114/074345_720p.mp4"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo" --xquery "name:=concat('Autojunk: ',//meta[@property='og:title']/@content,replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/(if (iframe) then v_url:=replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else formats:=[for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
+name := Autojunk: Opties op de Porsche Panamera Sport Turismo (14012018)
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x352", "vbitrate": "v:562k", "abitrate": "a:126k", "url": "https://static.autojunk.nl/flv/2018/0114/074345.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:1980k", "abitrate": "a:190k", "url": "https://static.autojunk.nl/flv/2018/0114/074345_720p.mp4"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "name:=concat(
+            'Autojunk: ',
+            //meta[@property='og:title']/@content,
+            replace(
+              //span[@class='posted'],
+              '.+?(\d+)-(\d+)-(\d+).+',
+              ' ($1$2$3)'
+            )
+          ),
+          //div[@id='playerWrapper']/(
+            if (iframe) then
+              v_url:=replace(
+                iframe/@src,
+                '.+/(.+)',
+                'https://youtu.be/$1'
+              )
+            else
+              formats:=[
+                for $x at $i in script/extract(
+                  .,
+                  'myfile = ''(.+)''',
+                  1,'*'
+                )[.]
+                let $a:=extract(
+                  $x,
+                  '.+\.(.+)',
+                  1
+                )
+                return
+                system(
+                  x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1'
+                ) ! {
+                  'format':concat(
+                    $a,
+                    '-',
+                    $i
+                  ),
+                  'extension':$a,
+                  'resolution':extract(
+                    .,
+                    'Video:.+, (\d+x\d+)',
+                    1
+                  ),
+                  'vbitrate':replace(
+                    .,
+                    '.+Video:.+?(\d+) kb.+',
+                    'v:$1k',
+                    's'
+                  ),
+                  'abitrate':replace(
+                    .,
+                    '.+Audio:.+?(\d+) kb.+',
+                    'a:$1k',
+                    's'
+                  ),
+                  'url':$x
+                }
+              ]
+          )"
