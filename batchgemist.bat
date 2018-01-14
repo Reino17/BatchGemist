@@ -4072,6 +4072,46 @@ IF DEFINED formats (
 
 REM ================================================================================================
 
+:MTVapi
+FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%"
+--xquery ^"name:^=replace^(
+            '%name:^^^=%'^,
+            '[^&quot^;^&apos^;]'^,
+            ''''''
+          ^)^|^|replace^(
+            //pubDate^,
+            '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+            ' ^($3$2$1^)'
+          ^)^,
+          t:^=//media:content/@duration^,
+          duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^"
+-f ^"//media:content/@url^"
+-e ^"formats:^=[
+      //rendition/{
+        'format':'flv-'^|^|position^(^)^,
+        'extension':'mp4'^,
+        'resolution':concat^(
+          @width^,
+          'x'^,
+          @height
+        ^)^,
+        'bitrate':@bitrate^|^|'k'^,
+        'url':src
+      }
+    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+
+IF DEFINED formats (
+	GOTO Formats
+) ELSE (
+	ECHO.
+	ECHO Video nog niet, of niet meer beschikbaar.
+	ECHO.
+	ECHO.
+	GOTO Input
+)
+
+REM ================================================================================================
+
 :NPORadio
 SETLOCAL
 ECHO.
@@ -4246,24 +4286,25 @@ ECHO.
                     'channel-NED2',^
                     'channel-NED3'^
                   )^
-                ]//a[.//span[@class='npo-epg-play']]/{^
-                  'tijdstip':.//span[@class='npo-epg-time'],^
-                  'zender':@data-channel,^
-                  'titel':.//span[@class='npo-epg-title'],^
-                  'url':@href^
-                }^
-                group by $url:=$x/extract(^
-                           url,^
+                ]//a[.//span[@class='npo-epg-play']]^
+                group by $prid:=extract(^
+                           $x/@href,^
                            '.+/(.+)',^
                            1^
                          )^
-                order by $x[1]/extract(^
-                           url,^
+                order by extract(^
+                           $x[1]/@href,^
                            '.+/(.+)/',^
                            1^
                          ),^
-                         $x[1]/tijdstip^
-                return $x[1]^
+                         $x[1]//span[@class='npo-epg-time']^
+                return^
+                $x[1]/{^
+                  'tijdstip':.//span[@class='npo-epg-time'],^
+                  'zender':@data-channel,^
+                  'titel':.//span[@class='npo-epg-title'],^
+                  'prid':@data-id^
+                }^
               ],^
               $width:=string-length(^
                 count($json())^
@@ -4305,30 +4346,27 @@ FOR /F "delims=" %%A IN ('^"%xidel% "https://www.npo.nl/gids?date=%date2%&type=t
                 'channel-NED2'^,
                 'channel-NED3'
               ^)
-            ]//a[.//span[@class^='npo-epg-play']]/{
-              'tijdstip':.//span[@class^='npo-epg-time']^,
-              'zender':@data-channel^,
-              'titel':.//span[@class^='npo-epg-title']^,
-              'url':@href
-            }
-            group by $url:^=$x/extract^(
-                       url^,
+            ]//a[.//span[@class^='npo-epg-play']]
+            group by $prid:^=extract^(
+                       $x/@href^,
                        '.+/^(.+^)'^,
                        1
                      ^)
-            order by $x[1]/extract^(
-                       url^,
+            order by extract^(
+                       $x[1]/@href^,
                        '.+/^(.+^)/'^,
                        1
                      ^)^,
-                     $x[1]/tijdstip
-            return $x[1]
+                     $x[1]//span[@class^='npo-epg-time']
+            return
+            $x[1]/{
+              'tijdstip':.//span[@class^='npo-epg-time']^,
+              'zender':@data-channel^,
+              'titel':.//span[@class^='npo-epg-title']^,
+              'prid':@data-id
+            }
           ] return
-          prid:^=$json^(%id%^)/extract^(
-            url^,
-            '.+/^(.+^)'^,
-            1
-          ^)^" --output-format^=cmd^"') DO %%A
+          prid:^=$json^(%id%^)/prid^" --output-format^=cmd^"') DO %%A
 
 IF DEFINED prid (
 	GOTO NPO
@@ -4338,46 +4376,6 @@ IF DEFINED prid (
 	ECHO.
 	ENDLOCAL
 	GOTO NPOGids
-)
-
-REM ================================================================================================
-
-:MTVapi
-FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%"
---xquery ^"name:^=replace^(
-            '%name:^^^=%'^,
-            '[^&quot^;^&apos^;]'^,
-            ''''''
-          ^)^|^|replace^(
-            //pubDate^,
-            '^(\d+^)-^(\d+^)-^(\d+^).+'^,
-            ' ^($3$2$1^)'
-          ^)^,
-          t:^=//media:content/@duration^,
-          duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^"
--f ^"//media:content/@url^"
--e ^"formats:^=[
-      //rendition/{
-        'format':'flv-'^|^|position^(^)^,
-        'extension':'mp4'^,
-        'resolution':concat^(
-          @width^,
-          'x'^,
-          @height
-        ^)^,
-        'bitrate':@bitrate^|^|'k'^,
-        'url':src
-      }
-    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
-
-IF DEFINED formats (
-	GOTO Formats
-) ELSE (
-	ECHO.
-	ECHO Video nog niet, of niet meer beschikbaar.
-	ECHO.
-	ECHO.
-	GOTO Input
 )
 
 REM ================================================================================================
@@ -4938,8 +4936,8 @@ ECHO     Surf naar ‚‚n van de ondersteunde websites en kopieer de programma-url 
 ECHO     programma. Start dit batch-script en plak deze url d.m.v. rechtermuis-knop + plakken (Ctrl+V
 ECHO     werkt hier niet).
 ECHO     Voer 'npo-radio' in voor een opsomming van alle NPO radiozenders.
-ECHO     Voer 'npo-gids' in voor een opsomming van alle tv-programma's die op NPO1, NPO2 en NPO3 zijn
-ECHO     geweest.
+ECHO     Voer 'npo-gids' in voor een opsomming van alle tv-programma's die op een bepaalde datum op
+ECHO     NPO1, NPO2 en NPO3 zijn geweest.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
 ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie/bitrate.
