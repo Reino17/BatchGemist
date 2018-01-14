@@ -9342,7 +9342,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://lb-fox-vod.
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/b3e34c2917ca49c94cabf07a81dfa9df0a4f9fc0]
 
 https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth
 
@@ -9553,3 +9553,311 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1280x720", "v
         'url':$a
       }
     ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html (1 video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html" -e "//div/@data-files/json(binary-to-string(base64Binary(.)))"
+{
+  "tablet": "http://media.dumpert.nl/tablet/61ebd30b_Blaaspijpjager.mp4.mp4.mp4",
+  "mobile": "http://media.dumpert.nl/mobile/61ebd30b_Blaaspijpjager.mp4.mp4.mp4",
+  "720p": "http://media.dumpert.nl/720p/61ebd30b_Blaaspijpjager.mp4.mp4.mp4",
+  "still": "http://media.dumpert.nl/stills/7326969_61ebd30b.jpg"
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+https://www.dumpert.nl/embed/7326969/61ebd30b (zelfde video, maar embedded)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "https://www.dumpert.nl/embed/7326969/61ebd30b/" -e "if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.])"
+{
+  "tablet": "http://media.dumpert.nl/tablet/61ebd30b_Blaaspijpjager.mp4.mp4.mp4",
+  "mobile": "http://media.dumpert.nl/mobile/61ebd30b_Blaaspijpjager.mp4.mp4.mp4",
+  "720p": "http://media.dumpert.nl/720p/61ebd30b_Blaaspijpjager.mp4.mp4.mp4",
+  "still": "http://media.dumpert.nl/stills/7326969_61ebd30b.jpg"
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+"still" moet er uit, maar dan nog gaat sorteren niet lukken met deze formaat-namen.
+Dan zelf alle formaten maar opsommen, van lage naar hoge kwaliteit.
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html" --xquery "let $a:=if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]) return for $x at $i in ('flv','mobile','tablet','720p') return join(($i,$a($x)))"
+1
+2 http://media.dumpert.nl/mobile/61ebd30b_Blaaspijpjager.mp4.mp4.mp4
+3 http://media.dumpert.nl/tablet/61ebd30b_Blaaspijpjager.mp4.mp4.mp4
+4 http://media.dumpert.nl/720p/61ebd30b_Blaaspijpjager.mp4.mp4.mp4
+
+Omdat "flv" in dit geval niet beschikbaar is geeft dit verderop problemen als we deze video-urls willen openen met FFmpeg. Dan nog maar een keer een for-loop er over heen.
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html" --xquery "let $a:=if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]) return for $x at $i in (for $x in ('flv','mobile','tablet','720p') return $a($x)) return join(($i,$x))"
+1 http://media.dumpert.nl/mobile/61ebd30b_Blaaspijpjager.mp4.mp4.mp4
+2 http://media.dumpert.nl/tablet/61ebd30b_Blaaspijpjager.mp4.mp4.mp4
+3 http://media.dumpert.nl/720p/61ebd30b_Blaaspijpjager.mp4.mp4.mp4
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html" -e "//p[@class='dump-pub']"
+4 januari 2018 22:01
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html" -e "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' ') return concat(if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3])"
+04012018
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html" -e "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' ') return concat('Dumpert: ',//div[@class='dump-desc']/h1,' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')')"
+Dumpert: De Maleisische Blaaspijpjager #15 (04012018)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7326969/61ebd30b/de_maleisische_blaaspijpjager_15.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:=concat('Dumpert: ',//div[@class='dump-desc']/h1,' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')'),$d:=if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]) return [$d/{position():{'name':$c,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}}}]"
+[
+  {
+    "1": {
+      "name": "Dumpert: De Maleisische Blaaspijpjager #15 (04012018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "480x270",
+          "vbitrate": "v:252k",
+          "abitrate": "a:128k",
+          "url": "http://media.dumpert.nl/mobile/61ebd30b_Blaaspijpjager.mp4.mp4.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "640x360",
+          "vbitrate": "v:774k",
+          "abitrate": "a:128k",
+          "url": "http://media.dumpert.nl/tablet/61ebd30b_Blaaspijpjager.mp4.mp4.mp4"
+        },
+        {
+          "format": "mp4-3",
+          "extension": "mp4",
+          "resolution": "1280x720",
+          "vbitrate": "v:1626k",
+          "abitrate": "a:128k",
+          "url": "http://media.dumpert.nl/720p/61ebd30b_Blaaspijpjager.mp4.mp4.mp4"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+http://www.dumpert.nl/mediabase/7331903/2e4720e8/dumpert_muziek.html (embedded youtube video)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7331903/2e4720e8/dumpert_muziek.html" -e "if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.])"
+{
+  "embed": "youtube:VBGR8uAqPBQ",
+  "still": "http://media.dumpert.nl/stills/7331903_2e4720e8.jpg"
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7331903/2e4720e8/dumpert_muziek.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:=concat('Dumpert: ',//div[@class='dump-desc']/h1,' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')'),$d:=if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]) return if ($d/embed) then replace($d/embed,'youtube:','https://youtu.be/') else [$d/{position():{'name':$c,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}}}]"
+https://youtu.be/VBGR8uAqPBQ
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+http://www.dumpert.nl/mediabase/7097415/9355c19d/niet_seksen_in_openbaar_vrouw_blijkt_webcamslet.html (2 video's)
+
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7097415/9355c19d/niet_seksen_in_openbaar_vrouw_blijkt_webcamslet.html" -e "if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.])"
+{
+  "tablet": "http://media.dumpert.nl/tablet/9355c19d_d728836a.mp4.mp4.mp4",
+  "mobile": "http://media.dumpert.nl/mobile/9355c19d_d728836a.mp4.mp4.mp4",
+  "still": "http://media.dumpert.nl/stills/7097415_9355c19d.jpg"
+}
+{
+  "tablet": "http://media.dumpert.nl/tablet/9355c19d_LiveLeak_dot_com_aa7_1490982861_IMG_5886_1490982988.mov.h264_720p.mp4.mp4.mp4",
+  "mobile": "http://media.dumpert.nl/mobile/9355c19d_LiveLeak_dot_com_aa7_1490982861_IMG_5886_1490982988.mov.h264_720p.mp4.mp4.mp4"
+}
+
+Zet de naam en datum elk in een variabele en voeg ze samen met, afhankelijk van de hoeveelheid video's, een indexnummer er tussen.
+
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7097415/9355c19d/niet_seksen_in_openbaar_vrouw_blijkt_webcamslet.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||//div[@class='dump-desc']/h1,$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')'),$e:=if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]) return if ($e/embed) then replace($e/embed,'youtube:','https://youtu.be/') else [$e/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}}}]"
+[
+  {
+    "1": {
+      "name": "Dumpert: Niet seksen in openbaar vrouw blijkt webcamslet (06042017)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "478x268",
+          "vbitrate": "v:252k",
+          "abitrate": "a:128k",
+          "url": "http://media.dumpert.nl/mobile/9355c19d_d728836a.mp4.mp4.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "640x358",
+          "vbitrate": "v:753k",
+          "abitrate": "a:128k",
+          "url": "http://media.dumpert.nl/tablet/9355c19d_d728836a.mp4.mp4.mp4"
+        }
+      ]
+    }
+  },
+  {
+    "2": {
+      "name": "Dumpert: Niet seksen in openbaar vrouw blijkt webcamslet (2) (06042017)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "152x270",
+          "vbitrate": "v:248k",
+          "abitrate": "a:128k",
+          "url": "http://media.dumpert.nl/mobile/9355c19d_LiveLeak_dot_com_aa7_1490982861_IMG_5886_1490982988.mov.h264_720p.mp4.mp4.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "202x360",
+          "vbitrate": "v:752k",
+          "abitrate": "a:128k",
+          "url": "http://media.dumpert.nl/tablet/9355c19d_LiveLeak_dot_com_aa7_1490982861_IMG_5886_1490982988.mov.h264_720p.mp4.mp4.mp4"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+http://www.dumpert.nl/mediabase/7330293/89b95efc/wut_de_fuck_.html (1 video zonder audio)
+
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7330293/89b95efc/wut_de_fuck_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||//div[@class='dump-desc']/h1,$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')'),$e:=if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]) return if ($e/embed) then v_url:=replace($e/embed,'youtube:','https://youtu.be/') else videos:=[$e/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
+videos := [{"1": {"name": "Dumpert: Wut de fuck? (09012018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "270x270", "vbitrate": "v:247k", "abitrate": "", "url": "http://media.dumpert.nl/mobile/_89b95efc_YTDL_1.mp4.mp4.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "360x360", "vbitrate": "v:745k", "abitrate": "", "url": "http://media.dumpert.nl/tablet/_89b95efc_YTDL_1.mp4.mp4.mp4"}]}}]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html (oude video met flv-variant)
+
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||//div[@class='dump-desc']/h1,$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')'),$e:=if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]) return if ($e/embed) then v_url:=replace($e/embed,'youtube:','https://youtu.be/') else videos:=[$e/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
+videos := [{"1": {"name": "Dumpert: GOUD. Dafne Schippers wint 200m Bejing! (28082015)", "formats": [{"format": "flv-1", "extension": "flv", "resolution": "480x270", "vbitrate": "v:779k", "abitrate": "a:131k", "url": "http://media.dumpert.nl/flv/4301bfad_schippers.mp4.mp4.flv"}, {"format": "mp4-2", "extension": "mp4", "resolution": "480x270", "vbitrate": "v:248k", "abitrate": "a:128k", "url": "http://media.dumpert.nl/mobile/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:752k", "abitrate": "a:128k", "url": "http://media.dumpert.nl/tablet/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-4", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:1646k", "abitrate": "a:128k", "url": "http://media.dumpert.nl/720p/4301bfad_schippers.mp4.mp4.mp4"}]}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "let $a:={
+                'januari':'01',
+                'februari':'02',
+                'maart':'03',
+                'april':'04',
+                'mei':'05',
+                'juni':'06',
+                'juli':'07',
+                'augustus':'08',
+                'september':'09',
+                'oktober':'10',
+                'november':'11',
+                'december':'12'
+              },
+              $b:=tokenize(
+                //p[@class='dump-pub'],
+                ' '
+              ),
+              $c:='Dumpert: '||//div[@class='dump-desc']/h1,
+              $d:=concat(
+                ' (',
+                if ($b[1]<10) then
+                  '0'||$b[1]
+                else
+                  $b[1],
+                $a($b[2]),
+                $b[3],
+                ')'
+              ),
+              $e:=if (//@data-files) then
+                //div/@data-files/json(
+                  binary-to-string(
+                    base64Binary(.)
+                  )
+                )
+              else
+                json(
+                  //script/extract(
+                    .,
+                    'fileinfo = (.+),',
+                    1
+                  )[.]
+                )
+          return
+          if ($e/embed) then
+            v_url:=replace(
+              $e/embed,
+              'youtube:',
+              'https://youtu.be/'
+            )
+          else
+            videos:=[
+              $e/{
+                position():{
+                  'name':(
+                    if (position()=1) then
+                      $c
+                    else
+                      concat(
+                        $c,
+                        ' (',
+                        position(),
+                        ')'
+                      )
+                  )||$d,
+                  'formats':for $x at $i in (
+                    for $x in (
+                      'flv',
+                      'mobile',
+                      'tablet',
+                      '720p'
+                    ) return
+                    .($x)
+                  )
+                  let $a:=extract(
+                    $x,
+                    '.+\.(.+)',
+                    1
+                  )
+                  return
+                  system(
+                    x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1'
+                  ) ! {
+                    'format':concat(
+                      $a,
+                      '-',
+                      $i
+                    ),
+                    'extension':$a,
+                    'resolution':extract(
+                      .,
+                      'Video:.+, (\d+x\d+)',
+                      1
+                    ),
+                    'vbitrate':replace(
+                      .,
+                      '.+Video:.+?(\d+) kb.+',
+                      'v:$1k',
+                      's'
+                    ),
+                    'abitrate':extract(
+                      .,
+                      'Audio:.+?(\d+) kb',
+                      1,'s'
+                    ) ! (
+                      if (.) then
+                        concat(
+                          'a:',
+                          .,
+                          'k'
+                        )
+                      else
+                        ''
+                    ),
+                    'url':$x
+                  }
+                }
+              }
+            ]"

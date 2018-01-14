@@ -2588,43 +2588,126 @@ IF NOT "%url: =%"=="%url%" (
 	      }
 	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:dumpert.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" --user-agent "BatchGemist %ver%" "%url%"
-	--xquery ^"let $a:^=json(
-	            if (//@data-files^) then
-	              binary-to-string(
-	                base64Binary(//div/@data-files^)
-	              ^)
-	            else
-	              //script/extract(
-	                .^,
-	                '(\{.+\}^)^,'^,1
-	              ^)[.]
-	          ^) return
-	          if ($a/embed^) then
-	            v_url:^=replace(
-	              $a/embed^,
+	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: nsfw=1;cpc=10" "%url%"
+	--xquery ^"let $a:^={
+	                'januari':'01'^,
+	                'februari':'02'^,
+	                'maart':'03'^,
+	                'april':'04'^,
+	                'mei':'05'^,
+	                'juni':'06'^,
+	                'juli':'07'^,
+	                'augustus':'08'^,
+	                'september':'09'^,
+	                'oktober':'10'^,
+	                'november':'11'^,
+	                'december':'12'
+	              }^,
+	              $b:^=tokenize^(
+	                //p[@class^='dump-pub']^,
+	                ' '
+	              ^)^,
+	              $c:^='Dumpert: '^|^|//div[@class^='dump-desc']/h1^,
+	              $d:^=concat^(
+	                ' ^('^,
+	                if ^($b[1]^<10^) then
+	                  '0'^|^|$b[1]
+	                else
+	                  $b[1]^,
+	                $a^($b[2]^)^,
+	                $b[3]^,
+	                '^)'
+	              ^)^,
+	              $e:^=if ^(//@data-files^) then
+	                //div/@data-files/json^(
+	                  binary-to-string^(
+	                    base64Binary^(.^)
+	                  ^)
+	                ^)
+	              else
+	                json^(
+	                  //script/extract^(
+	                    .^,
+	                    'fileinfo ^= ^(.+^)^,'^,
+	                    1
+	                  ^)[.]
+	                ^)
+	          return
+	          if ^($e/embed^) then
+	            v_url:^=replace^(
+	              $e/embed^,
 	              'youtube:'^,
 	              'https://youtu.be/'
 	            ^)
-	          else (
-	            name:^=concat(
-	              'Dumpert - '^,
-	              //meta[@name^='title']/@content
-	            ^)^,
-	            json:^=[
-	              $a(^)[.!^='still'] ! {
-	                'format':.^,
-	                'url':$a(.^)
+	          else
+	            videos:^=[
+	              $e/{
+	                position^(^):{
+	                  'name':^(
+	                    if ^(position^(^)^=1^) then
+	                      $c
+	                    else
+	                      concat^(
+	                        $c^,
+	                        ' ^('^,
+	                        position^(^)^,
+	                        '^)'
+	                      ^)
+	                  ^)^|^|$d^,
+	                  'formats':for $x at $i in ^(
+	                    for $x in ^(
+	                      'flv'^,
+	                      'mobile'^,
+	                      'tablet'^,
+	                      '720p'
+	                    ^) return
+	                    .^($x^)
+	                  ^)
+	                  let $a:^=extract^(
+	                    $x^,
+	                    '.+\.^(.+^)'^,
+	                    1
+	                  ^)
+	                  return
+	                  system^(
+	                    x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
+	                  ^) ! {
+	                    'format':concat^(
+	                      $a^,
+	                      '-'^,
+	                      $i
+	                    ^)^,
+	                    'extension':$a^,
+	                    'resolution':extract^(
+	                      .^,
+	                      'Video:.+^, ^(\d+x\d+^)'^,
+	                      1
+	                    ^)^,
+	                    'vbitrate':replace^(
+	                      .^,
+	                      '.+Video:.+?^(\d+^) kb.+'^,
+	                      'v:$1k'^,
+	                      's'
+	                    ^)^,
+	                    'abitrate':extract^(
+	                      .^,
+	                      'Audio:.+?^(\d+^) kb'^,
+	                      1^,'s'
+	                    ^) ! ^(
+	                      if ^(.^) then
+	                        concat^(
+	                          'a:'^,
+	                          .^,
+	                          'k'
+	                        ^)
+	                      else
+	                        ''
+	                    ^)^,
+	                    'url':$x
+	                  }
+	                }
 	              }
-	            ]^,
-	            let $b:^=(
-	              for $x in $json(^)[format!^='720p']/format order by $x return $x^,
-	              $json(^)[format^='720p']/format
-	            ^) return (
-	              formats:^=join($b^,'^, '^)^,
-	              best:^=$b[last(^)]
-	            ^)
-	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	            ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:comedycentral.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	--xquery ^"videos:^=if ^(//@data-mrss^) then
