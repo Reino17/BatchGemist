@@ -3415,7 +3415,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
             ^) else
               ^(^)^,
             if ^(tt888^='ja'^) then
-              s_url:^='http://tt888.omroep.nl/tt888/%prid%'
+              s_url:^='http://tt888.omroep.nl/tt888/'||prid
             else
               ^(^)
           ^)^,
