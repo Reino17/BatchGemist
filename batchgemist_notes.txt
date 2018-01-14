@@ -7331,7 +7331,7 @@ videos := [{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/1215b6972d59453a4b2032dd69c9cbf82f6a4cd1]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/6cebf3127aa569e649983212ea4229cbbd67e0db]
 
 http://apps-api.uitzendinggemist.nl
 
@@ -9861,3 +9861,152 @@ videos := [{"1": {"name": "Dumpert: GOUD. Dafne Schippers wint 200m Bejing! (280
                 }
               }
             ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+Voer een zoekterm in voor een NPO-programma en maak van de resultaten een json met de titel en het serie-id:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then 'Geen resultaten gevonden' else [//a[@class='npo-ankeiler-tile']/{'titel':@title,'sid':extract(@href,'.+/(.+)',1)}]) else ()"
+blahblah
+Geen resultaten gevonden
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then 'Geen resultaten gevonden' else [//a[@class='npo-ankeiler-tile']/{'titel':@title,'sid':extract(@href,'.+/(.+)',1)}]) else ()"
+nos journaal
+[
+  {
+    "titel": "NOS Journaal",
+    "sid": "NOSJournaal"
+  },
+  {
+    "titel": "NOS Journaal 20.00 uur",
+    "sid": "NOSjnl2000"
+  },
+  {
+    "titel": "NOS Journaal 1000",
+    "sid": "NOSjnl1000"
+  },
+  {
+    "titel": "NOS Journaal met gebarentolk",
+    "sid": "NOSJournaalgebarentolk"
+  },
+  {
+    "titel": "NOS De Achterkant van het NOS Journaal",
+    "sid": "POMS_S_NOS_2818934"
+  },
+  {
+    "titel": "NOS WK Journaal",
+    "sid": "NOSWKJournaal"
+  },
+  {
+    "titel": "NOS Jaaroverzicht Journaal",
+    "sid": "NOSJaaroverzichtJournaal"
+  }
+]
+
+Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/titel),'  ')"
+  1.  NOS Journaal
+  2.  NOS Journaal 1000
+  3.  NOS Journaal 20.00 uur
+  4.  NOS Journaal met gebarentolk
+  5.  NOS De Achterkant van het NOS Journaal
+  6.  NOS Jaaroverzicht Journaal
+  7.  NOS WK Journaal
+
+Gebruik optie 1 als input en maak een json van de laatste 20 afleveringen, op volgorde van vroeg naar laat, met de titel en de prid:
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - -e "x:request({'data':concat('https://www.npo.nl/media/series/',$json(1)/sid,'/episodes?page=1&tilemapping=dedicated&tiletype=asset&pageType=franchise'),'header':'X-Requested-With: XMLHttpRequest'})/json/[reverse(parse-html(tiles)//a)/{'titel':concat(.//h2,': ',.//p),'prid':@data-ts-destination}]"
+[
+  {
+    "titel": "NOS Journaal: Gisteren 18:00",
+    "prid": "POW_03688996"
+  },
+  {
+    "titel": "NOS Journaal: Gisteren 20:00",
+    "prid": "POW_03689556"
+  },
+  {
+    "titel": "NOS Journaal: Gisteren 00:05",
+    "prid": "POW_03689833"
+  },
+  [...]
+  {
+    "titel": "NOS Journaal: Vandaag 18:00",
+    "prid": "POW_03688997"
+  }
+]
+
+Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/titel),'  ')"
+  1.   NOS Journaal: Gisteren 18:00
+  2.   NOS Journaal: Gisteren 20:00
+  3.   NOS Journaal: Gisteren 00:05
+  4.   NOS Journaal: Vandaag 06:30
+  5.   NOS Journaal: Vandaag 07:00
+  6.   NOS Journaal: Vandaag 07:30
+  7.   NOS Journaal: Vandaag 08:00
+  8.   NOS Journaal: Vandaag 08:30
+  9.   NOS Journaal: Vandaag 08:30
+  10.  NOS Journaal: Vandaag 09:00
+  11.  NOS Journaal: Vandaag 10:00
+  12.  NOS Journaal: Vandaag 11:00
+  13.  NOS Journaal: Vandaag 12:00
+  14.  NOS Journaal: Vandaag 13:00
+  15.  NOS Journaal: Vandaag 13:00
+  16.  NOS Journaal: Vandaag 14:00
+  17.  NOS Journaal: Vandaag 15:00
+  18.  NOS Journaal: Vandaag 16:00
+  19.  NOS Journaal: Vandaag 17:00
+  20.  NOS Journaal: Vandaag 18:00
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "let $a:=read() return
+    if ($a) then
+      doc(
+        'https://www.npo.nl/zoeken?term='||$a
+      )/(
+        if (//div[@class='no-results']) then
+          'Geen resultaten gevonden'
+        else
+          [
+            //a[@class='npo-ankeiler-tile']/{
+              'titel':@title,
+              'sid':extract(
+                @href,
+                '.+/(.+)',
+                1
+              )
+            }
+          ]
+      )
+    else
+      ()"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "x:request(
+      {
+        'data':concat(
+          'https://www.npo.nl/media/series/',
+          $json(1)/sid,
+          '/episodes?page=1&tilemapping=dedicated&tiletype=asset&pageType=franchise'
+        ),
+        'header':'X-Requested-With: XMLHttpRequest'
+      }
+    )/json/[
+      reverse(
+        parse-html(tiles)//a
+      )/{
+        'titel':concat(
+          .//h2,
+          ': ',
+          .//p
+        ),
+        'prid':@data-ts-destination
+      }
+    ]"

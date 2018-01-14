@@ -218,6 +218,8 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPORadio
 ) ELSE IF "%url%"=="npo-gids" (
 	GOTO NPOGids
+) ELSE IF "%url%"=="npo-programma" (
+	GOTO NPOProg
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -489,6 +491,72 @@ IF DEFINED prid (
 	ECHO.
 	ENDLOCAL
 	GOTO NPOGids
+)
+
+REM ================================================================================================
+
+:NPOProg
+SETLOCAL
+ECHO.
+ECHO Voer programma-titel in:
+FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=read() return if ($a) then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then no_res:='1' else s_json:=[//a[@class='npo-ankeiler-tile']/{'titel':@title,'sid':extract(@href,'.+/(.+)',1)}]) else ()" --output-format^=cmd^"') DO %%A
+IF DEFINED no_res (
+	ECHO.
+	ECHO Geen resultaten gevonden.
+	ECHO.
+	ENDLOCAL
+	GOTO NPOProg
+) ELSE IF NOT DEFINED s_json (
+	ECHO.
+	ENDLOCAL
+	GOTO Input
+)
+
+FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% - -e "count($json())"') DO (
+	IF "%%A"=="1" (
+		SET "id=1"
+	) ELSE (
+		ECHO.
+		ECHO %s_json% | %xidel% - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/titel),'  ')"
+		ECHO.
+		SET /P "id=Voer nummer in van gewenst programma: "
+		IF NOT DEFINED id (
+			ECHO.
+			ENDLOCAL
+			GOTO Input
+		)
+	)
+)
+
+FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% - -e "p_json:=x:request({'data':concat('https://www.npo.nl/media/series/',$json(%id%)/sid,'/episodes?page=1&tilemapping=dedicated&tiletype=asset&pageType=franchise'),'header':'X-Requested-With: XMLHttpRequest'})/json/[reverse(parse-html(tiles)//a)/{'titel':concat(.//h2,': ',.//p),'prid':@data-ts-destination}]" --output-format^=cmd') DO %%A
+IF NOT DEFINED p_json (
+	ECHO.
+	ECHO Ongeldig nummer.
+	ECHO.
+	ENDLOCAL
+	GOTO NPOProg
+)
+
+ECHO.
+ECHO %p_json% | %xidel% - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/titel),'  ')"
+ECHO.
+SET id=
+SET /P "id=Voer nummer in van gewenste aflevering: "
+IF NOT DEFINED id (
+	ECHO.
+	ENDLOCAL
+	GOTO Input
+)
+
+FOR /F "delims=" %%A IN ('ECHO %p_json% ^| %xidel% - -e "prid:=$json(%id%)/prid" --output-format^=cmd^"') DO %%A
+IF DEFINED prid (
+	GOTO NPO
+) ELSE (
+	ECHO.
+	ECHO Ongeldig nummer.
+	ECHO.
+	ENDLOCAL
+	GOTO NPOProg
 )
 
 REM ================================================================================================
@@ -860,15 +928,18 @@ ECHO     werkt hier niet).
 ECHO     Voer 'npo-radio' in voor een opsomming van alle NPO radiozenders.
 ECHO     Voer 'npo-gids' in voor een opsomming van alle tv-programma's die op een bepaalde datum op
 ECHO     NPO1, NPO2 en NPO3 zijn geweest.
+ECHO     Voer 'npo-programma' in om te zoeken naar een tv-programma. Wat uiteindelijk volgt is een
+ECHO     opsomming van de laatste 20 afleveringen van het gekozen tv-programma.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
 ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie/bitrate.
 ECHO     Voor dit formaat kun je gewoon op ENTER drukken. Formaten die beginnen met 'hls' zijn
 ECHO     dynamische videostreams en eindigen op 'm3u8'. Formaten die beginnen met 'pg' zijn
-ECHO     progressieve videostreams en eindigen op 'mp4/m4v'.
-ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
 PAUSE
+ECHO.
+ECHO     progressieve videostreams en eindigen op 'mp4/m4v'.
+ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
 ECHO     Vervolgens krijg je de keuze om de gegenereerde audio/video-url weer te geven, te downloaden,
 ECHO     of te openen met MPC-HC/BE (als je die hebt toegevoegd onder ":Check"). Optie 1 tussen blok-
