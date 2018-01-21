@@ -2967,7 +2967,11 @@ IF NOT "%url: =%"=="%url%" (
 	          return
 	          name:^=concat^(
 	            'ABHD: '^,
-	            //div[@id^='playerObject']//a^,
+	            replace^(
+	              //div[@id^='playerObject']//a^,
+	              '[^&quot^;^&apos^;]'^,
+	              ''''''
+	            ^)^,
 	            ' ^('^,
 	            $b[1]^,
 	            $a^($b[2]^)^,
@@ -2988,6 +2992,24 @@ IF NOT "%url: =%"=="%url%" (
 	            ^) ! {
 	              'format':'mp4-'^|^|$i^,
 	              'extension':'mp4'^,
+	              'duration':let $a:^=extract^(
+	                .^,
+	                'Duration: ^(.+?^)^,'^,
+	                1
+	              ^) return
+	              round^(
+	                seconds-from-time^($a^)
+	              ^) ! concat^(
+	                extract^(
+	                  $a^,
+	                  '^(.+:^)'^,
+	                  1
+	                ^)^,
+	                if ^(.^<10^) then
+	                  '0'^|^|.
+	                else
+	                  .
+	              ^)^,
 	              'resolution':extract^(
 	                .^,
 	                'Video:.+^, ^(\d+x\d+^)'^,
