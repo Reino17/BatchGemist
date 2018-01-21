@@ -2218,30 +2218,35 @@ IF NOT "%url: =%"=="%url%" (
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nickelodeon.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"let $a:^=//meta[@itemprop^='name']/@content return
-	    doc(
-	      //@data-mrss
-	    ^)/(
-	      name:^=concat(
-	        'Nickelodeon - '^,
-	        $a^,
-	        replace(
-	          //pubDate^,
-	          '(\d+^)-(\d+^)-(\d+^).+'^,
-	          ' ($3$2$1^)'
-	        ^)
-	      ^)^,
-	      json:^=[
-	        doc(
-	          //media:content/@url
-	        ^)//rendition/{
-	          'format':concat('mp4-'^,@bitrate^)^,
-	          'url':src
-	        }
-	      ]
-	    ^)^,
-	    formats:^=join($json(^)/format^,'^, '^)^,
-	    best:^=$json(^)[last(^)]/format^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	-e ^"name:^=concat^(
+	      'Nickelodeon: '^,
+	      //meta[@itemprop^='name']/@content^,
+	      replace^(
+	        //meta[@itemprop^='uploadDate']/@content^,
+	        '^(\d+^)-^(\d+^)-^(\d+^)'^,
+	        ' ^($3$2$1^)'
+	      ^)
+	    ^)^"
+	-f ^"//@data-mrss^"
+	-e ^"t:^=//@duration^,
+	    duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^"
+	-f ^"substring-before^(
+	      //media:content/@url^,
+	      '$'
+	    ^)^|^|'NL'^"
+	-e ^"formats:^=[
+	      //rendition/{
+	        'format':'mp4-'^|^|position^(^)^,
+	        'extension':'mp4'^,
+	        'resolution':concat^(
+	          @width^,
+	          'x'^,
+	          @height
+	        ^)^,
+	        'bitrate':@bitrate^|^|'k'^,
+	        'url':src
+	      }
+	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:disney.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-f ^"json(

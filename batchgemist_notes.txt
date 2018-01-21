@@ -10098,7 +10098,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:10:48", "res
 
 [https://github.com/Reino17/BatchGemist/commit/1f8593bf0c029471086af9c3c4c9a5a35a941dcc]
 [https://github.com/Reino17/BatchGemist/commit/2c276cef1287e0b0f0b8cb3d1e0b56d28e0a2d4d]
-[https://github.com/Reino17/BatchGemist/]
+[https://github.com/Reino17/BatchGemist/commit/0bd5711191951330617669a6c0e1b081b8bee3a3]
 
 http://www.autojunk.nl/2009/11/peugeot-206-rally-crash (video in 1 formaat)
 
@@ -10240,3 +10240,101 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "res
                 }
               ]
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -e "concat('Nickelodeon: ',//meta[@itemprop='name']/@content,replace(//meta[@itemprop='uploadDate']/@content,'(\d+)-(\d+)-(\d+)',' ($3$2$1)'))"
+Nickelodeon: Totally Spies - Vakantie (04072016)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -f "//@data-mrss" -e "t:=//@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')"
+t := 1274
+duration := 00:21:14
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -f "//@data-mrss" -e "//media:content/@url"
+http://videos.mtvnn.com/mediagen/8006f39c68bda893197a244da858e22b?siteKey=&force_country=$(GEO{'country_code'})
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -f "//@data-mrss" -f "substring-before(//media:content/@url,'$')||'NL'" -e "$raw"
+<package version="1.4">
+  <video>
+    <item>
+      <rendition cdn="akamai" duration="1274.48" width="416" height="312" type="video/mp4" bitrate="160">
+        <src>rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_160k_b30_seg0_416x312_97000.mp4</src>
+      </rendition>
+      <rendition cdn="akamai" duration="1274.48" width="416" height="312" type="video/mp4" bitrate="583">
+        <src>rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_576k_b30_seg0_416x312_488000.mp4</src>
+      </rendition>
+      <rendition cdn="akamai" duration="1274.48" width="640" height="480" type="video/mp4" bitrate="1317">
+        <src>rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_640px_1296k_m31_seg0_640x480_1222000.mp4</src>
+      </rendition>
+    </item>
+  </video>
+</package>
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -f "//@data-mrss" -f "substring-before(//media:content/@url,'$')||'NL'" -e "[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "416x312",
+    "bitrate": "160k",
+    "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_160k_b30_seg0_416x312_97000.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "416x312",
+    "bitrate": "583k",
+    "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_576k_b30_seg0_416x312_488000.mp4"
+  },
+  {
+    "format": "mp4-3",
+    "extension": "mp4",
+    "resolution": "640x480",
+    "bitrate": "1317k",
+    "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_640px_1296k_m31_seg0_640x480_1222000.mp4"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -e "name:=concat('Nickelodeon: ',//meta[@itemprop='name']/@content,replace(//meta[@itemprop='uploadDate']/@content,'(\d+)-(\d+)-(\d+)',' ($3$2$1)'))" -f "//@data-mrss" -e "t:=//@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "substring-before(//media:content/@url,'$')||'NL'" -e "formats:=[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+name := Nickelodeon: Totally Spies - Vakantie (04072016)
+t := 1274
+duration := 00:21:14
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x312", "bitrate": "160k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_160k_b30_seg0_416x312_97000.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "416x312", "bitrate": "583k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_576k_b30_seg0_416x312_488000.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "640x480", "bitrate": "1317k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_640px_1296k_m31_seg0_640x480_1222000.mp4"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "name:=concat(
+      'Nickelodeon: ',
+      //meta[@itemprop='name']/@content,
+      replace(
+        //meta[@itemprop='uploadDate']/@content,
+        '(\d+)-(\d+)-(\d+)',
+        ' ($3$2$1)'
+      )
+    )"
+-f "//@data-mrss"
+-e "t:=//@duration,
+    duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')"
+-f "substring-before(
+      //media:content/@url,
+      '$'
+    )||'NL'"
+-e "formats:=[
+      //rendition/{
+        'format':'mp4-'||position(),
+        'extension':'mp4',
+        'resolution':concat(
+          @width,
+          'x',
+          @height
+        ),
+        'bitrate':@bitrate||'k',
+        'url':src
+      }
+    ]"
