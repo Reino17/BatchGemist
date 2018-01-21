@@ -397,97 +397,92 @@ IF NOT "%url: =%"=="%url%" (
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nos.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"declare function local:extract^($arg^){
-	            [
-	              for $x at $i in $arg order by extract^(
-	                $x/@data-label^,
-	                '^(\d+^)p'^,
-	                1
-	              ^) count $i
-	              let $a:^=if ^(
-	                contains^(
-	                  $x/@src^,
-	                  'content-ip'
-	                ^)
-	              ^) then
-	                x:request^(
-	                  {
-	                    'post':serialize-json^(
-	                      [
-	                        {
-	                          'file':string^($x/@src^)
-	                        }
-	                      ]
-	                    ^)^,
-	                    'url':'https://nos.nl/video/resolve/'
-	                  }
-	                ^)//file
+	--xquery ^"videos:^=[
+	            ^(
+	              if ^(//div[@class^='video-play']^) then
+	                //div[@class^='video-play']/a/doc^(@href^)
 	              else
-	                $x/@src
-	              return
-	              system^(
-	                x'cmd /c %ffmpeg% -i {$a} 2^>^&amp^;1'
-	              ^) ! {
-	                'format':'mp4-'^|^|$i^,
-	                'extension':'mp4'^,
-	                'resolution':extract^(
-	                  .^,
-	                  'Video:.+^, ^(\d+x\d+^)'^,
-	                  1
-	                ^)^,
-	                'vbitrate':replace^(
-	                  .^,
-	                  '.+Video:.+?^(\d+^) kb.+'^,
-	                  'v:$1k'^,
-	                  's'
-	                ^)^,
-	                'abitrate':replace^(
-	                  .^,
-	                  '.+Audio:.+?^(\d+^) kb.+'^,
-	                  'a:$1k'^,
-	                  's'
-	                ^)^,
-	                'url':$a
-	              }
-	            ]
-	          }^;
-	          if ^(//div[@class^='video-play']^) then
-	            videos:^=[
-	              //div[@class^='video-play']/a/doc^(@href^)/{
-	                position^(^):{
-	                  'name':concat^(
-	                    'NOS: '^,
-	                    replace^(
-	                      //h1^,
-	                      '[^&quot^;^&apos^;]'^,
-	                      ''''''
-	                    ^)^,
-	                    replace^(
-	                      //@datetime^,
-	                      '^(\d+^)-^(\d+^)-^(\d+^).+'^,
-	                      ' ^($3$2$1^)'
-	                    ^)
+	                .
+	            ^)/{
+	              position^(^):{
+	                'name':concat^(
+	                  'NOS: '^,
+	                  replace^(
+	                    //h1^,
+	                    '[^&quot^;^&apos^;]'^,
+	                    ''''''
 	                  ^)^,
-	                  'formats':local:extract^(//source^)
+	                  replace^(
+	                    //@datetime^,
+	                    '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+	                    ' ^($3$2$1^)'
+	                  ^)
+	                ^)^,
+	                'formats':for $x at $i in //source order by extract^(
+	                  $x/@data-label^,
+	                  '^(\d+^)p'^,
+	                  1
+	                ^) count $i
+	                let $a:^=if ^(
+	                  contains^(
+	                    $x/@src^,
+	                    'ipv4-api'
+	                  ^)
+	                ^) then
+	                  x:request^(
+	                    {
+	                      'data':$x/@src^,
+	                      'method':'HEAD'
+	                    }
+	                  ^)/url
+	                else
+	                  $x/@src
+	                return
+	                system^(
+	                  x'cmd /c %ffmpeg% -i {$a} 2^>^&amp^;1'
+	                ^) ! {
+	                  'format':'mp4-'^|^|$i^,
+	                  'extension':'mp4'^,
+	                  'duration':let $b:^=extract^(
+	                    .^,
+	                    'Duration: ^(.+?^)^,'^,
+	                    1
+	                  ^) return
+	                  round^(
+	                    seconds-from-time^($b^)
+	                  ^) ! concat^(
+	                    extract^(
+	                      $b^,
+	                      '^(.+:^)'^,
+	                      1
+	                    ^)^,
+	                    if ^(.^<10^) then
+	                      '0'^|^|.
+	                    else
+	                      .
+	                  ^)^,
+	                  'resolution':extract^(
+	                    .^,
+	                    'Video:.+^, ^(\d+x\d+^)'^,
+	                    1
+	                  ^)^,
+	                  'vbitrate':replace^(
+	                    .^,
+	                    '.+Video:.+?^(\d+^) kb.+'^,
+	                    'v:$1k'^,
+	                    's'
+	                  ^)^,
+	                  'abitrate':replace^(
+	                    .^,
+	                    '.+Audio:.+?^(\d+^) kb.+'^,
+	                    'a:$1k'^,
+	                    's'
+	                  ^)^,
+	                  'url':$a
 	                }
 	              }
-	            ]
-	          else ^(
-	            name:^=concat^(
-	              'NOS: '^,
-	              replace^(
-	                //h1^,
-	                '[^&quot^;^&apos^;]'^,
-	                ''''''
-	              ^)^,
-	              replace^(
-	                //@datetime^,
-	                '^(\d+^)-^(\d+^)-^(\d+^).+'^,
-	                ' ^($3$2$1^)'
-	              ^)
-	            ^)^,
-	            formats:^=local:extract^(//source^)
-	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	            }
+	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:eenvandaag.avrotros.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=json(//@data-at-player)/video_id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -4698,7 +4693,12 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% -
 -e ^"$json^(^)[format^='%format%']/^(
         v_url:^=url^,
-        ff_param:^=ff_param
+        ff_param:^=ff_param^,
+        if ^(duration^) then ^(
+          duration:^=duration^,
+          t:^=hours-from-time^(duration^)*3600+minutes-from-time^(duration^)*60+seconds-from-time^(duration^)
+        ^) else
+          ^(^)
       ^)^" --output-format^=cmd') DO %%A
 
 IF DEFINED v_url (
