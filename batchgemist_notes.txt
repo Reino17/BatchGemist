@@ -1981,7 +1981,7 @@ name := AT5 - ''Bekende voetballers kopen massaal huizen op in Amsterdam'' (2801
 [https://github.com/Reino17/BatchGemist/commit/87db54e6178903fc6c8ba312d0724062f037c00a]
 [https://github.com/Reino17/BatchGemist/commit/c6ef00d49969a54a1bbe083387e7c5b7bfc228bf]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/60dd9ab0208417e69ef16253fc4dcd17e812952f]
 
 http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
 
@@ -6202,6 +6202,7 @@ http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-l
 [https://github.com/Reino17/BatchGemist/commit/d40a3b85a7cfdc06263ad21e165f48e23ce47ed7]
 [https://github.com/Reino17/BatchGemist/commit/75c91336d899846f3d02691b26b8d7d07a169b5d]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30 (losse video)
 
@@ -6486,11 +6487,8 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://tweakers.net/video/player
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" --xquery "declare function local:extract($arg){$arg/[for $x at $i in reverse((progressive)()) return system(x'cmd /c %ffmpeg% -i {$x//src} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x//src},let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-0','extension':'m3u8','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)})]}; if (//iframe) then videos:=[//iframe/doc(@src)/{position():json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/{'name':'Tweakers: '||replace(title,'[&quot;&apos;]',''''''),'t':duration,'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),'formats':local:extract(locations)}}] else json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/(name:='Tweakers: '||replace(title,'[&quot;&apos;]',''''''),t:=duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),formats:=local:extract(locations))"
-name := Tweakers: De rol van het verzet tegen de nazi''s in Wolfenstein II: The New Colossus
-t := 91
-duration := 00:01:31
-formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "vbitrate": "v:466k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=9qVLMq5IKpUA/5wVDEI7aZxcE.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:719k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=ZrELEqtIa54A/5wVDEI7aZxcE.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:4828k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dKFKMs_KKl8A/5wVDEI7aZxcE.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:7820k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dpcDEsdYKkcg/5wVDEI7aZxcE.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/5wVDEI7aZxcE.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:5000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=5000000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:8000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=8000000.m3u8"}]
+xidel-0.9.7.5706-openssl.exe -s --color=never --method=POST "https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30" --xquery "videos:=[(if (//iframe) then //iframe/doc(@src) else .)/{position():json(//script/extract(.,'''video'',(.+)\);',1)[.])/(.//items)()/{'name':'Tweakers: '||replace(title,'[&quot;&apos;]',''''''),'t':duration,'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),'formats':locations/[for $x at $i in reverse((progressive)()) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x//src} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x//src},let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-0','extension':'m3u8','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)})]}}]"
+videos := [{"1": {"name": "Tweakers: De rol van het verzet tegen de nazi''s in Wolfenstein II: The New Colossus", "t": 91, "duration": "00:01:31", "formats": [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "vbitrate": "v:466k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=9qVLMq5IKpUA/5wVDEI7aZxcE.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:719k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=ZrELEqtIa54A/5wVDEI7aZxcE.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:4828k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dKFKMs_KKl8A/5wVDEI7aZxcE.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:7820k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=5wVDEI7aZxcE/file=dpcDEsdYKkcg/5wVDEI7aZxcE.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/5wVDEI7aZxcE.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:5000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=5000000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:8000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=5wVDEI7aZxcE/9RUCNKvaJhUg-ZRVCEIvKZl0A-ZZUDEIrILxUA-ZxdKNK9IJ1Qk-hls-nodrm-audio=128000-video=8000000.m3u8"}]}}]
 
 https://tweakers.net/reviews/5325/samsung-galaxy-s8-en-s8+-sexy-smartphone-blijkt-behoorlijk-trouw.html (artikel met één video)
 
@@ -6504,139 +6502,123 @@ videos := [{"1": {"name": "Tweakers: Gameplay Overwatch", "t": 755, "duration": 
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
---xquery "declare function local:extract($arg){
-            $arg/[
-              for $x at $i in reverse(
-                (progressive)()
-              ) return
-              system(
-                x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x//src} 2>&amp;1'
-              ) ! {
-                'format':'pg-'||$i,
-                'extension':'mp4',
-                'resolution':extract(
+--xquery "videos:=[
+            (
+              if (//iframe) then
+                //iframe/doc(@src)
+              else
+                .
+            )/{
+              position():json(
+                //script/extract(
                   .,
-                  'Video:.+, (\d+x\d+)',
+                  '''video'',(.+)\);',
                   1
+                )[.]
+              )/(.//items)()/{
+                'name':'Tweakers: '||replace(
+                  title,
+                  '[&quot;&apos;]',
+                  ''''''
                 ),
-                'vbitrate':replace(
-                  .,
-                  '.+Video:.+?(\d+) kb.+',
-                  'v:$1k',
-                  's'
-                ),
-                'abitrate':replace(
-                  .,
-                  '.+Audio:.+?(\d+) kb.+',
-                  'a:$1k',
-                  's'
-                ),
-                'url':$x//src
-              },
-              let $a:=(adaptive)()[
-                ends-with(
-                  src,
-                  'm3u8'
-                )
-              ]/src return (
-                {
-                  'format':'hls-0',
-                  'extension':'m3u8',
-                  'url':$a
-                },
-                for $x at $i in tail(
-                  tokenize(
-                    extract(
-                      unparsed-text($a),
-                      '(#EXT-X-STREAM-INF.+m3u8$)',
-                      1,
-                      'ms'
+                't':duration,
+                'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),
+                'formats':locations/[
+                  for $x at $i in reverse(
+                    (progressive)()
+                  ) return
+                  system(
+                    x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x//src} 2>&amp;1'
+                  ) ! {
+                    'format':'pg-'||$i,
+                    'extension':'mp4',
+                    'resolution':extract(
+                      .,
+                      'Video:.+, (\d+x\d+)',
+                      1
                     ),
-                    '#EXT-X-STREAM-INF:'
-                  )
-                ) order by extract(
-                  $x,
-                  'BANDWIDTH=(\d+)',
-                  1
-                ) count $i return
-                {
-                  'format':'hls-'||$i,
-                  'extension':'m3u8',
-                  'resolution':extract(
-                    $x,
-                    'RESOLUTION=([\dx]+)',
-                    1
-                  ),
-                  'vbitrate':extract(
-                    $x,
-                    'video=(\d+)\d{3}',
-                    1
-                  ) ! (
-                    if (.) then
-                      concat(
-                        'v:',
-                        .,
-                        'k'
+                    'vbitrate':replace(
+                      .,
+                      '.+Video:.+?(\d+) kb.+',
+                      'v:$1k',
+                      's'
+                    ),
+                    'abitrate':replace(
+                      .,
+                      '.+Audio:.+?(\d+) kb.+',
+                      'a:$1k',
+                      's'
+                    ),
+                    'url':$x//src
+                  },
+                  let $a:=(adaptive)()[
+                    ends-with(
+                      src,
+                      'm3u8'
+                    )
+                  ]/src return (
+                    {
+                      'format':'hls-0',
+                      'extension':'m3u8',
+                      'url':$a
+                    },
+                    for $x at $i in tail(
+                      tokenize(
+                        extract(
+                          unparsed-text($a),
+                          '(#EXT-X-STREAM-INF.+m3u8$)',
+                          1,
+                          'ms'
+                        ),
+                        '#EXT-X-STREAM-INF:'
                       )
-                    else
-                      ''
-                  ),
-                  'abitrate':replace(
-                    $x,
-                    '.+audio.+?(\d+)\d{3}.+',
-                    'a:$1k',
-                    's'
-                  ),
-                  'url':resolve-uri(
-                    '.',
-                    $a
-                  )||extract(
-                    $x,
-                    '(.+m3u8)',
-                    1
+                    ) order by extract(
+                      $x,
+                      'BANDWIDTH=(\d+)',
+                      1
+                    ) count $i return
+                    {
+                      'format':'hls-'||$i,
+                      'extension':'m3u8',
+                      'resolution':extract(
+                        $x,
+                        'RESOLUTION=([\dx]+)',
+                        1
+                      ),
+                      'vbitrate':extract(
+                        $x,
+                        'video=(\d+)\d{3}',
+                        1
+                      ) ! (
+                        if (.) then
+                          concat(
+                            'v:',
+                            .,
+                            'k'
+                          )
+                        else
+                          ''
+                      ),
+                      'abitrate':replace(
+                        $x,
+                        '.+audio.+?(\d+)\d{3}.+',
+                        'a:$1k',
+                        's'
+                      ),
+                      'url':resolve-uri(
+                        '.',
+                        $a
+                      )||extract(
+                        $x,
+                        '(.+m3u8)',
+                        1
+                      )
+                    }
                   )
-                }
-              )
-            ]
-          };
-          if (//iframe) then
-            videos:=[
-              //iframe/doc(@src)/{
-                position():json(
-                  //script/extract(
-                    .,
-                    '''video'',(.+)\);',
-                    1
-                  )[.]
-                )/(.//items)()/{
-                  'name':'Tweakers: '||replace(
-                    title,
-                    '[&quot;&apos;]',
-                    ''''''
-                  ),
-                  't':duration,
-                  'duration':duration * dayTimeDuration('PT1S') + time('00:00:00'),
-                  'formats':local:extract(locations)
-                }
+                ]
               }
-            ]
-          else
-            json(
-              //script/extract(
-                .,
-                '''video'',(.+)\);',
-                1
-              )[.]
-            )/(.//items)()/(
-              name:='Tweakers: '||replace(
-                title,
-                '[&quot;&apos;]',
-                ''''''
-              ),
-              t:=duration,
-              duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
-              formats:=local:extract(locations)
-            )"
+            }
+          ]"
 
 ================================================================================================================================
 

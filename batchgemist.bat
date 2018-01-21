@@ -3161,139 +3161,123 @@ IF NOT "%url: =%"=="%url%" (
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:tweakers.net=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --method^=POST "%url%"
-	--xquery ^"declare function local:extract^($arg^){
-	            $arg/[
-	              for $x at $i in reverse^(
-	                ^(progressive^)^(^)
-	              ^) return
-	              system^(
-	                x'cmd /c %ffmpeg% -i {$x//src} 2^>^&amp^;1'
-	              ^) ! {
-	                'format':'pg-'^|^|$i^,
-	                'extension':'mp4'^,
-	                'resolution':extract^(
+	--xquery ^"videos:^=[
+	            ^(
+	              if ^(//iframe^) then
+	                //iframe/doc^(@src^)
+	              else
+	                .
+	            ^)/{
+	              position^(^):json^(
+	                //script/extract^(
 	                  .^,
-	                  'Video:.+^, ^(\d+x\d+^)'^,
+	                  '''video''^,^(.+^)\^)^;'^,
 	                  1
+	                ^)[.]
+	              ^)/^(.//items^)^(^)/{
+	                'name':'Tweakers: '^|^|replace^(
+	                  title^,
+	                  '[^&quot^;^&apos^;]'^,
+	                  ''''''
 	                ^)^,
-	                'vbitrate':replace^(
-	                  .^,
-	                  '.+Video:.+?^(\d+^) kb.+'^,
-	                  'v:$1k'^,
-	                  's'
-	                ^)^,
-	                'abitrate':replace^(
-	                  .^,
-	                  '.+Audio:.+?^(\d+^) kb.+'^,
-	                  'a:$1k'^,
-	                  's'
-	                ^)^,
-	                'url':$x//src
-	              }^,
-	              let $a:^=^(adaptive^)^(^)[
-	                ends-with^(
-	                  src^,
-	                  'm3u8'
-	                ^)
-	              ]/src return ^(
-	                {
-	                  'format':'hls-0'^,
-	                  'extension':'m3u8'^,
-	                  'url':$a
-	                }^,
-	                for $x at $i in tail^(
-	                  tokenize^(
-	                    extract^(
-	                      unparsed-text^($a^)^,
-	                      '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
-	                      1^,
-	                      'ms'
+	                't':duration^,
+	                'duration':duration * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+	                'formats':locations/[
+	                  for $x at $i in reverse^(
+	                    ^(progressive^)^(^)
+	                  ^) return
+	                  system^(
+	                    x'cmd /c %ffmpeg% -i {$x//src} 2^>^&amp^;1'
+	                  ^) ! {
+	                    'format':'pg-'^|^|$i^,
+	                    'extension':'mp4'^,
+	                    'resolution':extract^(
+	                      .^,
+	                      'Video:.+^, ^(\d+x\d+^)'^,
+	                      1
 	                    ^)^,
-	                    '#EXT-X-STREAM-INF:'
-	                  ^)
-	                ^) order by extract^(
-	                  $x^,
-	                  'BANDWIDTH^=^(\d+^)'^,
-	                  1
-	                ^) count $i return
-	                {
-	                  'format':'hls-'^|^|$i^,
-	                  'extension':'m3u8'^,
-	                  'resolution':extract^(
-	                    $x^,
-	                    'RESOLUTION^=^([\dx]+^)'^,
-	                    1
-	                  ^)^,
-	                  'vbitrate':extract^(
-	                    $x^,
-	                    'video^=^(\d+^)\d{3}'^,
-	                    1
-	                  ^) ! ^(
-	                    if ^(.^) then
-	                      concat^(
-	                        'v:'^,
-	                        .^,
-	                        'k'
+	                    'vbitrate':replace^(
+	                      .^,
+	                      '.+Video:.+?^(\d+^) kb.+'^,
+	                      'v:$1k'^,
+	                      's'
+	                    ^)^,
+	                    'abitrate':replace^(
+	                      .^,
+	                      '.+Audio:.+?^(\d+^) kb.+'^,
+	                      'a:$1k'^,
+	                      's'
+	                    ^)^,
+	                    'url':$x//src
+	                  }^,
+	                  let $a:^=^(adaptive^)^(^)[
+	                    ends-with^(
+	                      src^,
+	                      'm3u8'
+	                    ^)
+	                  ]/src return ^(
+	                    {
+	                      'format':'hls-0'^,
+	                      'extension':'m3u8'^,
+	                      'url':$a
+	                    }^,
+	                    for $x at $i in tail^(
+	                      tokenize^(
+	                        extract^(
+	                          unparsed-text^($a^)^,
+	                          '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
+	                          1^,
+	                          'ms'
+	                        ^)^,
+	                        '#EXT-X-STREAM-INF:'
 	                      ^)
-	                    else
-	                      ''
-	                  ^)^,
-	                  'abitrate':replace^(
-	                    $x^,
-	                    '.+audio.+?^(\d+^)\d{3}.+'^,
-	                    'a:$1k'^,
-	                    's'
-	                  ^)^,
-	                  'url':resolve-uri^(
-	                    '.'^,
-	                    $a
-	                  ^)^|^|extract^(
-	                    $x^,
-	                    '^(.+m3u8^)'^,
-	                    1
+	                    ^) order by extract^(
+	                      $x^,
+	                      'BANDWIDTH^=^(\d+^)'^,
+	                      1
+	                    ^) count $i return
+	                    {
+	                      'format':'hls-'^|^|$i^,
+	                      'extension':'m3u8'^,
+	                      'resolution':extract^(
+	                        $x^,
+	                        'RESOLUTION^=^([\dx]+^)'^,
+	                        1
+	                      ^)^,
+	                      'vbitrate':extract^(
+	                        $x^,
+	                        'video^=^(\d+^)\d{3}'^,
+	                        1
+	                      ^) ! ^(
+	                        if ^(.^) then
+	                          concat^(
+	                            'v:'^,
+	                            .^,
+	                            'k'
+	                          ^)
+	                        else
+	                          ''
+	                      ^)^,
+	                      'abitrate':replace^(
+	                        $x^,
+	                        '.+audio.+?^(\d+^)\d{3}.+'^,
+	                        'a:$1k'^,
+	                        's'
+	                      ^)^,
+	                      'url':resolve-uri^(
+	                        '.'^,
+	                        $a
+	                      ^)^|^|extract^(
+	                        $x^,
+	                        '^(.+m3u8^)'^,
+	                        1
+	                      ^)
+	                    }
 	                  ^)
-	                }
-	              ^)
-	            ]
-	          }^;
-	          if ^(//iframe^) then
-	            videos:^=[
-	              //iframe/doc^(@src^)/{
-	                position^(^):json^(
-	                  //script/extract^(
-	                    .^,
-	                    '''video''^,^(.+^)\^)^;'^,
-	                    1
-	                  ^)[.]
-	                ^)/^(.//items^)^(^)/{
-	                  'name':'Tweakers: '^|^|replace^(
-	                    title^,
-	                    '[^&quot^;^&apos^;]'^,
-	                    ''''''
-	                  ^)^,
-	                  't':duration^,
-	                  'duration':duration * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
-	                  'formats':local:extract^(locations^)
-	                }
+	                ]
 	              }
-	            ]
-	          else
-	            json^(
-	              //script/extract^(
-	                .^,
-	                '''video''^,^(.+^)\^)^;'^,
-	                1
-	              ^)[.]
-	            ^)/^(.//items^)^(^)/^(
-	              name:^='Tweakers: '^|^|replace^(
-	                title^,
-	                '[^&quot^;^&apos^;]'^,
-	                ''''''
-	              ^)^,
-	              t:^=duration^,
-	              duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
-	              formats:^=local:extract^(locations^)
-	            ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	            }
+	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE (
 	ECHO.
 	ECHO Ongeldige programma-url.
