@@ -1981,6 +1981,7 @@ name := AT5 - ''Bekende voetballers kopen massaal huizen op in Amsterdam'' (2801
 [https://github.com/Reino17/BatchGemist/commit/87db54e6178903fc6c8ba312d0724062f037c00a]
 [https://github.com/Reino17/BatchGemist/commit/c6ef00d49969a54a1bbe083387e7c5b7bfc228bf]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
 
@@ -2614,9 +2615,21 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
   "url": "https://video.omroep.nl/secure/23977b59e3a8f847b0e9aff48f9c961a/5a1a0c74/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
 }
 
+De "https://nos.nl/video/resolve/"-methode werkt op dit moment nog steeds, maar ik ga toch over op "https://ipv4-api.nos.nl/resolve.php/video?url=" (zie NOS notities).
+
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return {'format':'mp4-'||$i,'url':$x}"
+{
+  "format": "mp4-1",
+  "url": "https://content1b.omroep.nl/urishieldv2/l27m28dde3a336a798f9005a63a7b4000000.24a64a6b0b81a99f87aad4af0856b457/nos/content-ip/ipod/2017/02/05/284055.mp4"
+}
+{
+  "format": "mp4-2",
+  "url": "https://content1b.omroep.nl/urishieldv2/l27m3c56b61a5d320b14005a63a7b4000000.0dcab8bd2dd2484c3b0bd4aa7aae4fbe/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+}
+
 https://www.npo.nl/nieuw-seizoen-hunted/13-07-2017/WO_AT_9826291
 
-xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_9826291?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'url':$x}"
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_9826291?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'url':$x}"
 {
   "format": "mp4-1",
   "extension": "m4v",
@@ -2633,22 +2646,24 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
   "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_704x396_1499953546.m4v"
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}"
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}"
 {
   "format": "mp4-1",
   "extension": "mp4",
+  "duration": "00:04:54",
   "resolution": "640x360",
   "vbitrate": "v:502k",
   "abitrate": "a:104k",
-  "url": "https://video.omroep.nl/secure/fc0d60a42a718d7e8bc29017bb8cfcbe/5a1a0940/nos/content-ip/ipod/2017/02/05/284055.mp4"
-},
+  "url": "https://content1a.omroep.nl/urishieldv2/l27m3693a921367bb149005a63ab04000000.1a7fe867449b7a998d014273aaf0a171/nos/content-ip/ipod/2017/02/05/284055.mp4"
+}
 {
   "format": "mp4-2",
   "extension": "mp4",
+  "duration": "00:04:54",
   "resolution": "856x482",
   "vbitrate": "v:1504k",
   "abitrate": "a:129k",
-  "url": "https://video.omroep.nl/secure/644b31fb4696bdedf43d1bfa8fec864f/5a1a0940/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+  "url": "https://content1a.omroep.nl/urishieldv2/l27m7728ed3b0b320ea3005a63ab04000000.e5970a009eed33b40b1aadfb9c449ac6/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
 }
 
 http://www.npo.nl/promo-victoria/06-01-2017/POMS_EO_6751605 
@@ -2657,6 +2672,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 {
   "format": "mp4-1",
   "extension": "mp4",
+  "duration": "00:03:23",
   "resolution": "288x162",
   "vbitrate": "v:198k",
   "abitrate": "a:53k",
@@ -2665,6 +2681,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 {
   "format": "mp4-2",
   "extension": "mp4",
+  "duration": "00:03:23",
   "resolution": "416x234",
   "vbitrate": "v:493k",
   "abitrate": "a:80k",
@@ -2673,6 +2690,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 {
   "format": "mp4-3",
   "extension": "mp4",
+  "duration": "00:03:23",
   "resolution": "544x306",
   "vbitrate": "v:694k",
   "abitrate": "a:80k",
@@ -2681,6 +2699,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 {
   "format": "mp4-4",
   "extension": "mp4",
+  "duration": "00:03:23",
   "resolution": "608x342",
   "vbitrate": "v:972k",
   "abitrate": "a:80k",
@@ -2693,6 +2712,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 {
   "format": "mp4-1",
   "extension": "mp4",
+  "duration": "00:01:46",
   "resolution": "1920x1080",
   "vbitrate": "v:10004k",
   "abitrate": "a:317k",
@@ -2705,7 +2725,7 @@ Progressieve- en dynamische videostreams en progressieve videofragmenten samen
 
 https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
 
-xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b},for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then [$b] else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b},for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then [$b] else ()"
 [
   {
     "format": "pg-1",
@@ -2905,18 +2925,20 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "[...]"
   {
     "format": "mp4-1",
     "extension": "mp4",
+    "duration": "00:04:54",
     "resolution": "640x360",
     "vbitrate": "v:502k",
     "abitrate": "a:104k",
-    "url": "https://video.omroep.nl/secure/d53dda9a8c5c3688918a7edc8f70f6dd/5a1a9533/nos/content-ip/ipod/2017/02/05/284055.mp4"
+    "url": "https://content1b.omroep.nl/urishieldv2/l27m01d185586f4c228e005a63ac38000000.6bee9ab358dfc3d5bab0c5330d8ba436/nos/content-ip/ipod/2017/02/05/284055.mp4"
   },
   {
     "format": "mp4-2",
     "extension": "mp4",
+    "duration": "00:04:54",
     "resolution": "856x482",
     "vbitrate": "v:1504k",
     "abitrate": "a:129k",
-    "url": "https://video.omroep.nl/secure/501bba084e92d96ccd9822e4a7589a30/5a1a9533/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+    "url": "https://content1b.omroep.nl/urishieldv2/l27m2ec2f6e764efc4fb005a63ac38000000.bc5f8b34a0e1d5172ff83b2123ad1ab7/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
   }
 ]
 
@@ -2925,18 +2947,20 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
   {
     "format": "mp4-1",
     "extension": "mp4",
+    "duration": "00:04:54",
     "resolution": "640x360",
     "vbitrate": "v:502k",
     "abitrate": "a:104k",
-    "url": "https://video.omroep.nl/secure/d5145e606b2af5f549fbbdc104ff8731/5a1a95e2/nos/content-ip/ipod/2017/02/05/284055.mp4"
+    "url": "https://content1b.omroep.nl/urishieldv2/l27m01d185586f4c228e005a63ac38000000.6bee9ab358dfc3d5bab0c5330d8ba436/nos/content-ip/ipod/2017/02/05/284055.mp4"
   },
   {
     "format": "mp4-2",
     "extension": "mp4",
+    "duration": "00:04:54",
     "resolution": "856x482",
     "vbitrate": "v:1504k",
     "abitrate": "a:129k",
-    "url": "https://video.omroep.nl/secure/cea87e84a216f9e2e7cad53c3b6149fe/5a1a95e2/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
+    "url": "https://content1b.omroep.nl/urishieldv2/l27m2ec2f6e764efc4fb005a63ac38000000.bc5f8b34a0e1d5172ff83b2123ad1ab7/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"
   }
 ]
 
@@ -2944,11 +2968,11 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 
 http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "json(extract($raw,'\((.+)\)',1))[not(error)] ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),': ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':'http://www.npo.nl/%prid%','method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/%prid%' else ()),let $a:=x:request({'data':'http://ida.omroep.nl/app.php/%prid%?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b}[url],for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'post':serialize-json([{'file':url}]),'url':'https://nos.nl/video/resolve/'})//file else url) return system(x'cmd /c %ffmpeg% -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then formats:=[$b] else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" --xquery "json(extract($raw,'\((.+)\)',1))[not(error)] ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),': ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':'http://www.npo.nl/WO_AT_4993516','method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/WO_AT_4993516' else ()),let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_4993516?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b}[url],for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then formats:=[$b] else ()"
 
 https://www.npo.nl/groen-licht/11-12-2017/BV_101384591
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/BV_101384591" --xquery "[...]"
 name := BNNVARA: Groen Licht (11122017)
 duration := 00:24:23
 t := 1463
@@ -2957,7 +2981,7 @@ s_url := http://tt888.omroep.nl/tt888/BV_101384591
 
 https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POW_03375508" --xquery "[...]"
 name := NOS: NOS Journaal (18112017)
 duration := 00:20:22
 t := 1222
@@ -2967,25 +2991,25 @@ formats := [{"format": "pg-1", "extension": "m4v", "resolution": "480x270", "vbi
 
 https://www.npo.nl/live/npo-1 (LI_NL1_4188102)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/LI_NL1_4188102" --xquery "[...]"
 name := NPO 1: Livestream (26112017)
 formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1.m3u8?token=579b2ad07b5468034d28dda5b724a36b_1511781574_1511781574"}, {"format": "hls-1", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "384x216", "vbitrate": "v:200k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=200000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=500000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:700k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=700000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "768x432", "vbitrate": "v:1000k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1000000.m3u8"}, {"format": "hls-6", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1800k", "abitrate": "a:128k", "url": "https://pedgewarer27b.video.kpnstreaming.nl/session/ae4d249c-d29b-11e7-b7a0-9cb65498c8b0/fqimjj/b2b/live/npo/live/npo/tvlive/npo1/npo1.isml/npo1-audio_nld=128000-video=1800000.m3u8"}]
 
 https://www.npo.nl/nieuw-seizoen-hunted/13-07-2017/WO_AT_9826291
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_9826291" --xquery "[...]"
 name := AVROTROS: Nieuw seizoen Hunted! (13072017)
-formats := [{"format": "mp4-1", "extension": "m4v", "resolution": "288x162", "vbitrate": "v:197k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_288x162_1499953546.m4v"}, {"format": "mp4-2", "extension": "m4v", "resolution": "544x306", "vbitrate": "v:688k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_544x306_1499953546.m4v"}, {"format": "mp4-3", "extension": "m4v", "resolution": "846x476", "vbitrate": "v:1269k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_704x396_1499953546.m4v"}]
+formats := [{"format": "mp4-1", "extension": "m4v", "duration": "00:00:19", "resolution": "288x162", "vbitrate": "v:197k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_288x162_1499953546.m4v"}, {"format": "mp4-2", "extension": "m4v", "duration": "00:00:19", "resolution": "544x306", "vbitrate": "v:688k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_544x306_1499953546.m4v"}, {"format": "mp4-3", "extension": "m4v", "duration": "00:00:19", "resolution": "846x476", "vbitrate": "v:1269k", "abitrate": "a:127k", "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_704x396_1499953546.m4v"}]
 
 https://www.npo.nl/li-jie-voor-het-eerst-winnares-top-16-na-opgave-solja/05-02-2017/WO_NOS_7303921
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_NOS_7303921" --xquery "[...]"
 name := NOS: Li Jie voor het eerst winnares Top-16 na opgave Solja (05022017)
-formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:104k", "url": "https://video.omroep.nl/secure/dc1d4ec4ed12028685e23fed149c672e/5a1aa380/nos/content-ip/ipod/2017/02/05/284055.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "856x482", "vbitrate": "v:1504k", "abitrate": "a:129k", "url": "https://video.omroep.nl/secure/8accf5236fab284e636e459299b5418c/5a1aa380/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"}]
+formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:04:54", "resolution": "640x360", "vbitrate": "v:502k", "abitrate": "a:104k", "url": "https://content1b.omroep.nl/urishieldv2/l27m01d185586f4c228e005a63ac38000000.6bee9ab358dfc3d5bab0c5330d8ba436/nos/content-ip/ipod/2017/02/05/284055.mp4"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:04:54", "resolution": "856x482", "vbitrate": "v:1504k", "abitrate": "a:129k", "url": "https://content1b.omroep.nl/urishieldv2/l27m2ec2f6e764efc4fb005a63ac38000000.bc5f8b34a0e1d5172ff83b2123ad1ab7/nos/content-ip/mp4/web03/2017/02/05/284055.mp4"}]
 
 https://www.npo.nl/hunted/20-11-2017/AT_2084949/POMS_AT_11768999
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/POMS_AT_11768999" --xquery "[...]"
 name := AVROTROS: Hunted - ''Staan blijven!'' (20112017)
 duration := 00:01:59
 t := 119
@@ -3001,11 +3025,11 @@ formats := [{"format": "pg-1", "extension": "m4v", "resolution": "480x270", "vbi
 
 https://www.npo.nl/seksshop-bestolen-van-14-bijna-echte-meisjes/06-09-2017/WO_POWN_10684109
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_POWN_10684109" --xquery "[...]"
 name := PowNed: Seksshop bestolen van 14 ''bijna echte'' meisjes (06092017)
 duration := 00:01:45
 t := 105
-formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:10004k", "abitrate": "a:317k", "url": "http://download.omroep.nl/powned/1353%20SEKSSHOP%20BESTOLEN.mp4"}]
+formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "resolution": "1920x1080", "vbitrate": "v:10004k", "abitrate": "a:317k", "url": "http://download.omroep.nl/powned/1353%20SEKSSHOP%20BESTOLEN.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -3290,16 +3314,10 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1920x1080", "
                   if (contains(url,'content-ip')) then
                     x:request(
                       {
-                        'post':serialize-json(
-                          [
-                            {
-                              'file':url
-                            }
-                          ]
-                        ),
-                        'url':'https://nos.nl/video/resolve/'
+                        'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),
+                        'method':'HEAD'
                       }
-                    )//file
+                    )/url
                   else
                     url
                 ) return
@@ -3311,6 +3329,24 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1920x1080", "
                     $x,
                     '.+\.(.+)',
                     1
+                  ),
+                  'duration':let $b:=extract(
+                    .,
+                    'Duration: (.+?),',
+                    1
+                  ) return
+                  round(
+                    seconds-from-time($b)
+                  ) ! concat(
+                    extract(
+                      $b,
+                      '(.+:)',
+                      1
+                    ),
+                    if (.<10) then
+                      '0'||.
+                    else
+                      .
                   ),
                   'resolution':extract(
                     .,
@@ -6685,7 +6721,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://anderetijden.nl/programma
 [https://github.com/Reino17/BatchGemist/commit/81962742f028bf76946fb9ea8f3dc7c7819964bd]
 [https://github.com/Reino17/BatchGemist/commit/5afb9883c481444ccd6b2b82563e63675a62cca4]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/3b46cc81bcdc86b42cb6cdf29c31ef3b126aa510]
 
 https://nos.nl/livestream/2206486-wb-schaatsen-salt-lake-city-1500-meter-v.html
 

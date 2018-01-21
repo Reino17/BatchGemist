@@ -3455,7 +3455,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
             ^) else
               ^(^)^,
             if ^(tt888^='ja'^) then
-              s_url:^='http://tt888.omroep.nl/tt888/'||prid
+              s_url:^='http://tt888.omroep.nl/tt888/'^|^|prid
             else
               ^(^)
           ^)^,
@@ -3606,16 +3606,10 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                   if ^(contains^(url^,'content-ip'^)^) then
                     x:request^(
                       {
-                        'post':serialize-json^(
-                          [
-                            {
-                              'file':url
-                            }
-                          ]
-                        ^)^,
-                        'url':'https://nos.nl/video/resolve/'
+                        'data':'https://ipv4-api.nos.nl/resolve.php/video?url^='^|^|uri-encode^(url^)^,
+                        'method':'HEAD'
                       }
-                    ^)//file
+                    ^)/url
                   else
                     url
                 ^) return
@@ -3627,6 +3621,24 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     $x^,
                     '.+\.^(.+^)'^,
                     1
+                  ^)^,
+                  'duration':let $b:^=extract^(
+                    .^,
+                    'Duration: ^(.+?^)^,'^,
+                    1
+                  ^) return
+                  round^(
+                    seconds-from-time^($b^)
+                  ^) ! concat^(
+                    extract^(
+                      $b^,
+                      '^(.+:^)'^,
+                      1
+                    ^)^,
+                    if ^(.^<10^) then
+                      '0'^|^|.
+                    else
+                      .
                   ^)^,
                   'resolution':extract^(
                     .^,
