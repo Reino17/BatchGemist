@@ -9254,6 +9254,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://lb-fox-vod.
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/b3e34c2917ca49c94cabf07a81dfa9df0a4f9fc0]
+[https://github.com/Reino17/BatchGemist/]
 
 https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth
 
@@ -9391,10 +9392,11 @@ https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_12
 
 Xidel's standaard user-agent werkt niet. "Mozilla/5.0 Firefox" ook niet. "Mozilla/5.0 Firefox/57.0" op z'n minst dus wel. Zeer kieskeurig!
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}"
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}"
 {
   "format": "mp4-1",
   "extension": "mp4",
+  "duration": "00:17:08",
   "resolution": "1280x720",
   "vbitrate": "v:1679k",
   "abitrate": "a:125k",
@@ -9403,9 +9405,9 @@ xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --use
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/(name:=concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')))" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return formats:=[system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/(name:=concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')))" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return formats:=[system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
 name := 24Kitchen: Lemon pudding van oma Ruth (02012018)
-formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:1679k", "abitrate": "a:125k", "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"}]
+formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:17:08", "resolution": "1280x720", "vbitrate": "v:1679k", "abitrate": "a:125k", "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -9444,6 +9446,24 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "1280x720", "v
       ) ! {
         'format':'mp4-1',
         'extension':'mp4',
+        'duration':let $b:=extract(
+          .,
+          'Duration: (.+?),',
+          1
+        ) return
+        round(
+          seconds-from-time($b)
+        ) ! concat(
+          extract(
+            $b,
+            '(.+:)',
+            1
+          ),
+          if (.<10) then
+            '0'||.
+          else
+            .
+        ),
         'resolution':extract(
           .,
           'Video:.+, (\d+x\d+)',

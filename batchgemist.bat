@@ -2441,6 +2441,24 @@ IF NOT "%url: =%"=="%url%" (
 	      ^) ! {
 	        'format':'mp4-1'^,
 	        'extension':'mp4'^,
+	        'duration':let $b:^=extract^(
+	          .^,
+	          'Duration: ^(.+?^)^,'^,
+	          1
+	        ^) return
+	        round^(
+	          seconds-from-time^($b^)
+	        ^) ! concat^(
+	          extract^(
+	            $b^,
+	            '^(.+:^)'^,
+	            1
+	          ^)^,
+	          if ^(.^<10^) then
+	            '0'^|^|.
+	          else
+	            .
+	        ^)^,
 	        'resolution':extract^(
 	          .^,
 	          'Video:.+^, ^(\d+x\d+^)'^,
