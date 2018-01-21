@@ -3034,7 +3034,11 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	--xquery ^"name:^=concat^(
 	            'Autojunk: '^,
-	            //meta[@property^='og:title']/@content^,
+	            replace^(
+	              //meta[@property^='og:title']/@content^,
+	              '[^&quot^;^&apos^;]'^,
+	              ''''''
+	            ^)^,
 	            replace^(
 	              //span[@class^='posted']^,
 	              '.+?^(\d+^)-^(\d+^)-^(\d+^).+'^,
@@ -3070,6 +3074,24 @@ IF NOT "%url: =%"=="%url%" (
 	                    $i
 	                  ^)^,
 	                  'extension':$a^,
+	                  'duration':let $b:^=extract^(
+	                    .^,
+	                    'Duration: ^(.+?^)^,'^,
+	                    1
+	                  ^) return
+	                  round^(
+	                    seconds-from-time^($b^)
+	                  ^) ! concat^(
+	                    extract^(
+	                      $b^,
+	                      '^(.+:^)'^,
+	                      1
+	                    ^)^,
+	                    if ^(.^<10^) then
+	                      '0'^|^|.
+	                    else
+	                      .
+	                  ^)^,
 	                  'resolution':extract^(
 	                    .^,
 	                    'Video:.+^, ^(\d+x\d+^)'^,
