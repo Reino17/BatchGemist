@@ -2518,108 +2518,116 @@ IF NOT "%url: =%"=="%url%" (
 	                $a^($b[2]^)^,
 	                $b[3]^,
 	                '^)'
-	              ^)^,
-	              $e:^=if ^(//@data-files^) then
-	                //div/@data-files/json^(
-	                  binary-to-string^(
-	                    base64Binary^(.^)
-	                  ^)
-	                ^)
-	              else
-	                json^(
-	                  //script/extract^(
-	                    .^,
-	                    'fileinfo ^= ^(.+^)^,'^,
-	                    1
-	                  ^)[.]
-	                ^)
+	              ^)
 	          return
-	          videos:^=[
-	            $e/{
-	              position^(^):{
-	                'name':^(
-	                  if ^(position^(^)^=1^) then
-	                    $c
-	                  else
-	                    concat^(
-	                      $c^,
-	                      ' ^('^,
-	                      position^(^)^,
-	                      '^)'
+	          if ^(//iframe^) then
+	            v_url:^=replace^(
+	              //iframe/@src^,
+	              '.+/^(.+^)'^,
+	              'https://youtu.be/$1'
+	            ^)
+	          else
+	            videos:^=[
+	              ^(
+	                if ^(//@data-files^) then
+	                  //div/@data-files/json^(
+	                    binary-to-string^(
+	                      base64Binary^(.^)
 	                    ^)
-	                ^)^|^|$d^,
-	                'formats':for $x at $i in ^(
-	                  for $x in ^(
-	                    'flv'^,
-	                    'mobile'^,
-	                    'tablet'^,
-	                    '720p'
-	                  ^) return
-	                  .^($x^)
-	                ^)
-	                let $a:^=extract^(
-	                  $x^,
-	                  '.+\.^(.+^)'^,
-	                  1
-	                ^)
-	                return
-	                system^(
-	                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
-	                ^) ! {
-	                  'format':concat^(
-	                    $a^,
-	                    '-'^,
-	                    $i
-	                  ^)^,
-	                  'extension':$a^,
-	                  'duration':let $b:^=extract^(
-	                    .^,
-	                    'Duration: ^(.+?^)^,'^,
+	                  ^)
+	                else
+	                  json^(
+	                    //script/extract^(
+	                      .^,
+	                      'fileinfo ^= ^(.+^)^,'^,
+	                      1
+	                    ^)[.]
+	                  ^)
+	              ^)/{
+	                position^(^):{
+	                  'name':^(
+	                    if ^(position^(^)^=1^) then
+	                      $c
+	                    else
+	                      concat^(
+	                        $c^,
+	                        ' ^('^,
+	                        position^(^)^,
+	                        '^)'
+	                      ^)
+	                  ^)^|^|$d^,
+	                  'formats':for $x at $i in ^(
+	                    for $x in ^(
+	                      'flv'^,
+	                      'mobile'^,
+	                      'tablet'^,
+	                      '720p'
+	                    ^) return
+	                    .^($x^)
+	                  ^)
+	                  let $a:^=extract^(
+	                    $x^,
+	                    '.+\.^(.+^)'^,
 	                    1
-	                  ^) return
-	                  round^(
-	                    seconds-from-time^($b^)
-	                  ^) ! concat^(
-	                    extract^(
-	                      $b^,
-	                      '^(.+:^)'^,
+	                  ^)
+	                  return
+	                  system^(
+	                    x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
+	                  ^) ! {
+	                    'format':concat^(
+	                      $a^,
+	                      '-'^,
+	                      $i
+	                    ^)^,
+	                    'extension':$a^,
+	                    'duration':let $b:^=extract^(
+	                      .^,
+	                      'Duration: ^(.+?^)^,'^,
+	                      1
+	                    ^) return
+	                    round^(
+	                      seconds-from-time^($b^)
+	                    ^) ! concat^(
+	                      extract^(
+	                        $b^,
+	                        '^(.+:^)'^,
+	                        1
+	                      ^)^,
+	                      if ^(.^<10^) then
+	                        '0'^|^|.
+	                      else
+	                        .
+	                    ^)^,
+	                    'resolution':extract^(
+	                      .^,
+	                      'Video:.+^, ^(\d+x\d+^)'^,
 	                      1
 	                    ^)^,
-	                    if ^(.^<10^) then
-	                      '0'^|^|.
-	                    else
-	                      .
-	                  ^)^,
-	                  'resolution':extract^(
-	                    .^,
-	                    'Video:.+^, ^(\d+x\d+^)'^,
-	                    1
-	                  ^)^,
-	                  'vbitrate':replace^(
-	                    .^,
-	                    '.+Video:.+?^(\d+^) kb.+'^,
-	                    'v:$1k'^,
-	                    's'
-	                  ^)^,
-	                  'abitrate':extract^(
-	                    .^,
-	                    'Audio:.+?^(\d+^) kb'^,
-	                    1^,'s'
-	                  ^) ! ^(
-	                    if ^(.^) then
-	                      concat^(
-	                        'a:'^,
-	                        .^,
-	                        'k'
-	                      ^)
-	                    else
-	                      ''
-	                  ^)^,
-	                  'url':$x
+	                    'vbitrate':replace^(
+	                      .^,
+	                      '.+Video:.+?^(\d+^) kb.+'^,
+	                      'v:$1k'^,
+	                      's'
+	                    ^)^,
+	                    'abitrate':extract^(
+	                      .^,
+	                      'Audio:.+?^(\d+^) kb'^,
+	                      1^,'s'
+	                    ^) ! ^(
+	                      if ^(.^) then
+	                        concat^(
+	                          'a:'^,
+	                          .^,
+	                          'k'
+	                        ^)
+	                      else
+	                        ''
+	                    ^)^,
+	                    'url':$x
+	                  }
 	                }
 	              }
-	            }
-	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	            ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:comedycentral.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	--xquery ^"videos:^=if ^(//@data-mrss^) then
