@@ -443,23 +443,15 @@ IF NOT "%url: =%"=="%url%" (
 	                ^) ! {
 	                  'format':'mp4-'^|^|$i^,
 	                  'extension':'mp4'^,
-	                  'duration':let $b:^=extract^(
-	                    .^,
-	                    'Duration: ^(.+?^)^,'^,
-	                    1
-	                  ^) return
-	                  round^(
-	                    seconds-from-time^($b^)
-	                  ^) ! concat^(
-	                    extract^(
-	                      $b^,
-	                      '^(.+:^)'^,
-	                      1
-	                    ^)^,
-	                    if ^(.^<10^) then
-	                      '0'^|^|.
-	                    else
-	                      .
+	                  'duration':format-time^(
+	                    time^(
+	                      extract^(
+	                        .^,
+	                        'Duration: ^(.+?^)^,'^,
+	                        1
+	                      ^)
+	                    ^) + duration^('PT0.5S'^)^,
+	                    '[H01]:[m01]:[s01]'
 	                  ^)^,
 	                  'resolution':extract^(
 	                    .^,
@@ -2446,23 +2438,15 @@ IF NOT "%url: =%"=="%url%" (
 	      ^) ! {
 	        'format':'mp4-1'^,
 	        'extension':'mp4'^,
-	        'duration':let $b:^=extract^(
-	          .^,
-	          'Duration: ^(.+?^)^,'^,
-	          1
-	        ^) return
-	        round^(
-	          seconds-from-time^($b^)
-	        ^) ! concat^(
-	          extract^(
-	            $b^,
-	            '^(.+:^)'^,
-	            1
-	          ^)^,
-	          if ^(.^<10^) then
-	            '0'^|^|.
-	          else
-	            .
+	        'duration':format-time^(
+	          time^(
+	            extract^(
+	              .^,
+	              'Duration: ^(.+?^)^,'^,
+	              1
+	            ^)
+	          ^) + duration^('PT0.5S'^)^,
+	          '[H01]:[m01]:[s01]'
 	        ^)^,
 	        'resolution':extract^(
 	          .^,
@@ -2580,23 +2564,15 @@ IF NOT "%url: =%"=="%url%" (
 	                      $i
 	                    ^)^,
 	                    'extension':$a^,
-	                    'duration':let $b:^=extract^(
-	                      .^,
-	                      'Duration: ^(.+?^)^,'^,
-	                      1
-	                    ^) return
-	                    round^(
-	                      seconds-from-time^($b^)
-	                    ^) ! concat^(
-	                      extract^(
-	                        $b^,
-	                        '^(.+:^)'^,
-	                        1
-	                      ^)^,
-	                      if ^(.^<10^) then
-	                        '0'^|^|.
-	                      else
-	                        .
+	                    'duration':format-time^(
+	                      time^(
+	                        extract^(
+	                          .^,
+	                          'Duration: ^(.+?^)^,'^,
+	                          1
+	                        ^)
+	                      ^) + duration^('PT0.5S'^)^,
+	                      '[H01]:[m01]:[s01]'
 	                    ^)^,
 	                    'resolution':extract^(
 	                      .^,
@@ -3005,23 +2981,15 @@ IF NOT "%url: =%"=="%url%" (
 	            ^) ! {
 	              'format':'mp4-'^|^|$i^,
 	              'extension':'mp4'^,
-	              'duration':let $a:^=extract^(
-	                .^,
-	                'Duration: ^(.+?^)^,'^,
-	                1
-	              ^) return
-	              round^(
-	                seconds-from-time^($a^)
-	              ^) ! concat^(
-	                extract^(
-	                  $a^,
-	                  '^(.+:^)'^,
-	                  1
-	                ^)^,
-	                if ^(.^<10^) then
-	                  '0'^|^|.
-	                else
-	                  .
+	              'duration':format-time^(
+	                time^(
+	                  extract^(
+	                    .^,
+	                    'Duration: ^(.+?^)^,'^,
+	                    1
+	                  ^)
+	                ^) + duration^('PT0.5S'^)^,
+	                '[H01]:[m01]:[s01]'
 	              ^)^,
 	              'resolution':extract^(
 	                .^,
@@ -3087,23 +3055,15 @@ IF NOT "%url: =%"=="%url%" (
 	                    $i
 	                  ^)^,
 	                  'extension':$a^,
-	                  'duration':let $b:^=extract^(
-	                    .^,
-	                    'Duration: ^(.+?^)^,'^,
-	                    1
-	                  ^) return
-	                  round^(
-	                    seconds-from-time^($b^)
-	                  ^) ! concat^(
-	                    extract^(
-	                      $b^,
-	                      '^(.+:^)'^,
-	                      1
-	                    ^)^,
-	                    if ^(.^<10^) then
-	                      '0'^|^|.
-	                    else
-	                      .
+	                  'duration':format-time^(
+	                    time^(
+	                      extract^(
+	                        .^,
+	                        'Duration: ^(.+?^)^,'^,
+	                        1
+	                      ^)
+	                    ^) + duration^('PT0.5S'^)^,
+	                    '[H01]:[m01]:[s01]'
 	                  ^)^,
 	                  'resolution':extract^(
 	                    .^,
@@ -3573,23 +3533,15 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     '.+\.^(.+^)'^,
                     1
                   ^)^,
-                  'duration':let $b:^=extract^(
-                    .^,
-                    'Duration: ^(.+?^)^,'^,
-                    1
-                  ^) return
-                  round^(
-                    seconds-from-time^($b^)
-                  ^) ! concat^(
-                    extract^(
-                      $b^,
-                      '^(.+:^)'^,
-                      1
-                    ^)^,
-                    if ^(.^<10^) then
-                      '0'^|^|.
-                    else
-                      .
+                  'duration':format-time^(
+                    time^(
+                      extract^(
+                        .^,
+                        'Duration: ^(.+?^)^,'^,
+                        1
+                      ^)
+                    ^) + duration^('PT0.5S'^)^,
+                   '[H01]:[m01]:[s01]'
                   ^)^,
                   'resolution':extract^(
                     .^,

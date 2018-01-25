@@ -2646,7 +2646,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
   "url": "http://content.omroep.nl/avrotros/transcoding/algemeen/975_1499953546/975_704x396_1499953546.m4v"
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}"
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_NOS_7303921?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()() return for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}"
 {
   "format": "mp4-1",
   "extension": "mp4",
@@ -2725,7 +2725,7 @@ Progressieve- en dynamische videostreams en progressieve videofragmenten samen
 
 https://www.npo.nl/nos-journaal/18-11-2017/POW_03375508
 
-xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b},for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then [$b] else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data':'http://ida.omroep.nl/app.php/POW_03375508?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b},for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then [$b] else ()"
 [
   {
     "format": "pg-1",
@@ -2968,7 +2968,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=x:request({'data
 
 http://www.npo.nl/promo-opgelicht-06-09-2016/05-09-2016/WO_AT_4993516
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" --xquery "json(extract($raw,'\((.+)\)',1))[not(error)] ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),': ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':'http://www.npo.nl/WO_AT_4993516','method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/WO_AT_4993516' else ()),let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_4993516?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b}[url],for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then formats:=[$b] else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT_4993516" --xquery "json(extract($raw,'\((.+)\)',1))[not(error)] ! (name:=if (medium='live') then concat(titel,replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)')) else replace(concat(if (count(.//naam)=1) then .//naam else join(.//naam,' en '),': ',if (ptype='episode') then (if (aflevering_titel) then (if (contains(titel,aflevering_titel)) then titel else (if (contains(aflevering_titel,titel)) then aflevering_titel else concat(titel,' - ',aflevering_titel))) else titel) else concat(.//serie_titel,' - ',titel),if (matches('%date%','^\d')) then ' (%date%)' else replace(x:request({'data':'http://www.npo.nl/WO_AT_4993516','method':'HEAD'})/url,'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),'[&quot;&apos;]',''''''),if (tijdsduur) then (duration:=tijdsduur,t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),if (start) then (start:=start,(hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (ss:=.,if (. mod 30=0) then (if (.=30) then () else ss1:=. - 30,ss2:=30) else (if (.<30) then () else ss1:=. - (. mod 30),ss2:=. mod 30)),end:=eind,to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)) else (),if (publicatie_eind) then (let $a:=dateTime(publicatie_eind) - current-dateTime() return expire:=concat(replace(publicatie_eind,'(\d+)-(\d+)-(\d+)T(.+)\+.+','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else ()) else (),if (tt888='ja') then s_url:='http://tt888.omroep.nl/tt888/WO_AT_4993516' else ()),let $a:=x:request({'data':'http://ida.omroep.nl/app.php/WO_AT_4993516?token='||json('http://ida.omroep.nl/app.php/auth')/token,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/(items)()(),$b:=(for $x at $i in reverse($a[contentType='odi'][format='mp4'])/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json/substring-before(url,'?') return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'pg-'||$i,'extension':'m4v','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $b:=$a[format='hls']/x:request({'data':replace(url,'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/(if (doc) then json(doc) else json/url) return ({'format':'hls-0','extension':'m3u8','url':$b}[url],for $x at $i in tail(tokenize(extract(unparsed-text($b),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}),for $x at $i in reverse($a[contentType='url'][format='mp4']) ! x:request({'data':url,'method':'HEAD','error-handling':'xxx=accept'})[some $x in ('200','302') satisfies contains(headers[1],$x)]/(if (contains(url,'content-ip')) then x:request({'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),'method':'HEAD'})/url else url) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':extract($x,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}) return if ($b) then formats:=[$b] else ()"
 
 https://www.npo.nl/groen-licht/11-12-2017/BV_101384591
 
@@ -3330,23 +3330,15 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "res
                     '.+\.(.+)',
                     1
                   ),
-                  'duration':let $b:=extract(
-                    .,
-                    'Duration: (.+?),',
-                    1
-                  ) return
-                  round(
-                    seconds-from-time($b)
-                  ) ! concat(
-                    extract(
-                      $b,
-                      '(.+:)',
-                      1
-                    ),
-                    if (.<10) then
-                      '0'||.
-                    else
-                      .
+                  'duration':format-time(
+                    time(
+                      extract(
+                        .,
+                        'Duration: (.+?),',
+                        1
+                      )
+                    ) + duration('PT0.5S'),
+                    '[H01]:[m01]:[s01]'
                   ),
                   'resolution':extract(
                     .,
@@ -3799,6 +3791,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "le
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
 [https://github.com/Reino17/BatchGemist/commit/e69868def8a5576e733289d4f84e494f9611da2f]
 [https://github.com/Reino17/BatchGemist/commit/ff8a842391003b2bf0a7733dc23243402ca698f1]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'(Duration: .+?),',1)"
 Duration: 00:04:53.99
@@ -3825,34 +3818,44 @@ xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c
 duration := 00:01:06
 t := 66
 
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i \"http://media.dumpert.nl/720p/59d5f289_dimitri_v3.mp4.mp4.mp4\" 2>&1'),'Duration: (.+?),',1)"
+00:00:59.77
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=extract(system('cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i \"http://media.dumpert.nl/720p/59d5f289_dimitri_v3.mp4.mp4.mp4\" 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.) else ()"
+duration := 00:00:60
+t := 60
+
+Hmm... oeps! Afronden naar de volgende integer is een betere oplossing. Tel er een halve seconde bij op en laat alleen hele seconden zien:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "time(extract(system('cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i \"http://media.dumpert.nl/720p/59d5f289_dimitri_v3.mp4.mp4.mp4\" 2>&1'),'Duration: (.+?),',1)) + duration('PT0.5S')"
+00:01:00.27
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "format-time(time(extract(system('cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i \"http://media.dumpert.nl/720p/59d5f289_dimitri_v3.mp4.mp4.mp4\" 2>&1'),'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]')"
+00:01:00
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "duration:=format-time(time(extract(system('cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i \"http://media.dumpert.nl/720p/59d5f289_dimitri_v3.mp4.mp4.mp4\" 2>&1'),'Duration: (.+?),',1))+duration('PT0.5S'),'[H01]:[m01]:[s01]'),t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration)"
+duration := 00:01:00
+t := 60
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
--e "let $a:=extract(
-      system(
-        'cmd /c %ffmpeg% -i %v_url% 2>&1'
-      ),
-      'Duration: (.+?),',
-      1
-    ) return
-    if ($a castable as time) then
-      round(
-        seconds-from-time($a)
-      ) ! (
-        duration:=concat(
-          extract(
-            $a,
-            '(.+:)',
-            1
+-e "duration:=format-time(
+      time(
+        extract(
+          system(
+            'cmd /c %ffmpeg% -i %v_url% 2>&1'
           ),
-          if (.<10) then
-            '0'||.
-          else
-            .
-        ),
-        t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.
-      )
-    else
-      ()"
+          'Duration: (.+?),',
+          1
+        )
+      ) + duration('PT0.5S'),
+      '[H01]:[m01]:[s01]'
+    ),
+    t:=hours-from-time($duration)*3600+
+       minutes-from-time($duration)*60+
+       seconds-from-time($duration)"
 
 ================================================================================================================================
 
@@ -6991,7 +6994,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-e
   }
 ]
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html" --xquery "[for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-eredivisieweekend-in-vogelvlucht.html" --xquery "[for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
 [
   {
     "format": "mp4-1",
@@ -7017,7 +7020,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://nos.nl/video/2128675-het-e
 
 https://nos.nl/artikel/2206752-week-in-beeld-catalanen-californie-en-commotie-om-jeruzalem.html (artikel met 1 video)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2206752-week-in-beeld-catalanen-californie-en-commotie-om-jeruzalem.html" --xquery "[//div[@class='video-play']/a/doc(@href)/{position():{'name':concat('NOS: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}}}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2206752-week-in-beeld-catalanen-californie-en-commotie-om-jeruzalem.html" --xquery "[//div[@class='video-play']/a/doc(@href)/{position():{'name':concat('NOS: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}}}]"
 [
   {
     "1": {
@@ -7135,7 +7138,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/artikel/2206740-co
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2206753-dit-was-de-week-brexit-doorbraak-julio-poch-en-jeruzalem.html" --xquery "videos:=[(if (//div[@class='video-play']) then //div[@class='video-play']/a/doc(@href) else .)/{position():{'name':concat('NOS: ',replace(//h1,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}}}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/video/2206753-dit-was-de-week-brexit-doorbraak-julio-poch-en-jeruzalem.html" --xquery "videos:=[(if (//div[@class='video-play']) then //div[@class='video-play']/a/doc(@href) else .)/{position():{'name':concat('NOS: ',replace(//h1,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i let $a:=if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}}}]"
 videos := [{"1": {"name": "NOS: Dit was de week: brexit-doorbraak, Julio Poch en Jeruzalem (09122017)", "formats": [{"format": "mp4-1", "extension": "mp4", "duration": "00:02:51", "resolution": "640x360", "vbitrate": "v:507k", "abitrate": "a:125k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:02:51", "resolution": "856x482", "vbitrate": "v:1494k", "abitrate": "a:125k", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211205/web03.mp4"}]}}]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "https://nos.nl/uitzending/29678-nos-journaal.html" --xquery "[...]"
@@ -7198,23 +7201,15 @@ videos := [{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017
                 ) ! {
                   'format':'mp4-'||$i,
                   'extension':'mp4',
-                  'duration':let $b:=extract(
-                    .,
-                    'Duration: (.+?),',
-                    1
-                  ) return
-                  round(
-                    seconds-from-time($b)
-                  ) ! concat(
-                    extract(
-                      $b,
-                      '(.+:)',
-                      1
-                    ),
-                    if (.<10) then
-                      '0'||.
-                    else
-                      .
+                  'duration':format-time(
+                    time(
+                      extract(
+                        .,
+                        'Duration: (.+?),',
+                        1
+                      )
+                    ) + duration('PT0.5S'),
+                    '[H01]:[m01]:[s01]'
                   ),
                   'resolution':extract(
                     .,
@@ -9392,7 +9387,7 @@ https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_12
 
 Xidel's standaard user-agent werkt niet. "Mozilla/5.0 Firefox" ook niet. "Mozilla/5.0 Firefox/57.0" op z'n minst dus wel. Zeer kieskeurig!
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}"
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}"
 {
   "format": "mp4-1",
   "extension": "mp4",
@@ -9405,7 +9400,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --use
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/(name:=concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')))" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return formats:=[system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/(name:=concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')))" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return formats:=[system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
 name := 24Kitchen: Lemon pudding van oma Ruth (02012018)
 formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:17:08", "resolution": "1280x720", "vbitrate": "v:1679k", "abitrate": "a:125k", "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"}]
 
@@ -9446,23 +9441,15 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:17:08", "res
       ) ! {
         'format':'mp4-1',
         'extension':'mp4',
-        'duration':let $b:=extract(
-          .,
-          'Duration: (.+?),',
-          1
-        ) return
-        round(
-          seconds-from-time($b)
-        ) ! concat(
-          extract(
-            $b,
-            '(.+:)',
-            1
-          ),
-          if (.<10) then
-            '0'||.
-          else
-            .
+        'duration':format-time(
+          time(
+            extract(
+              .,
+              'Duration: (.+?),',
+              1
+            )
+          ) + duration('PT0.5S'),
+          '[H01]:[m01]:[s01]'
         ),
         'resolution':extract(
           .,
@@ -9489,7 +9476,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:17:08", "res
 
 [https://github.com/Reino17/BatchGemist/commit/396292d3d143e7eea490efa2b6961b994bd198df]
 [https://github.com/Reino17/BatchGemist/commit/b18cab87c65f648908efa36c6514835b5603f0ef]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/fb40190d19fcfeba5e1ffae20be4d487698cd660]
 
 http://www.dumpert.nl/mediabase/7344763/fe47eb65/dumpert_s_got_talent.html (1 video)
 
@@ -9544,7 +9531,7 @@ Dumpert: Dumpert''s Got Talent (19012018)
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7344763/fe47eb65/dumpert_s_got_talent.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:=concat('Dumpert: ',replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':$c,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $a:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($a)) ! concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}}}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7344763/fe47eb65/dumpert_s_got_talent.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:=concat('Dumpert: ',replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':$c,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}}}]"
 [
   {
     "1": {
@@ -9599,7 +9586,7 @@ xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http:/
 
 Zet de naam en datum elk in een variabele en voeg ze samen met, afhankelijk van de hoeveelheid video's, een indexnummer er tussen.
 
-xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7097415/9355c19d/niet_seksen_in_openbaar_vrouw_blijkt_webcamslet.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $s:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($s)) ! concat(extract($s,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}}}]"
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7097415/9355c19d/niet_seksen_in_openbaar_vrouw_blijkt_webcamslet.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}}}]"
 [
   {
     "1": {
@@ -9657,17 +9644,17 @@ xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http:/
 
 http://www.dumpert.nl/mediabase/7330293/89b95efc/wut_de_fuck_.html (1 video zonder audio)
 
-xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7330293/89b95efc/wut_de_fuck_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $a:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($a)) ! concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7330293/89b95efc/wut_de_fuck_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
 videos := [{"1": {"name": "Dumpert: Wut de fuck? (09012018)", "formats": [{"format": "mp4-1", "extension": "mp4", "duration": "00:00:15", "resolution": "270x270", "vbitrate": "v:247k", "abitrate": "", "url": "http://media.dumpert.nl/mobile/_89b95efc_YTDL_1.mp4.mp4.mp4"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:00:15", "resolution": "360x360", "vbitrate": "v:745k", "abitrate": "", "url": "http://media.dumpert.nl/tablet/_89b95efc_YTDL_1.mp4.mp4.mp4"}]}}]
 
 http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html (oude video met flv-variant)
 
-xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
 videos := [{"1": {"name": "Dumpert: GOUD. Dafne Schippers wint 200m Bejing! (28082015)", "formats": [{"format": "flv-1", "extension": "flv", "duration": "00:03:07", "resolution": "480x270", "vbitrate": "v:779k", "abitrate": "a:131k", "url": "http://media.dumpert.nl/flv/4301bfad_schippers.mp4.mp4.flv"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:03:07", "resolution": "480x270", "vbitrate": "v:248k", "abitrate": "a:128k", "url": "http://media.dumpert.nl/mobile/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-3", "extension": "mp4", "duration": "00:03:07", "resolution": "640x360", "vbitrate": "v:752k", "abitrate": "a:128k", "url": "http://media.dumpert.nl/tablet/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-4", "extension": "mp4", "duration": "00:03:07", "resolution": "1280x720", "vbitrate": "v:1646k", "abitrate": "a:128k", "url": "http://media.dumpert.nl/720p/4301bfad_schippers.mp4.mp4.mp4"}]}}]
 
 http://www.dumpert.nl/mediabase/7345865/1659cffc/nederlanders_zijn_de_baas.html (embedded youtube video)
 
-xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7345865/1659cffc/nederlanders_zijn_de_baas.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return if (//iframe) then v_url:=replace(//iframe/@src,'.+/(.+)','https://youtu.be/$1') else videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7345865/1659cffc/nederlanders_zijn_de_baas.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return if (//iframe) then v_url:=replace(//iframe/@src,'.+/(.+)','https://youtu.be/$1') else videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x}}}]"
 v_url := https://youtu.be/jkdwK_74eEs
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -9766,23 +9753,15 @@ v_url := https://youtu.be/jkdwK_74eEs
                       $i
                     ),
                     'extension':$a,
-                    'duration':let $b:=extract(
-                      .,
-                      'Duration: (.+?),',
-                      1
-                    ) return
-                    round(
-                      seconds-from-time($b)
-                    ) ! concat(
-                      extract(
-                        $b,
-                        '(.+:)',
-                        1
-                      ),
-                      if (.<10) then
-                        '0'||.
-                      else
-                        .
+                    'duration':format-time(
+                      time(
+                        extract(
+                          .,
+                          'Duration: (.+?),',
+                          1
+                        )
+                      ) + duration('PT0.5S'),
+                      '[H01]:[m01]:[s01]'
                     ),
                     'resolution':extract(
                       .,
@@ -9975,7 +9954,7 @@ http://www.abhd.nl/video/opel-astra-opc-2012/ (video in 1 formaat)
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" -e "let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(//div[@id='playerObject']/span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return concat('ABHD: ',//div[@id='playerObject']//a,' (',$b[1],$a($b[2]),'20',$b[3],')')"
 ABHD: Opel Astra OPC 2012 (25062012)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" --xquery "[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $a:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($a)) ! concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" --xquery "[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
 [
   {
     "format": "mp4-1",
@@ -10014,7 +9993,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/hyundai
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/hyundai-i30-n/" --xquery "let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(//div[@id='playerObject']/span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return name:=concat('ABHD: ',replace(//div[@id='playerObject']//a,'[&quot;&apos;]',''''''),' (',$b[1],$a($b[2]),'20',$b[3],')'),formats:=[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $a:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($a)) ! concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/hyundai-i30-n/" --xquery "let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(//div[@id='playerObject']/span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return name:=concat('ABHD: ',replace(//div[@id='playerObject']//a,'[&quot;&apos;]',''''''),' (',$b[1],$a($b[2]),'20',$b[3],')'),formats:=[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
 name := ABHD: Hyundai i30 N (14112017)
 formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:10:48", "resolution": "848x480", "vbitrate": "v:1190k", "abitrate": "a:195k", "url": "https://static.autojunk.nl/flv/2017/1114/115719_hq.mp4"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:10:48", "resolution": "1280x720", "vbitrate": "v:1980k", "abitrate": "a:195k", "url": "https://static.autojunk.nl/flv/2017/1114/115719_720p.mp4"}]
 
@@ -10067,23 +10046,15 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:10:48", "res
             ) ! {
               'format':'mp4-'||$i,
               'extension':'mp4',
-              'duration':let $a:=extract(
-                .,
-                'Duration: (.+?),',
-                1
-              ) return
-              round(
-                seconds-from-time($a)
-              ) ! concat(
-                extract(
-                  $a,
-                  '(.+:)',
-                  1
-                ),
-                if (.<10) then
-                  '0'||.
-                else
-                  .
+              'duration':format-time(
+                time(
+                  extract(
+                    .,
+                    'Duration: (.+?),',
+                    1
+                  )
+                ) + duration('PT0.5S'),
+                '[H01]:[m01]:[s01]'
               ),
               'resolution':extract(
                 .,
@@ -10117,7 +10088,7 @@ http://www.autojunk.nl/2009/11/peugeot-206-rally-crash (video in 1 formaat)
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" --xquery "concat('Autojunk: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)'))"
 Autojunk: Peugeot 206 rally crash (15112009)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':let $a:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($a)) ! concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
 [
   {
     "format": "mp4-1",
@@ -10132,11 +10103,11 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/pe
 
 Voor het geval er nog Autojunk video's zijn die eindigen op *.flv:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2007/03/7-seconden-op-de-ring" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2007/03/7-seconden-op-de-ring" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
 
 https://www.autojunk.nl/2018/01/straight-piped-nissan-350z-burnout-and-loud-revs (embedded youtube video in eigen player)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/straight-piped-nissan-350z-burnout-and-loud-revs" --xquery "//div[@id='playerWrapper']/(if (iframe) then replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else [for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/straight-piped-nissan-350z-burnout-and-loud-revs" --xquery "//div[@id='playerWrapper']/(if (iframe) then replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else [for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
 https://youtu.be/XFVlBm16cRk
 
 https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo (video in 2 formaten)
@@ -10165,7 +10136,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/o
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo" --xquery "name:=concat('Autojunk: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/(if (iframe) then v_url:=replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else formats:=[for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':let $b:=extract(.,'Duration: (.+?),',1) return round(seconds-from-time($b)) ! concat(extract($b,'(.+:)',1),if (.<10) then '0'||. else .),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo" --xquery "name:=concat('Autojunk: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/(if (iframe) then v_url:=replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else formats:=[for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
 name := Autojunk: Opties op de Porsche Panamera Sport Turismo (14012018)
 formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "resolution": "640x352", "vbitrate": "v:562k", "abitrate": "a:126k", "url": "https://static.autojunk.nl/flv/2018/0114/074345.mp4"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:08:31", "resolution": "1280x720", "vbitrate": "v:1980k", "abitrate": "a:190k", "url": "https://static.autojunk.nl/flv/2018/0114/074345_720p.mp4"}]
 
@@ -10213,23 +10184,15 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "res
                     $i
                   ),
                   'extension':$a,
-                  'duration':let $b:=extract(
-                    .,
-                    'Duration: (.+?),',
-                    1
-                  ) return
-                  round(
-                    seconds-from-time($b)
-                  ) ! concat(
-                    extract(
-                      $b,
-                      '(.+:)',
-                      1
-                    ),
-                    if (.<10) then
-                      '0'||.
-                    else
-                      .
+                  'duration':format-time(
+                    time(
+                      extract(
+                        .,
+                        'Duration: (.+?),',
+                        1
+                      )
+                    ) + duration('PT0.5S'),
+                    '[H01]:[m01]:[s01]'
                   ),
                   'resolution':extract(
                     .,
