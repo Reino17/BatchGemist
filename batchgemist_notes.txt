@@ -10316,7 +10316,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x312", "bi
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/946040cc2dc7fc2ddfa75bf9a87a9d522e82a59a]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -e "json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1]"
 s6ZM3OFSeoaH

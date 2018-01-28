@@ -201,7 +201,7 @@ IF DEFINED check (
 	GOTO Help
 )
 
-SET "user-agent=Mozilla/5.0 ^(compatible; Xidel^)"
+SET "user-agent=Mozilla/5.0 Firefox/58.0"
 GOTO Input
 
 REM ================================================================================================
@@ -2456,7 +2456,7 @@ IF NOT "%url: =%"=="%url%" (
 	            best:^=$a[last(^)]
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:24kitchen.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "%url%"
+	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: AcceptCookies=1" --user-agent "%user-agent%" "%url%"
 	-e ^"json^(
 	      //script/extract^(
 	        .^,
