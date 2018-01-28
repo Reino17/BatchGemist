@@ -692,8 +692,13 @@ ECHO.
 ECHO Audio- of video-url:
 ECHO %v_url%
 ECHO|SET /P ="%v_url:^=%"|clip.exe
+IF DEFINED s_url (
+	ECHO.
+	ECHO Ondertiteling-url:
+	ECHO %s_url%
+)
 ECHO.
-ECHO Url gekopieerd naar het klembord.
+ECHO Audio- of video-url gekopieerd naar het klembord.
 ECHO.
 ECHO.
 ENDLOCAL
