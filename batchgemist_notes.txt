@@ -3791,7 +3791,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "le
 [https://github.com/Reino17/BatchGemist/commit/128a49f1c24796df01967f41981a883410b6ac59]
 [https://github.com/Reino17/BatchGemist/commit/e69868def8a5576e733289d4f84e494f9611da2f]
 [https://github.com/Reino17/BatchGemist/commit/ff8a842391003b2bf0a7733dc23243402ca698f1]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/c369fc0e4bf5ff18959a2b42f6add82fb262c5f1]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "extract(system('cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -i \"https://video.omroep.nl/secure/f8aaf3d0799bbb96fab52e7e3d934cef/5a2180b8/nos/content-ip/mp4/web03/2017/02/05/284055.mp4\" 2>&1'),'(Duration: .+?),',1)"
 Duration: 00:04:53.99
@@ -10313,3 +10313,341 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x312", "bi
         'url':src
       }
     ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -e "json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1]"
+s6ZM3OFSeoaH
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -f "concat('https://content.tmgvideo.nl/playlist/item=',json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1],'/playlist.json')" -e "$json"
+{
+  "items": [
+    {
+      "id": "s6ZM3OFSeoaH",
+      "account": "Kx1PKc",
+      "audioonly": false,
+      "live": false,
+      "title": "Kim Holland: respect voor pornofilm rapper Sjors",
+      "description": "Kim vindt dat hij veel lef heeft door met een shemale naar bed te gaan.",
+      "poster": "//content.tmgvideo.nl/img/account=Kx1PKc/item=s6ZM3OFSeoaH/thumbid=3/image.jpg",
+      "datecreated": "2018-01-26 12:20:40",
+      "duration": 71,
+      "locations": {
+        "progressive": [
+          {
+            "label": "1080p",
+            "height": 1080,
+            "width": 1920,
+            "sources": [
+              {
+                "type": "video/mp4",
+                "src": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=mDZFvIxQyo6D/s6ZM3OFSeoaH.mp4"
+              }
+            ]
+          },
+          {
+            "label": "720p",
+            "height": 720,
+            "width": 1280,
+            "sources": [
+              {
+                "type": "video/mp4",
+                "src": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=GDBNuIjQw16H/s6ZM3OFSeoaH.mp4"
+              }
+            ]
+          },
+          {
+            "label": "480p",
+            "height": 480,
+            "width": 854,
+            "sources": [
+              {
+                "type": "video/mp4",
+                "src": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=miZNnKFAgpyn/s6ZM3OFSeoaH.mp4"
+              }
+            ]
+          },
+          {
+            "label": "360p",
+            "height": 360,
+            "width": 640,
+            "sources": [
+              {
+                "type": "video/mp4",
+                "src": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=mrYFueFCyM-j/s6ZM3OFSeoaH.mp4"
+              }
+            ]
+          },
+          {
+            "label": "240p",
+            "height": 240,
+            "width": 426,
+            "sources": [
+              {
+                "type": "video/mp4",
+                "src": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=CCYNmIlSgoan/s6ZM3OFSeoaH.mp4"
+              }
+            ]
+          }
+        ],
+        "adaptive": [
+          {
+            "type": "application/dash+xml",
+            "src": "https://media.tmgvideo.nl/dash/account=Kx1PKc/item=s6ZM3OFSeoaH/s6ZM3OFSeoaH.mpd"
+          },
+          {
+            "type": "application/x-mpegURL",
+            "src": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/s6ZM3OFSeoaH.m3u8"
+          }
+        ]
+      },
+      [...]
+}
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -f "concat('https://content.tmgvideo.nl/playlist/item=',json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1],'/playlist.json')" -e "$json/(items)()/(name:=concat('Telegraaf: ',title,replace(datecreated,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'))"
+name := Telegraaf: Kim Holland: respect voor pornofilm rapper Sjors (26012018)
+t := 71
+duration := 00:01:11
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Progressieve videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -f "concat('https://content.tmgvideo.nl/playlist/item=',json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1],'/playlist.json')" --xquery "$json/(items)()/locations/[for $x at $i in reverse((progressive)())//src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "426x240",
+    "vbitrate": "v:303k",
+    "abitrate": "a:64k",
+    "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=CCYNmIlSgoan/s6ZM3OFSeoaH.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "v:726k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=mrYFueFCyM-j/s6ZM3OFSeoaH.mp4"
+  },
+  {
+    "format": "mp4-3",
+    "extension": "mp4",
+    "resolution": "854x480",
+    "vbitrate": "v:1139k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=miZNnKFAgpyn/s6ZM3OFSeoaH.mp4"
+  },
+  {
+    "format": "mp4-4",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "vbitrate": "v:2498k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=GDBNuIjQw16H/s6ZM3OFSeoaH.mp4"
+  },
+  {
+    "format": "mp4-5",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "vbitrate": "v:4255k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=mDZFvIxQyo6D/s6ZM3OFSeoaH.mp4"
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Dynamische videostreams
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -f "concat('https://content.tmgvideo.nl/playlist/item=',json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1],'/playlist.json')" --xquery "$json/(items)()/locations/[let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-0','extension':'m3u8','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)})]"
+[
+  {
+    "format": "hls-0",
+    "extension": "m3u8",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/s6ZM3OFSeoaH.m3u8"
+  },
+  {
+    "format": "hls-1",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:64k",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=64000.m3u8"
+  },
+  {
+    "format": "hls-2",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000.m3u8"
+  },
+  {
+    "format": "hls-3",
+    "extension": "m3u8",
+    "resolution": "426x240",
+    "vbitrate": "v:320k",
+    "abitrate": "a:64k",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=64000-video=320000.m3u8"
+  },
+  {
+    "format": "hls-4",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "v:768k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=768000.m3u8"
+  },
+  {
+    "format": "hls-5",
+    "extension": "m3u8",
+    "resolution": "854x480",
+    "vbitrate": "v:1200k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=1200000.m3u8"
+  },
+  {
+    "format": "hls-6",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "vbitrate": "v:2600k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=2600000.m3u8"
+  },
+  {
+    "format": "hls-7",
+    "extension": "m3u8",
+    "resolution": "1920x1080",
+    "vbitrate": "v:4400k",
+    "abitrate": "a:128k",
+    "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=4400000.m3u8"
+  }
+]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -f "concat('https://content.tmgvideo.nl/playlist/item=',json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1],'/playlist.json')" --xquery "$json/(items)()/(name:=concat('Telegraaf: ',title,replace(datecreated,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),formats:=locations/[for $x at $i in reverse((progressive)())//src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x},let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return ({'format':'hls-0','extension':'m3u8','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)})])"
+name := Telegraaf: Kim Holland: respect voor pornofilm rapper Sjors (26012018)
+t := 71
+duration := 00:01:11
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "426x240", "vbitrate": "v:303k", "abitrate": "a:64k", "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=CCYNmIlSgoan/s6ZM3OFSeoaH.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "640x360", "vbitrate": "v:726k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=mrYFueFCyM-j/s6ZM3OFSeoaH.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "854x480", "vbitrate": "v:1139k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=miZNnKFAgpyn/s6ZM3OFSeoaH.mp4"}, {"format": "mp4-4", "extension": "mp4", "resolution": "1280x720", "vbitrate": "v:2498k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=GDBNuIjQw16H/s6ZM3OFSeoaH.mp4"}, {"format": "mp4-5", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:4255k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/progressive/account=Kx1PKc/item=s6ZM3OFSeoaH/file=mDZFvIxQyo6D/s6ZM3OFSeoaH.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/s6ZM3OFSeoaH.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:64k", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=64000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "426x240", "vbitrate": "v:320k", "abitrate": "a:64k", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=64000-video=320000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "854x480", "vbitrate": "v:1200k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=1200000.m3u8"}, {"format": "hls-6", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:2600k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=2600000.m3u8"}, {"format": "hls-7", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:4400k", "abitrate": "a:128k", "url": "https://media.tmgvideo.nl/hls/account=Kx1PKc/item=s6ZM3OFSeoaH/GaIFm6hAwU2j-GaIMm6zSiQ2D-i6BEu4hAwQ2j-iyAFv61CyU2n-m6IMm4hAyEWn-hls-nodrm-audio=128000-video=4400000.m3u8"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-f "concat(
+      'https://content.tmgvideo.nl/playlist/item=',
+      json(
+        //script/extract(
+          .,
+          'APOLLO_STATE__=(.+);',
+          1
+        )[.]
+      )/(.//videoId)[1],
+      '/playlist.json'
+    )"
+--xquery "$json/(items)()/(
+            name:=concat(
+              'Telegraaf: ',
+              title,
+              replace(
+                datecreated,
+                '(\d+)-(\d+)-(\d+).+',
+                ' ($3$2$1)'
+              )
+            ),
+            t:=duration,
+            duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
+            formats:=locations/[
+              for $x at $i in reverse(
+                (progressive)()
+              )//src return
+              system(
+                x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1'
+              ) ! {
+                'format':'mp4-'||$i,
+                'extension':'mp4',
+                'resolution':extract(
+                  .,
+                  'Video:.+, (\d+x\d+)',
+                  1
+                ),
+                'vbitrate':replace(
+                  .,
+                  '.+Video:.+?(\d+) kb.+',
+                  'v:$1k',
+                  's'
+                ),
+                'abitrate':replace(
+                  .,
+                  '.+Audio:.+?(\d+) kb.+',
+                  'a:$1k',
+                  's'
+                ),
+                'url':$x
+              },
+              let $a:=(adaptive)()[ends-with(src,'m3u8')]/src return (
+                {
+                  'format':'hls-0',
+                  'extension':'m3u8',
+                  'url':$a
+                },
+                for $x at $i in tail(
+                  tokenize(
+                    extract(
+                      unparsed-text($a),
+                      '(#EXT-X-STREAM-INF.+m3u8$)',
+                      1,'ms'
+                    ),
+                    '#EXT-X-STREAM-INF:'
+                  )
+                ) order by extract(
+                  $x,
+                  'BANDWIDTH=(\d+)',
+                  1
+                ) count $i return
+                {
+                  'format':'hls-'||$i,
+                  'extension':'m3u8',
+                  'resolution':extract(
+                    $x,
+                    'RESOLUTION=([\dx]+)',
+                    1
+                  ),
+                  'vbitrate':extract(
+                    $x,
+                    'video=(\d+)\d{3}',
+                    1
+                  ) ! (
+                    if (.) then
+                      concat(
+                        'v:',
+                        .,
+                        'k'
+                      )
+                    else
+                      ''
+                  ),
+                  'abitrate':replace(
+                    $x,
+                    '.+audio.+?(\d+)\d{3}.+',
+                    'a:$1k',
+                    's'
+                  ),
+                  'url':resolve-uri(
+                    '.',
+                    $a
+                  )||extract(
+                    $x,
+                    '(.+m3u8)',
+                    1
+                  )
+                }
+              )
+            ]
+          )"
