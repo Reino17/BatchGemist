@@ -3637,7 +3637,11 @@ REM ============================================================================
 
 :rtlXL
 FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/"
---xquery ^"$json/^(
+--xquery ^"$json[
+            not^(
+              meta/nr_of_videos_total^=0
+            ^)
+          ]/^(
             name:^=replace^(
               concat^(
                 .//station^,
@@ -3649,7 +3653,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 else
                   .//title^,
                 replace^(
-                  .//original_date * dayTimeDuration^('PT1S'^) + date^('1970-01-01'^)^,
+                  .//original_date * duration^('PT1S'^) + date^('1970-01-01'^)^,
                   '^(\d+^)-^(\d+^)-^(\d+^)'^,
                   ' ^($3$2$1^)'
                 ^)
@@ -3657,27 +3661,14 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
               '[^&quot^;^&apos^;]'^,
               ''''''
             ^)^,
-            q:^=.//quality^,
             ^(material^)^(^)/^(
-              let $a:^=duration return
-              round^(
-                seconds-from-time^($a^)
-              ^) ! ^(
-                duration:^=concat^(
-                  extract^(
-                    $a^,
-                    '^(.+:^)'^,
-                    1
-                  ^)^,
-                  if ^(.^<10^) then
-                    '0'^|^|.
-                  else
-                    .
-                ^)^,
-                t:^=hours-from-time^($a^)*3600+minutes-from-time^($a^)*60+.
+              duration:^=format-time^(
+                time^(duration^) + duration^('PT0.5S'^)^,
+                '[H01]:[m01]:[s01]'
               ^)^,
+              t:^=hours-from-time^($duration^)*3600+minutes-from-time^($duration^)*60+seconds-from-time^($duration^)^,
               if ^(^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop^) then
-                let $a:^=^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop * dayTimeDuration^('PT1S'^) + dateTime^('1970-01-01T00:00:00'^)^,
+                let $a:^=^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop * duration^('PT1S'^) + dateTime^('1970-01-01T00:00:00'^)^,
                     $b:^=$a - current-dateTime^(^)
                 return
                 expire:^=concat^(
@@ -3714,104 +3705,75 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 ^)
               else
                 ^(^)
-            ^)
-          ^)^"
--f ^"$json[not^(meta/nr_of_videos_total^=0^)]/concat^(
-      meta/videohost^,
-      material/videopath
-    ^)^"
---xquery ^"let $a:^=if ^($q^='HD'^) then
-            ^('a2t'^,'a3t'^,'nettv'^)
-          else
-            ^('a2t'^,'a3t'^) return
-          formats:^=[
-            for $x at $i in ^(
-              $a ! replace^(
-                $url^,
-                '.+^(/comp.+^)m3u8'^,
-                concat^(
-                  'http://pg.us.rtl.nl/rtlxl/network/'^,
-                  .^,
-                  '/progressive$1mp4'
+            ^)^,
+            formats:^=x:request^(
+              {
+                'data':json^(
+                  'https://tm-videourlfeed.rtl.nl/api/url/%uuid%?device^=pc^&amp^;format^=hls'
+                ^)/url^,
+                'error-handling':'4xx^=accept'
+              }
+            ^)[
+              contains^(
+                headers[1]^,
+                '200'
+              ^)
+            ]/[
+              {
+                'format':'hls-0'^,
+                'extension':'m3u8'^,
+                'url':url
+              }^,
+              for $x at $i in tail^(
+                tokenize^(
+                  raw^,
+                  '#EXT-X-STREAM-INF:'
                 ^)
-              ^)
-            ^) return
-            system^(
-              x'cmd /c %ffmpeg% -user_agent \^"%user-agent%\^" -i {$x} 2^>^&amp^;1'
-            ^) ! {
-              'format':'pg-'^|^|$i^,
-              'extension':'mp4'^,
-              'resolution':extract^(
-                .^,
-                'Video:.+^, ^(\d+x\d+^)'^,
-                1
-              ^)^,
-              'vbitrate':replace^(
-                .^,
-                '.+Video:.+?^(\d+^) kb.+'^,
-                'v:$1k'^,
-                's'
-              ^)^,
-              'abitrate':replace^(
-                .^,
-                '.+Audio:.+?^(\d+^) kb.+'^,
-                'a:$1k'^,
-                's'
-              ^)^,
-              'url':$x^,
-              'ff_param':'-user_agent \^"%user-agent%\^"'
-            }^,
-            {
-              'format':'hls-0'^,
-              'extension':'m3u8'^,
-              'url':$url
-            }^,
-            for $x at $i in tail^(
-              tokenize^(
-                $raw^,
-                '#EXT-X-STREAM-INF:'
-              ^)
-            ^) order by extract^(
-              $x^,
-              'BANDWIDTH^=^(\d+^)'^,
-              1
-            ^) count $i return
-            {
-              'format':'hls-'^|^|$i^,
-              'extension':'m3u8'^,
-              'resolution':extract^(
+              ^) order by extract^(
                 $x^,
-                'RESOLUTION^=^([\dx]+^)'^,
+                'BANDWIDTH^=^(\d+^)'^,
                 1
-              ^)^,
-              'vbitrate':extract^(
-                $x^,
-                'video^=^(\d+^)\d{3}'^,
-                1
-              ^) ! ^(
-                if ^(.^) then
-                  concat^(
-                    'v:'^,
-                    .^,
-                    'k'
-                  ^)
-                else
-                  ''
-              ^)^,
-              'abitrate':replace^(
-                $x^,
-                '.+audio.+?^(\d+^)\d{3}.+'^,
-                'a:$1k'^,
-                's'
-              ^)^,
-              'url':extract^(
-                $x^,
-                '^(.+m3u8^)'^,
-                1
-              ^)^,
-              'ff_param':'-seekable 0'
-            }
-          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+              ^) count $i return
+              {
+                'format':'hls-'^|^|$i^,
+                'extension':'m3u8'^,
+                'resolution':extract^(
+                  $x^,
+                  'RESOLUTION^=^([\dx]+^)'^,
+                  1
+                ^)^,
+                'vbitrate':extract^(
+                  $x^,
+                  'video^=^(\d+^)\d{3}'^,
+                  1
+                ^) ! ^(
+                  if ^(.^) then
+                    concat^(
+                      'v:'^,
+                      .^,
+                      'k'
+                    ^)
+                  else
+                    ''
+                ^)^,
+                'abitrate':replace^(
+                  $x^,
+                  '.+audio.+?^(\d+^)\d{3}.+'^,
+                  'a:$1k'^,
+                  's'
+                ^)^,
+                'url':resolve-uri^(
+                  '.'^,
+                  url
+                ^)^|^|extract^(
+                  $x^,
+                  '^(.+m3u8^)'^,
+                  1
+                ^)^,
+                'ff_param':'-seekable 0'
+              }
+            ]
+          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
 	GOTO Formats
