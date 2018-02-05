@@ -984,7 +984,9 @@ De laatste methode is duidelijk de kortste en efficiëntste, helemaal als er voor
 
 -e "let $a:='01:00:00' return
     let $a:=if ($a castable as time) then
-      hours-from-time($a)*3600+minutes-from-time($a)*60+seconds-from-time($a)
+      hours-from-time($a)*3600+
+      minutes-from-time($a)*60+
+      seconds-from-time($a)
     else
       $a
     return
@@ -1023,7 +1025,9 @@ xidel-0.9.6.exe -s --color=never -e "let $a:=read() return if ($a) then let $a:=
 -e "let $a:=read() return
     if ($a) then
       let $a:=if ($a castable as time) then
-        hours-from-time($a)*3600+minutes-from-time($a)*60+seconds-from-time($a)
+        hours-from-time($a)*3600+
+        minutes-from-time($a)*60+
+        seconds-from-time($a)
       else
         $a
       return
@@ -1126,10 +1130,16 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT
           )[not(error)] ! (
             if (tijdsduur) then (
               duration:=tijdsduur,
-              t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),
+              t:=hours-from-time(tijdsduur)*3600+
+                minutes-from-time(tijdsduur)*60+
+                seconds-from-time(tijdsduur),
               if (start) then (
                 start:=start,
-                (hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (
+                (
+                  hours-from-time(start)*3600+
+                  minutes-from-time(start)*60+
+                  seconds-from-time(start)
+                ) ! (
                   ss:=.,
                   if (. mod 30=0) then (
                     if (.=30) then
@@ -1146,7 +1156,9 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://e.omroep.nl/metadata/WO_AT
                   )
                 ),
                 end:=eind,
-                to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)
+                to:=hours-from-time(eind)*3600+
+                  minutes-from-time(eind)*60+
+                  seconds-from-time(eind)
               ) else
                 (),
               if (publicatie_eind) then (
@@ -1270,7 +1282,9 @@ Prettification:
 xidel-0.9.6.exe -s --color=never ^
 -e ^"let $a:='01:00:00' return ^
      let $a:=if ($a castable as time) then ^
-       hours-from-time($a)*3600+minutes-from-time($a)*60+seconds-from-time($a) ^
+       hours-from-time($a)*3600+
+       minutes-from-time($a)*60+
+       seconds-from-time($a) ^
      else ^
        $a ^
      return ^
@@ -1298,7 +1312,9 @@ SET xidel="D:\Storage\Media\Binaries\xidel-0.9.6.exe"
 FOR /F "delims=" %%A IN ('^"%xidel% -s --color^=never
 -e ^"let $a:^='01:00:00' return
      let $a:^=if ($a castable as time^) then
-       hours-from-time($a^)*3600+minutes-from-time($a^)*60+seconds-from-time($a^)
+       hours-from-time($a^)*3600+
+       minutes-from-time($a^)*60+
+       seconds-from-time($a^)
      else
        $a
      return
@@ -3062,10 +3078,20 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "res
                   ': ',
                   if (ptype='episode') then (
                     if (aflevering_titel) then (
-                      if (contains(titel,aflevering_titel)) then
+                      if (
+                        contains(
+                          titel,
+                          aflevering_titel
+                        )
+                      ) then
                         titel
                       else (
-                        if (contains(aflevering_titel,titel)) then
+                        if (
+                          contains(
+                            aflevering_titel,
+                            titel
+                          )
+                        ) then
                           aflevering_titel
                         else
                           concat(
@@ -3082,7 +3108,12 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "res
                       ' - ',
                       titel
                     ),
-                  if (matches('%date%','^\d')) then
+                  if (
+                    matches(
+                      '%date%',
+                      '^\d'
+                    )
+                  ) then
                     ' (%date%)'
                   else
                     replace(
@@ -3101,10 +3132,16 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "res
               ),
             if (tijdsduur) then (
               duration:=tijdsduur,
-              t:=hours-from-time(tijdsduur)*3600+minutes-from-time(tijdsduur)*60+seconds-from-time(tijdsduur),
+              t:=hours-from-time(tijdsduur)*3600+
+                minutes-from-time(tijdsduur)*60+
+                seconds-from-time(tijdsduur),
               if (start) then (
                 start:=start,
-                (hours-from-time(start)*3600+minutes-from-time(start)*60+seconds-from-time(start)) ! (
+                (
+                  hours-from-time(start)*3600+
+                  minutes-from-time(start)*60+
+                  seconds-from-time(start)
+                ) ! (
                   ss:=.,
                   if (. mod 30=0) then (
                     if (.=30) then
@@ -3121,7 +3158,9 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "res
                   )
                 ),
                 end:=eind,
-                to:=hours-from-time(eind)*3600+minutes-from-time(eind)*60+seconds-from-time(eind)
+                to:=hours-from-time(eind)*3600+
+                  minutes-from-time(eind)*60+
+                  seconds-from-time(eind)
               ) else
                 (),
               if (publicatie_eind) then (
@@ -3263,8 +3302,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "res
                     $x,
                     'BANDWIDTH=(\d+)',
                     1
-                  ) count $i return
-                  {
+                  ) count $i return {
                     'format':'hls-'||$i,
                     'extension':'m3u8',
                     'resolution':extract(
@@ -3311,7 +3349,12 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:01:46", "res
                     'error-handling':'xxx=accept'
                   }
                 )[some $x in ('200','302') satisfies contains(headers[1],$x)]/(
-                  if (contains(url,'content-ip')) then
+                  if (
+                    contains(
+                      url,
+                      'content-ip'
+                    )
+                  ) then
                     x:request(
                       {
                         'data':'https://ipv4-api.nos.nl/resolve.php/video?url='||uri-encode(url),
@@ -3854,8 +3897,8 @@ t := 60
       '[H01]:[m01]:[s01]'
     ),
     t:=hours-from-time($duration)*3600+
-       minutes-from-time($duration)*60+
-       seconds-from-time($duration)"
+      minutes-from-time($duration)*60+
+      seconds-from-time($duration)"
 
 ================================================================================================================================
 
@@ -3863,7 +3906,7 @@ t := 60
 [https://github.com/Reino17/BatchGemist/commit/bfac669aff1b9e0a30a904e9e88021c702b0c6c2]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 [https://github.com/Reino17/BatchGemist/commit/b4559b4bfd69efbb13e9256e301c5479cdb4d65e]
-[https://github.com/Reino17/BatchGemist/commit/] (https://github.com/Reino17/BatchGemist/issues/3)
+[https://github.com/Reino17/BatchGemist/commit/133df2785e8e2e437f32f1a9750008c8fbc08f45] (https://github.com/Reino17/BatchGemist/issues/3)
 
 Oude API:
 
@@ -4193,7 +4236,9 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://rtl-hls-aes
                 time(duration) + duration('PT0.5S'),
                 '[H01]:[m01]:[s01]'
               ),
-              t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration),
+              t:=hours-from-time($duration)*3600+
+                minutes-from-time($duration)*60+
+                seconds-from-time($duration),
               if ((.//ddr_timeframes)()[model='AVOD']/stop) then
                 let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * duration('PT1S') + dateTime('1970-01-01T00:00:00'),
                     $b:=$a - current-dateTime()
@@ -4260,8 +4305,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://rtl-hls-aes
                 $x,
                 'BANDWIDTH=(\d+)',
                 1
-              ) count $i return
-              {
+              ) count $i return {
                 'format':'hls-'||$i,
                 'extension':'m3u8',
                 'resolution':extract(
@@ -5587,7 +5631,11 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bit
                         upper-case(.//sbs_station),
                       ': ',
                       name,
-                      if (string-length(.//sbs_episode)<=7) then
+                      if (
+                        string-length(
+                          .//sbs_episode
+                        )<=7
+                      ) then
                         ' '||.//sbs_episode
                       else
                         (),
@@ -6185,8 +6233,7 @@ formats := [{"format": "aac-1", "abitrate": "a:64k", "url": "http://icecast.omro
                     $x,
                     'BANDWIDTH=(\d+)',
                     1
-                  ) count $i return
-                  {
+                  ) count $i return {
                     'format':'hls-'||$i,
                     'extension':'m3u8',
                     'resolution':extract(
@@ -6662,8 +6709,7 @@ videos := [{"1": {"name": "Tweakers: Gameplay Overwatch", "t": 755, "duration": 
                       $x,
                       'BANDWIDTH=(\d+)',
                       1
-                    ) count $i return
-                    {
+                    ) count $i return {
                       'format':'hls-'||$i,
                       'extension':'m3u8',
                       'resolution':extract(
@@ -6929,8 +6975,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://pedgewarer2
               $x,
               'BANDWIDTH=(\d+)',
               1
-            ) count $i return
-            {
+            ) count $i return {
               'format':'hls-'||$i,
               'extension':'m3u8',
               'resolution':extract(
@@ -8622,7 +8667,9 @@ formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "bi
       1,
       8-string-length($a)
     )||$a,
-    t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration)"
+    t:=hours-from-time($duration)*3600+
+      minutes-from-time($duration)*60+
+      seconds-from-time($duration)"
 -f "//@data-tffeed[1]"
 -e "name:=$json//data/concat(
       'MTV: ',
@@ -10256,8 +10303,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "res
                   $x,
                   '.+\.(.+)',
                   1
-                )
-                return
+                ) return
                 system(
                   x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1'
                 ) ! {
@@ -10693,8 +10739,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "426x240", "vb
                   $x,
                   'BANDWIDTH=(\d+)',
                   1
-                ) count $i return
-                {
+                ) count $i return {
                   'format':'hls-'||$i,
                   'extension':'m3u8',
                   'resolution':extract(

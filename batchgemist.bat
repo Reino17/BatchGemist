@@ -356,8 +356,7 @@ IF NOT "%url: =%"=="%url%" (
 	              $x^,
 	              'BANDWIDTH^=^(\d+^)'^,
 	              1
-	            ^) count $i return
-	            {
+	            ^) count $i return {
 	              'format':'hls-'^|^|$i^,
 	              'extension':'m3u8'^,
 	              'resolution':extract^(
@@ -2221,8 +2220,7 @@ IF NOT "%url: =%"=="%url%" (
 	                  $x^,
 	                  'BANDWIDTH^=^(\d+^)'^,
 	                  1
-	                ^) count $i return
-	                {
+	                ^) count $i return {
 	                  'format':'hls-'^|^|$i^,
 	                  'extension':'m3u8'^,
 	                  'resolution':extract^(
@@ -2755,7 +2753,9 @@ IF NOT "%url: =%"=="%url%" (
 	      1^,
 	      8-string-length^($a^)
 	    ^)^|^|$a^,
-	    t:^=hours-from-time^($duration^)*3600+minutes-from-time^($duration^)*60+seconds-from-time^($duration^)^"
+	    t:^=hours-from-time^($duration^)*3600+
+	      minutes-from-time^($duration^)*60+
+	      seconds-from-time^($duration^)^"
 	-f ^"//@data-tffeed[1]^"
 	-e ^"name:^=$json//data/concat^(
 	      'MTV: '^,
@@ -3098,8 +3098,7 @@ IF NOT "%url: =%"=="%url%" (
 	                  $x^,
 	                  '.+\.^(.+^)'^,
 	                  1
-	                ^)
-	                return
+	                ^) return
 	                system^(
 	                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
 	                ^) ! {
@@ -3216,8 +3215,7 @@ IF NOT "%url: =%"=="%url%" (
 	                      $x^,
 	                      'BANDWIDTH^=^(\d+^)'^,
 	                      1
-	                    ^) count $i return
-	                    {
+	                    ^) count $i return {
 	                      'format':'hls-'^|^|$i^,
 	                      'extension':'m3u8'^,
 	                      'resolution':extract^(
@@ -3319,10 +3317,20 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                   ': '^,
                   if ^(ptype^='episode'^) then ^(
                     if ^(aflevering_titel^) then ^(
-                      if ^(contains^(titel^,aflevering_titel^)^) then
+                      if ^(
+                        contains^(
+                          titel^,
+                          aflevering_titel
+                        ^)
+                      ^) then
                         titel
                       else ^(
-                        if ^(contains^(aflevering_titel^,titel^)^) then
+                        if ^(
+                          contains^(
+                            aflevering_titel^,
+                            titel
+                          ^)
+                        ^) then
                           aflevering_titel
                         else
                           concat^(
@@ -3339,7 +3347,12 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                       ' - '^,
                       titel
                     ^)^,
-                  if ^(matches^('%date%'^,'^^\d'^)^) then
+                  if ^(
+                    matches^(
+                      '%date%'^,
+                      '^^\d'
+                    ^)
+                  ^) then
                     ' ^(%date%^)'
                   else
                     replace^(
@@ -3358,10 +3371,16 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
               ^)^,
             if ^(tijdsduur^) then ^(
               duration:^=tijdsduur^,
-              t:^=hours-from-time^(tijdsduur^)*3600+minutes-from-time^(tijdsduur^)*60+seconds-from-time^(tijdsduur^)^,
+              t:^=hours-from-time^(tijdsduur^)*3600+
+                minutes-from-time^(tijdsduur^)*60+
+                seconds-from-time^(tijdsduur^)^,
               if ^(start^) then ^(
                 start:^=start^,
-                ^(hours-from-time^(start^)*3600+minutes-from-time^(start^)*60+seconds-from-time^(start^)^) ! ^(
+                ^(
+                  hours-from-time^(start^)*3600+
+                  minutes-from-time^(start^)*60+
+                  seconds-from-time^(start^)
+                ^) ! ^(
                   ss:^=.^,
                   if ^(. mod 30^=0^) then ^(
                     if ^(.^=30^) then
@@ -3378,7 +3397,9 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                   ^)
                 ^)^,
                 end:^=eind^,
-                to:^=hours-from-time^(eind^)*3600+minutes-from-time^(eind^)*60+seconds-from-time^(eind^)
+                to:^=hours-from-time^(eind^)*3600+
+                  minutes-from-time^(eind^)*60+
+                  seconds-from-time^(eind^)
               ^) else
                 ^(^)^,
               if ^(publicatie_eind^) then ^(
@@ -3520,8 +3541,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     $x^,
                     'BANDWIDTH^=^(\d+^)'^,
                     1
-                  ^) count $i return
-                  {
+                  ^) count $i return {
                     'format':'hls-'^|^|$i^,
                     'extension':'m3u8'^,
                     'resolution':extract^(
@@ -3568,7 +3588,12 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     'error-handling':'xxx^=accept'
                   }
                 ^)[some $x in ^('200'^,'302'^) satisfies contains^(headers[1]^,$x^)]/^(
-                  if ^(contains^(url^,'content-ip'^)^) then
+                  if ^(
+                    contains^(
+                      url^,
+                      'content-ip'
+                    ^)
+                  ^) then
                     x:request^(
                       {
                         'data':'https://ipv4-api.nos.nl/resolve.php/video?url^='^|^|uri-encode^(url^)^,
@@ -3666,7 +3691,9 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 time^(duration^) + duration^('PT0.5S'^)^,
                 '[H01]:[m01]:[s01]'
               ^)^,
-              t:^=hours-from-time^($duration^)*3600+minutes-from-time^($duration^)*60+seconds-from-time^($duration^)^,
+              t:^=hours-from-time^($duration^)*3600+
+                minutes-from-time^($duration^)*60+
+                seconds-from-time^($duration^)^,
               if ^(^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop^) then
                 let $a:^=^(.//ddr_timeframes^)^(^)[model^='AVOD']/stop * duration^('PT1S'^) + dateTime^('1970-01-01T00:00:00'^)^,
                     $b:^=$a - current-dateTime^(^)
@@ -3733,8 +3760,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                 $x^,
                 'BANDWIDTH^=^(\d+^)'^,
                 1
-              ^) count $i return
-              {
+              ^) count $i return {
                 'format':'hls-'^|^|$i^,
                 'extension':'m3u8'^,
                 'resolution':extract^(
@@ -3873,7 +3899,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                         upper-case^(.//sbs_station^)^,
                       ': '^,
                       name^,
-                      if ^(string-length^(.//sbs_episode^)^<^=7^) then
+                      if ^(
+                        string-length^(
+                          .//sbs_episode
+                        ^)^<^=7
+                      ^) then
                         ' '^|^|.//sbs_episode
                       else
                         ^(^)^,
@@ -4173,8 +4203,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                     $x^,
                     'BANDWIDTH^=^(\d+^)'^,
                     1
-                  ^) count $i return
-                  {
+                  ^) count $i return {
                     'format':'hls-'^|^|$i^,
                     'extension':'m3u8'^,
                     'resolution':extract^(
@@ -4627,7 +4656,9 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% -
         ff_param:^=ff_param^,
         if ^(duration^) then ^(
           duration:^=duration^,
-          t:^=hours-from-time^(duration^)*3600+minutes-from-time^(duration^)*60+seconds-from-time^(duration^)
+          t:^=hours-from-time^(duration^)*3600+
+            minutes-from-time^(duration^)*60+
+            seconds-from-time^(duration^)
         ^) else
           ^(^)
       ^)^" --output-format^=cmd') DO %%A
@@ -4912,7 +4943,9 @@ IF DEFINED ss1 (
 		-e ^"let $a:^=read^(^) return
 		    if ^($a^) then
 		      let $a:^=if ^($a castable as time^) then
-		        hours-from-time^($a^)*3600+minutes-from-time^($a^)*60+seconds-from-time^($a^)
+		        hours-from-time^($a^)*3600+
+		        minutes-from-time^($a^)*60+
+		        seconds-from-time^($a^)
 		      else
 		        $a
 		      return
