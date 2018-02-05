@@ -231,6 +231,8 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPO
 ) ELSE IF NOT "%url:uitzendinggemist.net/aflevering=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "let $a:=extract((//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)),'(\w+)\.nl.+(?:/|video=)([\w-]+)',(1,2)) return videos:=[{'1':{'prid':$a[2],'goto':$a[1]}}]" --output-format^=cmd^"') DO %%A
+) ELSE IF NOT "%url:tvblik.nl=%"=="%url%" (
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "let $a:=extract(//div[@id='embed-player']/(@data-episode,.//@href),'(\w+)\.nl.+(?:/|video=)([\w-]+)',(1,2)) return videos:=[{'1':{'prid':$a[2],'goto':$a[1]}}]" --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:2doc.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=(//@data-media-id)[1],date:=replace((//@datetime)[1],'(\d+)-(\d+)-(\d+)','$3$2$1')" --output-format^=cmd^"') DO %%A
 	GOTO NPO

@@ -10823,7 +10823,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "426x240", "vb
 
 [https://github.com/Reino17/BatchGemist/commit/9097a36305ace5a11cf248c857ef032021bcc530]
 [https://github.com/Reino17/BatchGemist/commit/0a65e575647605c500a26c8739174f288d0718bf]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/66f3924e7d67b856a746ecba1a4e13a1178c33f6]
 
 http://www.uitzendinggemist.net/aflevering/402151/Nos_Journaal_2000.html
 http://www.uitzendinggemist.net/aflevering/402175/Rtl_Nieuws_1930_Uur.html
@@ -10853,6 +10853,43 @@ videos := [{"1": {"prid": "gcuLMlCxPtL", "goto": "kijk"}}]
           '(http.+?)''',
           1
         )
+      ),
+      '(\w+)\.nl.+(?:/|video=)([\w-]+)',
+      (1,2)
+    ) return
+    videos:=[
+      {
+        '1':{
+          'prid':$a[2],
+          'goto':$a[1]
+        }
+      }
+    ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/]
+
+https://tvblik.nl/2doc/de-hoeder
+https://tvblik.nl/rtl-late-night/aflevering-13-7
+https://tvblik.nl/hart-van-nederland/30-januari-2018
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "<de 3 urls>" -e "//div[@id='embed-player']/(@data-episode,.//@href)"
+//www.npo.nl/embed/2doc-de-hoeder/30-01-2018/KN_1696401
+http://www.rtlxl.nl/#!/_rtl-late-night-301978/91472da6-3a28-a466-53f5-3b95e9ef53b7
+//embed.kijk.nl/?width=640&height=360&video=bEby5Cptj1c&autoplay=1
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "<de 3 urls>" -e "let $a:=extract(//div[@id='embed-player']/(@data-episode,.//@href),'(\w+)\.nl.+(?:/|video=)([\w-]+)',(1,2)) return videos:=[{'1':{'prid':$a[2],'goto':$a[1]}}]"
+videos := [{"1": {"prid": "KN_1696401", "goto": "npo"}}]
+videos := [{"1": {"prid": "91472da6-3a28-a466-53f5-3b95e9ef53b7", "goto": "rtlxl"}}]
+videos := [{"1": {"prid": "bEby5Cptj1c", "goto": "kijk"}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "let $a:=extract(
+      //div[@id='embed-player']/(
+        @data-episode,
+        .//@href
       ),
       '(\w+)\.nl.+(?:/|video=)([\w-]+)',
       (1,2)
