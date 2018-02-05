@@ -3907,6 +3907,7 @@ t := 60
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 [https://github.com/Reino17/BatchGemist/commit/b4559b4bfd69efbb13e9256e301c5479cdb4d65e]
 [https://github.com/Reino17/BatchGemist/commit/133df2785e8e2e437f32f1a9750008c8fbc08f45] (https://github.com/Reino17/BatchGemist/issues/3)
+[https://github.com/Reino17/BatchGemist/commit/]
 
 Oude API:
 
@@ -4090,7 +4091,7 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "704x400", "vbi
 
 Nieuwe API:
 
-https://www.rtl.nl/video/ab2aee02-8dd7-3d6f-b815-82fd2d419bba/
+https://www.rtl.nl/video/ab2aee02-8dd7-3d6f-b815-82fd2d419bba/ (video die van de nieuwe host 'rtl-hls-aes-relative.akamaized.net' komt)
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "https://xlapi.rtl.nl/version=1/fun=uuid/model=svod/uuid=ab2aee02-8dd7-3d6f-b815-82fd2d419bba/" -e "$json"
 {
@@ -4151,7 +4152,20 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://tm-videourlfeed.rtl.nl/ap
   "url": "https://rtl-hls-aes-relative.akamaized.net/rtlxl/v166/network/pc/adaptive/components/actueel/rtlnieuws/390575/2018w05/ab2aee02-8dd7-3d6f-b815-82fd2d419bba.ssm/ab2aee02-8dd7-3d6f-b815-82fd2d419bba.m3u8"
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://tm-videourlfeed.rtl.nl/api/url/ab2aee02-8dd7-3d6f-b815-82fd2d419bba?device=pc&drm&format=hls" -f "$json/url" -e "[{'format':'hls-0','extension':'m3u8','url':$url},for $x at $i in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$url)||extract($x,'(.+m3u8)',1),'ff_param':'-seekable 0'}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tm-videourlfeed.rtl.nl/api/url/ab2aee02-8dd7-3d6f-b815-82fd2d419bba?device=pc&drm&format=hls" -f "$json/url" -e "$raw"
+#EXTM3U
+#EXT-X-VERSION:1
+## Created with Unified Streaming Platform(version=1.6.6)
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=1164344,CODECS="mp4a.40.2,avc1.77.31",RESOLUTION=711x400
+ab2aee02-8dd7-3d6f-b815-82fd2d419bba-audio=125438-video=973000.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2486164,CODECS="mp4a.40.2,avc1.100.41",RESOLUTION=912x512
+ab2aee02-8dd7-3d6f-b815-82fd2d419bba-audio=125438-video=2220000.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=4401584,CODECS="mp4a.40.2,avc1.100.41",RESOLUTION=1280x720
+ab2aee02-8dd7-3d6f-b815-82fd2d419bba-audio=125438-video=4027000.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=132964,CODECS="mp4a.40.2"
+ab2aee02-8dd7-3d6f-b815-82fd2d419bba-audio=125438.m3u8			# Relatieve urls.
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tm-videourlfeed.rtl.nl/api/url/ab2aee02-8dd7-3d6f-b815-82fd2d419bba?device=pc&drm&format=hls" -f "$json/url" --xquery "[{'format':'hls-0','extension':'m3u8','url':$url},for $x at $i in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$url)||extract($x,'(.+m3u8)',1),'ff_param':'-seekable 0'}]"
 [
   {
     "format": "hls-0",
@@ -4196,9 +4210,80 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://tm-videourlfeed.rtl.nl/ap
   }
 ]
 
+https://www.rtl.nl/video/7b36ee56-684f-3331-be3d-3369dc73626f/ (oudere video van 08-05-2017 die nog van 'manifest.us.rtl.nl' komt)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tm-videourlfeed.rtl.nl/api/url/7b36ee56-684f-3331-be3d-3369dc73626f?device=pc&drm&format=hls" -f "$json/url" -e "$raw"
+#EXTM3U
+#EXT-X-VERSION:1
+## Created with Unified Streaming Platform(version=1.6.6)
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=955522,CODECS="mp4a.40.2,avc1.77.31",RESOLUTION=512x288
+https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=776000.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=1544882,CODECS="mp4a.40.2,avc1.77.31",RESOLUTION=711x400
+https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=1332000.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2636682,CODECS="mp4a.40.2,avc1.100.41",RESOLUTION=912x512
+https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=2362000.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=4528782,CODECS="mp4a.40.2,avc1.100.41",RESOLUTION=1280x720
+https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=4147000.m3u8
+#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=132962,CODECS="mp4a.40.2"
+https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436.m3u8			# Absolute urls.
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tm-videourlfeed.rtl.nl/api/url/7b36ee56-684f-3331-be3d-3369dc73626f?device=pc&drm&format=hls" -f "$json/url" --xquery "[{'format':'hls-0','extension':'m3u8','url':$url},for $x at $i in tail(tokenize($raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':let $a:=extract($x,'(.+m3u8)',1) return if (starts-with($a,'http')) then $a else resolve-uri('.',$url)||$a,'ff_param':'-seekable 0'}]"
+[
+  {
+    "format": "hls-0",
+    "extension": "m3u8",
+    "url": "https://manifest.us.rtl.nl/rtlxl/v166/network/pc/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.m3u8"
+  },
+  {
+    "format": "hls-1",
+    "extension": "m3u8",
+    "resolution": "",
+    "vbitrate": "",
+    "abitrate": "a:125k",
+    "url": "https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436.m3u8",
+    "ff_param": "-seekable 0"
+  },
+  {
+    "format": "hls-2",
+    "extension": "m3u8",
+    "resolution": "512x288",
+    "vbitrate": "v:776k",
+    "abitrate": "a:125k",
+    "url": "https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=776000.m3u8",
+    "ff_param": "-seekable 0"
+  },
+  {
+    "format": "hls-3",
+    "extension": "m3u8",
+    "resolution": "711x400",
+    "vbitrate": "v:1332k",
+    "abitrate": "a:125k",
+    "url": "https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=1332000.m3u8",
+    "ff_param": "-seekable 0"
+  },
+  {
+    "format": "hls-4",
+    "extension": "m3u8",
+    "resolution": "912x512",
+    "vbitrate": "v:2362k",
+    "abitrate": "a:125k",
+    "url": "https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=2362000.m3u8",
+    "ff_param": "-seekable 0"
+  },
+  {
+    "format": "hls-5",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "vbitrate": "v:4147k",
+    "abitrate": "a:125k",
+    "url": "https://manifest.us.rtl.nl/10/v166/aes/adaptive/components/videorecorder/38/382528/382529/7b36ee56-684f-3331-be3d-3369dc73626f.ssm/7b36ee56-684f-3331-be3d-3369dc73626f.ism/7b36ee56-684f-3331-be3d-3369dc73626f-audio=125436-video=4147000.m3u8",
+    "ff_param": "-seekable 0"
+  }
+]
+
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=ab2aee02-8dd7-3d6f-b815-82fd2d419bba/fmt=adaptive/" --xquery "$json[not(meta/nr_of_videos_total=0)]/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * duration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),(material)()/(duration:=format-time(time(duration) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * duration('PT1S') + dateTime('1970-01-01T00:00:00'),$b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()),formats:=x:request({'data':json('https://tm-videourlfeed.rtl.nl/api/url/ab2aee02-8dd7-3d6f-b815-82fd2d419bba?device=pc&amp;format=hls')/url,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/[{'format':'hls-0','extension':'m3u8','url':url},for $x at $i in tail(tokenize(raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',url)||extract($x,'(.+m3u8)',1),'ff_param':'-seekable 0'}])"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=ab2aee02-8dd7-3d6f-b815-82fd2d419bba/fmt=adaptive/" --xquery "$json[not(meta/nr_of_videos_total=0)]/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * duration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),(material)()/(duration:=format-time(time(duration) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * duration('PT1S') + dateTime('1970-01-01T00:00:00'),$b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()),formats:=x:request({'data':json('https://tm-videourlfeed.rtl.nl/api/url/ab2aee02-8dd7-3d6f-b815-82fd2d419bba?device=pc&amp;format=hls')/url,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/[{'format':'hls-0','extension':'m3u8','url':url},for $x at $i in tail(tokenize(raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':let $a:=extract($x,'(.+m3u8)',1) return if (starts-with($a,'http')) then $a else resolve-uri('.',url)||$a,'ff_param':'-seekable 0'}])"
 name := RTL4: RTL Nieuws - 19:30 uur (31012018)
 duration := 00:21:39
 t := 1299
@@ -4333,14 +4418,23 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://rtl-hls-aes
                   'a:$1k',
                   's'
                 ),
-                'url':resolve-uri(
-                  '.',
-                  url
-                )||extract(
+                'url':let $a:=extract(
                   $x,
                   '(.+m3u8)',
                   1
-                ),
+                ) return
+                if (
+                  starts-with(
+                    $a,
+                    'http'
+                  )
+                ) then
+                  $a
+                else
+                  resolve-uri(
+                    '.',
+                    url
+                  )||$a,
                 'ff_param':'-seekable 0'
               }
             ]

@@ -3788,14 +3788,23 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                   'a:$1k'^,
                   's'
                 ^)^,
-                'url':resolve-uri^(
-                  '.'^,
-                  url
-                ^)^|^|extract^(
+                'url':let $a:^=extract^(
                   $x^,
                   '^(.+m3u8^)'^,
                   1
-                ^)^,
+                ^) return
+                if ^(
+                  starts-with^(
+                    $a^,
+                    'http'
+                  ^)
+                ^) then
+                  $a
+                else
+                  resolve-uri^(
+                    '.'^,
+                    url
+                  ^)^|^|$a^,
                 'ff_param':'-seekable 0'
               }
             ]
