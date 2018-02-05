@@ -230,8 +230,7 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','.+/([\w_]+)',1),date:=replace('%url%','.+?(\d+)-(\d+)-(\d+).+','$1$2$3')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:uitzendinggemist.net/aflevering=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'user-agent':'%user-agent%','method':'HEAD'})/url" --output-format^=cmd^"') DO %%A
-	GOTO Process
+	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "let $a:=extract((//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)),'(\w+)\.nl.+(?:/|video=)([\w-]+)',(1,2)) return videos:=[{'1':{'prid':$a[2],'goto':$a[1]}}]" --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:2doc.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=(//@data-media-id)[1],date:=replace((//@datetime)[1],'(\d+)-(\d+)-(\d+)','$3$2$1')" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -251,19 +250,19 @@ IF NOT "%url: =%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=json(//@data-at-player)/video_id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:static.rtl.nl/embed=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%','uuid=([\w-]+)',1)" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','uuid=([\w-]+)',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%','video/([\w-]+)',1)" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','video/([\w-]+)',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtl.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "uuid:=extract('%url%','video/([\w-]+)',1)" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','video/([\w-]+)',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "uuid:=extract(//div[@class='videoContainer']//@src,'=(.+)/',1)" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=extract(//div[@class='videoContainer']//@src,'=(.+)/',1)" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "uuid:=//iframe/extract(@src,'uuid=(.+?)/',1)[.]" --output-format^=cmd^"') DO %%A
+	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//iframe/extract(@src,'uuid=(.+?)/',1)[.]" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:kijk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -e "prid:=extract('%url%','(?:video|videos)/(\w+)',1)" --output-format^=cmd^"') DO %%A
@@ -384,7 +383,7 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :rtlXL
-FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/" --xquery "$json[not(meta/nr_of_videos_total=0)]/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * duration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),(material)()/(duration:=format-time(time(duration) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * duration('PT1S') + dateTime('1970-01-01T00:00:00'),$b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()),formats:=x:request({'data':json('https://tm-videourlfeed.rtl.nl/api/url/%uuid%?device=pc&amp;format=hls')/url,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/[{'format':'hls-0','extension':'m3u8','url':url},for $x at $i in tail(tokenize(raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':let $a:=extract($x,'(.+m3u8)',1) return if (starts-with($a,'http')) then $a else resolve-uri('.',url)||$a,'ff_param':'-seekable 0'}])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%prid%/fmt=adaptive/" --xquery "$json[not(meta/nr_of_videos_total=0)]/(name:=replace(concat(.//station,': ',abstracts/name,' - ',if (.//classname='uitzending') then episodes/name else .//title,replace(.//original_date * duration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),'[&quot;&apos;]',''''''),(material)()/(duration:=format-time(time(duration) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration),if ((.//ddr_timeframes)()[model='AVOD']/stop) then let $a:=(.//ddr_timeframes)()[model='AVOD']/stop * duration('PT1S') + dateTime('1970-01-01T00:00:00'),$b:=$a - current-dateTime() return expire:=concat(replace($a,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($b) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($b) ! (if (.=0) then () else .||'u'),minutes-from-duration($b) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($b)),'s)') else ()),formats:=x:request({'data':json('https://tm-videourlfeed.rtl.nl/api/url/%prid%?device=pc&amp;format=hls')/url,'error-handling':'4xx=accept'})[contains(headers[1],'200')]/[{'format':'hls-0','extension':'m3u8','url':url},for $x at $i in tail(tokenize(raw,'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':let $a:=extract($x,'(.+m3u8)',1) return if (starts-with($a,'http')) then $a else resolve-uri('.',url)||$a,'ff_param':'-seekable 0'}])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
 	GOTO Formats

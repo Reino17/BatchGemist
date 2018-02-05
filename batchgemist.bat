@@ -258,31 +258,26 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPO
 ) ELSE IF NOT "%url:uitzendinggemist.net/aflevering=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"url:^=x:request(
+	-e ^"let $a:^=extract^(
+	      ^(
+	        //iframe[@class]/@src^,
+	        extract^(
+	          //@onclick^,
+	          '^(http.+?^)'''^,
+	          1
+	        ^)
+	      ^)^,
+	      '^(\w+^)\.nl.+^(?:/^|video^=^)^([\w-]+^)'^,
+	      ^(1^,2^)
+	    ^) return
+	    videos:^=[
 	      {
-	        'data':let $a:^=(
-	          //iframe[@class]/@src^,
-	          extract(
-	            //@onclick^,
-	            '(http.+?^)'''^,
-	            1
-	          ^)
-	        ^) return
-	        replace(
-	          $a^,
-	          '.+(?:/^|^=^)(.+^)'^,
-	          if (contains($a^,'npo'^)^) then
-	            'http://www.npo.nl/$1'
-	          else if (contains($a^,'rtl'^)^) then
-	            'http://www.rtl.nl/video/$1'
-	          else
-	            'http://www.kijk.nl/video/$1'
-	        ^)^,
-	        'user-agent':'%user-agent%'^,
-	        'method':'HEAD'
+	        '1':{
+	          'prid':$a[2]^,
+	          'goto':$a[1]
+	        }
 	      }
-	    ^)/url^" --output-format^=cmd^"') DO %%A
-	GOTO Process
+	    ]^" --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:2doc.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"prid:^=(//@data-media-id^)[1]^,
@@ -479,7 +474,7 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPO
 ) ELSE IF NOT "%url:static.rtl.nl/embed=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"uuid:^=extract(
+	-e ^"prid:^=extract(
 	      '%url%'^,
 	      'uuid=([\w-]+^)'^,
 	      1
@@ -487,7 +482,7 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"uuid:^=extract(
+	-e ^"prid:^=extract(
 	      '%url%'^,
 	      'video/([\w-]+^)'^,
 	      1
@@ -495,7 +490,7 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"uuid:^=extract(
+	-e ^"prid:^=extract(
 	      '%url%'^,
 	      'video/([\w-]+^)'^,
 	      1
@@ -503,7 +498,7 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlnieuws.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%"
-	-e ^"uuid:^=extract(
+	-e ^"prid:^=extract(
 	      //div[@class^='videoContainer']//@src^,
 	      '^=(.+^)/'^,
 	      1
@@ -511,7 +506,7 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlz.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%"
-	-e ^"uuid:^=//iframe/extract(
+	-e ^"prid:^=//iframe/extract(
 	      @src^,
 	      'uuid^=(.+?^)/'^,
 	      1
@@ -3661,7 +3656,7 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :rtlXL
-FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%uuid%/fmt=adaptive/"
+FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/uuid=%prid%/fmt=adaptive/"
 --xquery ^"$json[
             not^(
               meta/nr_of_videos_total^=0
@@ -3736,7 +3731,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
             formats:^=x:request^(
               {
                 'data':json^(
-                  'https://tm-videourlfeed.rtl.nl/api/url/%uuid%?device^=pc^&amp^;format^=hls'
+                  'https://tm-videourlfeed.rtl.nl/api/url/%prid%?device^=pc^&amp^;format^=hls'
                 ^)/url^,
                 'error-handling':'4xx^=accept'
               }

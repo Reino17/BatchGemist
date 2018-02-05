@@ -3907,7 +3907,7 @@ t := 60
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 [https://github.com/Reino17/BatchGemist/commit/b4559b4bfd69efbb13e9256e301c5479cdb4d65e]
 [https://github.com/Reino17/BatchGemist/commit/133df2785e8e2e437f32f1a9750008c8fbc08f45] (https://github.com/Reino17/BatchGemist/issues/3)
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/1d99163a2e0f5da92b9fbd7772270ec0396a1675]
 
 Oude API:
 
@@ -6368,61 +6368,6 @@ formats := [{"format": "aac-1", "abitrate": "a:64k", "url": "http://icecast.omro
               )
             ]
           )"
-
-================================================================================================================================
-
-[https://github.com/Reino17/BatchGemist/commit/9097a36305ace5a11cf248c857ef032021bcc530]
-[https://github.com/Reino17/BatchGemist/commit/0a65e575647605c500a26c8739174f288d0718bf]
-
-http://www.uitzendinggemist.net/aflevering/402151/Nos_Journaal_2000.html
-http://www.uitzendinggemist.net/aflevering/402175/Rtl_Nieuws_1930_Uur.html
-http://www.uitzendinggemist.net/aflevering/402189/Hart_Van_Nederland.html
-
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://www.uitzendinggemist.net/aflevering/402151/Nos_Journaal_2000.html" -e "extract(//@onclick,'(http.+?)''',1)"
-http://www.npo.nl/aa-aa/01-01-2015/POW_03375494
-
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://www.uitzendinggemist.net/aflevering/402175/Rtl_Nieuws_1930_Uur.html" -e "extract(//@onclick,'(http.+?)''',1)"
-http://www.rtlxl.nl/#!/zzzz/408f1683-6aec-3cf0-bf39-cabf9dbeb4f2
-
-xidel-0.9.7.5447-openssl.exe -s --color=never "http://www.uitzendinggemist.net/aflevering/402189/Hart_Van_Nederland.html" -e "//iframe[@class]/@src"
-http://embed.kijk.nl/?width=720&height=410&video=gcuLMlCxPtL
-
-xidel-0.9.7.5447-openssl.exe -s --color=never "[de 3 urls]" -e "let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1')"
-http://www.npo.nl/POW_03375494
-http://www.rtl.nl/video/408f1683-6aec-3cf0-bf39-cabf9dbeb4f2
-http://www.kijk.nl/video/gcuLMlCxPtL
-
-xidel-0.9.7.5447-openssl.exe -s --color=never "[de 3 urls]" -e "url:=x:request({'data':let $a:=(//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)) return replace($a,'.+(?:/|=)(.+)',if (contains($a,'npo')) then 'http://www.npo.nl/$1' else if (contains($a,'rtl')) then 'http://www.rtl.nl/video/$1' else 'http://www.kijk.nl/video/$1'),'user-agent':'BatchGemist 1.6-git','method':'HEAD'})/url"
-https://www.npo.nl/nos-journaal/12-08-2017/POW_03375494
-https://www.rtl.nl/video/408f1683-6aec-3cf0-bf39-cabf9dbeb4f2
-http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-laat
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
--e "url:=x:request(
-      {
-        'data':let $a:=(
-          //iframe[@class]/@src,
-          extract(
-            //@onclick,
-            '(http.+?)''',
-            1
-          )
-        ) return
-        replace(
-          $a,
-          '.+(?:/|=)(.+)',
-          if (contains($a,'npo')) then
-            'http://www.npo.nl/$1'
-          else if (contains($a,'rtl')) then
-            'http://www.rtl.nl/video/$1'
-          else
-            'http://www.kijk.nl/video/$1'
-        ),
-        'user-agent':'BatchGemist 1.6-git',
-        'method':'HEAD'
-      }
-    )/url"
 
 ================================================================================================================================
 
@@ -10873,3 +10818,50 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "426x240", "vb
               )
             ]
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/9097a36305ace5a11cf248c857ef032021bcc530]
+[https://github.com/Reino17/BatchGemist/commit/0a65e575647605c500a26c8739174f288d0718bf]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.uitzendinggemist.net/aflevering/402151/Nos_Journaal_2000.html
+http://www.uitzendinggemist.net/aflevering/402175/Rtl_Nieuws_1930_Uur.html
+http://www.uitzendinggemist.net/aflevering/402189/Hart_Van_Nederland.html
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "<de 3 urls>" -e "//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)"
+http://www.npo.nl/aa-aa/01-01-2015/POW_03375494
+http://www.rtlxl.nl/#!/zzzz/408f1683-6aec-3cf0-bf39-cabf9dbeb4f2
+http://embed.kijk.nl/?width=720&height=410&video=gcuLMlCxPtL
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://tvblik.nl/2doc/de-hoeder" -e "let $a:=extract((//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)),'(\w+)\.nl.+(?:/|video=)([\w-]+)',(1,2)) return (prid:=$a[2],goto:=$a[1])"
+prid := POW_03375494
+goto := npo			# Gaat niet werken, omdat voor "GOTO %goto%" delayedexpansion nodig is.
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "<de 3 urls>" -e "let $a:=extract((//iframe[@class]/@src,extract(//@onclick,'(http.+?)''',1)),'(\w+)\.nl.+(?:/|video=)([\w-]+)',(1,2)) return videos:=[{'1':{'prid':$a[2],'goto':$a[1]}}]"
+videos := [{"1": {"prid": "POW_03375494", "goto": "npo"}}]
+videos := [{"1": {"prid": "408f1683-6aec-3cf0-bf39-cabf9dbeb4f2", "goto": "rtlxl"}}]
+videos := [{"1": {"prid": "gcuLMlCxPtL", "goto": "kijk"}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "let $a:=extract(
+      (
+        //iframe[@class]/@src,
+        extract(
+          //@onclick,
+          '(http.+?)''',
+          1
+        )
+      ),
+      '(\w+)\.nl.+(?:/|video=)([\w-]+)',
+      (1,2)
+    ) return
+    videos:=[
+      {
+        '1':{
+          'prid':$a[2],
+          'goto':$a[1]
+        }
+      }
+    ]"
