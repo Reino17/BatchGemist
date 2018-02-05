@@ -435,54 +435,22 @@ IF NOT "%url: =%"=="%url%" (
 	                  '^(\d+^)p'^,
 	                  1
 	                ^) count $i
-	                let $a:^=if ^(
-	                  contains^(
-	                    $x/@src^,
-	                    'ipv4-api'
-	                  ^)
-	                ^) then
-	                  x:request^(
-	                    {
-	                      'data':$x/@src^,
-	                      'method':'HEAD'
-	                    }
-	                  ^)/url
-	                else
-	                  $x/@src
-	                return
-	                system^(
-	                  x'cmd /c %ffmpeg% -i {$a} 2^>^&amp^;1'
-	                ^) ! {
+	                return {
 	                  'format':'mp4-'^|^|$i^,
-	                  'extension':'mp4'^,
-	                  'duration':format-time^(
-	                    time^(
-	                      extract^(
-	                        .^,
-	                        'Duration: ^(.+?^)^,'^,
-	                        1
-	                      ^)
-	                    ^) + duration^('PT0.5S'^)^,
-	                    '[H01]:[m01]:[s01]'
-	                  ^)^,
-	                  'resolution':extract^(
-	                    .^,
-	                    'Video:.+^, ^(\d+x\d+^)'^,
-	                    1
-	                  ^)^,
-	                  'vbitrate':replace^(
-	                    .^,
-	                    '.+Video:.+?^(\d+^) kb.+'^,
-	                    'v:$1k'^,
-	                    's'
-	                  ^)^,
-	                  'abitrate':replace^(
-	                    .^,
-	                    '.+Audio:.+?^(\d+^) kb.+'^,
-	                    'a:$1k'^,
-	                    's'
-	                  ^)^,
-	                  'url':$a
+	                  'url':if ^(
+	                    contains^(
+	                      $x/@src^,
+	                      'ipv4-api'
+	                    ^)
+	                  ^) then
+	                    x:request^(
+	                      {
+	                        'data':$x/@src^,
+	                        'method':'HEAD'
+	                      }
+	                    ^)/url
+	                  else
+	                    $x/@src
 	                }
 	              }
 	            }
