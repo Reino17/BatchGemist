@@ -2581,56 +2581,15 @@ IF NOT "%url: =%"=="%url%" (
 	                      '720p'
 	                    ^) return
 	                    .^($x^)
-	                  ^)
-	                  let $a:^=extract^(
-	                    $x^,
-	                    '.+\.^(.+^)'^,
-	                    1
-	                  ^)
-	                  return
-	                  system^(
-	                    x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
-	                  ^) ! {
+	                  ^) return {
 	                    'format':concat^(
-	                      $a^,
+	                      extract^(
+	                        $x^,
+	                        '.+\.^(.+^)'^,
+	                        1
+	                      ^)^,
 	                      '-'^,
 	                      $i
-	                    ^)^,
-	                    'extension':$a^,
-	                    'duration':format-time^(
-	                      time^(
-	                        extract^(
-	                          .^,
-	                          'Duration: ^(.+?^)^,'^,
-	                          1
-	                        ^)
-	                      ^) + duration^('PT0.5S'^)^,
-	                      '[H01]:[m01]:[s01]'
-	                    ^)^,
-	                    'resolution':extract^(
-	                      .^,
-	                      'Video:.+^, ^(\d+x\d+^)'^,
-	                      1
-	                    ^)^,
-	                    'vbitrate':replace^(
-	                      .^,
-	                      '.+Video:.+?^(\d+^) kb.+'^,
-	                      'v:$1k'^,
-	                      's'
-	                    ^)^,
-	                    'abitrate':extract^(
-	                      .^,
-	                      'Audio:.+?^(\d+^) kb'^,
-	                      1^,'s'
-	                    ^) ! ^(
-	                      if ^(.^) then
-	                        concat^(
-	                          'a:'^,
-	                          .^,
-	                          'k'
-	                        ^)
-	                      else
-	                        ''
 	                    ^)^,
 	                    'url':$x
 	                  }
