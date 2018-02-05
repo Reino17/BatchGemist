@@ -573,7 +573,7 @@ FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
 		IF NOT DEFINED video SET "video=1"
 	)
 )
-FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% --extract-exclude=obj - --xquery "obj:=$json()('%video%'),$obj() ! eval(x'${.}:=$obj/{.}')" --output-encoding^=oem --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% --extract-exclude=obj - --xquery "obj:=$json()('%video%'),$obj()[.!='formats'] ! eval(x'{.}:=$obj/{.}'),formats:=[for $x in $obj/(formats)()[not(extension)] return system(x'cmd /c %ffmpeg% -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':extract($x/url,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url},$obj/(formats)()[extension]]" --output-encoding^=oem --output-format^=cmd') DO %%A
 
 IF DEFINED goto (
 	GOTO %goto%
@@ -611,7 +611,7 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		)
 	)
 )
-FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[format='%format%']/(v_url:=url,ff_param:=ff_param,if (duration) then (duration:=duration,t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+seconds-from-time(duration)) else ())" --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[format='%format%']/(v_url:=url,ff_param:=ff_param,if (duration and not(environment-variable('duration'))) then (duration:=duration,t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+seconds-from-time(duration)) else ())" --output-format^=cmd') DO %%A
 
 IF DEFINED v_url (
 	GOTO Select
@@ -627,9 +627,6 @@ REM ============================================================================
 
 :Select
 SETLOCAL
-IF NOT DEFINED duration (
-	FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=extract(system('cmd /c %ffmpeg% -i %v_url% 2>&1'),'Duration: (.+?),',1) return if ($a castable as time) then round(seconds-from-time($a)) ! (duration:=concat(extract($a,'(.+:)',1),if (.<10) then '0'||. else .),t:=hours-from-time($a)*3600+minutes-from-time($a)*60+.) else ()" --output-format^=cmd^"') DO %%A
-)
 FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(normalize-space('%name%'),'[<>/\\|?*]','')" --output-encoding^=oem^"') DO SET "name=%%A"
 ECHO.
 IF DEFINED duration (
