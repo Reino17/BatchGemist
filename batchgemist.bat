@@ -3103,32 +3103,11 @@ IF NOT "%url: =%"=="%url%" (
 	                't':duration^,
 	                'duration':duration * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
 	                'formats':locations/[
-	                  for $x at $i in reverse^(
+	                  reverse^(
 	                    ^(progressive^)^(^)
-	                  ^) return
-	                  system^(
-	                    x'cmd /c %ffmpeg% -i {$x//src} 2^>^&amp^;1'
-	                  ^) ! {
-	                    'format':'pg-'^|^|$i^,
-	                    'extension':'mp4'^,
-	                    'resolution':extract^(
-	                      .^,
-	                      'Video:.+^, ^(\d+x\d+^)'^,
-	                      1
-	                    ^)^,
-	                    'vbitrate':replace^(
-	                      .^,
-	                      '.+Video:.+?^(\d+^) kb.+'^,
-	                      'v:$1k'^,
-	                      's'
-	                    ^)^,
-	                    'abitrate':replace^(
-	                      .^,
-	                      '.+Audio:.+?^(\d+^) kb.+'^,
-	                      'a:$1k'^,
-	                      's'
-	                    ^)^,
-	                    'url':$x//src
+	                  ^)/{
+	                    'format':'pg-'^|^|position^(^)^,
+	                    'url':.//src
 	                  }^,
 	                  let $a:^=^(adaptive^)^(^)[
 	                    ends-with^(
