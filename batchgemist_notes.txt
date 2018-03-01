@@ -9020,7 +9020,7 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "vbi
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/1c4b95c3f0121d93196e6b6a4be6f56bdc859bad]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/22534409a56d5d7ab07d450ab62fa1696fd1fb2f]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/video/2065789/wta-shenzhen-siniakova-wint-van-sharapova/" -e "{'data':concat('https://',$host,'/videodata/',//@data-videoid,'.xml'),'input-format':'xml-strict'}"
 {
@@ -10136,6 +10136,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "res
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/7ca487adb7a4815319d03e8a1c88df9696560346]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie
 
@@ -10166,38 +10167,38 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1
   </video>
 </package>
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -f "//@data-mrss" -f "substring-before(//media:content/@url,'$')||'NL'" -e "[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -f "//@data-mrss" -f "substring-before(//media:content/@url,'$')||'NL'" -e "[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src}]"
 [
   {
     "format": "mp4-1",
     "extension": "mp4",
     "resolution": "416x312",
-    "bitrate": "160k",
+    "vbitrate": "160k",
     "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_160k_b30_seg0_416x312_97000.mp4"
   },
   {
     "format": "mp4-2",
     "extension": "mp4",
     "resolution": "416x312",
-    "bitrate": "583k",
+    "vbitrate": "583k",
     "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_576k_b30_seg0_416x312_488000.mp4"
   },
   {
     "format": "mp4-3",
     "extension": "mp4",
     "resolution": "640x480",
-    "bitrate": "1317k",
+    "vbitrate": "1317k",
     "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_640px_1296k_m31_seg0_640x480_1222000.mp4"
   }
 ]
 
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -e "name:=concat('Nickelodeon: ',//meta[@itemprop='name']/@content,replace(//meta[@itemprop='uploadDate']/@content,'(\d+)-(\d+)-(\d+)',' ($3$2$1)'))" -f "//@data-mrss" -e "t:=//@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "substring-before(//media:content/@url,'$')||'NL'" -e "formats:=[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie" -e "name:=concat('Nickelodeon: ',//meta[@itemprop='name']/@content,replace(//meta[@itemprop='uploadDate']/@content,'(\d+)-(\d+)-(\d+)',' ($3$2$1)'))" -f "//@data-mrss" -e "t:=//@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "substring-before(//media:content/@url,'$')||'NL'" -e "formats:=[//rendition/{'format':'mp4-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src}]"
 name := Nickelodeon: Totally Spies - Vakantie (04072016)
 t := 1274
 duration := 00:21:14
-formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x312", "bitrate": "160k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_160k_b30_seg0_416x312_97000.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "416x312", "bitrate": "583k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_576k_b30_seg0_416x312_488000.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "640x480", "bitrate": "1317k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_640px_1296k_m31_seg0_640x480_1222000.mp4"}]
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x312", "vbitrate": "160k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_160k_b30_seg0_416x312_97000.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "416x312", "vbitrate": "583k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_416px_576k_b30_seg0_416x312_488000.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "640x480", "vbitrate": "1317k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2014/12/23/8006f39c68bda893197a244da858e22b/mp4_640px_1296k_m31_seg0_640x480_1222000.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -10226,7 +10227,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x312", "bi
           'x',
           @height
         ),
-        'bitrate':@bitrate||'k',
+        'vbitrate':@bitrate||'k',
         'url':src
       }
     ]"
