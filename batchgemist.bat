@@ -2821,7 +2821,7 @@ IF NOT "%url: =%"=="%url%" (
 	                    'x'^,
 	                    @height
 	                  ^)^,
-	                  'bitrate':round^(
+	                  'vbitrate':round^(
 	                    @system-bitrate div 1000
 	                  ^)^|^|'k'^,
 	                  'url':@src
@@ -2830,6 +2830,7 @@ IF NOT "%url: =%"=="%url%" (
 	                  {
 	                    'format':'hls-0'^,
 	                    'extension':'m3u8'^,
+	                    'resolution':'manifest'^,
 	                    'url':@src
 	                  }^,
 	                  for $x at $i in tail^(
@@ -2849,7 +2850,7 @@ IF NOT "%url: =%"=="%url%" (
 	                      'RESOLUTION^=^([\dx]+^)'^,
 	                      1
 	                    ^)^,
-	                    'bitrate':extract^(
+	                    'vbitrate':extract^(
 	                      $x^,
 	                      'BANDWIDTH^=^(\d+^)\d{3}'^,
 	                      1
