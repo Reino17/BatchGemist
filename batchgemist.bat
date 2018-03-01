@@ -351,6 +351,7 @@ IF NOT "%url: =%"=="%url%" (
 	            {
 	              'format':'hls-0'^,
 	              'extension':'m3u8'^,
+	              'resolution':'manifest'^,
 	              'url':$a
 	            }^,
 	            for $x at $i in tail^(
@@ -373,6 +374,11 @@ IF NOT "%url: =%"=="%url%" (
 	                $x^,
 	                'RESOLUTION^=^([\dx]+^)'^,
 	                1
+	              ^) ! ^(
+	                if ^(.^) then
+	                  .
+	                else
+	                  'audiospoor'
 	              ^)^,
 	              'vbitrate':extract^(
 	                $x^,
@@ -434,6 +440,7 @@ IF NOT "%url: =%"=="%url%" (
 	                ^) count $i
 	                return {
 	                  'format':'mp4-'^|^|$i^,
+	                  'extension':'mp4'^,
 	                  'url':if ^(
 	                    contains^(
 	                      $x/@src^,
