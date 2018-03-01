@@ -3563,26 +3563,23 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json(concat('htt
 
 [https://github.com/Reino17/BatchGemist/commit/e9d866ede38cc08037c5bd457aa0c1c40466e3cf]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
+[https://github.com/Reino17/BatchGemist/commit/d25aab3779f567347f78bd759d123ed70d4ef57f]
 [https://github.com/Reino17/BatchGemist/]
 
 'VPWON_1274590.json':
 
-[{"format": "pg-1", "extension": "m4v", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:64k", "url": "url"}, {"format": "pg-2", "extension": "m4v", "resolution": "640x360", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "url"}, {"format": "pg-3", "extension": "m4v", "resolution": "960x540", "vbitrate": "v:1000k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-0", "extension": "m3u8", "url": "url"}, {"format": "hls-1", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-3", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:192k", "url": "url"}, {"format": "hls-4", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-5", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-6", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:192k", "url": "url"}, {"format": "hls-7", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-8", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-9", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:192k", "url": "url"}, {"format": "hls-10", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-11", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-12", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:192k", "url": "url"}]
+[{"format": "pg-1", "extension": "m4v", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:64k", "url": "url"}, {"format": "pg-2", "extension": "m4v", "resolution": "640x360", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "url"}, {"format": "pg-3", "extension": "m4v", "resolution": "960x540", "vbitrate": "v:1000k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "url"}, {"format": "hls-1", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-3", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:200k", "abitrate": "a:192k", "url": "url"}, {"format": "hls-4", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-5", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-6", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:499k", "abitrate": "a:192k", "url": "url"}, {"format": "hls-7", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-8", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-9", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1097k", "abitrate": "a:192k", "url": "url"}, {"format": "hls-10", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:96k", "url": "url"}, {"format": "hls-11", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:128k", "url": "url"}, {"format": "hls-12", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "v:1795k", "abitrate": "a:192k", "url": "url"}]
 
 'kdxdhBykVTt.json':
 
-[{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bitrate": "450k", "url": "url"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "bitrate": "866k", "url": "url"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "bitrate": "1116k", "url": "url"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "bitrate": "1465k", "url": "url"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "bitrate": "2085k", "url": "url"}, {"format": "hls-0", "extension": "m3u8", "url": "url"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "bitrate": "611k", "url": "url"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "bitrate": "929k", "url": "url"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "bitrate": "1289k", "url": "url"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "bitrate": "1643k", "url": "url"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "bitrate": "2179k", "url": "url"}, {"format": "hls-0_hd", "extension": "m3u8", "url": "url"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "bitrate": "316k", "url": "url"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "bitrate": "500k", "url": "url"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "bitrate": "900k", "url": "url"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "bitrate": "1500k", "url": "url"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "bitrate": "2468k", "url": "url"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "bitrate": "4500k", "url": "url"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "bitrate": "5750k", "url": "url"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "7000k", "url": "url"}]
-
-'WO_POWN_10684109.json':
-
-[{"format": "mp4-1", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "v:10004k", "abitrate": "a:317k", "url": "http://download.omroep.nl/powned/1353%20SEKSSHOP%20BESTOLEN.mp4"}]
+[{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "vbitrate": "450k", "url": "url"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "vbitrate": "866k", "url": "url"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "1116k", "url": "url"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "vbitrate": "1465k", "url": "url"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "vbitrate": "2085k", "url": "url"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "url"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "vbitrate": "611k", "url": "url"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "vbitrate": "929k", "url": "url"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "1289k", "url": "url"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1643k", "url": "url"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "vbitrate": "2179k", "url": "url"}, {"format": "hls-0_hd", "extension": "m3u8", "resolution": "manifest", "url": "url"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "vbitrate": "316k", "url": "url"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "vbitrate": "500k", "url": "url"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "vbitrate": "900k", "url": "url"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1500k", "url": "url"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "2468k", "url": "url"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "4500k", "url": "url"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "vbitrate": "5750k", "url": "url"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "7000k", "url": "url"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "$json()[starts-with(format,'pg')][last()]/format"
 pg-3
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "max($json()[format!='hls-master'][starts-with(format,'hls')]/format)"
+xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "max($json()[format!='hls-0'][starts-with(format,'hls')]/format)"
 hls-12
 
 xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "max($json()[replace(format,'hls-','') castable as int]/format)"
@@ -3592,59 +3589,13 @@ xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json -e "max($json()
 hls-12
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "$json()[last()]"
-{
-  "format": "hls-12",
-  "extension": "m3u8",
-  "resolution": "1024x576",
-  "vbitrate": "v:1795k",
-  "abitrate": "a:192k",
-  "url": "url"
-}
-
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "$json()[last()]()"
-format
-extension
-resolution
-vbitrate
-abitrate
-url
-
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "$json()[last()]()[.!='url']"
-format
-extension
-resolution
-vbitrate
-abitrate
-
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate'))"
-format
-extension
-resolution
-vbitrate
-abitrate
-
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate'))"
-format
-extension
-resolution
-bitrate
-
-xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "('extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate'))"
-extension
-resolution
-vbitrate
-abitrate
-
---------------------------------------------------------------------------------------------------------------------------------
-
 Opsomming beschikbare formaten:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.))"
+xidel-0.9.7.6044-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') for $x in $json() return join($a ! $x(.))"
 pg-1 m4v 480x270 v:200k a:64k
 pg-2 m4v 640x360 v:500k a:128k
 pg-3 m4v 960x540 v:1000k a:128k
-hls-0 m3u8
+hls-0 m3u8 manifest
 hls-1 m3u8 480x270 v:200k a:96k
 hls-2 m3u8 480x270 v:200k a:128k
 hls-3 m3u8 480x270 v:200k a:192k
@@ -3658,19 +3609,19 @@ hls-10 m3u8 1024x576 v:1795k a:96k
 hls-11 m3u8 1024x576 v:1795k a:128k
 hls-12 m3u8 1024x576 v:1795k a:192k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.))"
+xidel-0.9.7.6044-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') for $x in $json() return join($a ! $x(.))"
 pg-1 mp4 320x180 450k
 pg-2 mp4 512x288 866k
 pg-3 mp4 640x360 1116k
 pg-4 mp4 768x432 1465k
 pg-5 mp4 868x488 2085k
-hls-0 m3u8
+hls-0 m3u8 manifest
 hls-1 m3u8 320x180 611k
 hls-2 m3u8 512x288 929k
 hls-3 m3u8 640x360 1289k
 hls-4 m3u8 768x432 1643k
 hls-5 m3u8 868x488 2179k
-hls-0_hd m3u8
+hls-0_hd m3u8 manifest
 hls-1_hd m3u8 384x216 316k
 hls-2_hd m3u8 512x288 500k
 hls-3_hd m3u8 640x360 900k
@@ -3684,11 +3635,11 @@ hls-8_hd m3u8 1920x1080 7000k
 
 Het gebruik van een TAB heeft niet het gewenste resultaat:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.),'&#x9;')"
+xidel-0.9.7.6044-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') for $x in $json() return join($a ! $x(.),'&#x9;')"
 pg-1    m4v     480x270 v:200k  a:64k
 pg-2    m4v     640x360 v:500k  a:128k
 pg-3    m4v     960x540 v:1000k a:128k
-hls-0   m3u8
+hls-0   m3u8    manifest
 hls-1   m3u8    480x270 v:200k  a:96k
 hls-2   m3u8    480x270 v:200k  a:128k
 hls-3   m3u8    480x270 v:200k  a:192k
@@ -3702,19 +3653,19 @@ hls-10  m3u8    1024x576        v:1795k a:96k
 hls-11  m3u8    1024x576        v:1795k a:128k
 hls-12  m3u8    1024x576        v:1795k a:192k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) for $x in $json() return join($a ! $x(.),'&#x9;')"
+xidel-0.9.7.6044-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') for $x in $json() return join($a ! $x(.),'&#x9;')"
 pg-1    mp4     320x180 450k
 pg-2    mp4     512x288 866k
 pg-3    mp4     640x360 1116k
 pg-4    mp4     768x432 1465k
 pg-5    mp4     868x488 2085k
-hls-0   m3u8
+hls-0   m3u8    manifest
 hls-1   m3u8    320x180 611k
 hls-2   m3u8    512x288 929k
 hls-3   m3u8    640x360 1289k
 hls-4   m3u8    768x432 1643k
 hls-5   m3u8    868x488 2179k
-hls-0_hd        m3u8
+hls-0_hd        m3u8    manifest
 hls-1_hd        m3u8    384x216 316k
 hls-2_hd        m3u8    512x288 500k
 hls-3_hd        m3u8    640x360 900k
@@ -3728,7 +3679,7 @@ hls-8_hd        m3u8    1920x1080       7000k
 
 De maximale kolombreedte voor elk van de eigenschappen:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')) return $a ! max($json()(.) ! string-length(.))"
+xidel-0.9.7.6044-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate') return $a ! max($json()(.) ! string-length(.))"
 6
 4
 8
@@ -3737,11 +3688,11 @@ xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $
 
 De maximale kolombreedte toegepast, plus 2 spaties tussenruimte:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)) for $x in $json() return string-join(for $y at $i in $a return substring(string-join(($x($y),for $x in 1 to $b[$i]+2 return ' ')),1,$b[$i]+2))"
+xidel-0.9.7.6044-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate'),$b:=$a ! max($json()(.) ! string-length(.)) for $x in $json() return string-join(for $y at $i in $a return substring(string-join(($x($y),for $x in 1 to $b[$i]+2 return ' ')),1,$b[$i]+2))"
 pg-1    m4v   480x270   v:200k   a:64k
 pg-2    m4v   640x360   v:500k   a:128k
 pg-3    m4v   960x540   v:1000k  a:128k
-hls-0   m3u8
+hls-0   m3u8  manifest
 hls-1   m3u8  480x270   v:200k   a:96k
 hls-2   m3u8  480x270   v:200k   a:128k
 hls-3   m3u8  480x270   v:200k   a:192k
@@ -3757,11 +3708,11 @@ hls-12  m3u8  1024x576  v:1795k  a:192k
 
 Alternatief van Benito, plus 2 extra spaties aan het begin:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+xidel-0.9.7.6044-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate'),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
   pg-1    m4v   480x270   v:200k   a:64k
   pg-2    m4v   640x360   v:500k   a:128k
   pg-3    m4v   960x540   v:1000k  a:128k
-  hls-0   m3u8
+  hls-0   m3u8  manifest
   hls-1   m3u8  480x270   v:200k   a:96k
   hls-2   m3u8  480x270   v:200k   a:128k
   hls-3   m3u8  480x270   v:200k   a:192k
@@ -3775,19 +3726,19 @@ xidel-0.9.7.5706-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $
   hls-11  m3u8  1024x576  v:1795k  a:128k
   hls-12  m3u8  1024x576  v:1795k  a:192k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+xidel-0.9.7.6044-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:=('format','extension','resolution','vbitrate','abitrate'),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
   pg-1      mp4   320x180    450k
   pg-2      mp4   512x288    866k
   pg-3      mp4   640x360    1116k
   pg-4      mp4   768x432    1465k
   pg-5      mp4   868x488    2085k
-  hls-0     m3u8
+  hls-0     m3u8  manifest
   hls-1     m3u8  320x180    611k
   hls-2     m3u8  512x288    929k
   hls-3     m3u8  640x360    1289k
   hls-4     m3u8  768x432    1643k
   hls-5     m3u8  868x488    2179k
-  hls-0_hd  m3u8
+  hls-0_hd  m3u8  manifest
   hls-1_hd  m3u8  384x216    316k
   hls-2_hd  m3u8  512x288    500k
   hls-3_hd  m3u8  640x360    900k
@@ -3797,21 +3748,74 @@ xidel-0.9.7.5706-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $a:
   hls-7_hd  m3u8  1600x900   5750k
   hls-8_hd  m3u8  1920x1080  7000k
 
-xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "let $a:=('extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+Laat bij één formaat 'format' achterwege:
+
+xidel-0.9.7.6044-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "let $a:=(if (count($json())!=1) then 'format' else (),'extension','resolution','vbitrate','abitrate'),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
   mp4  1920x1080  v:10004k  a:317k
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Voeg legenda toe:
+
+xidel-0.9.7.6044-openssl.exe -s --color=never VPWON_1274590.json --xquery "let $json:=[{'format':'formaat','extension':'extensie','resolution':'resolutie','vbitrate':'bitrate'},$json()],$a:=('format','extension','resolution','vbitrate','abitrate'),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+  formaat  extensie  resolutie  bitrate
+  pg-1     m4v       480x270    v:200k   a:64k
+  pg-2     m4v       640x360    v:500k   a:128k
+  pg-3     m4v       960x540    v:1000k  a:128k
+  hls-0    m3u8      manifest
+  hls-1    m3u8      480x270    v:200k   a:96k
+  hls-2    m3u8      480x270    v:200k   a:128k
+  hls-3    m3u8      480x270    v:200k   a:192k
+  hls-4    m3u8      640x360    v:499k   a:96k
+  hls-5    m3u8      640x360    v:499k   a:128k
+  hls-6    m3u8      640x360    v:499k   a:192k
+  hls-7    m3u8      1024x576   v:1097k  a:96k
+  hls-8    m3u8      1024x576   v:1097k  a:128k
+  hls-9    m3u8      1024x576   v:1097k  a:192k
+  hls-10   m3u8      1024x576   v:1795k  a:96k
+  hls-11   m3u8      1024x576   v:1795k  a:128k
+  hls-12   m3u8      1024x576   v:1795k  a:192k
+
+xidel-0.9.7.6044-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $json:=[{'format':'formaat','extension':'extensie','resolution':'resolutie','vbitrate':'bitrate'},$json()],$a:=('format','extension','resolution','vbitrate','abitrate'),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+  formaat   extensie  resolutie  bitrate
+  pg-1      mp4       320x180    450k
+  pg-2      mp4       512x288    866k
+  pg-3      mp4       640x360    1116k
+  pg-4      mp4       768x432    1465k
+  pg-5      mp4       868x488    2085k
+  hls-0     m3u8      manifest
+  hls-1     m3u8      320x180    611k
+  hls-2     m3u8      512x288    929k
+  hls-3     m3u8      640x360    1289k
+  hls-4     m3u8      768x432    1643k
+  hls-5     m3u8      868x488    2179k
+  hls-0_hd  m3u8      manifest
+  hls-1_hd  m3u8      384x216    316k
+  hls-2_hd  m3u8      512x288    500k
+  hls-3_hd  m3u8      640x360    900k
+  hls-4_hd  m3u8      768x432    1500k
+  hls-5_hd  m3u8      1024x576   2468k
+  hls-6_hd  m3u8      1280x720   4500k
+  hls-7_hd  m3u8      1600x900   5750k
+  hls-8_hd  m3u8      1920x1080  7000k
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
---xquery "let $a:=(
-                'format',		# Bij één object wordt deze niet getoond.
+--xquery "let $json:=[
+                {
+                  'format':'formaat',
+                  'extension':'extensie',
+                  'resolution':'resolutie',
+                  'vbitrate':'bitrate'
+                },
+                $json()
+              ],
+              $a:=(
+                'format',
                 'extension',
                 'resolution',
-                if ($json()[last()]/bitrate) then
-                  'bitrate'
-                else (
-                  'vbitrate',
-                  'abitrate'
-                )
+                'vbitrate',
+                'abitrate'
               ),
               $b:=$a ! max(
                 $json()(.) ! string-length(.)
@@ -3828,6 +3832,140 @@ xidel-0.9.7.5706-openssl.exe -s --color=never WO_POWN_10684109.json --xquery "le
               $b[$i]+2
             )
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/da56f8f72a6508b91d1e4e85a4c288a4882076e0]
+[https://github.com/Reino17/BatchGemist/commit/eb1dea2c3b142d38e742610d40ec2b3800145026]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+Exporteer alle attributen van het object waarbij de variabelenaam de naam van het attribuut krijgt.
+
+xidel-0.9.7.6044-openssl.exe -s --color=never -e "obj:={'a':1,'b':2},$obj() ! eval(x'{.}:=$obj/{.}')"
+obj := {"a": 1, "b": 2}
+a := 1
+b := 2
+
+'AndereTijden.json':
+
+[{"1": {"name": "100 jaar Russische Revolutie", "prid": "VPWON_1274590", "goto": ":NPO"}}, {"2": [...]}]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never AndereTijden.json -e "obj:=$json()('1'),$obj() ! eval(x'{.}:=$obj/{.}')"
+obj := {"name": "100 jaar Russische Revolutie", "prid": "VPWON_1274590", "goto": ":NPO"}
+name := 100 jaar Russische Revolutie
+prid := VPWON_1274590
+goto := NPO
+
+xidel-0.9.7.6044-openssl.exe -s --color=never --extract-exclude=obj AndereTijden.json -e "obj:=$json()('1'),$obj() ! eval(x'{.}:=$obj/{.}')"
+name := 100 jaar Russische Revolutie
+prid := VPWON_1274590
+goto := NPO
+
+'nos-2206740.json':
+
+[{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017)", "formats": [{"format": "mp4-1", "extension": "mp4", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/web03.mp4"}]}}, {"2": [...]}]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never --extract-exclude=obj nos-2206740.json -e "obj:=$json()('1'),$obj() ! eval(x'{.}:=$obj/{.}')"
+name := NOS: Plezier en problemen door winters weer (09122017)
+formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/vod01.mp4"}, {"format": "mp4-2", "extension": "mp4", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/web03.mp4"}]
+
+'tweakers-4619.json':
+
+[{"1": {"name": "Tweakers: Gameplay Overwatch", "t": 755, "duration": "00:12:35", "formats": [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"}, [...] {"format": "pg-4", "extension": "mp4", "resolution": "1920x1080", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"}, [...] {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:12000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"}]}}, {"2": [...]}]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never --extract-exclude=obj tweakers-4619.json -e "obj:=$json()('1'),$obj() ! eval(x'{.}:=$obj/{.}')"
+name := Tweakers: Gameplay Overwatch
+t := 755
+duration := 00:12:35
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"}, [...] {"format": "pg-4", "extension": "mp4", "resolution": "1920x1080", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"}, [...] {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:12000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"}]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Voer een 2nd pass uit over $formats door m.b.v. FFmpeg meer informatie over de progressieve videostreams te achterhalen.
+
+'tweakers-4619_formats.json':
+
+[{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"}, [...] {"format": "pg-4", "extension": "mp4", "resolution": "1920x1080", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"}, [...] {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:12000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"}]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never tweakers-4619_formats.json -e "$json()[not(extension='m3u8')]"
+{
+  "format": "pg-1",
+  "extension": "mp4",
+  "resolution": "480x270",
+  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"
+}
+{
+  "format": "pg-2",
+  "extension": "mp4",
+  "resolution": "640x360",
+  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=vasvw8DbMBKw/Po9v4qRJMNOw.mp4"
+}
+{
+  "format": "pg-3",
+  "extension": "mp4",
+  "resolution": "1280x720",
+  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=Nq8uwejbPYqU/Po9v4qRJMNOw.mp4"
+}
+{
+  "format": "pg-4",
+  "extension": "mp4",
+  "resolution": "1920x1080",
+  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"
+}
+
+xidel-0.9.7.6044-openssl.exe -s --color=never tweakers-4619_formats.json --xquery "formats:=[for $x in $json()[not(extension='m3u8')] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':$x/extension,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url},$json()[extension='m3u8']]"
+formats := [{"format": "pg-1", "extension": "mp4", "duration": "00:12:35", "resolution": "480x270", "vbitrate": "v:496k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"}, {"format": "pg-2", "extension": "mp4", "duration": "00:12:35", "resolution": "640x360", "vbitrate": "v:760k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=vasvw8DbMBKw/Po9v4qRJMNOw.mp4"}, {"format": "pg-3", "extension": "mp4", "duration": "00:12:35", "resolution": "1280x720", "vbitrate": "v:6452k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=Nq8uwejbPYqU/Po9v4qRJMNOw.mp4"}, {"format": "pg-4", "extension": "mp4", "duration": "00:12:35", "resolution": "1920x1080", "vbitrate": "v:11928k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "audiospoor", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:6500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=6500000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:12000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "formats:=[
+            for $x in $json()[
+              not(extension='m3u8')
+            ] return
+            system(
+              x'cmd /c %ffmpeg% -i {$x/url} 2>&amp;1'
+            ) ! {
+              'format':$x/format,
+              'extension':$x/extension,
+              'duration':format-time(
+                time(
+                  extract(
+                    .,
+                    'Duration: (.+?),',
+                    1
+                  )
+                ) + duration('PT0.5S'),
+                '[H01]:[m01]:[s01]'
+              ),
+              'resolution':extract(
+                .,
+                'Video:.+, (\d+x\d+)',
+                1
+              ),
+              'vbitrate':replace(
+                .,
+                '.+Video:.+?(\d+) kb.+',
+                'v:$1k',
+                's'
+              ),
+              'abitrate':extract(
+                .,
+                'Audio:.+?(\d+) kb',
+                1,'s'
+              ) ! (
+                if (.) then
+                  concat(
+                    'a:',
+                    .,
+                    'k'
+                  )
+                else
+                  ''
+              ),
+              'url':$x/url
+            },
+            $json()[extension='m3u8']
+          ]"
 
 ================================================================================================================================
 
@@ -3899,6 +4037,61 @@ t := 60
     t:=hours-from-time($duration)*3600+
       minutes-from-time($duration)*60+
       seconds-from-time($duration)"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=[{'text':'Audio/video-url weergeven.','goto':'Render'},{'text':'Audio/video downloaden.','goto':'Download'},{'text':'Audio/video openen met MPC-HC/BE.','goto':'Play'},{'text':'Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.','goto':'PlayXP'}] return select:=if (file:exists('FFmpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe')) then if (file:exists('C:\Program Files\Media\MPC-BE.1.4.6.1590.x86\mpc-be.exe')) then $a else [$a(1),$a(2)] else if (file:exists('C:\Program Files\Media\MPC-BE.1.4.6.1590.x86\mpc-be.exe')) then [$a(1),$a(3)] else [$a(1)]"
+select := [{"Audio/video-url weergeven.": "Render"}, {"Audio/video downloaden.": "Download"}, {"Audio/video openen met MPC-HC/BE.": "Play"}, {"Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.": "PlayXP"}]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=[{'text':'Audio/video-url weergeven.','goto':'Render'},{'text':'Audio/video downloaden.','goto':'Download'},{'text':'Audio/video openen met MPC-HC/BE.','goto':'Play'},{'text':'Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.','goto':'PlayXP'}] return select:=if (file:exists('')) then if (file:exists('')) then $a else [$a(1),$a(2)] else if (file:exists('')) then [$a(1),$a(3)] else [$a(1)]"
+select := [{"text": "Audio/video-url weergeven.", "goto": "Render"}]
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+ECHO [{^"text^": ^"Audio/video-url weergeven.^"^, ^"goto^": ^"Render^"}^, {^"text^": ^"Audio/video downloaden.^"^, ^"goto^": ^"Download^"}^, {^"text^": ^"Audio/video openen met MPC-HC/BE.^"^, ^"goto^": ^"Play^"}^, {^"text^": ^"Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.^"^, ^"goto^": ^"PlayXP^"}] | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "for $x at $i in $json() return concat('   ',$i,'. ',$x/text)"
+   1. Audio/video-url weergeven.
+   2. Audio/video downloaden.
+   3. Audio/video openen met MPC-HC/BE.
+   4. Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "let $a:=[
+      {
+        'text':'Audio/video-url weergeven.',
+        'goto':'Render'
+      },{
+        'text':'Audio/video downloaden.',
+        'goto':'Download'
+      },{
+        'text':'Audio/video openen met MPC-HC/BE.',
+        'goto':'Play'
+      },{
+        'text':'Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.',
+        'goto':'PlayXP'
+      }
+    ] return
+    select:=if (
+      file:exists('%ffmpeg:"=%')
+    ) then
+      if (
+        file:exists('%mpc:"=%')
+      ) then
+        $a
+      else [
+        $a(1),
+        $a(2)
+      ]
+    else if (
+      file:exists('%mpc:"=%')
+    ) then [
+      $a(1),
+      $a(3)
+    ] else [
+      $a(1)
+    ]"
 
 ================================================================================================================================
 
@@ -6375,7 +6568,7 @@ formats := [{"format": "aac-1", "abitrate": "a:64k", "url": "http://icecast.omro
 [https://github.com/Reino17/BatchGemist/commit/75c91336d899846f3d02691b26b8d7d07a169b5d]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 [https://github.com/Reino17/BatchGemist/commit/468391ac0e2e24d3f741482a88b40a0b21bdc2a1]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/5185d7e549192038f726df267456142815c94159]
 
 https://tweakers.net/video/player/15869/de-rol-van-het-verzet-tegen-de-nazis-in-wolfenstein-ii-the-new-colossus.html?width=980&height=551&zone=30 (losse video)
 
@@ -8118,278 +8311,6 @@ D:\Storage\Media\Encoding, Decoding\Binaries>xidel-0.9.7.5706-openssl.exe -s --c
                 'goto':'MTV'
               }
             }
-          ]"
-
-================================================================================================================================
-
-[https://github.com/Reino17/BatchGemist/commit/da56f8f72a6508b91d1e4e85a4c288a4882076e0]
-[https://github.com/Reino17/BatchGemist/commit/eb1dea2c3b142d38e742610d40ec2b3800145026]
-
-xidel-0.9.7.5706-openssl.exe -s --color=never -e "var:={'a':1,'b':2},$var() ! eval(x'{.}:=$var/{.}')"
-var := {"a": 1, "b": 2}
-a := 1
-b := 2
-
-xidel-0.9.7.5706-openssl.exe -s --color=never AndereTijden.json -e "var:=$json()('1'),$var() ! eval(x'{.}:=$var/{.}')"
-var := {"name": "100 jaar Russische Revolutie", "prid": "VPWON_1274590", "goto": ":NPO"}
-name := 100 jaar Russische Revolutie
-prid := VPWON_1274590
-goto := NPO
-
-xidel-0.9.7.5706-openssl.exe -s --color=never --extract-exclude=var AndereTijden.json -e "var:=$json()('1'),$var() ! eval(x'{.}:=$var/{.}')"
-name := 100 jaar Russische Revolutie
-prid := VPWON_1274590
-goto := NPO
-
--------------------------------------------------------------------------------------------------------------------------------
-
-'nos-2206740.json':
-
-[{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017)", "formats": [{"format": "mp4-1", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/vod01.mp4"}, {"format": "mp4-2", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/web03.mp4"}]}}, {"2": {"name": "NOS: Strooiploegen gaan op pad (09122017)", "formats": [{"format": "mp4-1", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211219/vod01.mp4"}, {"format": "mp4-2", "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211219/web03.mp4"}]}}]
-
-xidel-0.9.7.5706-openssl.exe -s --color=never nos-2206740.json -e "let $obj:=$json()('1') return $obj()[.!='formats']"
-name
-
-xidel-0.9.7.5706-openssl.exe -s --color=never nos-2206740.json -e "let $obj:=$json()('1') return $obj/(formats)()"
-{
-  "format": "mp4-1",
-  "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/vod01.mp4"
-}
-{
-  "format": "mp4-2",
-  "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/web03.mp4"
-}
-
-xidel-0.9.7.5706-openssl.exe -s --color=never nos-2206740.json --xquery "let $obj:=$json()('1') return for $x in $obj/(formats)() return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':extract($x/url,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url}"
-{
-  "format": "mp4-1",
-  "extension": "mp4",
-  "duration": "00:00:56",
-  "resolution": "640x360",
-  "vbitrate": "v:525k",
-  "abitrate": "a:106k",
-  "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/vod01.mp4"
-}
-{
-  "format": "mp4-2",
-  "extension": "mp4",
-  "duration": "00:00:56",
-  "resolution": "856x482",
-  "vbitrate": "v:1540k",
-  "abitrate": "a:106k",
-  "url": "https://download.omroep.nl/nos/content/video/2017/12/09/211216/web03.mp4"
-}
-
-'tweakers-4619.json':
-
-[{"1": {"name": "Tweakers: Gameplay Overwatch", "t": 755, "duration": "00:12:35", "formats": [{"format": "pg-1", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"}, [...] {"format": "pg-4", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"}, [...] {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:12000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"}]}}, {"2": {"name": "Tweakers: Blizzard toont gameplay Overwatch", "t": 345, "duration": "00:05:45", "formats": [{"format": "pg-1", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=nPe8ZZfcCH/file=OkeW4t86Uo/nPe8ZZfcCH.mp4"}, [...] {"format": "pg-3", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=nPe8ZZfcCH/file=vw4OpuhCKJIW/nPe8ZZfcCH.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/nPe8ZZfcCH.m3u8"}, [...] {"format": "hls-6", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:6500k", "abitrate": "a:192k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=nPe8ZZfcCH/OkeW4t86Uo-duHdtz865n-fUOhDjV8Yf-yD4Gu-jAn0Mk-hls-nodrm-audio=192000-video=6500000.m3u8"}]}}]
-
-xidel-0.9.7.5706-openssl.exe -s --color=never tweakers-4619.json -e "let $obj:=$json()('1') return $obj/(formats)()[not(extension)]"
-{
-  "format": "pg-1",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"
-}
-{
-  "format": "pg-2",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=vasvw8DbMBKw/Po9v4qRJMNOw.mp4"
-}
-{
-  "format": "pg-3",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=Nq8uwejbPYqU/Po9v4qRJMNOw.mp4"
-}
-{
-  "format": "pg-4",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"
-}
-
-xidel-0.9.7.5706-openssl.exe -s --color=never tweakers-4619.json --xquery "let $obj:=$json()('1') return for $x in $obj/(formats)()[not(extension)] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':extract($x/url,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url}"
-{
-  "format": "pg-1",
-  "extension": "mp4",
-  "duration": "00:12:35",
-  "resolution": "480x270",
-  "vbitrate": "v:496k",
-  "abitrate": "a:128k",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"
-}
-{
-  "format": "pg-2",
-  "extension": "mp4",
-  "duration": "00:12:35",
-  "resolution": "640x360",
-  "vbitrate": "v:760k",
-  "abitrate": "a:128k",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=vasvw8DbMBKw/Po9v4qRJMNOw.mp4"
-}
-{
-  "format": "pg-3",
-  "extension": "mp4",
-  "duration": "00:12:35",
-  "resolution": "1280x720",
-  "vbitrate": "v:6452k",
-  "abitrate": "a:128k",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=Nq8uwejbPYqU/Po9v4qRJMNOw.mp4"
-}
-{
-  "format": "pg-4",
-  "extension": "mp4",
-  "duration": "00:12:35",
-  "resolution": "1920x1080",
-  "vbitrate": "v:11928k",
-  "abitrate": "a:128k",
-  "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"
-}
-
-xidel-0.9.7.5706-openssl.exe -s --color=never tweakers-4619.json --xquery "let $obj:=$json()('1') return [for $x in $obj/(formats)()[not(extension)] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':extract($x/url,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url},$obj/(formats)()[extension]]"
-[
-  {
-    "format": "pg-1",
-    "extension": "mp4",
-    "duration": "00:12:35",
-    "resolution": "480x270",
-    "vbitrate": "v:496k",
-    "abitrate": "a:128k",
-    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"
-  },
-  {
-    "format": "pg-2",
-    "extension": "mp4",
-    "duration": "00:12:35",
-    "resolution": "640x360",
-    "vbitrate": "v:760k",
-    "abitrate": "a:128k",
-    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=vasvw8DbMBKw/Po9v4qRJMNOw.mp4"
-  },
-  {
-    "format": "pg-3",
-    "extension": "mp4",
-    "duration": "00:12:35",
-    "resolution": "1280x720",
-    "vbitrate": "v:6452k",
-    "abitrate": "a:128k",
-    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=Nq8uwejbPYqU/Po9v4qRJMNOw.mp4"
-  },
-  {
-    "format": "pg-4",
-    "extension": "mp4",
-    "duration": "00:12:35",
-    "resolution": "1920x1080",
-    "vbitrate": "v:11928k",
-    "abitrate": "a:128k",
-    "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"
-  },
-  {
-    "format": "hls-0",
-    "extension": "m3u8",
-    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"
-  },
-  {
-    "format": "hls-1",
-    "extension": "m3u8",
-    "resolution": "",
-    "vbitrate": "",
-    "abitrate": "a:128k",
-    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000.m3u8"
-  },
-  {
-    "format": "hls-2",
-    "extension": "m3u8",
-    "resolution": "480x270",
-    "vbitrate": "v:500k",
-    "abitrate": "a:128k",
-    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=500000.m3u8"
-  },
-  {
-    "format": "hls-3",
-    "extension": "m3u8",
-    "resolution": "640x360",
-    "vbitrate": "v:768k",
-    "abitrate": "a:128k",
-    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=768000.m3u8"
-  },
-  {
-    "format": "hls-4",
-    "extension": "m3u8",
-    "resolution": "1280x720",
-    "vbitrate": "v:6500k",
-    "abitrate": "a:128k",
-    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=6500000.m3u8"
-  },
-  {
-    "format": "hls-5",
-    "extension": "m3u8",
-    "resolution": "1920x1080",
-    "vbitrate": "v:12000k",
-    "abitrate": "a:128k",
-    "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"
-  }
-]
-
--------------------------------------------------------------------------------------------------------------------------------
-
-xidel-0.9.7.5706-openssl.exe -s --color=never --extract-exclude=obj tweakers-4619.json --xquery "obj:=$json()('1'),$obj()[.!='formats'] ! eval(x'{.}:=$obj/{.}'),formats:=[for $x in $obj/(formats)()[not(extension)] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':extract($x/url,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url},$obj/(formats)()[extension]]"
-name := Tweakers: Gameplay Overwatch
-t := 755
-duration := 00:12:35
-formats := [{"format": "pg-1", "extension": "mp4", "duration": "00:12:35", "resolution": "480x270", "vbitrate": "v:496k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=rrln5cXZcJCw/Po9v4qRJMNOw.mp4"}, {"format": "pg-2", "extension": "mp4", "duration": "00:12:35", "resolution": "640x360", "vbitrate": "v:760k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=vasvw8DbMBKw/Po9v4qRJMNOw.mp4"}, {"format": "pg-3", "extension": "mp4", "duration": "00:12:35", "resolution": "1280x720", "vbitrate": "v:6452k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=Nq8uwejbPYqU/Po9v4qRJMNOw.mp4"}, {"format": "pg-4", "extension": "mp4", "duration": "00:12:35", "resolution": "1920x1080", "vbitrate": "v:11928k", "abitrate": "a:128k", "url": "https://media.tweakers.tv/progressive/account=s7JeEm/item=Po9v4qRJMNOw/file=NL9n46xZeQuQ/Po9v4qRJMNOw.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/Po9v4qRJMNOw.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "", "vbitrate": "", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x270", "vbitrate": "v:500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=500000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "v:768k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=768000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:6500k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=6500000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:12000k", "abitrate": "a:128k", "url": "https://cdn.tweakers.tv/hls/account=s7JeEm/item=Po9v4qRJMNOw/PBknx4FJcJKQ-Phlv46DZcJOQ-Pj0u4-3ZcEuU-rBtmx4XLedGU-hls-nodrm-audio=128000-video=12000000.m3u8"}]
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
---xquery "obj:=$json()('1'),
-          $obj()[.!='formats'] ! eval(
-            x'{.}:=$obj/{.}'
-          ),
-          formats:=[
-            for $x in $obj/(formats)()[
-              not(extension)
-            ] return
-            system(
-              x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x/url} 2>&amp;1'
-            ) ! {
-              'format':$x/format,
-              'extension':extract(
-                $x/url,
-                '.+\.(.+)',
-                1
-              ),
-              'duration':format-time(
-                time(
-                  extract(
-                    .,
-                    'Duration: (.+?),',
-                    1
-                  )
-                ) + duration('PT0.5S'),
-                '[H01]:[m01]:[s01]'
-              ),
-              'resolution':extract(
-                .,
-                'Video:.+, (\d+x\d+)',
-                1
-              ),
-              'vbitrate':replace(
-                .,
-                '.+Video:.+?(\d+) kb.+',
-                'v:$1k',
-                's'
-              ),
-              'abitrate':extract(
-                .,
-                'Audio:.+?(\d+) kb',
-                1,'s'
-              ) ! (
-                if (.) then
-                  concat(
-                    'a:',
-                    .,
-                    'k'
-                  )
-                else
-                  ''
-              ),
-              'url':$x/url
-            },
-            $obj/(formats)()[extension]
           ]"
 
 ================================================================================================================================

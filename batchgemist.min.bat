@@ -163,7 +163,7 @@ REM ============================================================================
 
 :Check
 SET xidel="xidel.exe"
-SET ffmpeg="ffmpeg.exe"
+SET ffmpeg=""
 SET mpc=""
 
 SET check=
@@ -176,12 +176,10 @@ IF NOT EXIST %xidel% (
 		IF %%A LSS 5651 (
 			SET check=1
 			ECHO %xidel% gevonden, maar versie is te oud.
+		) ELSE (
+			SET "user-agent=Mozilla/5.0 Firefox/58.0"
 		)
 	)
-)
-IF NOT EXIST %ffmpeg% (
-	SET check=1
-	ECHO %ffmpeg% niet gevonden.
 )
 IF NOT EXIST %SystemRoot%\System32\clip.exe (
 	SET check=1
@@ -194,7 +192,6 @@ IF DEFINED check (
 	GOTO Help
 )
 
-SET "user-agent=Mozilla/5.0 Firefox/58.0"
 GOTO Input
 
 REM ================================================================================================
@@ -573,7 +570,7 @@ FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
 		IF NOT DEFINED video SET "video=1"
 	)
 )
-FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% --extract-exclude=obj - --xquery "obj:=$json()('%video%'),$obj()[.!='formats'] ! eval(x'{.}:=$obj/{.}'),formats:=[for $x in $obj/(formats)()[not(extension)] return system(x'cmd /c %ffmpeg% -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':extract($x/url,'.+\.(.+)',1),'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url},$obj/(formats)()[extension]]" --output-encoding^=oem --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% --extract-exclude^=obj - --xquery "obj:=$json()('%video%'),$obj() ! eval(x'{.}:=$obj/{.}')" --output-encoding^=oem --output-format^=cmd') DO %%A
 
 IF DEFINED goto (
 	GOTO %goto%
@@ -594,16 +591,20 @@ REM ============================================================================
 :Formats
 SETLOCAL
 ECHO.
+IF EXIST %ffmpeg% (
+	FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - --xquery "formats:=[for $x in $json()[not(extension='m3u8')] return system(x'cmd /c %ffmpeg% -i {$x/url} 2>&amp;1') ! {'format':$x/format,'extension':$x/extension,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':extract(.,'Audio:.+?(\d+) kb',1,'s') ! (if (.) then concat('a:',.,'k') else ''),'url':$x/url},$json()[extension='m3u8']]" --output-format^=cmd') DO %%A
+)
 FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 	IF "%%A"=="1" (
 		ECHO Beschikbaar formaat:
-		ECHO.
-		ECHO %formats% | %xidel% - --xquery "let $a:=('extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
-		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "format:=$json()/format" --output-format^=cmd') DO %%A
 	) ELSE (
 		ECHO Beschikbare formaten:
-		ECHO.
-		ECHO %formats% | %xidel% - --xquery "let $a:=('format','extension','resolution',if ($json()[last()]/bitrate) then 'bitrate' else ('vbitrate','abitrate')),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+	)
+	ECHO.
+	ECHO %formats% | %xidel% - --xquery "let $json:=[{'format':'formaat','extension':'extensie','resolution':'resolutie','vbitrate':'bitrate'},$json()],$a:=('format','extension','resolution','vbitrate','abitrate'),$b:=$a ! max($json()(.) ! string-length(.)),$c:=string-join((1 to sum($b)) ! ' ') for $x in $json() return '  '||string-join(for $y at $i in $a return substring($x($y)||$c,1,$b[$i]+2))"
+	IF "%%A"=="1" (
+		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "format:=$json()/format" --output-format^=cmd') DO %%A
+	) ELSE (
 		ECHO.
 		FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[last()]/format"') DO (
 			SET /P "format=Voer gewenst formaat in: [%%A] "
@@ -611,7 +612,7 @@ FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "count($json())"') DO (
 		)
 	)
 )
-FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[format='%format%']/(v_url:=url,ff_param:=ff_param,if (duration and not(environment-variable('duration'))) then (duration:=duration,t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+seconds-from-time(duration)) else ())" --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %formats% ^| %xidel% - -e "$json()[format='%format%']/(v_url:=url,ff_param:=ff_param,if (not(environment-variable('duration'))) then (duration:=duration,t:=hours-from-time(duration)*3600+minutes-from-time(duration)*60+seconds-from-time(duration)) else ())" --output-format^=cmd') DO %%A
 
 IF DEFINED v_url (
 	GOTO Select
@@ -641,13 +642,13 @@ IF DEFINED duration (
 	ECHO Naam: %name%
 )
 
-ECHO.
-ECHO   1. Audio/video-url weergeven.
-ECHO   2. Audio/video downloaden.
-IF EXIST %mpc% (
-	ECHO   3. Audio/video openen met MPC-HC/BE.
-	ECHO   4. Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.
+FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=[{'text':'Audio/video-url weergeven.','goto':'Render'},{'text':'Audio/video downloaden.','goto':'Download'},{'text':'Audio/video openen met MPC-HC/BE.','goto':'Play'},{'text':'Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.','goto':'PlayXP'}] return select:=if (file:exists('%ffmpeg:"=%')) then if (file:exists('%mpc:"=%')) then $a else [$a(1),$a(2)] else if (file:exists('%mpc:"=%')) then [$a(1),$a(3)] else [$a(1)]" --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %select% ^| %xidel% - -e "count($json())"') DO (
+	IF "%%A"=="1" GOTO Render
 )
+
+ECHO.
+ECHO %select% | %xidel% - --xquery "for $x at $i in $json() return concat('  ',$i,'. ',$x/text)"
 ECHO.
 SET id=
 SET /P "id=Voer keuze in: [1] "
@@ -655,22 +656,18 @@ IF NOT DEFINED id (
 	GOTO Render
 ) ELSE IF "%id%"=="1" (
 	GOTO Render
-) ELSE IF "%id%"=="2" (
-	GOTO Download
-) ELSE IF EXIST %mpc% (
-	IF "%id%"=="3" GOTO Play
-	IF "%id%"=="4" GOTO Play
-	ECHO.
-	ECHO Ongeldige keuze.
-	ECHO.
-	ENDLOCAL
-	GOTO Select
 ) ELSE (
-	ECHO.
-	ECHO Ongeldige keuze.
-	ECHO.
-	ENDLOCAL
-	GOTO Select
+	FOR /F "delims=" %%A IN ('ECHO %select% ^| %xidel% - -e "if ($json('%id%')) then $json('%id%')/goto else 'error'"') DO (
+		IF "%%A"=="error" (
+			ECHO.
+			ECHO Ongeldige keuze.
+			ECHO.
+			ENDLOCAL
+			GOTO Select
+		) ELSE (
+			GOTO %%A
+		)
+	)
 )
 
 ECHO.
@@ -710,23 +707,43 @@ REM ============================================================================
 SETLOCAL ENABLEDELAYEDEXPANSION
 SET "v_url=!v_url:^=!"
 IF DEFINED ss (
-	IF "%id%"=="3" (
-		FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('?start=',round(%ss1%+%ss2%),'&end=',round(%to%))"^"') DO %mpc% !v_url!%%A /close
-	)
-	IF "%id%"=="4" %ffmpeg% -v fatal -ss %ss1% -i !v_url! -ss %ss2% -t %t% -c copy -f nut - | %mpc% - /close
+	FOR /F "delims=" %%A IN ('^"%xidel% -e "concat('?start=',round(%ss1%+%ss2%),'&end=',round(%to%))"^"') DO %mpc% !v_url!%%A /close
 ) ELSE IF DEFINED s_url (
 	ECHO.
 	SET /P "subs=Inclusief ondertiteling? [j/N] "
 	IF /I "!subs!"=="j" (
-		IF "%id%"=="3" %mpc% !v_url! /sub %s_url% /close
-		IF "%id%"=="4" %ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /sub %s_url% /close
+		%mpc% !v_url! /sub %s_url% /close
 	) ELSE (
-		IF "%id%"=="3" %mpc% !v_url! /close
-		IF "%id%"=="4" %ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /close
+		%mpc% !v_url! /close
 	)
 ) ELSE (
-	IF "%id%"=="3" %mpc% !v_url! /close
-	IF "%id%"=="4" %ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /close
+	%mpc% !v_url! /close
+)
+ECHO.
+ECHO.
+ENDLOCAL
+ENDLOCAL
+ENDLOCAL
+ENDLOCAL
+GOTO Input
+
+REM ================================================================================================
+
+:PlayXP
+SETLOCAL ENABLEDELAYEDEXPANSION
+SET "v_url=!v_url:^=!"
+IF DEFINED ss (
+	%ffmpeg% -v fatal -ss %ss1% -i !v_url! -ss %ss2% -t %t% -c copy -f nut - | %mpc% - /close
+) ELSE IF DEFINED s_url (
+	ECHO.
+	SET /P "subs=Inclusief ondertiteling? [j/N] "
+	IF /I "!subs!"=="j" (
+		%ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /sub %s_url% /close
+	) ELSE (
+		%ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /close
+	)
+) ELSE (
+	%ffmpeg% -v fatal %ff_param% -i !v_url! -c copy -f nut - | %mpc% - /close
 )
 ECHO.
 ECHO.
