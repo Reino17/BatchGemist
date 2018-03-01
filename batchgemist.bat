@@ -3976,7 +3976,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:s
           'x'^,
           @height
         ^)^,
-        'bitrate':@bitrate^|^|'k'^,
+        'vbitrate':@bitrate^|^|'k'^,
         'url':src
       }
     ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A

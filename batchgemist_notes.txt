@@ -5854,7 +5854,7 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "vbi
 [https://github.com/Reino17/BatchGemist/commit/e9b1a15d92b26b518770012bde1815f9f86697d8]
 [https://github.com/Reino17/BatchGemist/commit/9b61484ba4c82af8ed77f79b65dafb8c0644b6e2]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/4523dbed6810ff63d6b6c4f913997c74fdd5abb6]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://radio-app.omroep.nl/player/script/player.js" --xquery "for $x in json(extract($raw,'NPW.config.channels=(.+),NPW.config.comscore_configurations',1))()[name!='demo'] order by $x/id return concat('  ',$x/id,'. ',$x/name)"
   1. NPO Radio 1
@@ -7800,6 +7800,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 
 [https://github.com/Reino17/BatchGemist/commit/1a4fb6e6ab86243b70f3814b25d0a76f70396fcc]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.comedycentral.nl/nieuws/95726-20-photoshop-trolls-die-geweldig-zijn-ingegaan-op-slechte-verzoeken
 
@@ -7989,36 +7990,36 @@ MTV api extractor:
 
 http://www.comedycentral.nl/shows/2655-modern-family/bonus (44e video)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:local_playlist-5d3a6dc68f006730a57d" -f "//media:content/@url" -e "[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:local_playlist-5d3a6dc68f006730a57d" -f "//media:content/@url" -e "[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src}]"
 [
   {
     "format": "flv-1",
     "extension": "mp4",
     "resolution": "416x234",
-    "bitrate": "159k",
+    "vbitrate": "159k",
     "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_160k_b30_seg0_416x234_96000.mp4"
   },
   {
     "format": "flv-2",
     "extension": "mp4",
     "resolution": "416x234",
-    "bitrate": "565k",
+    "vbitrate": "565k",
     "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_576k_b30_seg0_416x234_470000.mp4"
   },
   {
     "format": "flv-3",
     "extension": "mp4",
     "resolution": "640x360",
-    "bitrate": "1246k",
+    "vbitrate": "1246k",
     "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_640px_1296k_m31_seg0_640x360_1151000.mp4"
   }
 ]
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%" --xquery "name:=replace('%name:^=%','[&quot;&apos;]','''''')||replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),t:=//media:content/@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "//media:content/@url" -e "formats:=[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%" --xquery "name:=replace('%name:^=%','[&quot;&apos;]','''''')||replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),t:=//media:content/@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "//media:content/@url" -e "formats:=[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src}]"
 name := Comedy Central: Modern Family - Nooit naaktfoto''s mailen (12022016)
 t := 48
 duration := 00:00:48
-formats := [{"format": "flv-1", "extension": "mp4", "resolution": "416x234", "bitrate": "159k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_160k_b30_seg0_416x234_96000.mp4"}, {"format": "flv-2", "extension": "mp4", "resolution": "416x234", "bitrate": "565k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_576k_b30_seg0_416x234_470000.mp4"}, {"format": "flv-3", "extension": "mp4", "resolution": "640x360", "bitrate": "1246k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_640px_1296k_m31_seg0_640x360_1151000.mp4"}]
+formats := [{"format": "flv-1", "extension": "mp4", "resolution": "416x234", "vbitrate": "159k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_160k_b30_seg0_416x234_96000.mp4"}, {"format": "flv-2", "extension": "mp4", "resolution": "416x234", "vbitrate": "565k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_416px_576k_b30_seg0_416x234_470000.mp4"}, {"format": "flv-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "1246k", "url": "rtmp://cp8619.edgefcs.net/ondemand/riptide/r2/production/2016/02/12/789699520b4294b3b7ca429cb561c069/mp4_640px_1296k_m31_seg0_640x360_1151000.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -8043,7 +8044,7 @@ formats := [{"format": "flv-1", "extension": "mp4", "resolution": "416x234", "bi
           'x',
           @height
         ),
-        'bitrate':@bitrate||'k',
+        'vbitrate':@bitrate||'k',
         'url':src
       }
     ]"

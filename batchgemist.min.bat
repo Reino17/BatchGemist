@@ -412,7 +412,7 @@ IF DEFINED formats (
 REM ================================================================================================
 
 :MTVapi
-FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%" --xquery "name:=replace('%name:^=%','[&quot;&apos;]','''''')||replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),t:=//media:content/@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "//media:content/@url" -e "formats:=[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% "http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:%prid%" --xquery "name:=replace('%name:^=%','[&quot;&apos;]','''''')||replace(//pubDate,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),t:=//media:content/@duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00')" -f "//media:content/@url" -e "formats:=[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src}]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 
 IF DEFINED formats (
 	GOTO Formats
