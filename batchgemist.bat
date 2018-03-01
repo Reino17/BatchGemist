@@ -3104,6 +3104,12 @@ IF NOT "%url: =%"=="%url%" (
 	                    ^(progressive^)^(^)
 	                  ^)/{
 	                    'format':'pg-'^|^|position^(^)^,
+	                    'extension':'mp4'^,
+	                    'resolution':concat^(
+	                      width^,
+	                      'x'^,
+	                      height
+	                    ^)^,
 	                    'url':.//src
 	                  }^,
 	                  let $a:^=^(adaptive^)^(^)[
@@ -3115,6 +3121,7 @@ IF NOT "%url: =%"=="%url%" (
 	                    {
 	                      'format':'hls-0'^,
 	                      'extension':'m3u8'^,
+	                      'resolution':'manifest'^,
 	                      'url':$a
 	                    }^,
 	                    for $x at $i in tail^(
@@ -3138,6 +3145,11 @@ IF NOT "%url: =%"=="%url%" (
 	                        $x^,
 	                        'RESOLUTION^=^([\dx]+^)'^,
 	                        1
+	                      ^) ! ^(
+	                        if ^(.^) then
+	                          .
+	                        else
+	                          'audiospoor'
 	                      ^)^,
 	                      'vbitrate':extract^(
 	                        $x^,
