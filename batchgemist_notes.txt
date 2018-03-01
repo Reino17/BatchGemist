@@ -8571,7 +8571,7 @@ formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "vb
 [https://github.com/Reino17/BatchGemist/commit/6629f05abc5f8a27eea61ef967241a4bd880e98c]
 [https://github.com/Reino17/BatchGemist/commit/55f3e82ee1985e74ac36bd1296d7e74c1e57f18a]
 [https://github.com/Reino17/BatchGemist/commit/3e80e235fdb45f0b427e50581920be09fb92dbe0]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/39afb4b4c2928fe33f899341eef7bf3ca6b9d2f9]
 
 http://www.foxtv.nl/programmas/fox/the-simpsons/videos/inglorious-bastards-the-simpsons-seizoen-24-aflevering-8
 
@@ -9020,6 +9020,7 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x270", "vbi
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/1c4b95c3f0121d93196e6b6a4be6f56bdc859bad]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/video/2065789/wta-shenzhen-siniakova-wint-van-sharapova/" -e "{'data':concat('https://',$host,'/videodata/',//@data-videoid,'.xml'),'input-format':'xml-strict'}"
 {
@@ -9120,46 +9121,47 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/v
 1280x720
 1280x720
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/video/2065789/wta-shenzhen-siniakova-wint-van-sharapova/" -f "{'data':concat('https://',$host,'/videodata/',//@data-videoid,'.xml'),'input-format':'xml-strict'}" --xquery "let $a:=doc(//videoSource[@format='IIS']/uri)//StreamIndex[@Type='video']/QualityLevel/concat(@MaxWidth,'x',@MaxHeight),$b:=//videoSource[@format='HLS']/uri return [{'format':'hls-0','extension':'m3u8','url':$b},for $x at $i in tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':reverse($a)[$i],'bitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/video/2065789/wta-shenzhen-siniakova-wint-van-sharapova/" -f "{'data':concat('https://',$host,'/videodata/',//@data-videoid,'.xml'),'input-format':'xml-strict'}" --xquery "let $a:=doc(//videoSource[@format='IIS']/uri)//StreamIndex[@Type='video']/QualityLevel/concat(@MaxWidth,'x',@MaxHeight),$b:=//videoSource[@format='HLS']/uri return [{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b},for $x at $i in tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':reverse($a)[$i],'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}]"
 [
   {
     "format": "hls-0",
     "extension": "m3u8",
+    "resolution": "manifest",
     "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/playlist.m3u8"
   },
   {
     "format": "hls-1",
     "extension": "m3u8",
     "resolution": "640x360",
-    "bitrate": "750k",
+    "vbitrate": "750k",
     "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w2001123911_b750000.m3u8"
   },
   {
     "format": "hls-2",
     "extension": "m3u8",
     "resolution": "768x432",
-    "bitrate": "1000k",
+    "vbitrate": "1000k",
     "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w2001123911_b1000000.m3u8"
   },
   {
     "format": "hls-3",
     "extension": "m3u8",
     "resolution": "1024x576",
-    "bitrate": "1500k",
+    "vbitrate": "1500k",
     "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w2001123911_b1500000.m3u8"
   },
   {
     "format": "hls-4",
     "extension": "m3u8",
     "resolution": "1280x720",
-    "bitrate": "2500k",
+    "vbitrate": "2500k",
     "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w2001123911_b2500000.m3u8"
   },
   {
     "format": "hls-5",
     "extension": "m3u8",
     "resolution": "1280x720",
-    "bitrate": "4000k",
+    "vbitrate": "4000k",
     "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w2001123911_b4000000.m3u8"
   }
 ]
@@ -9168,11 +9170,11 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/v
 
 Alles samen
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/video/2065789/wta-shenzhen-siniakova-wint-van-sharapova/" -f "{'data':concat('https://',$host,'/videodata/',//@data-videoid,'.xml'),'input-format':'xml-strict'}" --xquery "name:=concat('FOX Sports: ',//title,replace(//publicationDate,'(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),t:=//duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),let $a:=doc(//videoSource[@format='IIS']/uri)//StreamIndex[@Type='video']/QualityLevel/concat(@MaxWidth,'x',@MaxHeight),$b:=//videoSource[@format='HLS']/uri return formats:=[{'format':'hls-0','extension':'m3u8','url':$b},for $x at $i in tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':reverse($a)[$i],'bitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.foxsports.nl/tennis/video/2065789/wta-shenzhen-siniakova-wint-van-sharapova/" -f "{'data':concat('https://',$host,'/videodata/',//@data-videoid,'.xml'),'input-format':'xml-strict'}" --xquery "name:=concat('FOX Sports: ',//title,replace(//publicationDate,'(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),t:=//duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),let $a:=doc(//videoSource[@format='IIS']/uri)//StreamIndex[@Type='video']/QualityLevel/concat(@MaxWidth,'x',@MaxHeight),$b:=//videoSource[@format='HLS']/uri return formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b},for $x at $i in tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':reverse($a)[$i],'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}]"
 name := FOX Sports: WTA Shenzhen: Siniakova vs. Sharapova (05012018)
 t := 210
 duration := 00:03:30
-formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/playlist.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "640x360", "bitrate": "750k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b750000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "768x432", "bitrate": "1000k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b1000000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "1024x576", "bitrate": "1500k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b1500000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "bitrate": "2500k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b2500000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1280x720", "bitrate": "4000k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b4000000.m3u8"}]
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/playlist.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "640x360", "vbitrate": "750k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b750000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1000k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b1000000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "1500k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b1500000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "2500k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b2500000.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "4000k", "url": "https://lb-fox-vod.cdn.streamgate.nl/vod/_definst_/content1/fox/geo_nl/Endemol/2018/01/05/WTA_Shenzhen_Siniakova_wint_van_Sharapova_201801051025341123_HLS.smil/chunklist_w466927858_b4000000.m3u8"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -9210,6 +9212,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://lb-fox-vod.
             {
               'format':'hls-0',
               'extension':'m3u8',
+              'resolution':'manifest',
               'url':$b
             },
             for $x at $i in tail(
@@ -9225,7 +9228,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "url": "https://lb-fox-vod.
               'format':'hls-'||$i,
               'extension':'m3u8',
               'resolution':reverse($a)[$i],
-              'bitrate':extract(
+              'vbitrate':extract(
                 $x,
                 'BANDWIDTH=(\d+)\d{3}',
                 1

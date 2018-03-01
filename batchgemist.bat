@@ -2901,6 +2901,7 @@ IF NOT "%url: =%"=="%url%" (
 	            {
 	              'format':'hls-0'^,
 	              'extension':'m3u8'^,
+	              'resolution':'manifest'^,
 	              'url':$b
 	            }^,
 	            for $x at $i in tail^(
@@ -2916,7 +2917,7 @@ IF NOT "%url: =%"=="%url%" (
 	              'format':'hls-'^|^|$i^,
 	              'extension':'m3u8'^,
 	              'resolution':reverse^($a^)[$i]^,
-	              'bitrate':extract^(
+	              'vbitrate':extract^(
 	                $x^,
 	                'BANDWIDTH^=^(\d+^)\d{3}'^,
 	                1
