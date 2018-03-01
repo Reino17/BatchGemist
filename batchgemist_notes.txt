@@ -7800,7 +7800,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 
 [https://github.com/Reino17/BatchGemist/commit/1a4fb6e6ab86243b70f3814b25d0a76f70396fcc]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/aacf811a112c76717c2937db2b544b71f0bc020e]
 
 http://www.comedycentral.nl/nieuws/95726-20-photoshop-trolls-die-geweldig-zijn-ingegaan-op-slechte-verzoeken
 
@@ -8094,6 +8094,7 @@ D:\Storage\Media\Encoding, Decoding\Binaries>xidel-0.9.7.5706-openssl.exe -s --c
 
 [https://github.com/Reino17/BatchGemist/commit/b0069c866ff8edbe3516033f93fc11b8537e3a7c]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50
 
@@ -8265,55 +8266,55 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mt
   </video>
 </package>
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -f "//@data-tffeed[1]" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "$json//content" -e "[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -f "//@data-tffeed[1]" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "$json//content" -e "[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src}]"
 [
   {
     "format": "flv-1",
     "extension": "mp4",
     "resolution": "384x216",
-    "bitrate": "283k",
+    "vbitrate": "283k",
     "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_384x216.mp4"
   },
   {
     "format": "flv-2",
     "extension": "mp4",
     "resolution": "512x288",
-    "bitrate": "454k",
+    "vbitrate": "454k",
     "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_512x288.mp4"
   },
   {
     "format": "flv-3",
     "extension": "mp4",
     "resolution": "640x360",
-    "bitrate": "835k",
+    "vbitrate": "835k",
     "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_640x360.mp4"
   },
   {
     "format": "flv-4",
     "extension": "mp4",
     "resolution": "768x432",
-    "bitrate": "1146k",
+    "vbitrate": "1146k",
     "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_768x432.mp4"
   },
   {
     "format": "flv-5",
     "extension": "mp4",
     "resolution": "960x540",
-    "bitrate": "1634k",
+    "vbitrate": "1634k",
     "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_960x540.mp4"
   },
   {
     "format": "flv-6",
     "extension": "mp4",
     "resolution": "1280x720",
-    "bitrate": "2372k",
+    "vbitrate": "2372k",
     "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1280x720.mp4"
   },
   {
     "format": "flv-7",
     "extension": "mp4",
     "resolution": "1920x1080",
-    "bitrate": "3955k",
+    "vbitrate": "3955k",
     "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1920x1080.mp4"
   }
 ]
@@ -8348,60 +8349,61 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mt
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -f "//@data-tffeed[1]" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "substring-before($json//content,'&device')||'&acceptMethods=hls'" -e "//rendition/src"
 https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/master.m3u8?hdnea=st%3D1514062969%7Eexp%3D1514077369%7Eacl%3D%2Fi%2Fmtviestor%2F_*%2Fintlod%2FMTVInternational%2Fmtv.nl%2F2017%2F12%2F15%2F1513344184350%2F519c61fedb8efa25daa74d0c7aee0552_%2C384x216%2C512x288%2C640x360%2C768x432%2C960x540%2C1280x720%2C1920x1080%2C.mp4.csmil%2F*%7Ehmac%3D4cafd17a53e9104feca7a7d88998cfc7d2e2208fb0799cd77b63e3bebfff237c&__a__=off&__b__=450&__viacc__=NONE
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -f "//@data-tffeed[1]" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "substring-before($json//content,'&device')||'&acceptMethods=hls'" --xquery "let $a:=//rendition/src return [{'format':'hls-0','extension':'m3u8','url':$a},for $x at $i in tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'bitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract($x,'(.+m3u8.+)',1)}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -f "//@data-tffeed[1]" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "substring-before($json//content,'&device')||'&acceptMethods=hls'" --xquery "let $a:=//rendition/src return [{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract($x,'(.+m3u8.+)',1)}]"
 [
   {
     "format": "hls-0",
     "extension": "m3u8",
+    "resolution": "manifest",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/master.m3u8?hdnea=st%3D1514062969%7Eexp%3D1514077369%7Eacl%3D%2Fi%2Fmtviestor%2F_*%2Fintlod%2FMTVInternational%2Fmtv.nl%2F2017%2F12%2F15%2F1513344184350%2F519c61fedb8efa25daa74d0c7aee0552_%2C384x216%2C512x288%2C640x360%2C768x432%2C960x540%2C1280x720%2C1920x1080%2C.mp4.csmil%2F*%7Ehmac%3D4cafd17a53e9104feca7a7d88998cfc7d2e2208fb0799cd77b63e3bebfff237c&__a__=off&__b__=450&__viacc__=NONE"
   },
   {
     "format": "hls-1",
     "extension": "m3u8",
     "resolution": "384x216",
-    "bitrate": "274k",
+    "vbitrate": "274k",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_0_av.m3u8?null=0&id=AgBQZTEFUl7qbszHPlqzzV+5dzneYrOtM8gnXsuh246EOYLxxDk%2fvhF6YoDfe+JNLLz2pudLiUp4lg%3d%3d&hdntl=exp=1514150220~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=f08e7212f8375171bdd4f0b60a03e32b38d74c41488df333ad7831e09c5d770c"
   },
   {
     "format": "hls-2",
     "extension": "m3u8",
     "resolution": "512x288",
-    "bitrate": "445k",
+    "vbitrate": "445k",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_1_av.m3u8?null=0&id=AgBQZTEFUl7qbszHPlqzzV+5dzneYrOtM8gnXsuh246EOYLxxDk%2fvhF6YoDfe+JNLLz2pudLiUp4lg%3d%3d&hdntl=exp=1514150220~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=f08e7212f8375171bdd4f0b60a03e32b38d74c41488df333ad7831e09c5d770c"
   },
   {
     "format": "hls-3",
     "extension": "m3u8",
     "resolution": "640x360",
-    "bitrate": "824k",
+    "vbitrate": "824k",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_2_av.m3u8?null=0&id=AgBQZTEFUl7qbszHPlqzzV+5dzneYrOtM8gnXsuh246EOYLxxDk%2fvhF6YoDfe+JNLLz2pudLiUp4lg%3d%3d&hdntl=exp=1514150220~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=f08e7212f8375171bdd4f0b60a03e32b38d74c41488df333ad7831e09c5d770c"
   },
   {
     "format": "hls-4",
     "extension": "m3u8",
     "resolution": "768x432",
-    "bitrate": "1134k",
+    "vbitrate": "1134k",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_3_av.m3u8?null=0&id=AgBQZTEFUl7qbszHPlqzzV+5dzneYrOtM8gnXsuh246EOYLxxDk%2fvhF6YoDfe+JNLLz2pudLiUp4lg%3d%3d&hdntl=exp=1514150220~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=f08e7212f8375171bdd4f0b60a03e32b38d74c41488df333ad7831e09c5d770c"
   },
   {
     "format": "hls-5",
     "extension": "m3u8",
     "resolution": "960x540",
-    "bitrate": "1620k",
+    "vbitrate": "1620k",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_4_av.m3u8?null=0&id=AgBQZTEFUl7qbszHPlqzzV+5dzneYrOtM8gnXsuh246EOYLxxDk%2fvhF6YoDfe+JNLLz2pudLiUp4lg%3d%3d&hdntl=exp=1514150220~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=f08e7212f8375171bdd4f0b60a03e32b38d74c41488df333ad7831e09c5d770c"
   },
   {
     "format": "hls-6",
     "extension": "m3u8",
     "resolution": "1280x720",
-    "bitrate": "2354k",
+    "vbitrate": "2354k",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_5_av.m3u8?null=0&id=AgBQZTEFUl7qbszHPlqzzV+5dzneYrOtM8gnXsuh246EOYLxxDk%2fvhF6YoDfe+JNLLz2pudLiUp4lg%3d%3d&hdntl=exp=1514150220~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=f08e7212f8375171bdd4f0b60a03e32b38d74c41488df333ad7831e09c5d770c"
   },
   {
     "format": "hls-7",
     "extension": "m3u8",
     "resolution": "1920x1080",
-    "bitrate": "3930k",
+    "vbitrate": "3930k",
     "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_6_av.m3u8?null=0&id=AgBQZTEFUl7qbszHPlqzzV+5dzneYrOtM8gnXsuh246EOYLxxDk%2fvhF6YoDfe+JNLLz2pudLiUp4lg%3d%3d&hdntl=exp=1514150220~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=f08e7212f8375171bdd4f0b60a03e32b38d74c41488df333ad7831e09c5d770c"
   }
 ]
@@ -8412,11 +8414,11 @@ Alles samen
 
 http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -e "let $a:=//meta[@property='search:duration']/@content return duration:=substring('00:00:00',1,8-string-length($a))||$a,t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration)" -f "//@data-tffeed[1]" -e "name:=$json//data/concat('MTV: ',if ((artists)()) then (artists)(1)/name||' - ' else (),title,replace(displayDate,'(\d+)/(\d+)/(\d+)',' ($2$1$3)'))" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" --xquery "formats:=[doc($json//content)//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src},let $a:=doc(substring-before($json//content,'&amp;device')||'&amp;acceptMethods=hls')//rendition/src return ({'format':'hls-0','extension':'m3u8','url':$a},for $x at $i in tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'bitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract($x,'(.+m3u8.+)',1)})]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -e "let $a:=//meta[@property='search:duration']/@content return duration:=substring('00:00:00',1,8-string-length($a))||$a,t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration)" -f "//@data-tffeed[1]" -e "name:=$json//data/concat('MTV: ',if ((artists)()) then (artists)(1)/name||' - ' else (),title,replace(displayDate,'(\d+)/(\d+)/(\d+)',' ($2$1$3)'))" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" --xquery "formats:=[doc($json//content)//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src},let $a:=doc(substring-before($json//content,'&amp;device')||'&amp;acceptMethods=hls')//rendition/src return ({'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract($x,'(.+m3u8.+)',1)})]"
 duration := 00:02:48
 t := 168
 name := MTV: MTV NOW - Recap Week 50 (15122017)
-formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "bitrate": "283k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_384x216.mp4"}, {"format": "flv-2", "extension": "mp4", "resolution": "512x288", "bitrate": "454k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_512x288.mp4"}, {"format": "flv-3", "extension": "mp4", "resolution": "640x360", "bitrate": "835k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_640x360.mp4"}, {"format": "flv-4", "extension": "mp4", "resolution": "768x432", "bitrate": "1146k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_768x432.mp4"}, {"format": "flv-5", "extension": "mp4", "resolution": "960x540", "bitrate": "1634k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_960x540.mp4"}, {"format": "flv-6", "extension": "mp4", "resolution": "1280x720", "bitrate": "2372k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1280x720.mp4"}, {"format": "flv-7", "extension": "mp4", "resolution": "1920x1080", "bitrate": "3955k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1920x1080.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/master.m3u8?hdnea=st%3D1514071099%7Eexp%3D1514085499%7Eacl%3D%2Fi%2Fmtviestor%2F_*%2Fintlod%2FMTVInternational%2Fmtv.nl%2F2017%2F12%2F15%2F1513344184350%2F519c61fedb8efa25daa74d0c7aee0552_%2C384x216%2C512x288%2C640x360%2C768x432%2C960x540%2C1280x720%2C1920x1080%2C.mp4.csmil%2F*%7Ehmac%3Db50538d5b9d8fb7b4513791ace5be5258a10fbf168ef7d35abc3b9bbbaab25f5&__a__=off&__b__=450&__viacc__=NONE"}, {"format": "hls-1", "extension": "m3u8", "resolution": "384x216", "bitrate": "274k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_0_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "bitrate": "445k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_1_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "bitrate": "824k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_2_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "bitrate": "1134k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_3_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-5", "extension": "m3u8", "resolution": "960x540", "bitrate": "1620k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_4_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-6", "extension": "m3u8", "resolution": "1280x720", "bitrate": "2354k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_5_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-7", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "3930k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_6_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}]
+formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "vbitrate": "283k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_384x216.mp4"}, {"format": "flv-2", "extension": "mp4", "resolution": "512x288", "vbitrate": "454k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_512x288.mp4"}, {"format": "flv-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "835k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_640x360.mp4"}, {"format": "flv-4", "extension": "mp4", "resolution": "768x432", "vbitrate": "1146k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_768x432.mp4"}, {"format": "flv-5", "extension": "mp4", "resolution": "960x540", "vbitrate": "1634k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_960x540.mp4"}, {"format": "flv-6", "extension": "mp4", "resolution": "1280x720", "vbitrate": "2372k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1280x720.mp4"}, {"format": "flv-7", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "3955k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1920x1080.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/master.m3u8?hdnea=st%3D1514071099%7Eexp%3D1514085499%7Eacl%3D%2Fi%2Fmtviestor%2F_*%2Fintlod%2FMTVInternational%2Fmtv.nl%2F2017%2F12%2F15%2F1513344184350%2F519c61fedb8efa25daa74d0c7aee0552_%2C384x216%2C512x288%2C640x360%2C768x432%2C960x540%2C1280x720%2C1920x1080%2C.mp4.csmil%2F*%7Ehmac%3Db50538d5b9d8fb7b4513791ace5be5258a10fbf168ef7d35abc3b9bbbaab25f5&__a__=off&__b__=450&__viacc__=NONE"}, {"format": "hls-1", "extension": "m3u8", "resolution": "384x216", "vbitrate": "274k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_0_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "vbitrate": "445k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_1_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "824k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_2_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1134k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_3_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-5", "extension": "m3u8", "resolution": "960x540", "vbitrate": "1620k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_4_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-6", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "2354k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_5_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}, {"format": "hls-7", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "3930k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil/index_6_av.m3u8?null=0&id=AgBQZTEFUl7qbinlPlqRwRwj%2fcb4atZs%2fGUf%2fZfHqCl7XCmAevEUB9D3MfZOTkNP+yBUGibjB8gRfw%3d%3d&hdntl=exp=1514157737~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fMTVInternational%2fmtv.nl%2f2017%2f12%2f15%2f1513344184350%2f519c61fedb8efa25daa74d0c7aee0552_,384x216,512x288,640x360,768x432,960x540,1280x720,1920x1080,.mp4.csmil%2f*~data=hdntl~hmac=9f0597ed666a60cc2a9c18251f6b64beea6baf8268540854abe7bedcfb017f79"}]
 
 http://www.mtv.nl/afleveringen/5wrrop/are-you-the-one-are-you-the-one-playing-with-fire-S6-A12
 
@@ -8424,7 +8426,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/afleveringen/5w
 duration := 00:39:55
 t := 2395
 name := MTV: Are You The One? - Playing with Fire (20122017)
-formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "bitrate": "150k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/won-intl/are_you_the_one_/are_you_the_one__6/612_are_you_the_one__612/ABC893631/ABC893631_en-US_384x216_150.mp4"}, [...], {"format": "hls-7", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "4782k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/won-intl/are_you_the_one_/are_you_the_one__6/612_are_you_the_one__612/ABC893631/ABC893631_en-US_,384x216_150,512x288_370,640x360_900,768x432_1400,960x540_2000,1280x720_3000,1920x1080_5000,.mp4.csmil/index_6_av.m3u8?null=0&id=AgBQZTEFUl7qbmTDP1rWeP9Z0LEKL2mx2fJcjjP19GZI9v17RN2u2zAimPfEmFiwtId1xzjlkupGzw%3d%3d&hdntl=exp=1514214628~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fwon-intl%2fare_you_the_one_%2fare_you_the_one__6%2f612_are_you_the_one__612%2fABC893631%2fABC893631_en-US_,384x216_150,512x288_370,640x360_900,768x432_1400,960x540_2000,1280x720_3000,1920x1080_5000,.mp4.csmil%2f*~data=hdntl~hmac=9d08a82e6f9a14f51977c8fd10a99defa18edc4cc4e175d42d3ab3f8e6f6be79"}]
+formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "vbitrate": "150k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/won-intl/are_you_the_one_/are_you_the_one__6/612_are_you_the_one__612/ABC893631/ABC893631_en-US_384x216_150.mp4"}, [...], {"format": "hls-7", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "4782k", "url": "https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/won-intl/are_you_the_one_/are_you_the_one__6/612_are_you_the_one__612/ABC893631/ABC893631_en-US_,384x216_150,512x288_370,640x360_900,768x432_1400,960x540_2000,1280x720_3000,1920x1080_5000,.mp4.csmil/index_6_av.m3u8?null=0&id=AgBQZTEFUl7qbmTDP1rWeP9Z0LEKL2mx2fJcjjP19GZI9v17RN2u2zAimPfEmFiwtId1xzjlkupGzw%3d%3d&hdntl=exp=1514214628~acl=%2fi%2fmtviestor%2f_*%2fintlod%2fwon-intl%2fare_you_the_one_%2fare_you_the_one__6%2f612_are_you_the_one__612%2fABC893631%2fABC893631_en-US_,384x216_150,512x288_370,640x360_900,768x432_1400,960x540_2000,1280x720_3000,1920x1080_5000,.mp4.csmil%2f*~data=hdntl~hmac=9d08a82e6f9a14f51977c8fd10a99defa18edc4cc4e175d42d3ab3f8e6f6be79"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -8445,7 +8447,7 @@ Input #0, nut, from 'pipe:':aq=    0KB vq=    0KB sq=    0B f=0/0
    6.79 A-V: -0.022 fd=   6 aq=   20KB vq=  341KB sq=    0B f=0/0
 459KB sq=    0B f=0/0
 
-...terwijl de 'hls-master' wel werkt, blijkt FFmpeg de andere hls-streams toch niet te kunnen openen:
+...terwijl de 'hls-0' wel werkt, blijkt FFmpeg de andere hls-streams toch niet te kunnen openen:
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -f "//@data-tffeed[1]" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "substring-before($json//content,'&device')||'&acceptMethods=hls'" -e "let $a:=tokenize(unparsed-text(//rendition/src),'#EXT-X-STREAM-INF:')[last()] ! extract(.,'(.+m3u8.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-87867-g0655810-win32-static_legacy.exe" -hide_banner -i \"{$a}\" 2>&1')"
 [https @ 04caebc0] HTTP error 403 Forbidden   0KB sq=    0B f=0/0
@@ -8454,11 +8456,11 @@ https://cp450888-vh.akamaihd.net/i/mtviestor/_!/intlod/MTVInternational/mtv.nl/2
 
 Dus laten we het voor nu bij de progressieve videostreams:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -e "let $a:=//meta[@property='search:duration']/@content return duration:=substring('00:00:00',1,8-string-length($a))||$a,t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration)" -f "//@data-tffeed[1]" -e "name:=$json//data/concat('MTV: ',if ((artists)()) then (artists)(1)/name||' - ' else (),title,replace(displayDate,'(\d+)/(\d+)/(\d+)',' ($2$1$3)'))" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "$json//content" -e "formats:=[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'bitrate':@bitrate||'k','url':src}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.mtv.nl/clips/bwqezs/mtv-now-recap-week-50" -e "let $a:=//meta[@property='search:duration']/@content return duration:=substring('00:00:00',1,8-string-length($a))||$a,t:=hours-from-time($duration)*3600+minutes-from-time($duration)*60+seconds-from-time($duration)" -f "//@data-tffeed[1]" -e "name:=$json//data/concat('MTV: ',if ((artists)()) then (artists)(1)/name||' - ' else (),title,replace(displayDate,'(\d+)/(\d+)/(\d+)',' ($2$1$3)'))" -f "concat('http://media.mtvnservices.com/pmt/e1/access/index.html?uri=',$json//data/id,'&configtype=edge')" -f "$json//content" -e "formats:=[//rendition/{'format':'flv-'||position(),'extension':'mp4','resolution':concat(@width,'x',@height),'vbitrate':@bitrate||'k','url':src}]"
 duration := 00:02:48
 t := 168
 name := MTV: MTV NOW - Recap Week 50 (15122017)
-formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "bitrate": "283k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_384x216.mp4"}, {"format": "flv-2", "extension": "mp4", "resolution": "512x288", "bitrate": "454k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_512x288.mp4"}, {"format": "flv-3", "extension": "mp4", "resolution": "640x360", "bitrate": "835k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_640x360.mp4"}, {"format": "flv-4", "extension": "mp4", "resolution": "768x432", "bitrate": "1146k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_768x432.mp4"}, {"format": "flv-5", "extension": "mp4", "resolution": "960x540", "bitrate": "1634k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_960x540.mp4"}, {"format": "flv-6", "extension": "mp4", "resolution": "1280x720", "bitrate": "2372k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1280x720.mp4"}, {"format": "flv-7", "extension": "mp4", "resolution": "1920x1080", "bitrate": "3955k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1920x1080.mp4"}]
+formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "vbitrate": "283k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_384x216.mp4"}, {"format": "flv-2", "extension": "mp4", "resolution": "512x288", "vbitrate": "454k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_512x288.mp4"}, {"format": "flv-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "835k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_640x360.mp4"}, {"format": "flv-4", "extension": "mp4", "resolution": "768x432", "vbitrate": "1146k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_768x432.mp4"}, {"format": "flv-5", "extension": "mp4", "resolution": "960x540", "vbitrate": "1634k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_960x540.mp4"}, {"format": "flv-6", "extension": "mp4", "resolution": "1280x720", "vbitrate": "2372k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1280x720.mp4"}, {"format": "flv-7", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "3955k", "url": "rtmpe://cp5290.edgefcs.net/ondemand/mtviestor/_!/intlod/MTVInternational/mtv.nl/2017/12/15/1513344184350/519c61fedb8efa25daa74d0c7aee0552_1920x1080.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -8500,7 +8502,7 @@ formats := [{"format": "flv-1", "extension": "mp4", "resolution": "384x216", "bi
           'x',
           @height
         ),
-        'bitrate':@bitrate||'k',
+        'vbitrate':@bitrate||'k',
         'url':src
       }
     ]"

@@ -2722,7 +2722,7 @@ IF NOT "%url: =%"=="%url%" (
 	          'x'^,
 	          @height
 	        ^)^,
-	        'bitrate':@bitrate^|^|'k',^,
+	        'vbitrate':@bitrate^|^|'k',^,
 	        'url':src
 	      }
 	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
