@@ -9844,7 +9844,7 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
 [https://github.com/Reino17/BatchGemist/commit/8980d9b6732eac5e7f031645353c03a0d5ac1691]
 [https://github.com/Reino17/BatchGemist/commit/842af77531df053079114f8b2b4750c14ade2368]
 [https://github.com/Reino17/BatchGemist/commit/5527a6fd80c5115ec65f7253f7e1ddffd0d90f7a]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/be406044bb068139e09c0ec4633f16b838b02f09]
 
 https://www.abhd.nl/video/ford-fiesta-st/ (video in 1 formaat)
 
@@ -9960,13 +9960,56 @@ formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://static.autoj
 [https://github.com/Reino17/BatchGemist/commit/1f8593bf0c029471086af9c3c4c9a5a35a941dcc]
 [https://github.com/Reino17/BatchGemist/commit/2c276cef1287e0b0f0b8cb3d1e0b56d28e0a2d4d]
 [https://github.com/Reino17/BatchGemist/commit/0bd5711191951330617669a6c0e1b081b8bee3a3]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.autojunk.nl/2009/11/peugeot-206-rally-crash (video in 1 formaat)
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" --xquery "concat('Autojunk: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)'))"
 Autojunk: Peugeot 206 rally crash (15112009)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" -e "//div[@id='playerWrapper']/script[1]/extract(.,'clipData.assets = (.+\]);',1,'s')"
+[{
+              id: 1, // unique asset ID
+              mediatype: "MP4_HD", // HD if higher then 720p, MP4_MAIN otherwise.
+              src: "https://static.autojunk.nl/flv/2009/1115/135833.mp4", // asset URL
+              width: "1280", // video width
+              height: "720", // video height, used to display the asset name in the quality selector (rounded)
+              bandwidth: "2000" // asset bitrate in kbps, used to sort the assets from high to low in the quality selector in the player and pick a suitable asset for the user's connection speed.
+          },
+          {
+              id: 2,
+              mediatype: "MP4_MAIN",
+              src: "",
+              width: "640",
+              height: "360",
+              bandwidth: "1200",
+          }]
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" -e "//div[@id='playerWrapper']/script[1]/json(replace(extract(.,'clipData.assets = (.+\]);',1,'s'),' //.+',''))"
+[
+  {
+    "id": 1,
+    "mediatype": "MP4_HD",
+    "src": "https://static.autojunk.nl/flv/2009/1115/135833.mp4",
+    "width": "1280",
+    "height": "720",
+    "bandwidth": "2000"
+  },
+  {
+    "id": 2,
+    "mediatype": "MP4_MAIN",
+    "src": "",
+    "width": "640",
+    "height": "360",
+    "bandwidth": "1200"
+  }
+]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+De video-eigenschappen hier boven zijn onbetrouwbaar, want die zijn daadwerkelijk:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" --xquery "[for $x at $i in //div[@id='playerWrapper']/script[1]/reverse(json(replace(extract(.,'clipData.assets = (.+\]);',1,'s'),' //.+',''))())[src]/src return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
 [
   {
     "format": "mp4-1",
@@ -9979,44 +10022,49 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/pe
   }
 ]
 
-Voor het geval er nog Autojunk video's zijn die eindigen op *.flv:
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2007/03/7-seconden-op-de-ring" --xquery "[for $x at $i in //div[@id='playerWrapper']/script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
-
-https://www.autojunk.nl/2018/01/straight-piped-nissan-350z-burnout-and-loud-revs (embedded youtube video in eigen player)
-
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/straight-piped-nissan-350z-burnout-and-loud-revs" --xquery "//div[@id='playerWrapper']/(if (iframe) then replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else [for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
-https://youtu.be/XFVlBm16cRk
-
-https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo (video in 2 formaten)
-
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.autojunk.nl/2009/11/peugeot-206-rally-crash" -e "//div[@id='playerWrapper']/script[1]/[reverse(json(replace(extract(.,'clipData.assets = (.+\]);',1,'s'),' //.+',''))())[src]/{'format':'mp4-'||position(),'extension':'mp4','url':src}]"
 [
   {
     "format": "mp4-1",
     "extension": "mp4",
-    "duration": "00:08:31",
-    "resolution": "640x352",
-    "vbitrate": "v:562k",
-    "abitrate": "a:126k",
-    "url": "https://static.autojunk.nl/flv/2018/0114/074345.mp4"
+    "url": "https://static.autojunk.nl/flv/2009/1115/135833.mp4"
+  }
+]
+
+https://www.autojunk.nl/2018/02/man-krijgt-pech-midden-op-de-snelweg (video in 2 formaten)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/02/man-krijgt-pech-midden-op-de-snelweg" -e "[...]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "url": "https://static.autojunk.nl/flv/2018/0208/080515.mp4"
   },
   {
     "format": "mp4-2",
     "extension": "mp4",
-    "duration": "00:08:31",
-    "resolution": "1280x720",
-    "vbitrate": "v:1980k",
-    "abitrate": "a:190k",
-    "url": "https://static.autojunk.nl/flv/2018/0114/074345_720p.mp4"
+    "url": "https://static.autojunk.nl/flv/2018/0208/080515_720p.mp4"
   }
 ]
 
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/02/man-krijgt-pech-midden-op-de-snelweg" -e "//div[@id='playerWrapper']/script[1]/(t:=extract(.,'.+length.+?(\d+)',1),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'))"
+t := 58
+duration := 00:00:58
+
+https://www.autojunk.nl/2018/02/kia-doet-opmerkelijke-actie-bij-ambulance (embedded youtube video in eigen player)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/02/kia-doet-opmerkelijke-actie-bij-ambulance" -e "//div[@id='playerWrapper']/script[1]/(if (@src) then replace(@src,'.+/(.+)\.js','https://youtu.be/$1') else [reverse(json(replace(extract(.,'clipData.assets = (.+\]);',1,'s'),' //.+',''))())[src]/{'format':'mp4-'||position(),'extension':'mp4','url':src}])"
+https://youtu.be/rNVSqOespNY
+
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/01/opties-op-de-porsche-panamera-sport-turismo" --xquery "name:=concat('Autojunk: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/(if (iframe) then v_url:=replace(iframe/@src,'.+/(.+)','https://youtu.be/$1') else formats:=[for $x at $i in script/extract(.,'myfile = ''(.+)''',1,'*')[.] let $a:=extract($x,'.+\.(.+)',1) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':concat($a,'-',$i),'extension':$a,'duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}])"
-name := Autojunk: Opties op de Porsche Panamera Sport Turismo (14012018)
-formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "resolution": "640x352", "vbitrate": "v:562k", "abitrate": "a:126k", "url": "https://static.autojunk.nl/flv/2018/0114/074345.mp4"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:08:31", "resolution": "1280x720", "vbitrate": "v:1980k", "abitrate": "a:190k", "url": "https://static.autojunk.nl/flv/2018/0114/074345_720p.mp4"}]
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.autojunk.nl/2018/02/man-krijgt-pech-midden-op-de-snelweg" --xquery "name:=concat('Autojunk: ',replace(//meta[@property='og:title']/@content,'[&quot;&apos;]',''''''),replace(//span[@class='posted'],'.+?(\d+)-(\d+)-(\d+).+',' ($1$2$3)')),//div[@id='playerWrapper']/script[1]/(t:=extract(.,'.+length.+?(\d+)',1),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),if (@src) then v_url:=replace(@src,'.+/(.+)\.js','https://youtu.be/$1') else formats:=[reverse(json(replace(extract(.,'clipData.assets = (.+\]);',1,'s'),' //.+',''))())[src]/{'format':'mp4-'||position(),'extension':'mp4','url':src}])"
+name := Autojunk: Man krijgt pech midden op de snelweg (08022018)
+t := 58
+duration := 00:00:58
+formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://static.autojunk.nl/flv/2018/0208/080515.mp4"}, {"format": "mp4-2", "extension": "mp4", "url": "https://static.autojunk.nl/flv/2018/0208/080515_720p.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -10033,62 +10081,37 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "res
               ' ($1$2$3)'
             )
           ),
-          //div[@id='playerWrapper']/(
-            if (iframe) then
+          //div[@id='playerWrapper']/script[1]/(
+            t:=extract(
+              .,
+              '.+length.+?(\d+)',
+              1
+            ),
+            duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
+            if (@src) then
               v_url:=replace(
-                iframe/@src,
-                '.+/(.+)',
+                @src,
+                '.+/(.+)\.js',
                 'https://youtu.be/$1'
               )
             else
               formats:=[
-                for $x at $i in script/extract(
-                  .,
-                  'myfile = ''(.+)''',
-                  1,'*'
-                )[.]
-                let $a:=extract(
-                  $x,
-                  '.+\.(.+)',
-                  1
-                ) return
-                system(
-                  x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1'
-                ) ! {
-                  'format':concat(
-                    $a,
-                    '-',
-                    $i
-                  ),
-                  'extension':$a,
-                  'duration':format-time(
-                    time(
+                reverse(
+                  json(
+                    replace(
                       extract(
                         .,
-                        'Duration: (.+?),',
-                        1
-                      )
-                    ) + duration('PT0.5S'),
-                    '[H01]:[m01]:[s01]'
-                  ),
-                  'resolution':extract(
-                    .,
-                    'Video:.+, (\d+x\d+)',
-                    1
-                  ),
-                  'vbitrate':replace(
-                    .,
-                    '.+Video:.+?(\d+) kb.+',
-                    'v:$1k',
-                    's'
-                  ),
-                  'abitrate':replace(
-                    .,
-                    '.+Audio:.+?(\d+) kb.+',
-                    'a:$1k',
-                    's'
-                  ),
-                  'url':$x
+                        'clipData.assets = (.+\]);',
+                        1,'s'
+                      ),
+                      ' //.+',
+                      ''
+                    )
+                  )()
+                )[src]/{
+                  'format':'mp4-'||position(),
+                  'extension':'mp4',
+                  'url':src
                 }
               ]
           )"

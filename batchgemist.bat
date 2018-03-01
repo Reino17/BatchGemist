@@ -2978,62 +2978,37 @@ IF NOT "%url: =%"=="%url%" (
 	              ' ^($1$2$3^)'
 	            ^)
 	          ^)^,
-	          //div[@id^='playerWrapper']/^(
-	            if ^(iframe^) then
+	          //div[@id^='playerWrapper']/script[1]/^(
+	            t:^=extract^(
+	              .^,
+	              '.+length.+?^(\d+^)'^,
+	              1
+	            ^)^,
+	            duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+	            if ^(@src^) then
 	              v_url:^=replace^(
-	                iframe/@src^,
-	                '.+/^(.+^)'^,
+	                @src^,
+	                '.+/^(.+^)\.js'^,
 	                'https://youtu.be/$1'
 	              ^)
 	            else
 	              formats:^=[
-	                for $x at $i in script/extract^(
-	                  .^,
-	                  'myfile ^= ''^(.+^)'''^,
-	                  1^,'*'
-	                ^)[.]
-	                let $a:^=extract^(
-	                  $x^,
-	                  '.+\.^(.+^)'^,
-	                  1
-	                ^) return
-	                system^(
-	                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
-	                ^) ! {
-	                  'format':concat^(
-	                    $a^,
-	                    '-'^,
-	                    $i
-	                  ^)^,
-	                  'extension':$a^,
-	                  'duration':format-time^(
-	                    time^(
+	                reverse^(
+	                  json^(
+	                    replace^(
 	                      extract^(
 	                        .^,
-	                        'Duration: ^(.+?^)^,'^,
-	                        1
-	                      ^)
-	                    ^) + duration^('PT0.5S'^)^,
-	                    '[H01]:[m01]:[s01]'
-	                  ^)^,
-	                  'resolution':extract^(
-	                    .^,
-	                    'Video:.+^, ^(\d+x\d+^)'^,
-	                    1
-	                  ^)^,
-	                  'vbitrate':replace^(
-	                    .^,
-	                    '.+Video:.+?^(\d+^) kb.+'^,
-	                    'v:$1k'^,
-	                    's'
-	                  ^)^,
-	                  'abitrate':replace^(
-	                    .^,
-	                    '.+Audio:.+?^(\d+^) kb.+'^,
-	                    'a:$1k'^,
-	                    's'
-	                  ^)^,
-	                  'url':$x
+	                        'clipData.assets ^= ^(.+\]^)^;'^,
+	                        1^,'s'
+	                      ^)^,
+	                      ' //.+'^,
+	                      ''
+	                    ^)
+	                  ^)^(^)
+	                ^)[src]/{
+	                  'format':'mp4-'^|^|position^(^)^,
+	                  'extension':'mp4'^,
+	                  'url':src
 	                }
 	              ]
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
