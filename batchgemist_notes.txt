@@ -3564,7 +3564,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never --xquery "let $a:=json(concat('htt
 [https://github.com/Reino17/BatchGemist/commit/e9d866ede38cc08037c5bd457aa0c1c40466e3cf]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
 [https://github.com/Reino17/BatchGemist/commit/d25aab3779f567347f78bd759d123ed70d4ef57f]
-[https://github.com/Reino17/BatchGemist/]
+[https://github.com/Reino17/BatchGemist/commit/ca31827534fd8e521562495b2de1ec3218179f0a]
 
 'VPWON_1274590.json':
 
@@ -3837,7 +3837,7 @@ xidel-0.9.7.6044-openssl.exe -s --color=never kdxdhBykVTt.json --xquery "let $js
 
 [https://github.com/Reino17/BatchGemist/commit/da56f8f72a6508b91d1e4e85a4c288a4882076e0]
 [https://github.com/Reino17/BatchGemist/commit/eb1dea2c3b142d38e742610d40ec2b3800145026]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/ca31827534fd8e521562495b2de1ec3218179f0a]
 
 Exporteer alle attributen van het object waarbij de variabelenaam de naam van het attribuut krijgt.
 
@@ -4040,7 +4040,7 @@ t := 60
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/ca31827534fd8e521562495b2de1ec3218179f0a]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=[{'text':'Audio/video-url weergeven.','goto':'Render'},{'text':'Audio/video downloaden.','goto':'Download'},{'text':'Audio/video openen met MPC-HC/BE.','goto':'Play'},{'text':'Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.','goto':'PlayXP'}] return select:=if (file:exists('FFmpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe')) then if (file:exists('C:\Program Files\Media\MPC-BE.1.4.6.1590.x86\mpc-be.exe')) then $a else [$a(1),$a(2)] else if (file:exists('C:\Program Files\Media\MPC-BE.1.4.6.1590.x86\mpc-be.exe')) then [$a(1),$a(3)] else [$a(1)]"
 select := [{"Audio/video-url weergeven.": "Render"}, {"Audio/video downloaden.": "Download"}, {"Audio/video openen met MPC-HC/BE.": "Play"}, {"Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.": "PlayXP"}]

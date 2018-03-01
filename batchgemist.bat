@@ -4638,15 +4638,9 @@ REM ============================================================================
 
 :Select
 SETLOCAL
-FOR /F "delims=" %%A IN ('^"%xidel%
--e ^"name:^=replace^(
-      normalize-space^('%name%'^)^,
-      '[^<^>/\\^|?*]'^,
-      ''
-    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ECHO.
 IF DEFINED duration (
-	ECHO Naam:       %name%
+	ECHO Naam:       %name:''='%
 	ECHO Tijdsduur:  %duration% ^(%t%%duration:~8,4%s^)
 	IF DEFINED ss (
 		ECHO Begin:      %start% ^(%ss%s^)
@@ -4654,7 +4648,7 @@ IF DEFINED duration (
 	)
 	IF DEFINED expire ECHO Gratis tot: %expire%
 ) ELSE (
-	ECHO Naam: %name%
+	ECHO Naam: %name:''='%
 )
 
 FOR /F "delims=" %%A IN ('^"%xidel%
@@ -4877,7 +4871,15 @@ FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 	IF /I "%%~xA"==".asf"  SET ext=.wmv
 )
 
-SET "name=%name::=-%"
+FOR /F "delims=" %%A IN ('^"%xidel%
+-e ^"name:^=replace^(
+      replace^(
+        normalize-space^('%name%'^)^,
+        ':'^,'-'
+      ^)^,
+      '[^<^>/\\^|?*]'^,
+      ''
+    ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ECHO.
 ECHO Bestandsnaam: %name%%ext%
 SET /P "rename=Wijzigen? [j/N] "
