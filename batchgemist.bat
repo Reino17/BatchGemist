@@ -3846,37 +3846,34 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                   ^(^)
               ^)^,
               formats:^=[
-                if ^($a//sbs_videotype^='vod'^) then ^(
-                  for $x at $i in $a/^(sources^)^(^)[container^='MP4'] order by $x/size count $i return
-                  $x/{
-                    'format':'pg-'^|^|$i^,
-                    'extension':'mp4'^,
-                    'resolution':concat^(
-                      width^,
-                      'x'^,
-                      height
-                    ^)^,
-                    'bitrate':avg_bitrate idiv 1000^|^|'k'^,
-                    'url':replace^(
-                      stream_name^,
-                      'mp4:'^,
-                      extract^(
-                        $a/^(sources^)^(^)/src^,
-                        '^(.+nl/^)'^,
-                        1
-                      ^)
-                    ^)
-                  }^,
+                for $x at $i in $a/^(sources^)^(^)[stream_name] order by $x/size count $i return
+                $x/{
+                  'format':'pg-'^|^|$i^,
+                  'extension':'mp4'^,
+                  'resolution':concat^(
+                    width^,
+                    'x'^,
+                    height
+                  ^)^,
+                  'vbitrate':round^(
+                    avg_bitrate div 1000
+                  ^)^|^|'k'^,
+                  'url':replace^(
+                    stream_name^,
+                    'mp4:'^,
+                    'http://stv.cdn.sbsnet.nl/'
+                  ^)
+                }^,
+                let $c:^=$a/^(sources^)^(^)[size^=0]/src return ^(
                   {
                     'format':'hls-0'^,
                     'extension':'m3u8'^,
-                    'url':$a/^(sources^)^(^)/src
-                  }^,
+                    'resolution':'manifest'^,
+                    'url':$c
+                  }[url]^,
                   tail^(
                     tokenize^(
-                      unparsed-text^(
-                        $a/^(sources^)^(^)/src
-                      ^)^,
+                      unparsed-text^($c^)^,
                       '#EXT-X-STREAM-INF:'
                     ^)
                   ^) ! {
@@ -3887,7 +3884,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                       'RESOLUTION^=^([\dx]+^)'^,
                       1
                     ^)^,
-                    'bitrate':round^(
+                    'vbitrate':round^(
                       extract^(
                         .^,
                         'BANDWIDTH^=^(\d+^)'^,
@@ -3896,61 +3893,50 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                     ^)^|^|'k'^,
                     'url':resolve-uri^(
                       '.'^,
-                      $a/^(sources^)^(^)/src
+                      $c
                     ^)^|^|extract^(
                       .^,
                       '^(.+m3u8^)'^,
                       1
                     ^)
                   }
-                ^) else
-                  for $x at $i in $a/^(sources^)^(^)[src] order by $x/size count $i return
-                  $x/{
-                    'format':'pg-'^|^|$i^,
-                    'extension':'mp4'^,
-                    'resolution':concat^(
-                      width^,
-                      'x'^,
-                      height
-                    ^)^,
-                    'bitrate':avg_bitrate idiv 1000^|^|'k'^,
-                    'url':src
+                ^)^,
+                $b/^(
+                  {
+                    'format':'hls-0_hd'^,
+                    'extension':'m3u8'^,
+                    'resolution':'manifest'^,
+                    'url':playlist
                   }^,
-                  $b/^(
-                    {
-                      'format':'hls-0_hd'^,
-                      'extension':'m3u8'^,
-                      'url':playlist
-                    }^,
-                    tail^(
-                      tokenize^(
-                        unparsed-text^(playlist^)^,
-                        '#EXT-X-STREAM-INF:'
-                      ^)
-                    ^) ! {
-                      'format':concat^(
-                        'hls-'^,
-                        position^(^)^,
-                        '_hd'
-                      ^)^,
-                      'extension':'m3u8'^,
-                      'resolution':extract^(
-                        .^,
-                        'RESOLUTION^=^([\dx]+^)'^,
-                        1
-                      ^)^,
-                      'bitrate':extract^(
-                        .^,
-                        'BANDWIDTH^=^(\d+^)\d{3}'^,
-                        1
-                      ^)^|^|'k'^,
-                      'url':extract^(
-                        .^,
-                        '^(.+m3u8^)'^,
-                        1
-                      ^)
-                    }
-                  ^)
+                  tail^(
+                    tokenize^(
+                      unparsed-text^(playlist^)^,
+                      '#EXT-X-STREAM-INF:'
+                    ^)
+                  ^) ! {
+                    'format':concat^(
+                      'hls-'^,
+                      position^(^)^,
+                      '_hd'
+                    ^)^,
+                    'extension':'m3u8'^,
+                    'resolution':extract^(
+                      .^,
+                      'RESOLUTION^=^([\dx]+^)'^,
+                      1
+                    ^)^,
+                    'vbitrate':extract^(
+                      .^,
+                      'BANDWIDTH^=^(\d+^)\d{3}'^,
+                      1
+                    ^)^|^|'k'^,
+                    'url':extract^(
+                      .^,
+                      '^(.+m3u8^)'^,
+                      1
+                    ^)
+                  }
+                ^)
               ]
             ^)
           ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A

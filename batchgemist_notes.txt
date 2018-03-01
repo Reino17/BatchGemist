@@ -3901,7 +3901,7 @@ ECHO [{^"text^": ^"Audio/video-url weergeven.^"^, ^"goto^": ^"Render^"}^, {^"tex
 [https://github.com/Reino17/BatchGemist/commit/b4559b4bfd69efbb13e9256e301c5479cdb4d65e]
 [https://github.com/Reino17/BatchGemist/commit/133df2785e8e2e437f32f1a9750008c8fbc08f45] (https://github.com/Reino17/BatchGemist/issues/3)
 [https://github.com/Reino17/BatchGemist/commit/1d99163a2e0f5da92b9fbd7772270ec0396a1675]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/a0419361c7aeba334453492e596147494ee4ba34]
 
 Oude API:
 
@@ -4452,6 +4452,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "
 [https://github.com/Reino17/BatchGemist/commit/ae8be184a02c3ef1f7ca2b13acd4f23bc313efbb]
 [https://github.com/Reino17/BatchGemist/commit/0cdfeede4b7cf2505a88847c2d128d5c3667b59f]
 [https://github.com/Reino17/BatchGemist/commit/2f713620731932cece5f67eb5e59197a748bd879]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never -e "prid:=extract('http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1/','(?:video|videos)/(\w+)',1)"
 prid := w7ZW52xLgL5
@@ -4654,82 +4655,83 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/ent
   "created_at": "2017-04-02T09:32:54.912Z"
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/kdxdhBykVTt" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id)})/json return [for $x at $i in $a/(sources)()[container='MP4'] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-0','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}])"
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/w7ZW52xLgL5" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id)})/json return [for $x at $i in $a/(sources)()[stream_name] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'vbitrate':round(avg_bitrate div 1000)||'k','url':replace(stream_name,'mp4:','http://stv.cdn.sbsnet.nl/')},let $b:=$a/(sources)()[size=0]/src return ({'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)})])"
 [
   {
     "format": "pg-1",
     "extension": "mp4",
     "resolution": "320x180",
-    "bitrate": "450k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210950815366-bg-350.mp4"
+    "vbitrate": "450k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111255719592-bg-350.mp4"
   },
   {
     "format": "pg-2",
     "extension": "mp4",
     "resolution": "512x288",
-    "bitrate": "866k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-650.mp4"
+    "vbitrate": "866k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111441719592-bg-650.mp4"
   },
   {
     "format": "pg-3",
     "extension": "mp4",
     "resolution": "640x360",
-    "bitrate": "1116k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-900.mp4"
+    "vbitrate": "1116k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111843719592-bg-900.mp4"
   },
   {
     "format": "pg-4",
     "extension": "mp4",
     "resolution": "768x432",
-    "bitrate": "1465k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122211005815366-bg-1200.mp4"
+    "vbitrate": "1465k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402112340719592-bg-1200.mp4"
   },
   {
     "format": "pg-5",
     "extension": "mp4",
     "resolution": "868x488",
-    "bitrate": "2085k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210954815366-bg-1885.mp4"
+    "vbitrate": "2085k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111523719592-bg-1885.mp4"
   },
   {
     "format": "hls-0",
     "extension": "m3u8",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/net5_masterchefaustrali_S09E51_171122214050815366-hls-main.m3u8"
+    "resolution": "manifest",
+    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/net5_pekingexpress_S01E01_170402112846719592-hls-main.m3u8"
   },
   {
     "format": "hls-1",
     "extension": "m3u8",
     "resolution": "320x180",
-    "bitrate": "611k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r1/net5_masterchefaustrali_S09E51_171122211326815366-hls-350.m3u8"
+    "vbitrate": "611k",
+    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r1/net5_pekingexpress_S01E01_170402111916719592-hls-350.m3u8"
   },
   {
     "format": "hls-2",
     "extension": "m3u8",
     "resolution": "512x288",
-    "bitrate": "929k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r2/net5_masterchefaustrali_S09E51_171122211353815366-hls-650.m3u8"
+    "vbitrate": "929k",
+    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r2/net5_pekingexpress_S01E01_170402111034719592-hls-650.m3u8"
   },
   {
     "format": "hls-3",
     "extension": "m3u8",
     "resolution": "640x360",
-    "bitrate": "1289k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r3/net5_masterchefaustrali_S09E51_171122211220815366-hls-900.m3u8"
+    "vbitrate": "1289k",
+    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r3/net5_pekingexpress_S01E01_170402112139719592-hls-900.m3u8"
   },
   {
     "format": "hls-4",
     "extension": "m3u8",
     "resolution": "768x432",
-    "bitrate": "1643k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r4/net5_masterchefaustrali_S09E51_171122211251815366-hls-1200.m3u8"
+    "vbitrate": "1643k",
+    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r4/net5_pekingexpress_S01E01_170402112538719592-hls-1200.m3u8"
   },
   {
     "format": "hls-5",
     "extension": "m3u8",
     "resolution": "868x488",
-    "bitrate": "2179k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r8/net5_masterchefaustrali_S09E51_171122211325815366-hls-1885.m3u8"
+    "vbitrate": "2179k",
+    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r8/net5_pekingexpress_S01E01_170402112437719592-hls-1885.m3u8"
   }
 ]
 
@@ -4829,67 +4831,68 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/ent
   }
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/w7ZW52xLgL5" -e "$json/playerInfo[not(hasDRM)]/(let $b:=json(embed_api_url)[videoId]/playlist return [{'format':'hls-0_hd','extension':'m3u8','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)}])"
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/w7ZW52xLgL5" -e "$json/playerInfo[not(hasDRM)]/(let $b:=json(embed_api_url)[videoId]/playlist return [{'format':'hls-0_hd','extension':'m3u8','resolution':'manifest','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)}])"
 [
   {
     "format": "hls-0_hd",
     "extension": "m3u8",
+    "resolution": "manifest",
     "url": "https://embed.kijk.nl/api/playlist/w7ZW52xLgL5_dbzyr6.m3u8?user_token=b9cF07UrLBWswzXek4xHzVlWx&app_token=CgZzYW5vbWESEnc3Wlc1MnhMZ0w1X2RienlyNhoLODAuMTAxLjQ5LjUiGWI5Y0YwN1VyTEJXc3d6WGVrNHhIelZsV3gonOyii/0rMgJoADoERlZPREIDU0JTShJ3N1pXNTJ4TGdMNV9kYnp5cjY%3D%7CBABKsQghw0sVrPTOuu0XK2mAuvsSrWNgHYs4Nui1to4%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"
   },
   {
     "format": "hls-1_hd",
     "extension": "m3u8",
     "resolution": "384x216",
-    "bitrate": "316k",
+    "vbitrate": "316k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_2/index.m3u8"
   },
   {
     "format": "hls-2_hd",
     "extension": "m3u8",
     "resolution": "512x288",
-    "bitrate": "500k",
+    "vbitrate": "500k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_3/index.m3u8"
   },
   {
     "format": "hls-3_hd",
     "extension": "m3u8",
     "resolution": "640x360",
-    "bitrate": "900k",
+    "vbitrate": "900k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_4/index.m3u8"
   },
   {
     "format": "hls-4_hd",
     "extension": "m3u8",
     "resolution": "768x432",
-    "bitrate": "1500k",
+    "vbitrate": "1500k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_5/index.m3u8"
   },
   {
     "format": "hls-5_hd",
     "extension": "m3u8",
     "resolution": "1024x576",
-    "bitrate": "2468k",
+    "vbitrate": "2468k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_6/index.m3u8"
   },
   {
     "format": "hls-6_hd",
     "extension": "m3u8",
     "resolution": "1280x720",
-    "bitrate": "4500k",
+    "vbitrate": "4500k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_7/index.m3u8"
   },
   {
     "format": "hls-7_hd",
     "extension": "m3u8",
     "resolution": "1600x900",
-    "bitrate": "5750k",
+    "vbitrate": "5750k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_8/index.m3u8"
   },
   {
     "format": "hls-8_hd",
     "extension": "m3u8",
     "resolution": "1920x1080",
-    "bitrate": "7000k",
+    "vbitrate": "7000k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_9/index.m3u8"
   }
 ]
@@ -4955,46 +4958,47 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/ent
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 --> {"embed_video_url": "//embed.kijk.nl/?video=gcuLMlCxPtL"} (brightcove)
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/gcuLMlCxPtL" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] return [for $x at $i in $a/(sources)()[container='MP4'] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-0','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}])"
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/gcuLMlCxPtL" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] return [for $x at $i in $a/(sources)()[stream_name] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'vbitrate':round(avg_bitrate div 1000)||'k','url':replace(stream_name,'mp4:','http://stv.cdn.sbsnet.nl/')},let $b:=$a/(sources)()[size=0]/src return ({'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)})])"
 [
   {
     "format": "pg-1",
     "extension": "mp4",
     "resolution": "320x180",
-    "bitrate": "450k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231618767844-bg-350.mp4"
+    "vbitrate": "450k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231618767844-bg-350.mp4"
   },
   {
     "format": "pg-2",
     "extension": "mp4",
     "resolution": "512x288",
-    "bitrate": "866k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232038767844-bg-650.mp4"
+    "vbitrate": "866k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232038767844-bg-650.mp4"
   },
   {
     "format": "pg-3",
     "extension": "mp4",
     "resolution": "640x360",
-    "bitrate": "1116k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231808767844-bg-900.mp4"
+    "vbitrate": "1116k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231808767844-bg-900.mp4"
   },
   {
     "format": "pg-4",
     "extension": "mp4",
     "resolution": "768x432",
-    "bitrate": "1465k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231900767844-bg-1200.mp4"
+    "vbitrate": "1465k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231900767844-bg-1200.mp4"
   },
   {
     "format": "pg-5",
     "extension": "mp4",
     "resolution": "868x488",
-    "bitrate": "2085k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232401767844-bg-1885.mp4"
+    "vbitrate": "2085k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232401767844-bg-1885.mp4"
   },
   {
     "format": "hls-0",
     "extension": "m3u8",
+    "resolution": "manifest",
     "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232836767844-hls-main.m3u8"
   },
   {
@@ -5106,237 +5110,209 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/ent
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 --> {"embed_api_url": "http://embed.kijk.nl/api/video/Zrlt5xCjHqHp?id=kijkapp"} (ericsson)
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/Zrlt5xCjHqHp" -e "$json/playerInfo[not(hasDRM)]/(let $b:=json(embed_api_url)[videoId]/playlist return [{'format':'hls-0_hd','extension':'m3u8','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)}])"				# Zelfde procedure als bij een volledige aflevering.
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/Zrlt5xCjHqHp" -e "$json/playerInfo[not(hasDRM)]/(let $b:=json(embed_api_url)[videoId]/playlist return [{'format':'hls-0_hd','extension':'m3u8','resolution':'manifest','url':$b},tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)}])"				# Zelfde procedure als bij een volledige aflevering.
 [
   {
     "format": "hls-0_hd",
     "extension": "m3u8",
+    "resolution": "manifest",
     "url": "https://embed.kijk.nl/api/playlist/Zrlt5xCjHqHp-2_dbzyr6.m3u8?user_token=CCV66yEVtcYHQFd4LQHCvPotB&app_token=CgZzYW5vbWESFVpybHQ1eENqSHFIcC0yX2RienlyNhoLODAuMTAxLjQ5LjUiGUNDVjY2eUVWdGNZSFFGZDRMUUhDdlBvdEIo0am8zP4rMgcIAGgAoAEBOgRGVk9EQgNTQlNKFVpybHQ1eENqSHFIcC0yX2RienlyNg%3D%3D%7CvCaNvjFlv1q%2BpEYFj4cw/TsoKEUzMmdwa2LD98HdNX8%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"
   },
   {
     "format": "hls-1_hd",
     "extension": "m3u8",
     "resolution": "384x216",
-    "bitrate": "316k",
+    "vbitrate": "316k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"
   },
   {
     "format": "hls-2_hd",
     "extension": "m3u8",
     "resolution": "512x288",
-    "bitrate": "500k",
+    "vbitrate": "500k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"
   },
   {
     "format": "hls-3_hd",
     "extension": "m3u8",
     "resolution": "640x360",
-    "bitrate": "900k",
+    "vbitrate": "900k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"
   },
   {
     "format": "hls-4_hd",
     "extension": "m3u8",
     "resolution": "768x432",
-    "bitrate": "1500k",
+    "vbitrate": "1500k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"
   },
   {
     "format": "hls-5_hd",
     "extension": "m3u8",
     "resolution": "1024x576",
-    "bitrate": "2468k",
+    "vbitrate": "2468k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"
   },
   {
     "format": "hls-6_hd",
     "extension": "m3u8",
     "resolution": "1280x720",
-    "bitrate": "4500k",
+    "vbitrate": "4500k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"
   },
   {
     "format": "hls-7_hd",
     "extension": "m3u8",
     "resolution": "1600x900",
-    "bitrate": "5750k",
+    "vbitrate": "5750k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"
   },
   {
     "format": "hls-8_hd",
     "extension": "m3u8",
     "resolution": "1920x1080",
-    "bitrate": "7000k",
+    "vbitrate": "7000k",
     "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"
   }
 ]
+
 --------------------------------------------------------------------------------------------------------------------------------
 
-http://www.kijk.nl/sbs6/desmaakpolitie/videos/KxsFnNTV9Njv/het-is-weer-smerig-vies (brightcove progressief videofragment)
+https://www.kijk.nl/net5/pekingexpress/videos/YYFFqDEgqo10/peking-express (oude progressieve brightcove video)
 
---> https://edge.api.brightcove.com/playback/v1/accounts/585049245001/videos/2048895064001 (met vereiste policykey in header)
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/KxsFnNTV9Njv" -e "$json/playerInfo[not(hasDRM)]/doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)]"
+--> https://edge.api.brightcove.com/playback/v1/accounts/585049245001/videos/YYFFqDEgqo10 (met vereiste policykey in header)
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/YYFFqDEgqo10" -e "$json/playerInfo[not(hasDRM)]/doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)]"
 {
-  "description": "Het is weer smerig vies",
+  "description": "Peking Express 5 jaar",
   "poster_sources": [
     {
-      "src": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_2048964413001_vs-50d45256e4b07689f2b2a1cc-806787308001.jpg?pubId=585049245001"
+      "src": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_1301217747001_vs-1301178801001.jpg?pubId=585049245001"
     }
   ],
-  "tags": ["clip", "desmaakpolitie", "e117", "s00", "sbs6"],
+  "tags": ["net5", "pekingexpress", "s2008", "vod"],
   "cue_points": [],
   "custom_fields": {
-    "sbs_episode": "S00E117",
-    "sbs_program": "De Smaakpolitie",
-    "sbs_videotype": "clip",
-    "sbs_station": "sbs6"
+    "sbs_episode": "s2008e13",
+    "sbs_program": "Peking express",
+    "sbs_videotype": "vod",
+    "sbs_station": "net5"
   },
   "account_id": "585049245001",
   "sources": [
     {
-      "avg_bitrate": 975954,
+      "avg_bitrate": 287996,
       "width": 480,
-      "duration": 97083,
-      "size": 11946679,
-      "stream_name": "mp4:bc/videos/585049245001/585049245001_2048962019001_smerigvies.mp4",
+      "duration": 4025574,
+      "size": 147132185,
+      "stream_name": "mp4:bc/videos/585049245001/585049245001_1301217746001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4",
       "codec": "H264",
-      "asset_id": "2048962019001",
+      "asset_id": "1301217746001",
       "container": "MP4",
-      "height": 264,
+      "height": 268,
       "app_name": "rtmp://pssbsfs.fplive.net/pssbsfs"
     },
     {
-      "avg_bitrate": 975954,
+      "avg_bitrate": 287996,
       "width": 480,
-      "src": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048962019001_smerigvies.mp4",
-      "size": 11946679,
-      "height": 264,
-      "duration": 97083,
+      "src": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_1301217746001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4",
+      "size": 147132185,
+      "height": 268,
+      "duration": 4025574,
       "container": "MP4",
       "codec": "H264",
-      "asset_id": "2048962019001"
+      "asset_id": "1301217746001"
     },
     {
-      "avg_bitrate": 287977,
+      "avg_bitrate": 575996,
       "width": 480,
-      "duration": 97083,
-      "size": 3558738,
-      "stream_name": "mp4:bc/videos/585049245001/585049245001_2048964412001_smerigvies.mp4",
+      "duration": 4025574,
+      "size": 292019946,
+      "stream_name": "mp4:bc/videos/585049245001/585049245001_1301229704001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4",
       "codec": "H264",
-      "asset_id": "2048964412001",
+      "asset_id": "1301229704001",
       "container": "MP4",
-      "height": 264,
+      "height": 268,
       "app_name": "rtmp://pssbsfs.fplive.net/pssbsfs"
     },
     {
-      "avg_bitrate": 287977,
+      "avg_bitrate": 575996,
       "width": 480,
-      "src": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964412001_smerigvies.mp4",
-      "size": 3558738,
-      "height": 264,
-      "duration": 97083,
+      "src": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_1301229704001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4",
+      "size": 292019946,
+      "height": 268,
+      "duration": 4025574,
       "container": "MP4",
       "codec": "H264",
-      "asset_id": "2048964412001"
+      "asset_id": "1301229704001"
     },
     {
-      "avg_bitrate": 1611954,
-      "width": 720,
-      "duration": 97083,
-      "size": 19679633,
-      "stream_name": "mp4:bc/videos/585049245001/585049245001_2048964429001_smerigvies.mp4",
+      "avg_bitrate": 927996,
+      "width": 480,
+      "duration": 4025574,
+      "size": 469892845,
+      "stream_name": "mp4:bc/videos/585049245001/585049245001_1301232884001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4",
       "codec": "H264",
-      "asset_id": "2048964429001",
+      "asset_id": "1301232884001",
       "container": "MP4",
-      "height": 400,
+      "height": 268,
       "app_name": "rtmp://pssbsfs.fplive.net/pssbsfs"
     },
     {
-      "avg_bitrate": 1611954,
-      "width": 720,
-      "src": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964429001_smerigvies.mp4",
-      "size": 19679633,
-      "height": 400,
-      "duration": 97083,
-      "container": "MP4",
-      "codec": "H264",
-      "asset_id": "2048964429001"
-    },
-    {
-      "avg_bitrate": 608000,
+      "avg_bitrate": 927996,
       "width": 480,
-      "duration": 97083,
-      "size": 7458198,
-      "stream_name": "mp4:bc/videos/585049245001/585049245001_2048964957001_smerigvies.mp4",
-      "codec": "H264",
-      "asset_id": "2048964957001",
-      "container": "MP4",
-      "height": 264,
-      "app_name": "rtmp://pssbsfs.fplive.net/pssbsfs"
-    },
-    {
-      "avg_bitrate": 608000,
-      "width": 480,
-      "src": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964957001_smerigvies.mp4",
-      "size": 7458198,
-      "height": 264,
-      "duration": 97083,
+      "src": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_1301232884001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4",
+      "size": 469892845,
+      "height": 268,
+      "duration": 4025574,
       "container": "MP4",
       "codec": "H264",
-      "asset_id": "2048964957001"
+      "asset_id": "1301232884001"
     }
   ],
-  "name": "Het is weer smerig vies",
+  "name": "Peking Express 5 jaar",
   "reference_id": null,
   "long_description": null,
-  "duration": 97083,
+  "duration": 4025574,
   "economics": "AD_SUPPORTED",
-  "published_at": "2012-12-21T12:13:10.691Z",
+  "published_at": "2011-11-29T16:25:02.186Z",
   "text_tracks": [],
-  "updated_at": "2016-07-18T12:20:08.965Z",
-  "thumbnail": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_2048964414001_th-50d45256e4b07689f2b2a1cc-806787308001.jpg?pubId=585049245001",
-  "poster": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_2048964413001_vs-50d45256e4b07689f2b2a1cc-806787308001.jpg?pubId=585049245001",
+  "updated_at": "2011-11-29T18:46:29.739Z",
+  "thumbnail": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_1301217748001_th-1301178801001.jpg?pubId=585049245001",
+  "poster": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_1301217747001_vs-1301178801001.jpg?pubId=585049245001",
   "offline_enabled": false,
   "link": null,
-  "id": "2048895064001",
+  "id": "1301093688001",
   "ad_keys": null,
   "thumbnail_sources": [
     {
-      "src": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_2048964414001_th-50d45256e4b07689f2b2a1cc-806787308001.jpg?pubId=585049245001"
+      "src": "http://l3c.cdn.sbsnet.nl/bc/images/585049245001/585049245001_1301217748001_th-1301178801001.jpg?pubId=585049245001"
     }
   ],
-  "created_at": "2012-12-21T12:13:10.691Z"
+  "created_at": "2011-11-29T16:25:02.186Z"
 }
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/KxsFnNTV9Njv" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] return [if ($a//sbs_videotype='vod') then (for $x at $i in $a/(sources)()[container='MP4'] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-0','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}) else for $x at $i in $a/(sources)()[src] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':src}])"
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/YYFFqDEgqo10" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)] return [for $x at $i in $a/(sources)()[stream_name] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'vbitrate':round(avg_bitrate div 1000)||'k','url':replace(stream_name,'mp4:','http://stv.cdn.sbsnet.nl/')},let $b:=$a/(sources)()[size=0]/src return ({'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b}[url],tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$b)||extract(.,'(.+m3u8)',1)})])"
 [
   {
     "format": "pg-1",
     "extension": "mp4",
-    "resolution": "480x264",
-    "bitrate": "287k",
-    "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964412001_smerigvies.mp4"
+    "resolution": "480x268",
+    "vbitrate": "288k",
+    "url": "http://stv.cdn.sbsnet.nl/bc/videos/585049245001/585049245001_1301217746001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4"
   },
   {
     "format": "pg-2",
     "extension": "mp4",
-    "resolution": "480x264",
-    "bitrate": "608k",
-    "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964957001_smerigvies.mp4"
+    "resolution": "480x268",
+    "vbitrate": "576k",
+    "url": "http://stv.cdn.sbsnet.nl/bc/videos/585049245001/585049245001_1301229704001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4"
   },
   {
     "format": "pg-3",
     "extension": "mp4",
-    "resolution": "480x264",
-    "bitrate": "975k",
-    "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048962019001_smerigvies.mp4"
-  },
-  {
-    "format": "pg-4",
-    "extension": "mp4",
-    "resolution": "720x400",
-    "bitrate": "1611k",
-    "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964429001_smerigvies.mp4"
+    "resolution": "480x268",
+    "vbitrate": "928k",
+    "url": "http://stv.cdn.sbsnet.nl/bc/videos/585049245001/585049245001_1301232884001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4"
   }
 ]
 
@@ -5437,211 +5413,205 @@ true
 
 Brightcove- en Ericsson videostreams samen (incl. ondertiteling)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/kdxdhBykVTt" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)],$b:=json(embed_api_url)[videoId] return ('https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/kdxdhBykVTt_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then . else ()),[if ($a//sbs_videotype='vod') then (for $x at $i in $a/(sources)()[container='MP4'] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-0','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}) else for $x at $i in $a/(sources)()[src] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':src},$b/({'format':'hls-0_hd','extension':'m3u8','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)})]))"
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/kdxdhBykVTt" --xquery "$json/playerInfo[not(hasDRM)]/(let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)],$b:=json(embed_api_url)[videoId] return ('https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/kdxdhBykVTt_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then . else ()),[for $x at $i in $a/(sources)()[stream_name] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'vbitrate':round(avg_bitrate div 1000)||'k','url':replace(stream_name,'mp4:','http://stv.cdn.sbsnet.nl/')},let $c:=$a/(sources)()[size=0]/src return ({'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$c}[url],tail(tokenize(unparsed-text($c),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$c)||extract(.,'(.+m3u8)',1)}),$b/({'format':'hls-0_hd','extension':'m3u8','resolution':'manifest','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)})]))"
 https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/kdxdhBykVTt_dbzyr6/vtt/nl.vtt
 [
   {
     "format": "pg-1",
     "extension": "mp4",
     "resolution": "320x180",
-    "bitrate": "450k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210950815366-bg-350.mp4"
+    "vbitrate": "450k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210950815366-bg-350.mp4"
   },
   {
     "format": "pg-2",
     "extension": "mp4",
     "resolution": "512x288",
-    "bitrate": "866k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-650.mp4"
+    "vbitrate": "866k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-650.mp4"
   },
   {
     "format": "pg-3",
     "extension": "mp4",
     "resolution": "640x360",
-    "bitrate": "1116k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-900.mp4"
+    "vbitrate": "1116k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-900.mp4"
   },
   {
     "format": "pg-4",
     "extension": "mp4",
     "resolution": "768x432",
-    "bitrate": "1465k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122211005815366-bg-1200.mp4"
+    "vbitrate": "1465k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122211005815366-bg-1200.mp4"
   },
   {
     "format": "pg-5",
     "extension": "mp4",
     "resolution": "868x488",
-    "bitrate": "2085k",
-    "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210954815366-bg-1885.mp4"
+    "vbitrate": "2085k",
+    "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210954815366-bg-1885.mp4"
   },
   {
     "format": "hls-0",
     "extension": "m3u8",
+    "resolution": "manifest",
     "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/net5_masterchefaustrali_S09E51_171122214050815366-hls-main.m3u8"
   },
   {
     "format": "hls-1",
     "extension": "m3u8",
     "resolution": "320x180",
-    "bitrate": "611k",
+    "vbitrate": "611k",
     "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r1/net5_masterchefaustrali_S09E51_171122211326815366-hls-350.m3u8"
   },
   {
     "format": "hls-2",
     "extension": "m3u8",
     "resolution": "512x288",
-    "bitrate": "929k",
+    "vbitrate": "929k",
     "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r2/net5_masterchefaustrali_S09E51_171122211353815366-hls-650.m3u8"
   },
   {
     "format": "hls-3",
     "extension": "m3u8",
     "resolution": "640x360",
-    "bitrate": "1289k",
+    "vbitrate": "1289k",
     "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r3/net5_masterchefaustrali_S09E51_171122211220815366-hls-900.m3u8"
   },
   {
     "format": "hls-4",
     "extension": "m3u8",
     "resolution": "768x432",
-    "bitrate": "1643k",
+    "vbitrate": "1643k",
     "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r4/net5_masterchefaustrali_S09E51_171122211251815366-hls-1200.m3u8"
   },
   {
     "format": "hls-5",
     "extension": "m3u8",
     "resolution": "868x488",
-    "bitrate": "2179k",
+    "vbitrate": "2179k",
     "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r8/net5_masterchefaustrali_S09E51_171122211325815366-hls-1885.m3u8"
   },
   {
     "format": "hls-0_hd",
     "extension": "m3u8",
-    "url": "https://embed.kijk.nl/api/playlist/kdxdhBykVTt_dbzyr6.m3u8?user_token=CAyPZOqhw5VJTdKYAFSBFPML7&app_token=CgZzYW5vbWESEmtkeGRoQnlrVlR0X2RienlyNhoLODAuMTAxLjQ5LjUiGUNBeVBaT3FodzVWSlRkS1lBRlNCRlBNTDcoxPaNyf4rMgJoADoERlZPREIDU0JTShJrZHhkaEJ5a1ZUdF9kYnp5cjY%3D%7CP51DlQr09bXqPmso5D7eYlxBvu7Ka3kjfPE8G/e9hjg%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"
+    "resolution": "manifest",
+    "url": "https://embed.kijk.nl/api/playlist/kdxdhBykVTt_dbzyr6.m3u8?user_token=4stoFber56AXSzK1XBJ7lUOVw&app_token=CgZzYW5vbWESEmtkeGRoQnlrVlR0X2RienlyNhoLODAuMTAxLjQ5LjUiGTRzdG9GYmVyNTZBWFN6SzFYQko3bFVPVncom/n53JosMgJoADoERlZPREIDU0JTShJrZHhkaEJ5a1ZUdF9kYnp5cjY%3D%7CgJ2OSNrX/YIOy%2BJFh9rYZk1uWkZO3lzE0AJhMfBk9Cs%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"
   },
   {
     "format": "hls-1_hd",
     "extension": "m3u8",
     "resolution": "384x216",
-    "bitrate": "316k",
+    "vbitrate": "316k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"
   },
   {
     "format": "hls-2_hd",
     "extension": "m3u8",
     "resolution": "512x288",
-    "bitrate": "500k",
+    "vbitrate": "500k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"
   },
   {
     "format": "hls-3_hd",
     "extension": "m3u8",
     "resolution": "640x360",
-    "bitrate": "900k",
+    "vbitrate": "900k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"
   },
   {
     "format": "hls-4_hd",
     "extension": "m3u8",
     "resolution": "768x432",
-    "bitrate": "1500k",
+    "vbitrate": "1500k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"
   },
   {
     "format": "hls-5_hd",
     "extension": "m3u8",
     "resolution": "1024x576",
-    "bitrate": "2468k",
+    "vbitrate": "2468k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"
   },
   {
     "format": "hls-6_hd",
     "extension": "m3u8",
     "resolution": "1280x720",
-    "bitrate": "4500k",
+    "vbitrate": "4500k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"
   },
   {
     "format": "hls-7_hd",
     "extension": "m3u8",
     "resolution": "1600x900",
-    "bitrate": "5750k",
+    "vbitrate": "5750k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"
   },
   {
     "format": "hls-8_hd",
     "extension": "m3u8",
     "resolution": "1920x1080",
-    "bitrate": "7000k",
+    "vbitrate": "7000k",
     "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"
   }
 ]
+
 --------------------------------------------------------------------------------------------------------------------------------
 
-http://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1
+https://www.kijk.nl/net5/pekingexpress/videos/w7ZW52xLgL5/aflevering-1
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return expire:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)],$b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),': ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,': ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,': ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),'https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/%prid%_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then s_url:=. else ()),formats:=[if ($a//sbs_videotype='vod') then (for $x at $i in $a/(sources)()[container='MP4'] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':replace(stream_name,'mp4:',extract($a/(sources)()/src,'(.+nl/)',1))},{'format':'hls-0','extension':'m3u8','url':$a/(sources)()/src},tail(tokenize(unparsed-text($a/(sources)()/src),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$a/(sources)()/src)||extract(.,'(.+m3u8)',1)}) else for $x at $i in $a/(sources)()[src] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'bitrate':avg_bitrate idiv 1000||'k','url':src},$b/({'format':'hls-0_hd','extension':'m3u8','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'bitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)})]))"
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/w7ZW52xLgL5" --xquery "$json/playerInfo[not(hasDRM)]/(if (.//enddate) then dateTime(replace(.//enddate/date,' ','T')) ! (let $a:=. - current-dateTime() return expire:=concat(replace(.,'(\d+)-(\d+)-(\d+)T(.+)','$3-$2-$1 $4'),' (nog ',days-from-duration($a) ! (if (.=0) then () else if (.=1) then .||' dag en ' else .||' dagen en '),hours-from-duration($a) ! (if (.=0) then () else .||'u'),minutes-from-duration($a) ! (if (.=0) then () else .||'m'),round(seconds-from-duration($a)),'s)')) else (),let $a:=doc('http:'||embed_video_url)[//@data-video-id]/x:request({'headers':'Accept: application/json;pk='||extract(unparsed-text(//script[contains(@src,//@data-account)]/@src),'policyKey:\"(.+?)\"',1),'url':concat('https://edge.api.brightcove.com/playback/v1/accounts/',//@data-account,'/videos/',//@data-video-id),'error-handling':'xxx=accept'})/json[not(.//error_code)],$b:=json(embed_api_url)[videoId] return (if ($a) then $a/(name:=if (.//sbs_videotype='vod') then concat(if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station),': ',name,if (string-length(.//sbs_episode)<=7) then ' '||.//sbs_episode else (),replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')) else concat(.//sbs_program,': ',name,replace(published_at,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),t:=round(duration div 1000)) else $b/(name:=concat(if (.//sbs_videotype='vod') then if (.//sbs_station='veronicatv') then 'Veronica' else upper-case(.//sbs_station) else .//sbs_program,': ',.//title,replace(.//sko_dt,'(\d{4})(\d{2})(\d{2})',' ($3$2$1)')),t:=.//duration),duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),'https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/w7ZW52xLgL5_dbzyr6/vtt/nl.vtt' ! (if (unparsed-text-available(.)) then s_url:=. else ()),formats:=[for $x at $i in $a/(sources)()[stream_name] order by $x/size count $i return $x/{'format':'pg-'||$i,'extension':'mp4','resolution':concat(width,'x',height),'vbitrate':round(avg_bitrate div 1000)||'k','url':replace(stream_name,'mp4:','http://stv.cdn.sbsnet.nl/')},let $c:=$a/(sources)()[size=0]/src return ({'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$c}[url],tail(tokenize(unparsed-text($c),'#EXT-X-STREAM-INF:')) ! {'format':'hls-'||position(),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':round(extract(.,'BANDWIDTH=(\d+)',1) div 1000)||'k','url':resolve-uri('.',$c)||extract(.,'(.+m3u8)',1)}),$b/({'format':'hls-0_hd','extension':'m3u8','resolution':'manifest','url':playlist},tail(tokenize(unparsed-text(playlist),'#EXT-X-STREAM-INF:')) ! {'format':concat('hls-',position(),'_hd'),'extension':'m3u8','resolution':extract(.,'RESOLUTION=([\dx]+)',1),'vbitrate':extract(.,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':extract(.,'(.+m3u8)',1)})]))"
 expire := 31-03-2020 05:55:00 (nog 858 dagen en 6u14m17s)
 name := NET5: Peking Express S01E01 (03042017)
 t := 3840
 duration := 01:04:00
 s_url := https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/w7ZW52xLgL5_dbzyr6/vtt/nl.vtt
-formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bitrate": "450k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111255719592-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "bitrate": "866k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111441719592-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "bitrate": "1116k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111843719592-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "bitrate": "1465k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402112340719592-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "bitrate": "2085k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111523719592-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/net5_pekingexpress_S01E01_170402112846719592-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "bitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r1/net5_pekingexpress_S01E01_170402111916719592-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "bitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r2/net5_pekingexpress_S01E01_170402111034719592-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "bitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r3/net5_pekingexpress_S01E01_170402112139719592-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "bitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r4/net5_pekingexpress_S01E01_170402112538719592-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "bitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r8/net5_pekingexpress_S01E01_170402112437719592-hls-1885.m3u8"}, {"format": "hls-0_hd", "extension": "m3u8", "url": "https://embed.kijk.nl/api/playlist/w7ZW52xLgL5_dbzyr6.m3u8?user_token=3GyQ0ulHpUxQspcOXtX77Q0Ba&app_token=CgZzYW5vbWESEnc3Wlc1MnhMZ0w1X2RienlyNhoLODAuMTAxLjQ5LjUiGTNHeVEwdWxIcFV4UXNwY09YdFg3N1EwQmEo2L672P4rMgJoADoERlZPREIDU0JTShJ3N1pXNTJ4TGdMNV9kYnp5cjY%3D%7CnPAx0vX9XcP%2B%2Buntp%2B6YQnYHzxpOeg6/rBOEy2Sl1sM%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "bitrate": "316k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "bitrate": "500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "bitrate": "900k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "bitrate": "1500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "bitrate": "2468k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "bitrate": "4500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "bitrate": "5750k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "7000k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_9/index.m3u8"}]
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "vbitrate": "450k", "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111255719592-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "vbitrate": "866k", "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111441719592-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "1116k", "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111843719592-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "vbitrate": "1465k", "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402112340719592-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "vbitrate": "2085k", "url": "http://stv.cdn.sbsnet.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/mp4/net5_pekingexpress_S01E01_170402111523719592-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/net5_pekingexpress_S01E01_170402112846719592-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "vbitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r1/net5_pekingexpress_S01E01_170402111916719592-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "vbitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r2/net5_pekingexpress_S01E01_170402111034719592-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r3/net5_pekingexpress_S01E01_170402112139719592-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r4/net5_pekingexpress_S01E01_170402112538719592-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "vbitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/719592a2beb2a38c46677634a928ae91896da7/hls/r8/net5_pekingexpress_S01E01_170402112437719592-hls-1885.m3u8"}, {"format": "hls-0_hd", "extension": "m3u8", "resolution": "manifest", "url": "https://embed.kijk.nl/api/playlist/w7ZW52xLgL5_dbzyr6.m3u8?user_token=3GyQ0ulHpUxQspcOXtX77Q0Ba&app_token=CgZzYW5vbWESEnc3Wlc1MnhMZ0w1X2RienlyNhoLODAuMTAxLjQ5LjUiGTNHeVEwdWxIcFV4UXNwY09YdFg3N1EwQmEo2L672P4rMgJoADoERlZPREIDU0JTShJ3N1pXNTJ4TGdMNV9kYnp5cjY%3D%7CnPAx0vX9XcP%2B%2Buntp%2B6YQnYHzxpOeg6/rBOEy2Sl1sM%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "vbitrate": "316k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "vbitrate": "500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "vbitrate": "900k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "2468k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "4500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "vbitrate": "5750k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "7000k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/4/605539/vod_sbs_hd_mux_unenc_2_4_9/index.m3u8"}]
 
-http://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-laat-12-augustus-2017
+https://www.kijk.nl/sbs6/hartvannederland/videos/gcuLMlCxPtL/hart-van-nederland-laat-12-augustus-2017
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "[...]"
-expire := 31-12-2017 05:55:00 (nog 37 dagen en 6u9m39s)
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/gcuLMlCxPtL" --xquery "[...]"
+expire := 12-08-2018 05:55:00 (nog 174 dagen en 3u36m36s)
 name := SBS6: Hart van Nederland - Laat (12082017)
 t := 1240
 duration := 00:20:40
-formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bitrate": "450k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231618767844-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "bitrate": "866k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232038767844-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "bitrate": "1116k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231808767844-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "bitrate": "1465k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231900767844-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "bitrate": "2085k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232401767844-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232836767844-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "bitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r1/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232455767844-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "bitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r2/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231245767844-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "bitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r3/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232718767844-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "bitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232544767844-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "bitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r8/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232640767844-hls-1885.m3u8"}]
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "vbitrate": "450k", "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231618767844-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "vbitrate": "866k", "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232038767844-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "1116k", "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231808767844-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "vbitrate": "1465k", "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231900767844-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "vbitrate": "2085k", "url": "http://stv.cdn.sbsnet.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/mp4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232401767844-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232836767844-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "vbitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r1/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232455767844-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "vbitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r2/sbs6_hartvannederlandlaat_S00E2017081201025653_170812231245767844-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r3/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232718767844-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r4/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232544767844-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "vbitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/767844504c5bc971207dc82c8082ffdf922666/hls/r8/sbs6_hartvannederlandlaat_S00E2017081201025653_170812232640767844-hls-1885.m3u8"}]
 
-http://www.kijk.nl/autoweek/autoweekspecials/videos/Zrlt5xCjHqHp/de-7-beste-driftautos
+https://www.kijk.nl/autoweek/autoweekspecials/videos/Zrlt5xCjHqHp/de-7-beste-driftautos
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/Zrlt5xCjHqHp" --xquery "[...]"
 expire := 31-12-2037 00:00:00 (nog 7342 dagen en 6m19s)
 name := AutoWeek Specials: De 7 beste driftauto's (12082017)
 t := 289
 duration := 00:04:49
-formats := [{"format": "hls-0_hd", "extension": "m3u8", "url": "https://embed.kijk.nl/api/playlist/Zrlt5xCjHqHp-2_dbzyr6.m3u8?user_token=oCs31fskgP62onBluGJwFdmR5&app_token=CgZzYW5vbWESFVpybHQ1eENqSHFIcC0yX2RienlyNhoLODAuMTAxLjQ5LjUiGW9DczMxZnNrZ1A2Mm9uQmx1R0p3RmRtUjUo%2Bfnq2P4rMgcIAGgAoAEBOgRGVk9EQgNTQlNKFVpybHQ1eENqSHFIcC0yX2RienlyNg%3D%3D%7CcpPGT899t5loMRUK%2BuXmRtNcIq%2BDaAkAO%2B79cSGg9/0%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "bitrate": "316k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "bitrate": "500k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "bitrate": "900k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "bitrate": "1500k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "bitrate": "2468k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "bitrate": "4500k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "bitrate": "5750k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "7000k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
+formats := [{"format": "hls-0_hd", "extension": "m3u8", "resolution": "manifest", "url": "https://embed.kijk.nl/api/playlist/Zrlt5xCjHqHp-2_dbzyr6.m3u8?user_token=oCs31fskgP62onBluGJwFdmR5&app_token=CgZzYW5vbWESFVpybHQ1eENqSHFIcC0yX2RienlyNhoLODAuMTAxLjQ5LjUiGW9DczMxZnNrZ1A2Mm9uQmx1R0p3RmRtUjUo%2Bfnq2P4rMgcIAGgAoAEBOgRGVk9EQgNTQlNKFVpybHQ1eENqSHFIcC0yX2RienlyNg%3D%3D%7CcpPGT899t5loMRUK%2BuXmRtNcIq%2BDaAkAO%2B79cSGg9/0%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "vbitrate": "316k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "vbitrate": "500k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "vbitrate": "900k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1500k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "2468k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "4500k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "vbitrate": "5750k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "7000k", "url": "https://vod-es-gf-prod-1.sbscdn.nl/prod/6/641850/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
 
-http://www.kijk.nl/veronicatv/autoweektv/videos/FNAh4KO8hCL/autoweek-tv
+https://www.kijk.nl/veronicatv/autoweektv/videos/FNAh4KO8hCL/autoweek-tv
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "[...]"				# Video zonder "Gratis tot"-datum.
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/FNAh4KO8hCL" --xquery "[...]"				# Video zonder "Gratis tot"-datum.
 name := Veronica: AutoWeek TV S00E83 (23062017)
 t := 434
 duration := 00:07:14
-formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bitrate": "450k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622093806753207-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "bitrate": "866k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094301753207-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "bitrate": "1116k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094821753207-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "bitrate": "1465k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094106753207-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "bitrate": "2085k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094903753207-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/veronica_autoweektv_S00E83_170622095231753207-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "bitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r1/veronica_autoweektv_S00E83_170622094537753207-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "bitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r2/veronica_autoweektv_S00E83_170622093528753207-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "bitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r3/veronica_autoweektv_S00E83_170622095159753207-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "bitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r4/veronica_autoweektv_S00E83_170622094347753207-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "bitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r8/veronica_autoweektv_S00E83_170622093942753207-hls-1885.m3u8"}, {"format": "hls-0_hd", "extension": "m3u8", "url": "https://embed.kijk.nl/api/playlist/FNAh4KO8hCL_dbzyr6.m3u8?user_token=QJ3E6jlNcrT5yrmROF5VYPSQF&app_token=CgZzYW5vbWESEkZOQWg0S084aENMX2RienlyNhoLODAuMTAxLjQ5LjUiGVFKM0U2amxOY3JUNXlybVJPRjVWWVBTUUYojYvx2P4rMgJoADoERlZPREIDU0JTShJGTkFoNEtPOGhDTF9kYnp5cjY%3D%7CkFDLcuqzmoG0FHD5k5ie8ebOTKAr%2BtcVIaDcAJEZcZw%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "bitrate": "316k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "bitrate": "500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "bitrate": "900k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "bitrate": "1500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "bitrate": "2468k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "bitrate": "4500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "bitrate": "5750k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "7000k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_9/index.m3u8"}]
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "vbitrate": "450k", "url": "http://stv.cdn.sbsnet.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622093806753207-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "vbitrate": "866k", "url": "http://stv.cdn.sbsnet.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094301753207-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "1116k", "url": "http://stv.cdn.sbsnet.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094821753207-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "vbitrate": "1465k", "url": "http://stv.cdn.sbsnet.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094106753207-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "vbitrate": "2085k", "url": "http://stv.cdn.sbsnet.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/mp4/veronica_autoweektv_S00E83_170622094903753207-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/veronica_autoweektv_S00E83_170622095231753207-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "vbitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r1/veronica_autoweektv_S00E83_170622094537753207-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "vbitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r2/veronica_autoweektv_S00E83_170622093528753207-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r3/veronica_autoweektv_S00E83_170622095159753207-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r4/veronica_autoweektv_S00E83_170622094347753207-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "vbitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/753207945fc4e8e33888e1f3466ef62210ed02/hls/r8/veronica_autoweektv_S00E83_170622093942753207-hls-1885.m3u8"}, {"format": "hls-0_hd", "extension": "m3u8", "resolution": "manifest", "url": "https://embed.kijk.nl/api/playlist/FNAh4KO8hCL_dbzyr6.m3u8?user_token=QJ3E6jlNcrT5yrmROF5VYPSQF&app_token=CgZzYW5vbWESEkZOQWg0S084aENMX2RienlyNhoLODAuMTAxLjQ5LjUiGVFKM0U2amxOY3JUNXlybVJPRjVWWVBTUUYojYvx2P4rMgJoADoERlZPREIDU0JTShJGTkFoNEtPOGhDTF9kYnp5cjY%3D%7CkFDLcuqzmoG0FHD5k5ie8ebOTKAr%2BtcVIaDcAJEZcZw%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "vbitrate": "316k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "vbitrate": "500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "vbitrate": "900k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "2468k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "4500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "vbitrate": "5750k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "7000k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/625952/vod_sbs_hd_mux_unenc_2_4_9/index.m3u8"}]
 
-http://www.kijk.nl/sbs6/desmaakpolitie/videos/KxsFnNTV9Njv/het-is-weer-smerig-vies
+https://www.kijk.nl/net5/pekingexpress/videos/YYFFqDEgqo10/peking-express
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "[...]"
-expire := 31-12-2099 00:00:00 (nog 29987 dagen en 2m57s)
-name := De Smaakpolitie: Het is weer smerig vies (21122012)
-t := 97
-duration := 00:01:37
-formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x264", "bitrate": "287k", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964412001_smerigvies.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "480x264", "bitrate": "608k", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964957001_smerigvies.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "480x264", "bitrate": "975k", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048962019001_smerigvies.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "720x400", "bitrate": "1611k", "url": "http://sbsnl-apple-vod.adaptive.level3.net/bc/videos/585049245001/585049245001_2048964429001_smerigvies.mp4"}]
-
-http://www.kijk.nl/sbs6/mensenkennis/videos/9Zb61du3kCD/aflevering-6
-
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "[...]"
-expire := 03-10-2020 21:29:11 (nog 1044 dagen en 21u24m31s)
-name := SBS6: Mensenkennis (03102017)
-t := 2511
-duration := 00:41:51
-formats := [{"format": "hls-0_hd", "extension": "m3u8", "url": "https://embed.kijk.nl/api/playlist/9Zb61du3kCD_dbzyr6.m3u8?user_token=KLyCkLYdoFKFmrSjorlgAmJh5&app_token=CgZzYW5vbWESEjlaYjYxZHUza0NEX2RienlyNhoLODAuMTAxLjQ5LjUiGUtMeUNrTFlkb0ZLRm1yU2pvcmxnQW1KaDUo2pmT2f4rMgJoADoERlZPREIDU0JTShI5WmI2MWR1M2tDRF9kYnp5cjY%3D%7CW4vKFuZfy11rUOFzIFKOL2IigU9SIA9DscdDNxBFHis%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "bitrate": "316k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "bitrate": "500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "bitrate": "900k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "bitrate": "1500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "bitrate": "2468k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "bitrate": "4500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "bitrate": "5750k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "7000k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/5/657732/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/YYFFqDEgqo10" --xquery "[...]"
+expire := 31-12-2099 00:00:00 (nog 29899 dagen en 21u29m12s)
+name := NET5: Peking Express 5 jaar
+t := 4026
+duration := 01:07:06
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "480x268", "vbitrate": "288k", "url": "http://stv.cdn.sbsnet.nl/bc/videos/585049245001/585049245001_1301217746001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "480x268", "vbitrate": "576k", "url": "http://stv.cdn.sbsnet.nl/bc/videos/585049245001/585049245001_1301229704001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "480x268", "vbitrate": "928k", "url": "http://stv.cdn.sbsnet.nl/bc/videos/585049245001/585049245001_1301232884001_pekingexpress-s2008e13-5jaar-28052008-229209E1.mp4"}]
 
 https://www.kijk.nl/net5/masterchefaustralie/videos/kdxdhBykVTt/masterchef-australi
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/%prid%" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "http://api.kijk.nl/v1/default/entitlement/kdxdhBykVTt" --xquery "[...]"
 expire := 31-07-2020 23:59:59 (nog 980 dagen en 22u54m10s)
 name := NET5: MasterChef Australië S09E51 (22112017)
 t := 2696
 duration := 00:44:56
 s_url := https://empprdsubtitles.blob.core.windows.net/vtt/Sanoma/SBS/kdxdhBykVTt_dbzyr6/vtt/nl.vtt
-formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bitrate": "450k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210950815366-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "bitrate": "866k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "bitrate": "1116k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "bitrate": "1465k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122211005815366-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "bitrate": "2085k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210954815366-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/net5_masterchefaustrali_S09E51_171122214050815366-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "bitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r1/net5_masterchefaustrali_S09E51_171122211326815366-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "bitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r2/net5_masterchefaustrali_S09E51_171122211353815366-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "bitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r3/net5_masterchefaustrali_S09E51_171122211220815366-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "bitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r4/net5_masterchefaustrali_S09E51_171122211251815366-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "bitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r8/net5_masterchefaustrali_S09E51_171122211325815366-hls-1885.m3u8"}, {"format": "hls-0_hd", "extension": "m3u8", "url": "https://embed.kijk.nl/api/playlist/kdxdhBykVTt_dbzyr6.m3u8?user_token=gHiLcZlpMaEXOSzCC4fnA9GIu&app_token=CgZzYW5vbWESEmtkeGRoQnlrVlR0X2RienlyNhoLODAuMTAxLjQ5LjUiGWdIaUxjWmxwTWFFWE9TekNDNGZuQTlHSXUo0Zfz2v4rMgJoADoERlZPREIDU0JTShJrZHhkaEJ5a1ZUdF9kYnp5cjY%3D%7CFc1LVh0YofjDDTlBwWSBZSLTa997EkQ5r%2BLWqBFxw0g%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "bitrate": "316k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "bitrate": "500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "bitrate": "900k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "bitrate": "1500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "bitrate": "2468k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "bitrate": "4500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "bitrate": "5750k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "bitrate": "7000k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
+formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "vbitrate": "450k", "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210950815366-bg-350.mp4"}, {"format": "pg-2", "extension": "mp4", "resolution": "512x288", "vbitrate": "866k", "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-650.mp4"}, {"format": "pg-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "1116k", "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210955815366-bg-900.mp4"}, {"format": "pg-4", "extension": "mp4", "resolution": "768x432", "vbitrate": "1465k", "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122211005815366-bg-1200.mp4"}, {"format": "pg-5", "extension": "mp4", "resolution": "868x488", "vbitrate": "2085k", "url": "http://stv.cdn.sbsnet.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/mp4/net5_masterchefaustrali_S09E51_171122210954815366-bg-1885.mp4"}, {"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/net5_masterchefaustrali_S09E51_171122214050815366-hls-main.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "320x180", "vbitrate": "611k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r1/net5_masterchefaustrali_S09E51_171122211326815366-hls-350.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "512x288", "vbitrate": "929k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r2/net5_masterchefaustrali_S09E51_171122211353815366-hls-650.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "640x360", "vbitrate": "1289k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r3/net5_masterchefaustrali_S09E51_171122211220815366-hls-900.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1643k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r4/net5_masterchefaustrali_S09E51_171122211251815366-hls-1200.m3u8"}, {"format": "hls-5", "extension": "m3u8", "resolution": "868x488", "vbitrate": "2179k", "url": "https://vod-bc-prod-1.sbscdn.nl/ra/01/8153667a46bcc77a1b2f74a9c7c388c8544acc/hls/r8/net5_masterchefaustrali_S09E51_171122211325815366-hls-1885.m3u8"}, {"format": "hls-0_hd", "extension": "m3u8", "resolution": "manifest", "url": "https://embed.kijk.nl/api/playlist/kdxdhBykVTt_dbzyr6.m3u8?user_token=gHiLcZlpMaEXOSzCC4fnA9GIu&app_token=CgZzYW5vbWESEmtkeGRoQnlrVlR0X2RienlyNhoLODAuMTAxLjQ5LjUiGWdIaUxjWmxwTWFFWE9TekNDNGZuQTlHSXUo0Zfz2v4rMgJoADoERlZPREIDU0JTShJrZHhkaEJ5a1ZUdF9kYnp5cjY%3D%7CFc1LVh0YofjDDTlBwWSBZSLTa997EkQ5r%2BLWqBFxw0g%3D&base_url=https%3A//emp-prod-acc-we.ebsd.ericsson.net/sbsgroup"}, {"format": "hls-1_hd", "extension": "m3u8", "resolution": "384x216", "vbitrate": "316k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_2/index.m3u8"}, {"format": "hls-2_hd", "extension": "m3u8", "resolution": "512x288", "vbitrate": "500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_3/index.m3u8"}, {"format": "hls-3_hd", "extension": "m3u8", "resolution": "640x360", "vbitrate": "900k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_4/index.m3u8"}, {"format": "hls-4_hd", "extension": "m3u8", "resolution": "768x432", "vbitrate": "1500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_5/index.m3u8"}, {"format": "hls-5_hd", "extension": "m3u8", "resolution": "1024x576", "vbitrate": "2468k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_6/index.m3u8"}, {"format": "hls-6_hd", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "4500k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_7/index.m3u8"}, {"format": "hls-7_hd", "extension": "m3u8", "resolution": "1600x900", "vbitrate": "5750k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_8/index.m3u8"}, {"format": "hls-8_hd", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "7000k", "url": "https://vod-es-gf-prod-2.sbscdn.nl/prod/1/675613/vod_sbs_hd_mux_unenc_2_5_9/index.m3u8"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -5784,37 +5754,34 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bit
                   ()
               ),
               formats:=[
-                if ($a//sbs_videotype='vod') then (
-                  for $x at $i in $a/(sources)()[container='MP4'] order by $x/size count $i return
-                  $x/{
-                    'format':'pg-'||$i,
-                    'extension':'mp4',
-                    'resolution':concat(
-                      width,
-                      'x',
-                      height
-                    ),
-                    'bitrate':avg_bitrate idiv 1000||'k',
-                    'url':replace(
-                      stream_name,
-                      'mp4:',
-                      extract(
-                        $a/(sources)()/src,
-                        '(.+nl/)',
-                        1
-                      )
-                    )
-                  },
+                for $x at $i in $a/(sources)()[stream_name] order by $x/size count $i return
+                $x/{
+                  'format':'pg-'||$i,
+                  'extension':'mp4',
+                  'resolution':concat(
+                    width,
+                    'x',
+                    height
+                  ),
+                  'vbitrate':round(
+                    avg_bitrate div 1000
+                  )||'k',
+                  'url':replace(
+                    stream_name,
+                    'mp4:',
+                    'http://stv.cdn.sbsnet.nl/'
+                  )
+                },
+                let $c:=$a/(sources)()[size=0]/src return (
                   {
                     'format':'hls-0',
                     'extension':'m3u8',
-                    'url':$a/(sources)()/src
-                  },
+                    'resolution':'manifest',
+                    'url':$c
+                  }[url],
                   tail(
                     tokenize(
-                      unparsed-text(
-                        $a/(sources)()/src
-                      ),
+                      unparsed-text($c),
                       '#EXT-X-STREAM-INF:'
                     )
                   ) ! {
@@ -5825,7 +5792,7 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bit
                       'RESOLUTION=([\dx]+)',
                       1
                     ),
-                    'bitrate':round(
+                    'vbitrate':round(
                       extract(
                         .,
                         'BANDWIDTH=(\d+)',
@@ -5834,61 +5801,50 @@ formats := [{"format": "pg-1", "extension": "mp4", "resolution": "320x180", "bit
                     )||'k',
                     'url':resolve-uri(
                       '.',
-                      $a/(sources)()/src
+                      $c
                     )||extract(
                       .,
                       '(.+m3u8)',
                       1
                     )
                   }
-                ) else
-                  for $x at $i in $a/(sources)()[src] order by $x/size count $i return
-                  $x/{
-                    'format':'pg-'||$i,
-                    'extension':'mp4',
-                    'resolution':concat(
-                      width,
-                      'x',
-                      height
-                    ),
-                    'bitrate':avg_bitrate idiv 1000||'k',
-                    'url':src
+                ),
+                $b/(
+                  {
+                    'format':'hls-0_hd',
+                    'extension':'m3u8',
+                    'resolution':'manifest',
+                    'url':playlist
                   },
-                  $b/(
-                    {
-                      'format':'hls-0_hd',
-                      'extension':'m3u8',
-                      'url':playlist
-                    },
-                    tail(
-                      tokenize(
-                        unparsed-text(playlist),
-                        '#EXT-X-STREAM-INF:'
-                      )
-                    ) ! {
-                      'format':concat(
-                        'hls-',
-                        position(),
-                        '_hd'
-                      ),
-                      'extension':'m3u8',
-                      'resolution':extract(
-                        .,
-                        'RESOLUTION=([\dx]+)',
-                        1
-                      ),
-                      'bitrate':extract(
-                        .,
-                        'BANDWIDTH=(\d+)\d{3}',
-                        1
-                      )||'k',
-                      'url':extract(
-                        .,
-                        '(.+m3u8)',
-                        1
-                      )
-                    }
-                  )
+                  tail(
+                    tokenize(
+                      unparsed-text(playlist),
+                      '#EXT-X-STREAM-INF:'
+                    )
+                  ) ! {
+                    'format':concat(
+                      'hls-',
+                      position(),
+                      '_hd'
+                    ),
+                    'extension':'m3u8',
+                    'resolution':extract(
+                      .,
+                      'RESOLUTION=([\dx]+)',
+                      1
+                    ),
+                    'vbitrate':extract(
+                      .,
+                      'BANDWIDTH=(\d+)\d{3}',
+                      1
+                    )||'k',
+                    'url':extract(
+                      .,
+                      '(.+m3u8)',
+                      1
+                    )
+                  }
+                )
               ]
             )
           )"
