@@ -2159,37 +2159,23 @@ IF NOT "%url: =%"=="%url%" (
 	            t:^=duration^,
 	            duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
 	            formats:^=locations/[
-	              for $x at $i in reverse^(
+	              reverse^(
 	                ^(progressive^)^(^)
-	              ^)//src return
-	              system^(
-	                x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
-	              ^) ! {
-	                'format':'mp4-'^|^|$i^,
+	              ^)/{
+	                'format':'mp4-'^|^|position^(^)^,
 	                'extension':'mp4'^,
-	                'resolution':extract^(
-	                  .^,
-	                  'Video:.+^, ^(\d+x\d+^)'^,
-	                  1
+	                'resolution':concat^(
+	                  width^,
+	                  'x'^,
+	                  height
 	                ^)^,
-	                'vbitrate':replace^(
-	                  .^,
-	                  '.+Video:.+?^(\d+^) kb.+'^,
-	                  'v:$1k'^,
-	                  's'
-	                ^)^,
-	                'abitrate':replace^(
-	                  .^,
-	                  '.+Audio:.+?^(\d+^) kb.+'^,
-	                  'a:$1k'^,
-	                  's'
-	                ^)^,
-	                'url':$x
+	                'url':.//src
 	              }^,
 	              let $a:^=^(adaptive^)^(^)[ends-with^(src^,'m3u8'^)]/src return ^(
 	                {
 	                  'format':'hls-0'^,
 	                  'extension':'m3u8'^,
+	                  'resolution':'manifest'^,
 	                  'url':$a
 	                }^,
 	                for $x at $i in tail^(
@@ -2212,6 +2198,11 @@ IF NOT "%url: =%"=="%url%" (
 	                    $x^,
 	                    'RESOLUTION^=^([\dx]+^)'^,
 	                    1
+	                  ^) ! ^(
+	                    if ^(.^) then
+	                      .
+	                    else
+	                      'audiospoor'
 	                  ^)^,
 	                  'vbitrate':extract^(
 	                    $x^,
