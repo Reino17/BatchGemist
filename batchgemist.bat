@@ -222,8 +222,12 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPORadio
 ) ELSE IF "%url%"=="npo-gids" (
 	GOTO NPOGids
-) ELSE IF "%url%"=="npo-programma" (
-	GOTO NPOProg
+) ELSE IF "%url%"=="zoek-npo" (
+	SET url=NPO
+	GOTO ZoekProg
+) ELSE IF "%url%"=="zoek-rtl" (
+	SET url=rtlXL
+	GOTO ZoekProg
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -4205,30 +4209,51 @@ IF DEFINED prid (
 
 REM ================================================================================================
 
-:NPOProg
+:ZoekProg
 SETLOCAL
 ECHO.
 ECHO Voer programma-titel in:
 FOR /F "delims=" %%A IN ('^"%xidel%
 -e ^"let $a:^=read^(^) return
     if ^($a^) then
-      doc^(
-        'https://www.npo.nl/zoeken?term^='^|^|$a
-      ^)/^(
-        if ^(//div[@class^='no-results']^) then
-          no_res:^='1'
-        else
-          s_json:^=[
-            //a[@class^='npo-ankeiler-tile']/{
-              'titel':@title^,
-              'sid':extract^(
-                @href^,
-                '.+/^(.+^)'^,
-                1
-              ^)
-            }
-          ]
-      ^)
+      if ^('%url%'^='npo'^) then
+        doc^(
+          'https://www.npo.nl/zoeken?term^='^|^|$a
+        ^)/^(
+          if ^(//div[@class^='no-results']^) then
+            no_res:^='1'
+          else
+            s_json:^=[
+              //a[@class^='npo-ankeiler-tile']/{
+                'title':@title^,
+                'sid':extract^(
+                  @href^,
+                  '.+/^(.+^)'^,
+                  1
+                ^)
+              }
+            ]
+        ^)
+      else if ^('%url%'^='rtlxl'^) then
+        json^(
+          concat^(
+            'https://search.rtl.nl/?search^='^,
+            $a^,
+            '^&page^=1^&pageSize^=20^&typeRestriction^=tvabstract'
+          ^)
+        ^)/^(
+          if ^(AvailableResults^='0'^) then
+            no_res:^='1'
+          else
+            s_json:^=[
+              ^(Abstracts^)^(^)/{
+                'title':Title^,
+                'sid':Uuid
+              }
+            ]
+        ^)
+      else
+        ^(^)
     else
       ^(^)^" --output-format^=cmd^"') DO %%A
 IF DEFINED no_res (
@@ -4236,7 +4261,7 @@ IF DEFINED no_res (
 	ECHO Geen resultaten gevonden.
 	ECHO.
 	ENDLOCAL
-	GOTO NPOProg
+	GOTO ZoekProg
 ) ELSE IF NOT DEFINED s_json (
 	ECHO.
 	ENDLOCAL
@@ -4266,7 +4291,7 @@ FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% - -e "count($json())"') DO (
 		                1^,^
 		                $width+1^
 		              ^)^,^
-		              $x/titel^
+		              $x/title^
 		            ^)^,^
 		            '  '^
 		          ^)^"
@@ -4281,33 +4306,58 @@ FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% - -e "count($json())"') DO (
 )
 
 FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% -
--e ^"p_json:^=x:request^(
-      {
-        'data':concat^(
-          'https://www.npo.nl/media/series/'^,
-          $json^(%id%^)/sid^,
-          '/episodes?page^=1^&tilemapping^=dedicated^&tiletype^=asset^&pageType^=franchise'
-        ^)^,
-        'header':'X-Requested-With: XMLHttpRequest'
-      }
-    ^)/json/[
-      reverse^(
-        parse-html^(tiles^)//a
-      ^)/{
-        'titel':concat^(
-          .//h2^,
-          ': '^,
-          .//p
-        ^)^,
-        'prid':@data-ts-destination
-      }
-    ]^" --output-format^=cmd') DO %%A
+-e ^"if ^($json^('%id%'^)^) then
+      p_json:^=if ^('%url%'^='npo'^) then
+        x:request^(
+          {
+            'data':concat^(
+              'https://www.npo.nl/media/series/'^,
+              $json^(%id%^)/sid^,
+              '/episodes?page^=1^&tilemapping^=dedicated^&tiletype^=asset^&pageType^=franchise'
+            ^)^,
+            'header':'X-Requested-With: XMLHttpRequest'
+          }
+        ^)/json/[
+          reverse^(
+            parse-html^(tiles^)//a
+          ^)/{
+            'title':concat^(
+              .//h2^,
+              ': '^,
+              .//p
+            ^)^,
+            'prid':@data-ts-destination
+          }
+        ]
+      else if ^('%url%'^='rtlxl'^) then
+        json^(
+          concat^(
+            'https://xlapi.rtl.nl/version^=1/fun^=progeps/model^=avod/ak^='^,
+            $json^(1^)/sid^,
+            '/sz^=20/pg^=1'
+          ^)
+        ^)/[
+          reverse^(
+            ^(material^)^(^)
+          ^)/{
+            'title':title^|^|replace^(
+              dateTime^,
+              '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+              ' ^($3$2$1^)'
+            ^)^,
+            'prid':uuid
+          }
+        ]
+      else
+        ^(^)
+    else
+      ^(^)^" --output-format^=cmd') DO %%A
 IF NOT DEFINED p_json (
 	ECHO.
 	ECHO Ongeldig nummer.
 	ECHO.
 	ENDLOCAL
-	GOTO NPOProg
+	GOTO ZoekProg
 )
 
 ECHO.
@@ -4329,7 +4379,7 @@ ECHO %p_json% | %xidel% - ^
                 1^,^
                 $width+1^
               ^)^,^
-              $x/titel^
+              $x/title^
             ^)^,^
             '  '^
           ^)^"
@@ -4342,15 +4392,19 @@ IF NOT DEFINED id (
 	GOTO Input
 )
 
-FOR /F "delims=" %%A IN ('ECHO %p_json% ^| %xidel% - -e "prid:=$json(%id%)/prid" --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %p_json% ^| %xidel% -
+-e ^"if ^($json^('%id%'^)^) then
+      prid:^=$json^(%id%^)/prid
+    else
+      ^(^)^" --output-format^=cmd^"') DO %%A
 IF DEFINED prid (
-	GOTO NPO
+	GOTO %url%
 ) ELSE (
 	ECHO.
 	ECHO Ongeldig nummer.
 	ECHO.
 	ENDLOCAL
-	GOTO NPOProg
+	GOTO ZoekProg
 )
 
 REM ================================================================================================

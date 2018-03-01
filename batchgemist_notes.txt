@@ -7245,7 +7245,7 @@ videos := [{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017
 
 [https://github.com/Reino17/BatchGemist/commit/1215b6972d59453a4b2032dd69c9cbf82f6a4cd1]
 [https://github.com/Reino17/BatchGemist/commit/6cebf3127aa569e649983212ea4229cbbd67e0db]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/7e5e5dc18e7e50e2bbbbcf388bde1edd364ac134]
 
 http://apps-api.uitzendinggemist.nl
 
@@ -9694,49 +9694,50 @@ v_url := https://youtu.be/jkdwK_74eEs
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/0ace5ee524a702b8177b78a8586b6b18a6d622f2]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 Voer een zoekterm in voor een NPO-programma en maak van de resultaten een json met de titel en het serie-id:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then 'Geen resultaten gevonden' else [//a[@class='npo-ankeiler-tile']/{'titel':@title,'sid':extract(@href,'.+/(.+)',1)}]) else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then 'Geen resultaten gevonden' else [//a[@class='npo-ankeiler-tile']/{'title':@title,'sid':extract(@href,'.+/(.+)',1)}]) else ()"
 blahblah
 Geen resultaten gevonden
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then 'Geen resultaten gevonden' else [//a[@class='npo-ankeiler-tile']/{'titel':@title,'sid':extract(@href,'.+/(.+)',1)}]) else ()"
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then 'Geen resultaten gevonden' else [//a[@class='npo-ankeiler-tile']/{'title':@title,'sid':extract(@href,'.+/(.+)',1)}]) else ()"
 nos journaal
 [
   {
-    "titel": "NOS Journaal",
+    "title": "NOS Journaal",
     "sid": "NOSJournaal"
   },
   {
-    "titel": "NOS Journaal 20.00 uur",
+    "title": "NOS Journaal 20.00 uur",
     "sid": "NOSjnl2000"
   },
   {
-    "titel": "NOS Journaal 1000",
+    "title": "NOS Journaal 1000",
     "sid": "NOSjnl1000"
   },
   {
-    "titel": "NOS Journaal met gebarentolk",
+    "title": "NOS Journaal met gebarentolk",
     "sid": "NOSJournaalgebarentolk"
   },
   {
-    "titel": "NOS De Achterkant van het NOS Journaal",
+    "title": "NOS De Achterkant van het NOS Journaal",
     "sid": "POMS_S_NOS_2818934"
   },
   {
-    "titel": "NOS WK Journaal",
+    "title": "NOS WK Journaal",
     "sid": "NOSWKJournaal"
   },
   {
-    "titel": "NOS Jaaroverzicht Journaal",
+    "title": "NOS Jaaroverzicht Journaal",
     "sid": "NOSJaaroverzichtJournaal"
   }
 ]
 
 Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
 
-ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/titel),'  ')"
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/title),'  ')"
   1.  NOS Journaal
   2.  NOS Journaal 1000
   3.  NOS Journaal 20.00 uur
@@ -9747,30 +9748,30 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
 
 Gebruik optie 1 als input en maak een json van de laatste 20 afleveringen, op volgorde van vroeg naar laat, met de titel en de prid:
 
-ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - -e "x:request({'data':concat('https://www.npo.nl/media/series/',$json(1)/sid,'/episodes?page=1&tilemapping=dedicated&tiletype=asset&pageType=franchise'),'header':'X-Requested-With: XMLHttpRequest'})/json/[reverse(parse-html(tiles)//a)/{'titel':concat(.//h2,': ',.//p),'prid':@data-ts-destination}]"
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - -e "x:request({'data':concat('https://www.npo.nl/media/series/',$json(1)/sid,'/episodes?page=1&tilemapping=dedicated&tiletype=asset&pageType=franchise'),'header':'X-Requested-With: XMLHttpRequest'})/json/[reverse(parse-html(tiles)//a)/{'title':concat(.//h2,': ',.//p),'prid':@data-ts-destination}]"
 [
   {
-    "titel": "NOS Journaal: Gisteren 18:00",
+    "title": "NOS Journaal: Gisteren 18:00",
     "prid": "POW_03688996"
   },
   {
-    "titel": "NOS Journaal: Gisteren 20:00",
+    "title": "NOS Journaal: Gisteren 20:00",
     "prid": "POW_03689556"
   },
   {
-    "titel": "NOS Journaal: Gisteren 00:05",
+    "title": "NOS Journaal: Gisteren 00:05",
     "prid": "POW_03689833"
   },
   [...]
   {
-    "titel": "NOS Journaal: Vandaag 18:00",
+    "title": "NOS Journaal: Vandaag 18:00",
     "prid": "POW_03688997"
   }
 ]
 
 Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
 
-ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/titel),'  ')"
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/title),'  ')"
   1.   NOS Journaal: Gisteren 18:00
   2.   NOS Journaal: Gisteren 20:00
   3.   NOS Journaal: Gisteren 00:05
@@ -9804,7 +9805,7 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
         else
           [
             //a[@class='npo-ankeiler-tile']/{
-              'titel':@title,
+              'title':@title,
               'sid':extract(
                 @href,
                 '.+/(.+)',
@@ -9831,12 +9832,217 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
       reverse(
         parse-html(tiles)//a
       )/{
-        'titel':concat(
+        'title':concat(
           .//h2,
           ': ',
           .//p
         ),
         'prid':@data-ts-destination
+      }
+    ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+Voer een zoekterm in voor een RTL-programma en maak van de resultaten een json met de titel en het serie-id:
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then json(concat('https://search.rtl.nl/?search=',$a,'&page=1&pageSize=20&typeRestriction=tvabstract')) else ()"
+rtl nieuws
+{
+  "AvailableResults": 1,
+  "ReturnedResults": 1,
+  "FindTime": 0.027218,
+  "RankTime": 0.083767,
+  "SuggestTime": 0,
+  "Expressions": [
+    {
+      "original": "rtlnieuws",
+      "processed": "rtlnieuws",
+      "isLastWord": true,
+      "exact": false,
+      "cached": true
+    }
+  ],
+  "Abstracts": [
+    {
+      "Uuid": "132237",
+      "LastBroadcastDate": 1518198057000,
+      "Sequential": false,
+      "AbstractKey": "132237",
+      "MostSpecificS4MKey": "132237",
+      "Title": "RTL Nieuws",
+      "ContentTypeName": "tvabstract"
+    }
+  ]
+}
+
+xidel-0.9.7.5706-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then json(concat('https://search.rtl.nl/?search=',$a,'&page=1&pageSize=20&typeRestriction=tvabstract'))/(if (AvailableResults='0') then 'Geen resultaten gevonden' else [(Abstracts)()/{'title':Title,'sid':Uuid}]) else ()"
+rtl nieuws
+[
+  {
+    "title": "RTL Nieuws",
+    "sid": "132237"
+  }
+]
+
+Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/title),'  ')"
+  1.  RTL Nieuws
+
+Gebruik optie 1 als input en maak een json van de laatste 20 afleveringen, op volgorde van vroeg naar laat, met de titel en de prid:
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - -e "json(concat('https://xlapi.rtl.nl/version=1/fun=progeps/model=avod/ak=',$json(1)/sid,'/sz=20/pg=1'))"
+{
+  "meta": {
+    "version": 1,
+    "fun": "progeps",
+    "model": "avod",
+    "ak": "132237",
+    "sz": 20,
+    "pg": 1,
+    "pricetag": 819,
+    "itemsTotal": 107,
+    "lastModified": "2018-02-09T22:32:32.396Z"
+  },
+  "collection": {
+    "key": "132237",
+    "name": "RTL Nieuws",
+    "synopsis": "Dagelijks het laatste nieuws uit binnen- en buitenland. Voor nog meer nieuws kunt u ook gebruikmaken van onze mobiele apps.",
+    "members": [
+      {
+        "abstractKey": "132237",
+        "name": "RTL Nieuws",
+        "synopsis": "Dagelijks het laatste nieuws uit binnen- en buitenland. Voor nog meer nieuws kunt u ook gebruikmaken van onze mobiele apps."
+      },
+      {
+        "abstractKey": "208631",
+        "name": "RTL NIEUWS SPECIAL: ONDERZOEK IN GORI - DE DOOD VAN STAN STORIMANS",
+        "synopsis": ""
+      },
+      {
+        "abstractKey": "209275",
+        "name": "RTL NIEUWS EXCLUSIEF: HET VERDRIET VAN KONINGINNEDAG",
+        "synopsis": ""
+      }
+    ]
+  },
+  "seasons": {},
+  "material": [
+    {
+      "abstractKey": "132237",
+      "episodeKey": "390980",
+      "episodeNr": 40,
+      "uuid": "083dee6a-551a-3558-96f7-bd14d7dc0706",
+      "skoType": "tv.ep",
+      "title": "RTL Nieuws - 19:30 uur",
+      "synopsis": "Dagelijks het laatste nieuws uit binnen- en buitenland. Voor nog meer nieuws kunt u ook gebruikmaken van onze mobiele apps.",
+      "duration": "00:21:03.600",
+      "station": "RTL4",
+      "dateTime": "2018-02-09T18:30:00.000Z",
+      "model": "AVOD",
+      "audience": "DRM",
+      "tariff": null
+    },
+    [...]
+    {
+      "abstractKey": "132237",
+      "episodeKey": "390968",
+      "episodeNr": 28,
+      "uuid": "c82b1175-8c11-306a-96ee-f6f5f0808927",
+      "skoType": "tv.ep",
+      "title": "RTL Nieuws - 19:30 uur",
+      "synopsis": "Dagelijks het laatste nieuws uit binnen- en buitenland. Voor nog meer nieuws kunt u ook gebruikmaken van onze mobiele apps.",
+      "duration": "00:18:53.720",
+      "station": "RTL4",
+      "dateTime": "2018-01-28T18:30:00.000Z",
+      "model": "AVOD",
+      "audience": "DRM",
+      "tariff": null
+    }
+  ]
+}
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - -e "json(concat('https://xlapi.rtl.nl/version=1/fun=progeps/model=avod/ak=',$json(1)/sid,'/sz=20/pg=1'))/[reverse((material)())/{'title':title||replace(dateTime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),'prid':uuid}]"
+[
+  {
+    "title": "RTL Nieuws - 19:30 uur (28012018)",
+    "prid": "c82b1175-8c11-306a-96ee-f6f5f0808927"
+  },
+  [...]
+  {
+    "title": "RTL Nieuws - 19:30 uur (09022018)",
+    "prid": "083dee6a-551a-3558-96f7-bd14d7dc0706"
+  }
+]
+
+Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/title),'  ')"
+  1.   RTL Nieuws - 19:30 uur (28012018)
+  2.   RTL Nieuws - 19:30 uur (29012018)
+  3.   RTL Nieuws - 19:30 uur (30012018)
+  4.   RTL Nieuws - 19:30 uur (31012018)
+  5.   RTL Nieuws - 19:30 uur (01022018)
+  6.   RTL Nieuws - 19:30 uur (02022018)
+  7.   RTL Nieuws - 19:30 uur (03022018)
+  8.   RTL Nieuws - 19:30 uur (04022018)
+  9.   RTL Nieuws - 19:30 uur (05022018)
+  10.  RTL Nieuws - 19:30 uur (06022018)
+  11.  RTL Nieuws - 19:30 uur (07022018)
+  12.  RTL Nieuws - 19:30 uur (08022018)
+  13.  RTL Nieuws - Laat (08022018)
+  14.  RTL Nieuws - 06:30 uur (09022018)
+  15.  RTL Nieuws - 07:00 uur (09022018)
+  16.  RTL Nieuws - 08:00 uur (09022018)
+  17.  RTL Nieuws - 08:30 uur (09022018)
+  18.  RTL Nieuws - 09:00 uur (09022018)
+  19.  RTL Nieuws - 18:00 uur (09022018)
+  20.  RTL Nieuws - 19:30 uur (09022018)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "let $a:=read() return
+    if ($a) then
+      json(
+        concat(
+          'https://search.rtl.nl/?search=',
+          $a,
+          '&page=1&pageSize=20&typeRestriction=tvabstract'
+        )
+      )/(
+        if (AvailableResults='0') then
+          'Geen resultaten gevonden'
+        else
+          [
+            (Abstracts)()/{
+              'title':Title,
+              'sid':Uuid
+            }
+          ]
+      )
+    else
+      ()"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "json(
+      concat(
+        'https://xlapi.rtl.nl/version=1/fun=progeps/model=avod/ak=',
+        $json(1)/sid,
+        '/sz=20/pg=1'
+      )
+    )/[
+      reverse(
+        (material)()
+      )/{
+        'title':title||replace(
+          dateTime,
+          '(\d+)-(\d+)-(\d+).+',
+          ' ($3$2$1)'
+        ),
+        'prid':uuid
       }
     ]"
 
