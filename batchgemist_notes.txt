@@ -9445,7 +9445,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://24kitchen-nl
 [https://github.com/Reino17/BatchGemist/commit/b18cab87c65f648908efa36c6514835b5603f0ef]
 [https://github.com/Reino17/BatchGemist/commit/fb40190d19fcfeba5e1ffae20be4d487698cd660]
 [https://github.com/Reino17/BatchGemist/commit/c65a13aefc5039d9459c503801e59c414140f92d]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/4a75ea80a1d3c2fd88f6ab9889a8fbb0db18f617]
 
 http://www.dumpert.nl/mediabase/7344763/fe47eb65/dumpert_s_got_talent.html (1 video)
 
@@ -9844,134 +9844,116 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
 [https://github.com/Reino17/BatchGemist/commit/8980d9b6732eac5e7f031645353c03a0d5ac1691]
 [https://github.com/Reino17/BatchGemist/commit/842af77531df053079114f8b2b4750c14ade2368]
 [https://github.com/Reino17/BatchGemist/commit/5527a6fd80c5115ec65f7253f7e1ddffd0d90f7a]
+[https://github.com/Reino17/BatchGemist/commit/]
 
-http://www.abhd.nl/video/opel-astra-opc-2012/ (video in 1 formaat)
+https://www.abhd.nl/video/ford-fiesta-st/ (video in 1 formaat)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" -e "let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(//div[@id='playerObject']/span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return concat('ABHD: ',//div[@id='playerObject']//a,' (',$b[1],$a($b[2]),'20',$b[3],')')"
-ABHD: Opel Astra OPC 2012 (25062012)
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/ford-fiesta-st/" --xquery "//div[@id='playerObject']/(let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return concat('ABHD: ',replace(h1/a,'[&quot;&apos;]',''''''),' (',$b[1],$a($b[2]),'20',$b[3],')'))"
+ABHD: Ford Fiesta ST (08042013)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.abhd.nl/video/opel-astra-opc-2012/" --xquery "[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/ford-fiesta-st/" -e "//div[@id='playerObject']/script[@type='text/javascript']/extract(.,'myfile = ''(.+)''',1)"
+https://static.autojunk.nl/flv/2013/0408/121729_hq.mp4
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/ford-fiesta-st/" -e "//div[@id='playerObject']/script[@type='text/javascript']/[extract(.,'myfile = ''(.+)''',1) ! {'format':'mp4-'||position(),'extension':'mp4','url':.}]"
 [
   {
     "format": "mp4-1",
     "extension": "mp4",
-    "duration": "00:04:58",
-    "resolution": "848x480",
-    "vbitrate": "v:1192k",
-    "abitrate": "a:127k",
-    "url": "https://static.autojunk.nl/flv/2012/0625/120055_hq.mp4"
+    "url": "https://static.autojunk.nl/flv/2013/0408/121729_hq.mp4"
   }
 ]
 
-https://www.abhd.nl/video/hyundai-i30-n/ (video in 2 formaten)
+https://www.abhd.nl/video/ford-focus-st-2/ (video in 2 formaten)
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/hyundai-i30-n/" --xquery "[...]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/ford-focus-st-2/" -e "//div[@id='playerObject']/script[@type='text/javascript']/extract(.,'myfile = ''(.+)''',1,'*')"
+https://static.autojunk.nl/flv/2015/0201/193442_720p.mp4
+https://static.autojunk.nl/flv/2015/0201/193442_hq.mp4
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/ford-focus-st-2/" -e "//div[@id='playerObject']/script[@type='text/javascript']/[reverse(extract(.,'myfile = ''(.+)''',1,'*')) ! {'format':'mp4-'||position(),'extension':'mp4','url':.}]"
 [
   {
     "format": "mp4-1",
     "extension": "mp4",
-    "duration": "00:10:48",
-    "resolution": "848x480",
-    "vbitrate": "v:1190k",
-    "abitrate": "a:195k",
-    "url": "https://static.autojunk.nl/flv/2017/1114/115719_hq.mp4"
+    "url": "https://static.autojunk.nl/flv/2015/0201/193442_hq.mp4"
   },
   {
     "format": "mp4-2",
     "extension": "mp4",
-    "duration": "00:10:48",
-    "resolution": "1280x720",
-    "vbitrate": "v:1980k",
-    "abitrate": "a:195k",
-    "url": "https://static.autojunk.nl/flv/2017/1114/115719_720p.mp4"
+    "url": "https://static.autojunk.nl/flv/2015/0201/193442_720p.mp4"
   }
 ]
 
+https://www.abhd.nl/video/renault-megane-r-s-280-rijtest/ (embedded youtube video in eigen player)
+
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/renault-megane-r-s-280-rijtest/" -e "//div[@id='playerObject']/script[@type='text/javascript']/(if (@src) then replace(@src,'.+/(.+)\.js','https://youtu.be/$1') else [reverse(extract(.,'myfile = ''(.+)''',1,'*')) ! {'format':'mp4-'||position(),'extension':'mp4','url':.}])"
+https://youtu.be/d-gku0w4H58
+
 --------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/hyundai-i30-n/" --xquery "let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(//div[@id='playerObject']/span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return name:=concat('ABHD: ',replace(//div[@id='playerObject']//a,'[&quot;&apos;]',''''''),' (',$b[1],$a($b[2]),'20',$b[3],')'),formats:=[for $x at $i in //script/reverse(extract(.,'myfile = ''(.+)''',1,'*')[.]) return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1') ! {'format':'mp4-'||$i,'extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$x}]"
-name := ABHD: Hyundai i30 N (14112017)
-formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:10:48", "resolution": "848x480", "vbitrate": "v:1190k", "abitrate": "a:195k", "url": "https://static.autojunk.nl/flv/2017/1114/115719_hq.mp4"}, {"format": "mp4-2", "extension": "mp4", "duration": "00:10:48", "resolution": "1280x720", "vbitrate": "v:1980k", "abitrate": "a:195k", "url": "https://static.autojunk.nl/flv/2017/1114/115719_720p.mp4"}]
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.abhd.nl/video/ford-focus-st-2/" --xquery "//div[@id='playerObject']/(let $a:={'Jan':'01','Feb':'02','Mar':'03','Apr':'04','May':'05','Jun':'06','Jul':'07','Aug':'08','Sep':'09','Okt':'10','Nov':'11','Dec':'12'},$b:=extract(span[1],'(\d+)(.+?)(\d+)',(1,2,3)) return name:=concat('ABHD: ',replace(h1/a,'[&quot;&apos;]',''''''),' (',$b[1],$a($b[2]),'20',$b[3],')'),script[@type='text/javascript']/(if (@src) then v_url:=replace(@src,'.+/(.+)\.js','https://youtu.be/$1') else formats:=[reverse(extract(.,'myfile = ''(.+)''',1,'*')) ! {'format':'mp4-'||position(),'extension':'mp4','url':.}]))"
+name := ABHD: Ford Focus ST (02022015)
+formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://static.autojunk.nl/flv/2015/0201/193442_hq.mp4"}, {"format": "mp4-2", "extension": "mp4", "url": "https://static.autojunk.nl/flv/2015/0201/193442_720p.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
---xquery "let $a:={
-                'Jan':'01',
-                'Feb':'02',
-                'Mar':'03',
-                'Apr':'04',
-                'May':'05',
-                'Jun':'06',
-                'Jul':'07',
-                'Aug':'08',
-                'Sep':'09',
-                'Okt':'10',
-                'Nov':'11',
-                'Dec':'12'
-              },
-              $b:=extract(
-                //div[@id='playerObject']/span[1],
-                '(\d+)(.+?)(\d+)',
-                (1,2,3)
-              )
-          return
-          name:=concat(
-            'ABHD: ',
-            replace(
-              //div[@id='playerObject']//a,
-              '[&quot;&apos;]',
-              ''''''
+--xquery "//div[@id='playerObject']/(
+            let $a:={
+                  'Jan':'01',
+                  'Feb':'02',
+                  'Mar':'03',
+                  'Apr':'04',
+                  'May':'05',
+                  'Jun':'06',
+                  'Jul':'07',
+                  'Aug':'08',
+                  'Sep':'09',
+                  'Okt':'10',
+                  'Nov':'11',
+                  'Dec':'12'
+                },
+                $b:=extract(
+                  span[1],
+                  '(\d+)(.+?)(\d+)',
+                  (1,2,3)
+                )
+            return
+            name:=concat(
+              'ABHD: ',
+              replace(
+                h1/a,
+                '[&quot;&apos;]',
+                ''''''
+              ),
+              ' (',
+              $b[1],
+              $a($b[2]),
+              '20',
+              $b[3],
+              ')'
             ),
-            ' (',
-            $b[1],
-            $a($b[2]),
-            '20',
-            $b[3],
-            ')'
-          ),
-          formats:=[
-            for $x at $i in //script/reverse(
-              extract(
-                .,
-                'myfile = ''(.+)''',
-                1,'*'
-              )[.]
-            ) return
-            system(
-              x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$x} 2>&amp;1'
-            ) ! {
-              'format':'mp4-'||$i,
-              'extension':'mp4',
-              'duration':format-time(
-                time(
-                  extract(
-                    .,
-                    'Duration: (.+?),',
-                    1
-                  )
-                ) + duration('PT0.5S'),
-                '[H01]:[m01]:[s01]'
-              ),
-              'resolution':extract(
-                .,
-                'Video:.+, (\d+x\d+)',
-                1
-              ),
-              'vbitrate':replace(
-                .,
-                '.+Video:.+?(\d+) kb.+',
-                'v:$1k',
-                's'
-              ),
-              'abitrate':replace(
-                .,
-                '.+Audio:.+?(\d+) kb.+',
-                'a:$1k',
-                's'
-              ),
-              'url':$x
-            }
-          ]"
+            script[@type='text/javascript']/(
+              if (@src) then
+                v_url:=replace(
+                  @src,
+                  '.+/(.+)\.js',
+                  'https://youtu.be/$1'
+                )
+              else
+                formats:=[
+                  reverse(
+                    extract(
+                      .,
+                      'myfile = ''(.+)''',
+                      1,'*'
+                    )
+                  ) ! {
+                    'format':'mp4-'||position(),
+                    'extension':'mp4',
+                    'url':.
+                  }
+                ]
+            )
+          )"
 
 ================================================================================================================================
 

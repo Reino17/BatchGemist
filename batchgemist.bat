@@ -2905,83 +2905,64 @@ IF NOT "%url: =%"=="%url%" (
 	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:abhd.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"let $a:^={
-	                'Jan':'01'^,
-	                'Feb':'02'^,
-	                'Mar':'03'^,
-	                'Apr':'04'^,
-	                'May':'05'^,
-	                'Jun':'06'^,
-	                'Jul':'07'^,
-	                'Aug':'08'^,
-	                'Sep':'09'^,
-	                'Okt':'10'^,
-	                'Nov':'11'^,
-	                'Dec':'12'
-	              }^,
-	              $b:^=extract^(
-	                //div[@id^='playerObject']/span[1]^,
-	                '^(\d+^)^(.+?^)^(\d+^)'^,
-	                ^(1^,2^,3^)
-	              ^)
-	          return
-	          name:^=concat^(
-	            'ABHD: '^,
-	            replace^(
-	              //div[@id^='playerObject']//a^,
-	              '[^&quot^;^&apos^;]'^,
-	              ''''''
+	--xquery ^"//div[@id^='playerObject']/^(
+	            let $a:^={
+	                  'Jan':'01'^,
+	                  'Feb':'02'^,
+	                  'Mar':'03'^,
+	                  'Apr':'04'^,
+	                  'May':'05'^,
+	                  'Jun':'06'^,
+	                  'Jul':'07'^,
+	                  'Aug':'08'^,
+	                  'Sep':'09'^,
+	                  'Okt':'10'^,
+	                  'Nov':'11'^,
+	                  'Dec':'12'
+	                }^,
+	                $b:^=extract^(
+	                  span[1]^,
+	                  '^(\d+^)^(.+?^)^(\d+^)'^,
+	                  ^(1^,2^,3^)
+	                ^)
+	            return
+	            name:^=concat^(
+	              'ABHD: '^,
+	              replace^(
+	                h1/a^,
+	                '[^&quot^;^&apos^;]'^,
+	                ''''''
+	              ^)^,
+	              ' ^('^,
+	              $b[1]^,
+	              $a^($b[2]^)^,
+	              '20'^,
+	              $b[3]^,
+	              '^)'
 	            ^)^,
-	            ' ^('^,
-	            $b[1]^,
-	            $a^($b[2]^)^,
-	            '20'^,
-	            $b[3]^,
-	            '^)'
-	          ^)^,
-	          formats:^=[
-	            for $x at $i in //script/reverse^(
-	              extract^(
-	                .^,
-	                'myfile ^= ''^(.+^)'''^,
-	                1^,'*'
-	              ^)[.]
-	            ^) return
-	            system^(
-	              x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
-	            ^) ! {
-	              'format':'mp4-'^|^|$i^,
-	              'extension':'mp4'^,
-	              'duration':format-time^(
-	                time^(
-	                  extract^(
-	                    .^,
-	                    'Duration: ^(.+?^)^,'^,
-	                    1
-	                  ^)
-	                ^) + duration^('PT0.5S'^)^,
-	                '[H01]:[m01]:[s01]'
-	              ^)^,
-	              'resolution':extract^(
-	                .^,
-	                'Video:.+^, ^(\d+x\d+^)'^,
-	                1
-	              ^)^,
-	              'vbitrate':replace^(
-	                .^,
-	                '.+Video:.+?^(\d+^) kb.+'^,
-	                'v:$1k'^,
-	                's'
-	              ^)^,
-	              'abitrate':replace^(
-	                .^,
-	                '.+Audio:.+?^(\d+^) kb.+'^,
-	                'a:$1k'^,
-	                's'
-	              ^)^,
-	              'url':$x
-	            }
-	          ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	            script[@type^='text/javascript']/^(
+	              if ^(@src^) then
+	                v_url:^=replace^(
+	                  @src^,
+	                  '.+/^(.+^)\.js'^,
+	                  'https://youtu.be/$1'
+	                ^)
+	              else
+	                formats:^=[
+	                  reverse^(
+	                    extract^(
+	                      .^,
+	                      'myfile ^= ''^(.+^)'''^,
+	                      1^,'*'
+	                    ^)
+	                  ^) ! {
+	                    'format':'mp4-'^|^|position^(^)^,
+	                    'extension':'mp4'^,
+	                    'url':.
+	                  }
+	                ]
+	            ^)
+	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:autojunk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	--xquery ^"name:^=concat^(
