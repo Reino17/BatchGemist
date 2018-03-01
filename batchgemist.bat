@@ -2565,6 +2565,7 @@ IF NOT "%url: =%"=="%url%" (
 	                      '-'^,
 	                      $i
 	                    ^)^,
+	                    'extension':'mp4'^,
 	                    'url':$x
 	                  }
 	                }

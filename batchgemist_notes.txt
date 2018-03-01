@@ -9248,7 +9248,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "
 
 [https://github.com/Reino17/BatchGemist/commit/b3e34c2917ca49c94cabf07a81dfa9df0a4f9fc0]
 [https://github.com/Reino17/BatchGemist/commit/6b0a194373357a6bdc51938c9032772afd8d5a2d]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/91316bba1d4ada326b346653ecf85f277670de20]
 
 https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth
 
@@ -9445,6 +9445,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://24kitchen-nl
 [https://github.com/Reino17/BatchGemist/commit/b18cab87c65f648908efa36c6514835b5603f0ef]
 [https://github.com/Reino17/BatchGemist/commit/fb40190d19fcfeba5e1ffae20be4d487698cd660]
 [https://github.com/Reino17/BatchGemist/commit/c65a13aefc5039d9459c503801e59c414140f92d]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://www.dumpert.nl/mediabase/7344763/fe47eb65/dumpert_s_got_talent.html (1 video)
 
@@ -9499,7 +9500,7 @@ Dumpert: Dumpert''s Got Talent (19012018)
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7344763/fe47eb65/dumpert_s_got_talent.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:=concat('Dumpert: ',replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':$c,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':'mp4-'||$i,'url':$x}}}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7344763/fe47eb65/dumpert_s_got_talent.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:=concat('Dumpert: ',replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':$c,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':'mp4-'||$i,'extension':'mp4','url':$x}}}]"
 [
   {
     "1": {
@@ -9507,14 +9508,17 @@ xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http:/
       "formats": [
         {
           "format": "mp4-1",
+          "extension": "mp4",
           "url": "http://media.dumpert.nl/mobile/fe47eb65_REEPS_ONE_x_DUB_FX__STARS__1080P_reformat_16842960.mp4.mp4.mp4"
         },
         {
           "format": "mp4-2",
+          "extension": "mp4",
           "url": "http://media.dumpert.nl/tablet/fe47eb65_REEPS_ONE_x_DUB_FX__STARS__1080P_reformat_16842960.mp4.mp4.mp4"
         },
         {
           "format": "mp4-3",
+          "extension": "mp4",
           "url": "http://media.dumpert.nl/720p/fe47eb65_REEPS_ONE_x_DUB_FX__STARS__1080P_reformat_16842960.mp4.mp4.mp4"
         }
       ]
@@ -9539,7 +9543,7 @@ xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http:/
 
 Zet de naam en datum elk in een variabele en voeg ze samen met, afhankelijk van de hoeveelheid video's, een indexnummer er tussen.
 
-xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7097415/9355c19d/niet_seksen_in_openbaar_vrouw_blijkt_webcamslet.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':'mp4-'||$i,'url':$x}}}]"
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7097415/9355c19d/niet_seksen_in_openbaar_vrouw_blijkt_webcamslet.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return [(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':'mp4-'||$i,'extension':'mp4','url':$x}}}]"
 [
   {
     "1": {
@@ -9547,10 +9551,12 @@ xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http:/
       "formats": [
         {
           "format": "mp4-1",
+          "extension": "mp4",
           "url": "http://media.dumpert.nl/mobile/9355c19d_d728836a.mp4.mp4.mp4"
         },
         {
           "format": "mp4-2",
+          "extension": "mp4",
           "url": "http://media.dumpert.nl/tablet/9355c19d_d728836a.mp4.mp4.mp4"
         }
       ]
@@ -9562,10 +9568,12 @@ xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http:/
       "formats": [
         {
           "format": "mp4-1",
+          "extension": "mp4",
           "url": "http://media.dumpert.nl/mobile/9355c19d_LiveLeak_dot_com_aa7_1490982861_IMG_5886_1490982988.mov.h264_720p.mp4.mp4.mp4"
         },
         {
           "format": "mp4-2",
+          "extension": "mp4",
           "url": "http://media.dumpert.nl/tablet/9355c19d_LiveLeak_dot_com_aa7_1490982861_IMG_5886_1490982988.mov.h264_720p.mp4.mp4.mp4"
         }
       ]
@@ -9577,12 +9585,12 @@ xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http:/
 
 http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html (oude video met flv-variant)
 
-xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':concat(extract($x,'.+\.(.+)',1),'-',$i),'url':$x}}}]"
-videos := [{"1": {"name": "Dumpert: GOUD. Dafne Schippers wint 200m Bejing! (28082015)", "formats": [{"format": "flv-1", "url": "http://media.dumpert.nl/flv/4301bfad_schippers.mp4.mp4.flv"}, {"format": "mp4-2", "url": "http://media.dumpert.nl/mobile/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-3", "url": "http://media.dumpert.nl/tablet/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-4", "url": "http://media.dumpert.nl/720p/4301bfad_schippers.mp4.mp4.mp4"}]}}]
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/6678198/4301bfad/goud._dafne_schippers_wint_200m_bejing_.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':concat(extract($x,'.+\.(.+)',1),'-',$i),'extension':'mp4','url':$x}}}]"
+videos := [{"1": {"name": "Dumpert: GOUD. Dafne Schippers wint 200m Bejing! (28082015)", "formats": [{"format": "flv-1", "extension": "mp4", "url": "http://media.dumpert.nl/flv/4301bfad_schippers.mp4.mp4.flv"}, {"format": "mp4-2", "extension": "mp4", "url": "http://media.dumpert.nl/mobile/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-3", "extension": "mp4", "url": "http://media.dumpert.nl/tablet/4301bfad_schippers.mp4.mp4.mp4"}, {"format": "mp4-4", "extension": "mp4", "url": "http://media.dumpert.nl/720p/4301bfad_schippers.mp4.mp4.mp4"}]}}]
 
 http://www.dumpert.nl/mediabase/7345865/1659cffc/nederlanders_zijn_de_baas.html (embedded youtube video)
 
-xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7345865/1659cffc/nederlanders_zijn_de_baas.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return if (//iframe) then v_url:=replace(//iframe/@src,'.+/(.+)','https://youtu.be/$1') else videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':concat(extract($x,'.+\.(.+)',1),'-',$i),'url':$x}}}]"
+xidel-0.9.7.5651-openssl.exe -s --color=never -H "Cookie: nsfw=1;cpc=10" "http://www.dumpert.nl/mediabase/7345865/1659cffc/nederlanders_zijn_de_baas.html" --xquery "let $a:={'januari':'01','februari':'02','maart':'03','april':'04','mei':'05','juni':'06','juli':'07','augustus':'08','september':'09','oktober':'10','november':'11','december':'12'},$b:=tokenize(//p[@class='dump-pub'],' '),$c:='Dumpert: '||replace(//div[@class='dump-desc']/h1,'[&quot;&apos;]',''''''),$d:=concat(' (',if ($b[1]<10) then '0'||$b[1] else $b[1],$a($b[2]),$b[3],')') return if (//iframe) then v_url:=replace(//iframe/@src,'.+/(.+)','https://youtu.be/$1') else videos:=[(if (//@data-files) then //div/@data-files/json(binary-to-string(base64Binary(.))) else json(//script/extract(.,'fileinfo = (.+),',1)[.]))/{position():{'name':(if (position()=1) then $c else concat($c,' (',position(),')'))||$d,'formats':for $x at $i in (for $x in ('flv','mobile','tablet','720p') return .($x)) return {'format':concat(extract($x,'.+\.(.+)',1),'-',$i),'extension':'mp4','url':$x}}}]"
 v_url := https://youtu.be/jkdwK_74eEs
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -9675,6 +9683,7 @@ v_url := https://youtu.be/jkdwK_74eEs
                       '-',
                       $i
                     ),
+                    'extension':'mp4',
                     'url':$x
                   }
                 }
