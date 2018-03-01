@@ -3626,6 +3626,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
               {
                 'format':'hls-0'^,
                 'extension':'m3u8'^,
+                'resolution':'manifest'^,
                 'url':url
               }^,
               for $x at $i in tail^(
@@ -3644,6 +3645,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://www.rtl.nl/system/s4m/vfd/version=2/
                   $x^,
                   'RESOLUTION^=^([\dx]+^)'^,
                   1
+                ^) ! ^(
+                  if ^(.^) then
+                    .
+                  else
+                    'audiospoor'
                 ^)^,
                 'vbitrate':extract^(
                   $x^,
