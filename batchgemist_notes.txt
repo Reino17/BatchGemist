@@ -7245,6 +7245,7 @@ videos := [{"1": {"name": "NOS: Plezier en problemen door winters weer (09122017
 
 [https://github.com/Reino17/BatchGemist/commit/1215b6972d59453a4b2032dd69c9cbf82f6a4cd1]
 [https://github.com/Reino17/BatchGemist/commit/6cebf3127aa569e649983212ea4229cbbd67e0db]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 http://apps-api.uitzendinggemist.nl
 
@@ -7567,147 +7568,147 @@ https://www.npo.nl/gids?date=xxxx-xx-xx&type=tv
 
 Beperk de resultaten tot die van NPO1, NPO2 en NPO3. Sorteer op datum (uit de url) én tijdstip:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a order by extract($x/@href,'.+/(.+)/',1),$x//span[@class='npo-epg-time'] return $x/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a order by extract($x/@href,'.+/(.+)/',1),$x//span[@class='npo-epg-time'] return $x/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}]"
 [
   {
-    "tijdstip": "06:10",
-    "zender": "NED1",
-    "titel": "MAX Geheugentrainer",
+    "time": "06:10",
+    "channel": "NED1",
+    "title": "MAX Geheugentrainer",
     "prid": "POW_03406137"
   },
   {
-    "tijdstip": "06:30",
-    "zender": "NED1",
-    "titel": "NOS Journaal",
+    "time": "06:30",
+    "channel": "NED1",
+    "title": "NOS Journaal",
     "prid": "POW_03366667"
   },
   {
-    "tijdstip": "06:30",
-    "zender": "NED3",
-    "titel": "Pingu",
+    "time": "06:30",
+    "channel": "NED3",
+    "title": "Pingu",
     "prid": "POW_00066190"
   },
   {
-    "tijdstip": "06:35",
-    "zender": "NED1",
-    "titel": "NOS Journaal",
+    "time": "06:35",
+    "channel": "NED1",
+    "title": "NOS Journaal",
     "prid": "POW_03366667"
   },
   [...]
   {
-    "tijdstip": "05:20",
-    "zender": "NED3",
-    "titel": "Tekst-TV",
+    "time": "05:20",
+    "channel": "NED3",
+    "title": "Tekst-TV",
     "prid": "POW_03181560"
   },
   {
-    "tijdstip": "05:25",
-    "zender": "NED2",
-    "titel": "Nieuwsuur",
+    "time": "05:25",
+    "channel": "NED2",
+    "title": "Nieuwsuur",
     "prid": "VPWON_1273442"
   },
   {
-    "tijdstip": "05:50",
-    "zender": "NED1",
-    "titel": "Nederland in Beweging",
+    "time": "05:50",
+    "channel": "NED1",
+    "title": "Nederland in Beweging",
     "prid": "POW_03406611"
   }
 ]			# 189 objecten.
 
 Beperk de resultaten tot programma's die daadwerkelijk terug te kijken zijn door programma's zonder 'play-icoontje' er uit te filteren:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] order by extract($x/@href,'.+/(.+)/',1),$x//span[@class='npo-epg-time'] return $x/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] order by extract($x/@href,'.+/(.+)/',1),$x//span[@class='npo-epg-time'] return $x/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}]"
 [
   {
-    "tijdstip": "06:10",
-    "zender": "NED1",
-    "titel": "MAX Geheugentrainer",
+    "time": "06:10",
+    "channel": "NED1",
+    "title": "MAX Geheugentrainer",
     "prid": "POW_03406137"
   },
   {
-    "tijdstip": "06:30",
-    "zender": "NED1",
-    "titel": "NOS Journaal",
+    "time": "06:30",
+    "channel": "NED1",
+    "title": "NOS Journaal",
     "prid": "POW_03366667"
   },
   {
-    "tijdstip": "06:30",
-    "zender": "NED3",
-    "titel": "Pingu",
+    "time": "06:30",
+    "channel": "NED3",
+    "title": "Pingu",
     "prid": "POW_00066190"
   },
   {
-    "tijdstip": "06:35",
-    "zender": "NED1",
-    "titel": "NOS Journaal",
+    "time": "06:35",
+    "channel": "NED1",
+    "title": "NOS Journaal",
     "prid": "POW_03366667"
   },
   [...]
   {
-    "tijdstip": "04:55",
-    "zender": "NED1",
-    "titel": "NOS Journaal",
+    "time": "04:55",
+    "channel": "NED1",
+    "title": "NOS Journaal",
     "prid": "POW_03375762"
   },
   {
-    "tijdstip": "05:25",
-    "zender": "NED2",
-    "titel": "Nieuwsuur",
+    "time": "05:25",
+    "channel": "NED2",
+    "title": "Nieuwsuur",
     "prid": "VPWON_1273442"
   },
   {
-    "tijdstip": "05:50",
-    "zender": "NED1",
-    "titel": "Nederland in Beweging",
+    "time": "05:50",
+    "channel": "NED1",
+    "title": "Nederland in Beweging",
     "prid": "POW_03406611"
   }
 ]			# 178 objecten.
 
 Laat de herhalingen (zoals het NOS Journaal van 06:35 hierboven) achterwege door alle dubbele prid's er uit te filteren:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}]"
 [
   {
-    "tijdstip": "06:10",
-    "zender": "NED1",
-    "titel": "MAX Geheugentrainer",
+    "time": "06:10",
+    "channel": "NED1",
+    "title": "MAX Geheugentrainer",
     "prid": "POW_03406137"
   },
   {
-    "tijdstip": "06:30",
-    "zender": "NED3",
-    "titel": "Pingu",
+    "time": "06:30",
+    "channel": "NED3",
+    "title": "Pingu",
     "prid": "POW_00066190"
   },
   {
-    "tijdstip": "06:30",
-    "zender": "NED1",
-    "titel": "NOS Journaal",
+    "time": "06:30",
+    "channel": "NED1",
+    "title": "NOS Journaal",
     "prid": "POW_03366667"
   },
   {
-    "tijdstip": "06:35",
-    "zender": "NED3",
-    "titel": "Mullewapp",
+    "time": "06:35",
+    "channel": "NED3",
+    "title": "Mullewapp",
     "prid": "POW_00488230"
   },
   [...]
   {
-    "tijdstip": "00:00",
-    "zender": "NED1",
-    "titel": "NOS Journaal",
+    "time": "00:00",
+    "channel": "NED1",
+    "title": "NOS Journaal",
     "prid": "POW_03376038"
   },
   {
-    "tijdstip": "00:00",
-    "zender": "NED2",
-    "titel": "Podium Witteman",
+    "time": "00:00",
+    "channel": "NED2",
+    "title": "Podium Witteman",
     "prid": "VPWON_1277003"
   },
   {
-    "tijdstip": "01:00",
-    "zender": "NED2",
-    "titel": "De Nachtzoen",
+    "time": "01:00",
+    "channel": "NED2",
+    "title": "De Nachtzoen",
     "prid": "VPWON_1273805"
   }
 ]			# 129 objecten.
@@ -7716,7 +7717,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 
 Print een overzicht van de eerste 3 attributen van elke object, met telkens 2 spaties ertussen:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}] for $x in $json() return join(('tijdstip','zender','titel') ! $x(.),'  ')"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}] for $x in $json() return join(('time','channel','title') ! $x(.),'  ')"
 06:10  NED1  MAX Geheugentrainer
 06:30  NED3  Pingu
 06:30  NED1  NOS Journaal
@@ -7735,7 +7736,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 
 Print een uitgelijnd overzicht van alle attributen van elke object, met telkens 2 spaties ertussen:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}],$width:=$json(1)() ! max($json()(.) ! string-length(.)) for $x in $json() return replace(string-join(for $y at $i in $json(1)() return substring(string-join(($x($y),for $x in 1 to $width[$i]+2 return ' ')),1,$width[$i]+2)),'\s+$','')"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}],$width:=$json(1)() ! max($json()(.) ! string-length(.)) for $x in $json() return replace(string-join(for $y at $i in $json(1)() return substring(string-join(($x($y),for $x in 1 to $width[$i]+2 return ' ')),1,$width[$i]+2)),'\s+$','')"
 06:10  NED1  MAX Geheugentrainer                         POW_03406137
 06:30  NED3  Pingu                                       POW_00066190
 06:30  NED1  NOS Journaal                                POW_03366667
@@ -7756,7 +7757,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 
 Print een opgesomd overzicht van de eerste 3 attributen van elke object, met telkens 2 spaties ertussen:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}] for $x at $i in $json() return '  '||join(($i||'.',('tijdstip','zender','titel') ! $x(.)),'  ')"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}] for $x at $i in $json() return '  '||join(($i||'.',('time','channel','title') ! $x(.)),'  ')"
   1.  06:10  NED1  MAX Geheugentrainer
   2.  06:30  NED3  Pingu
   3.  06:30  NED1  NOS Journaal
@@ -7779,7 +7780,7 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
 
 Print een opgesomd en uitgelijnd overzicht van de eerste 3 attributen van elke object, met telkens 2 spaties ertussen:
 
-xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}],$width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),('tijdstip','zender','titel') ! $x(.)),'  ')"
+xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017-12-11&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}],$width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),('time','channel','title') ! $x(.)),'  ')"
   1.    06:10  NED1  MAX Geheugentrainer
   2.    06:30  NED3  Pingu
   3.    06:30  NED1  NOS Journaal
@@ -7823,9 +7824,9 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
                          $x[1]//span[@class='npo-epg-time']
                 return
                 $x[1]/{
-                  'tijdstip':.//span[@class='npo-epg-time'],
-                  'zender':@data-channel,
-                  'titel':.//span[@class='npo-epg-title'],
+                  'time':.//span[@class='npo-epg-time'],
+                  'channel':@data-channel,
+                  'title':.//span[@class='npo-epg-title'],
                   'prid':@data-id
                 }
               ],
@@ -7847,9 +7848,9 @@ xidel-0.9.7.5706-openssl.exe -s --color=never "https://www.npo.nl/gids?date=2017
                 $width+1
               ),
               (
-                'tijdstip',
-                'zender',
-                'titel'
+                'time',
+                'channel',
+                'title'
               ) ! $x(.)
             ),
             '  '
@@ -10218,7 +10219,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "416x312", "vb
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/946040cc2dc7fc2ddfa75bf9a87a9d522e82a59a]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/3fdf573b3a4c33e97e7c512eb9d751b3ad3ad161]
 
 xidel-0.9.7.5706-openssl.exe -s --color=never "http://www.telegraaf.nl/video/1591078/zo-begint-pornocarriere-rapper-sjors" -e "json(//script/extract(.,'APOLLO_STATE__=(.+);',1)[.])/(.//videoId)[1]"
 s6ZM3OFSeoaH

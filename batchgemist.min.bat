@@ -467,7 +467,7 @@ IF NOT DEFINED date2 (
 )
 
 ECHO.
-%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}],$width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),('tijdstip','zender','titel') ! $x(.)),'  ')"
+%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}],$width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),('time','channel','title') ! $x(.)),'  ')"
 ECHO.
 SET /P "id=Voer nummer in van gewenst programma: "
 IF NOT DEFINED id (
@@ -476,7 +476,7 @@ IF NOT DEFINED id (
 	GOTO Input
 )
 
-FOR /F "delims=" %%A IN ('^"%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'tijdstip':.//span[@class='npo-epg-time'],'zender':@data-channel,'titel':.//span[@class='npo-epg-title'],'prid':@data-id}] return prid:=$json(%id%)/prid" --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv" --xquery "let $json:=[for $x in //div[@id=('channel-NED1','channel-NED2','channel-NED3')]//a[.//span[@class='npo-epg-play']] group by $prid:=extract($x/@href,'.+/(.+)',1) order by extract($x[1]/@href,'.+/(.+)/',1),$x[1]//span[@class='npo-epg-time'] return $x[1]/{'time':.//span[@class='npo-epg-time'],'channel':@data-channel,'title':.//span[@class='npo-epg-title'],'prid':@data-id}] return prid:=$json(%id%)/prid" --output-format^=cmd^"') DO %%A
 IF DEFINED prid (
 	GOTO NPO
 ) ELSE (

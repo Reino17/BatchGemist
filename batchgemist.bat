@@ -4125,9 +4125,9 @@ ECHO.
                          $x[1]//span[@class='npo-epg-time']^
                 return^
                 $x[1]/{^
-                  'tijdstip':.//span[@class='npo-epg-time'],^
-                  'zender':@data-channel,^
-                  'titel':.//span[@class='npo-epg-title'],^
+                  'time':.//span[@class='npo-epg-time'],^
+                  'channel':@data-channel,^
+                  'title':.//span[@class='npo-epg-title'],^
                   'prid':@data-id^
                 }^
               ],^
@@ -4149,9 +4149,9 @@ ECHO.
                 $width+1^
               ),^
               (^
-                'tijdstip',^
-                'zender',^
-                'titel'^
+                'time',^
+                'channel',^
+                'title'^
               ) ! $x(.)^
             ),^
             '  '^
@@ -4185,9 +4185,9 @@ FOR /F "delims=" %%A IN ('^"%xidel% "https://www.npo.nl/gids?date=%date2%&type=t
                      $x[1]//span[@class^='npo-epg-time']
             return
             $x[1]/{
-              'tijdstip':.//span[@class^='npo-epg-time']^,
-              'zender':@data-channel^,
-              'titel':.//span[@class^='npo-epg-title']^,
+              'time':.//span[@class^='npo-epg-time']^,
+              'channel':@data-channel^,
+              'title':.//span[@class^='npo-epg-title']^,
               'prid':@data-id
             }
           ] return
