@@ -4066,6 +4066,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                   {
                     'format':'hls-0'^,
                     'extension':'m3u8'^,
+                    'resolution':'manifest'^,
                     'url':$a
                   }^,
                   for $x at $i in tail^(
@@ -4088,6 +4089,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://radio-app.omroep.nl/player/script/pl
                       $x^,
                       'RESOLUTION^=^([\dx]+^)'^,
                       1
+                    ^) ! ^(
+                      if ^(.^) then
+                        .
+                      else
+                        'audiospoor'
                     ^)^,
                     'vbitrate':extract^(
                       $x^,
