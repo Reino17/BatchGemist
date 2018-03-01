@@ -3375,7 +3375,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                 ^)
               ]/json/^(items^)^(^)^(^)^,
               $b:^=^(
-                for $x at $i in reverse^(
+                reverse^(
                   $a[contentType^='odi'][format^='mp4']
                 ^)/x:request^(
                   {
@@ -3394,30 +3394,10 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                 ]/json/substring-before^(
                   url^,
                   '?'
-                ^) return
-                system^(
-                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
                 ^) ! {
-                  'format':'pg-'^|^|$i^,
+                  'format':'pg-'^|^|position^(^)^,
                   'extension':'m4v'^,
-                  'resolution':extract^(
-                    .^,
-                    'Video:.+^, ^(\d+x\d+^)'^,
-                    1
-                  ^)^,
-                  'vbitrate':replace^(
-                    .^,
-                    '.+Video:.+?^(\d+^) kb.+'^,
-                    'v:$1k'^,
-                    's'
-                  ^)^,
-                  'abitrate':replace^(
-                    .^,
-                    '.+Audio:.+?^(\d+^) kb.+'^,
-                    'a:$1k'^,
-                    's'
-                  ^)^,
-                  'url':$x
+                  'url':.
                 }^,
                 let $b:^=$a[format^='hls']/x:request^(
                   {
@@ -3442,6 +3422,7 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                   {
                     'format':'hls-0'^,
                     'extension':'m3u8'^,
+                    'resolution':'manifest'^,
                     'url':$b
                   }[url]^,
                   for $x at $i in tail^(
@@ -3464,6 +3445,11 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                       $x^,
                       'RESOLUTION^=^([\dx]+^)'^,
                       1
+                    ^) ! ^(
+                      if ^(.^) then
+                        .
+                      else
+                        'audiospoor'
                     ^)^,
                     'vbitrate':extract^(
                       $x^,
@@ -3495,15 +3481,20 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     ^)
                   }
                 ^)^,
-                for $x at $i in reverse^(
+                reverse^(
                   $a[contentType^='url'][format^='mp4']
-                ^) ! x:request^(
+                ^)/x:request^(
                   {
                     'data':url^,
                     'method':'HEAD'^,
                     'error-handling':'xxx^=accept'
                   }
-                ^)[some $x in ^('200'^,'302'^) satisfies contains^(headers[1]^,$x^)]/^(
+                ^)[
+                  some $x in ^('200'^,'302'^) satisfies contains^(
+                    headers[1]^,
+                    $x
+                  ^)
+                ]/^(
                   if ^(
                     contains^(
                       url^,
@@ -3518,44 +3509,14 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     ^)/url
                   else
                     url
-                ^) return
-                system^(
-                  x'cmd /c %ffmpeg% -i {$x} 2^>^&amp^;1'
                 ^) ! {
-                  'format':'mp4-'^|^|$i^,
+                  'format':'mp4-'^|^|position^(^)^,
                   'extension':extract^(
-                    $x^,
+                    .^,
                     '.+\.^(.+^)'^,
                     1
                   ^)^,
-                  'duration':format-time^(
-                    time^(
-                      extract^(
-                        .^,
-                        'Duration: ^(.+?^)^,'^,
-                        1
-                      ^)
-                    ^) + duration^('PT0.5S'^)^,
-                   '[H01]:[m01]:[s01]'
-                  ^)^,
-                  'resolution':extract^(
-                    .^,
-                    'Video:.+^, ^(\d+x\d+^)'^,
-                    1
-                  ^)^,
-                  'vbitrate':replace^(
-                    .^,
-                    '.+Video:.+?^(\d+^) kb.+'^,
-                    'v:$1k'^,
-                    's'
-                  ^)^,
-                  'abitrate':replace^(
-                    .^,
-                    '.+Audio:.+?^(\d+^) kb.+'^,
-                    'a:$1k'^,
-                    's'
-                  ^)^,
-                  'url':$x
+                  'url':.
                 }
               ^)
           return
