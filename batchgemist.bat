@@ -2463,46 +2463,16 @@ IF NOT "%url: =%"=="%url%" (
 	      let $a:^=^(mcplayers^)^(^) return
 	      ^(mcplayers^)^($a^)
 	    ^)^"
-	-e ^"let $a:^=x:request^(
+	-e ^"formats:^=[
 	      {
-	        'data':$json//src^,
-	        'method':'HEAD'
-	      }
-	    ^)/url return
-	    formats:^=[
-	      system^(
-	        x'cmd /c %ffmpeg% -i {$a} 2^>^&1'
-	      ^) ! {
 	        'format':'mp4-1'^,
 	        'extension':'mp4'^,
-	        'duration':format-time^(
-	          time^(
-	            extract^(
-	              .^,
-	              'Duration: ^(.+?^)^,'^,
-	              1
-	            ^)
-	          ^) + duration^('PT0.5S'^)^,
-	          '[H01]:[m01]:[s01]'
-	        ^)^,
-	        'resolution':extract^(
-	          .^,
-	          'Video:.+^, ^(\d+x\d+^)'^,
-	          1
-	        ^)^,
-	        'vbitrate':replace^(
-	          .^,
-	          '.+Video:.+?^(\d+^) kb.+'^,
-	          'v:$1k'^,
-	          's'
-	        ^)^,
-	        'abitrate':replace^(
-	          .^,
-	          '.+Audio:.+?^(\d+^) kb.+'^,
-	          'a:$1k'^,
-	          's'
-	        ^)^,
-	        'url':$a
+	        'url':x:request^(
+	          {
+	            'data':$json//src^,
+	            'method':'HEAD'
+	          }
+	        ^)/url
 	      }
 	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:dumpert.nl=%"=="%url%" (

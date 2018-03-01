@@ -9248,6 +9248,7 @@ formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "
 
 [https://github.com/Reino17/BatchGemist/commit/b3e34c2917ca49c94cabf07a81dfa9df0a4f9fc0]
 [https://github.com/Reino17/BatchGemist/commit/6b0a194373357a6bdc51938c9032772afd8d5a2d]
+[https://github.com/Reino17/BatchGemist/commit/]
 
 https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth
 
@@ -9385,22 +9386,20 @@ https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_12
 
 Xidel's standaard user-agent werkt niet. "Mozilla/5.0 Firefox" ook niet. "Mozilla/5.0 Firefox/57.0" op z'n minst dus wel. Zeer kieskeurig!
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}"
-{
-  "format": "mp4-1",
-  "extension": "mp4",
-  "duration": "00:17:08",
-  "resolution": "1280x720",
-  "vbitrate": "v:1679k",
-  "abitrate": "a:125k",
-  "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"
-}
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "[{'format':'mp4-1','extension':'mp4','url':x:request({'data':$json//src,'method':'HEAD'})/url}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"
+  }
+]
 
 -------------------------------------------------------------------------------------------------------------------------------
 
-xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/(name:=concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')))" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "let $a:=x:request({'data':$json//src,'method':'HEAD'})/url return formats:=[system(x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1') ! {'format':'mp4-1','extension':'mp4','duration':format-time(time(extract(.,'Duration: (.+?),',1)) + duration('PT0.5S'),'[H01]:[m01]:[s01]'),'resolution':extract(.,'Video:.+, (\d+x\d+)',1),'vbitrate':replace(.,'.+Video:.+?(\d+) kb.+','v:$1k','s'),'abitrate':replace(.,'.+Audio:.+?(\d+) kb.+','a:$1k','s'),'url':$a}]"
+xidel-0.9.7.5706-openssl.exe -s --color=never -H "Cookie: AcceptCookies=1" --user-agent "Mozilla/5.0 Firefox/57.0" "https://www.24kitchen.nl/recepten/lemon-pudding-van-oma-ruth" -e "json(//script/extract(.,'graph.+?(\[.+\])',1,'s'))(1)/(name:=concat('24Kitchen: ',name,replace(datePublished,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')))" -f "json(//script[@type='application/json'])/(let $a:=(mcplayers)() return (mcplayers)($a))" -e "formats:=[{'format':'mp4-1','extension':'mp4','url':x:request({'data':$json//src,'method':'HEAD'})/url}]"
 name := 24Kitchen: Lemon pudding van oma Ruth (02012018)
-formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:17:08", "resolution": "1280x720", "vbitrate": "v:1679k", "abitrate": "a:125k", "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"}]
+formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://24kitchen-nl.fichub.com/FIC_24kitchen_NL/874/543/ZAODK_S03E07_RUTH_RV_1280x760_1672k_25fps.mp4"}]
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -9427,46 +9426,16 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:17:08", "res
       let $a:=(mcplayers)() return
       (mcplayers)($a)
     )"
--e "let $a:=x:request(
+-e "formats:=[
       {
-        'data':$json//src,
-        'method':'HEAD'
-      }
-    )/url return
-    formats:=[
-      system(
-        x'cmd /c "FFMpeg\ffmpeg-N-89661-ge45f7bc-win32-static_legacy.exe" -i {$a} 2>&1'
-      ) ! {
         'format':'mp4-1',
         'extension':'mp4',
-        'duration':format-time(
-          time(
-            extract(
-              .,
-              'Duration: (.+?),',
-              1
-            )
-          ) + duration('PT0.5S'),
-          '[H01]:[m01]:[s01]'
-        ),
-        'resolution':extract(
-          .,
-          'Video:.+, (\d+x\d+)',
-          1
-        ),
-        'vbitrate':replace(
-          .,
-          '.+Video:.+?(\d+) kb.+',
-          'v:$1k',
-          's'
-        ),
-        'abitrate':replace(
-          .,
-          '.+Audio:.+?(\d+) kb.+',
-          'a:$1k',
-          's'
-        ),
-        'url':$a
+        'url':x:request(
+          {
+            'data':$json//src,
+            'method':'HEAD'
+          }
+        )/url
       }
     ]"
 
@@ -10136,7 +10105,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "duration": "00:08:31", "res
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/7ca487adb7a4815319d03e8a1c88df9696560346]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/923be50256b5f9bdae994f29b1f4a3c49c43d8fd]
 
 http://www.nickelodeon.nl/shows/1397-totally-spies/videos/43777-vakantie
 
