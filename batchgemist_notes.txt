@@ -9694,7 +9694,7 @@ v_url := https://youtu.be/jkdwK_74eEs
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/0ace5ee524a702b8177b78a8586b6b18a6d622f2]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/ee83286734d6c3df428c5a18c3c6f1b7c5c0ccfc]
 
 Voer een zoekterm in voor een NPO-programma en maak van de resultaten een json met de titel en het serie-id:
 
@@ -9843,7 +9843,7 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/ee83286734d6c3df428c5a18c3c6f1b7c5c0ccfc]
 
 Voer een zoekterm in voor een RTL-programma en maak van de resultaten een json met de titel en het serie-id:
 
@@ -10043,6 +10043,223 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
           ' ($3$2$1)'
         ),
         'prid':uuid
+      }
+    ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+Voer een zoekterm in voor een Kijk-programma en maak van de resultaten een json met de titel en het serie-id:
+
+xidel-0.9.7.6044-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then json('https://api.kijk.nl/v1/default/searchresultsgrouped?search='||$a)()[type='series'] else ()"
+hart van nederland
+{
+  "episodes": [
+    {
+      "episodes": [],
+      "_links": {
+        "self": "default/pages/series-hartvannederland.sbs6-episode-cLqlDO6idoA"
+      },
+      "title": "Hart van Nederland - Laat",
+      "subtitle": "Hart van Nederland - Laat: 14 februari 2018",
+      "images": {
+        [...]
+      },
+      "id": "cLqlDO6idoA",
+      "type": "episode",
+      "channel": "sbs6",
+      "format": "hartvannederland",
+      "dateString": "Gisteren, 22.35 uur",
+      "dateStringShort": "Gisteren, 22.35u"
+    }
+  ],
+  "_links": {
+    "self": "default/pages/series-hartvannederland.sbs6"
+  },
+  "title": "Hart van Nederland - Laat",
+  "subtitle": "1001 Afleveringen",
+  "images": {
+    [...]
+  },
+  "id": "hartvannederland.sbs6",
+  "type": "series",
+  "channel": "sbs6",
+  "format": "hartvannederland",
+  "dateString": "Gisteren, 22.35 uur",
+  "dateStringShort": "Gisteren, 22.35u"
+}
+
+xidel-0.9.7.6044-openssl.exe -s --color=never -e "let $a:=read() return if ($a) then json('https://api.kijk.nl/v1/default/searchresultsgrouped?search='||$a)/(if (.()) then [.()[type='series']/{'title':title,'sid':id}] else 'Geen resultaten gevonden') else ()"
+hart van nederland
+[
+  {
+    "title": "Hart van Nederland - Laat",
+    "sid": "hartvannederland.sbs6"
+  }
+]
+
+Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
+
+ECHO <json hier boven> | xidel-0.9.7.6044-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/title),'  ')"
+  1.  Hart van Nederland - Laat
+
+Gebruik optie 1 als input en maak een json van de laatste 20 afleveringen, op volgorde van vroeg naar laat, met de titel en de prid:
+
+ECHO <json hier boven> | xidel-0.9.7.6044-openssl.exe -s --color=never - -e "json(concat('https://api.kijk.nl/v1/default/seasons/',$json(1)/sid,'/0/episodes?limit=20'))"
+{
+  "id": "series-hartvannederland.sbs6_Episodes-season-0-",
+  "type": "horizontal-single",
+  "title": "Afleveringen",
+  "hasMoreItems": true,
+  "totalItemsAvailable": 999,
+  "itemTypes": ["episode"],
+  "items": [
+    {
+      "id": "cLqlDO6idoA",
+      "_links": {
+        "self": "default/pages/series-hartvannederland.sbs6-episode-cLqlDO6idoA"
+      },
+      "type": "episode",
+      "title": "Hart van Nederland - Late Editie",
+      "isSeries": false,
+      "images": {
+        [...]
+      },
+      "synopsis": "'Waar praat Nederland vandaag over?' Toegankelijk nieuwsprogramma dat het gesprek van de dag op verrassende wijze in beeld brengt. ",
+      "duration": "",
+      "durationSeconds": 0,
+      "date": "2018-02-14T22:35:00+01:00",
+      "dateString": "Gisteren, 22.35 uur",
+      "dateStringShort": "Gisteren, 22.35u",
+      "dateStringNoTime": "gisteren",
+      "available": true,
+      "genres": ["Nieuws"],
+      "showPlayButton": true,
+      "showChannelLogo": true,
+      "prices": [],
+      "nicam": ["all-ages"],
+      "purchasedLicenses": [],
+      "label": [],
+      "brightcoveId": "5734047078001",
+      "minprice": 0,
+      "episodeLabel": "Hart van Nederland - Laat: 14 februari 2018",
+      "seriesTitle": "Hart van Nederland - Laat: 14 februari 2018",
+      "format": "hartvannederland",
+      "channel": "sbs6",
+      "episode": "2018021401025653"
+    },
+    [...]
+    {
+      "id": "DTbKVAp3f4l",
+      "_links": {
+        "self": "default/pages/series-hartvannederland.sbs6-episode-DTbKVAp3f4l"
+      },
+      "type": "episode",
+      "title": "Hart van Nederland - Late Editie",
+      "isSeries": false,
+      "images": {
+        [...]
+      },
+      "synopsis": "'Waar praat Nederland vandaag over?' Toegankelijk nieuwsprogramma dat het gesprek van de dag op verrassende wijze in beeld brengt. ",
+      "duration": "",
+      "durationSeconds": 0,
+      "date": "2018-02-03T22:30:00+01:00",
+      "dateString": "Zaterdag  3 februari, 22.30 uur",
+      "dateStringShort": "Za  3 feb., 22.30u",
+      "dateStringNoTime": "zaterdag  3 februari",
+      "available": true,
+      "genres": ["Nieuws"],
+      "showPlayButton": true,
+      "showChannelLogo": true,
+      "prices": [],
+      "nicam": ["all-ages"],
+      "purchasedLicenses": [],
+      "label": [],
+      "brightcoveId": "5725530837001",
+      "minprice": 0,
+      "episodeLabel": "Hart van Nederland - Laat: 3 februari 2018",
+      "seriesTitle": "Hart van Nederland - Laat: 3 februari 2018",
+      "format": "hartvannederland",
+      "channel": "sbs6",
+      "episode": "2018020301025653"
+    }
+  ]
+}
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - -e "json(concat('https://api.kijk.nl/v1/default/seasons/',$json(1)/sid,'/0/episodes?limit=20'))/[reverse((items)())/{'title':title||replace(date,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),'prid':id}]"
+[
+  {
+    "title": "Hart van Nederland - Late Editie (03022018)",
+    "prid": "DTbKVAp3f4l"
+  },
+  [...]
+  {
+    "title": "Hart van Nederland - Late Editie (14022018)",
+    "prid": "cLqlDO6idoA"
+  }
+]
+
+Print een opgesomd en uitgelijnd overzicht van het eerste attribuut van elke object, met 2 spaties ertussen:
+
+ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquery "let $width:=string-length(count($json())) for $x at $i in $json() return '  '||join((substring(concat($i,'.',string-join((1 to $width) ! ' ')),1,$width+1),$x/title),'  ')"
+  1.   Hart van Nederland - Late Editie (03022018)
+  2.   Hart van Nederland - Late Editie (04022018)
+  3.   Hart van Nederland - Vroege Editie (05022018)
+  4.   Hart van Nederland - Late Editie (05022018)
+  5.   Hart van Nederland - Vroege Editie (06022018)
+  6.   Hart van Nederland - Late Editie (06022018)
+  7.   Hart van Nederland - Vroege Editie (07022018)
+  8.   Hart van Nederland - Late Editie (07022018)
+  9.   Hart van Nederland - Vroege Editie (08022018)
+  10.  Hart van Nederland - Late Editie (08022018)
+  11.  Hart van Nederland - Vroege Editie (09022018)
+  12.  Hart van Nederland - Late Editie (09022018)
+  13.  Hart van Nederland - Late Editie (10022018)
+  14.  Hart van Nederland - Late Editie (11022018)
+  15.  Hart van Nederland - Vroege Editie (12022018)
+  16.  Hart van Nederland - Late Editie (12022018)
+  17.  Hart van Nederland - Vroege Editie (13022018)
+  18.  Hart van Nederland - Late Editie (13022018)
+  19.  Hart van Nederland - Vroege Editie (14022018)
+  20.  Hart van Nederland - Late Editie (14022018)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "let $a:=read() return
+    if ($a) then
+      json(
+        'https://api.kijk.nl/v1/default/searchresultsgrouped?search='||$a
+      )/(
+        if (.()) then [
+          .()[type='series']/{
+            'title':title,
+            'sid':id
+          }
+        ] else
+          'Geen resultaten gevonden'
+      )
+    else
+      ()"
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "json(
+      concat(
+        'https://api.kijk.nl/v1/default/seasons/',
+        $json(1)/sid,
+        '/0/episodes?limit=20'
+      )
+    )/[
+      reverse(
+        (items)()
+      )/{
+        'title':title||replace(
+          date,
+          '(\d+)-(\d+)-(\d+).+',
+          ' ($3$2$1)'
+        ),
+        'prid':id
       }
     ]"
 

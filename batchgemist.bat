@@ -228,6 +228,9 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF "%url%"=="zoek-rtl" (
 	SET url=rtlXL
 	GOTO ZoekProg
+) ELSE IF "%url%"=="zoek-kijk" (
+	SET url=Kijk
+	GOTO ZoekProg
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -4252,6 +4255,20 @@ FOR /F "delims=" %%A IN ('^"%xidel%
               }
             ]
         ^)
+      else if ^('%url%'^='kijk'^) then
+        json^(
+          'https://api.kijk.nl/v1/default/searchresultsgrouped?search^='^|^|$a
+        ^)/^(
+          if ^(.^(^)^) then
+            s_json:^=[
+              .^(^)[type^='series']/{
+                'title':title^,
+                'sid':id
+              }
+            ]
+          else
+            no_res:^='1'
+        ^)
       else
         ^(^)
     else
@@ -4346,6 +4363,25 @@ FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% -
               ' ^($3$2$1^)'
             ^)^,
             'prid':uuid
+          }
+        ]
+      else if ^('%url%'^='kijk'^) then
+        json^(
+          concat^(
+            'https://api.kijk.nl/v1/default/seasons/'^,
+            $json^(1^)/sid^,
+            '/0/episodes?limit^=20'
+          ^)
+        ^)/[
+          reverse^(
+            ^(items^)^(^)
+          ^)/{
+            'title':title^|^|replace^(
+              date^,
+              '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+              ' ^($3$2$1^)'
+            ^)^,
+            'prid':id
           }
         ]
       else
@@ -5051,16 +5087,17 @@ ECHO     werkt hier niet).
 ECHO     Voer 'npo-radio' in voor een opsomming van alle NPO radiozenders.
 ECHO     Voer 'npo-gids' in voor een opsomming van alle tv-programma's die op een bepaalde datum op
 ECHO     NPO1, NPO2 en NPO3 zijn geweest.
-ECHO     Voer 'npo-programma' in om te zoeken naar een tv-programma. Wat uiteindelijk volgt is een
-ECHO     opsomming van de laatste 20 afleveringen van het gekozen tv-programma.
+ECHO     Voer 'zoek-npo', 'zoek-rtl', of 'zoek-kijk' in om te zoeken naar een tv-programma van
+ECHO     desbetreffende website. Wat uiteindelijk volgt is een opsomming van de laatste 20
+ECHO     afleveringen van het gekozen tv-programma.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
 ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie/bitrate.
 ECHO     Voor dit formaat kun je gewoon op ENTER drukken. Formaten die beginnen met 'hls' zijn
-ECHO     dynamische videostreams en eindigen op 'm3u8'. Formaten die beginnen met 'pg' zijn
 ECHO.
 PAUSE
 ECHO.
+ECHO     dynamische videostreams en eindigen op 'm3u8'. Formaten die beginnen met 'pg' zijn
 ECHO     progressieve videostreams en eindigen op 'mp4/m4v'.
 ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.

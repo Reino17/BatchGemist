@@ -221,6 +221,9 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF "%url%"=="zoek-rtl" (
 	SET url=rtlXL
 	GOTO ZoekProg
+) ELSE IF "%url%"=="zoek-kijk" (
+	SET url=Kijk
+	GOTO ZoekProg
 ) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -497,7 +500,7 @@ REM ============================================================================
 SETLOCAL
 ECHO.
 ECHO Voer programma-titel in:
-FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=read() return if ($a) then if ('%url%'='npo') then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then no_res:='1' else s_json:=[//a[@class='npo-ankeiler-tile']/{'title':@title,'sid':extract(@href,'.+/(.+)',1)}]) else if ('%url%'='rtlxl') then json(concat('https://search.rtl.nl/?search=',$a,'&page=1&pageSize=20&typeRestriction=tvabstract'))/(if (AvailableResults='0') then no_res:='1' else s_json:=[(Abstracts)()/{'title':Title,'sid':Uuid}]) else () else ()" --output-format^=cmd^"') DO %%A
+FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=read() return if ($a) then if ('%url%'='npo') then doc('https://www.npo.nl/zoeken?term='||$a)/(if (//div[@class='no-results']) then no_res:='1' else s_json:=[//a[@class='npo-ankeiler-tile']/{'title':@title,'sid':extract(@href,'.+/(.+)',1)}]) else if ('%url%'='rtlxl') then json(concat('https://search.rtl.nl/?search=',$a,'&page=1&pageSize=20&typeRestriction=tvabstract'))/(if (AvailableResults='0') then no_res:='1' else s_json:=[(Abstracts)()/{'title':Title,'sid':Uuid}]) else if ('%url%'='kijk') then json('https://api.kijk.nl/v1/default/searchresultsgrouped?search='||$a)/(if (.()) then s_json:=[.()[type='series']/{'title':title,'sid':id}] else no_res:='1') else () else ()" --output-format^=cmd^"') DO %%A
 IF DEFINED no_res (
 	ECHO.
 	ECHO Geen resultaten gevonden.
@@ -526,7 +529,7 @@ FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% - -e "count($json())"') DO (
 	)
 )
 
-FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% - -e "if ($json('%id%')) then p_json:=if ('%url%'='npo') then x:request({'data':concat('https://www.npo.nl/media/series/',$json(%id%)/sid,'/episodes?page=1&tilemapping=dedicated&tiletype=asset&pageType=franchise'),'header':'X-Requested-With: XMLHttpRequest'})/json/[reverse(parse-html(tiles)//a)/{'title':concat(.//h2,': ',.//p),'prid':@data-ts-destination}] else if ('%url%'='rtlxl') then json(concat('https://xlapi.rtl.nl/version=1/fun=progeps/model=avod/ak=',$json(1)/sid,'/sz=20/pg=1'))/[reverse((material)())/{'title':title||replace(dateTime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),'prid':uuid}] else () else ()" --output-format^=cmd') DO %%A
+FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% - -e "if ($json('%id%')) then p_json:=if ('%url%'='npo') then x:request({'data':concat('https://www.npo.nl/media/series/',$json(%id%)/sid,'/episodes?page=1&tilemapping=dedicated&tiletype=asset&pageType=franchise'),'header':'X-Requested-With: XMLHttpRequest'})/json/[reverse(parse-html(tiles)//a)/{'title':concat(.//h2,': ',.//p),'prid':@data-ts-destination}] else if ('%url%'='rtlxl') then json(concat('https://xlapi.rtl.nl/version=1/fun=progeps/model=avod/ak=',$json(1)/sid,'/sz=20/pg=1'))/[reverse((material)())/{'title':title||replace(dateTime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),'prid':uuid}] else if ('%url%'='kijk') then json(concat('https://api.kijk.nl/v1/default/seasons/',$json(1)/sid,'/0/episodes?limit=20'))/[reverse((items)())/{'title':title||replace(date,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)'),'prid':id}] else () else ()" --output-format^=cmd') DO %%A
 IF NOT DEFINED p_json (
 	ECHO.
 	ECHO Ongeldig nummer.
@@ -947,16 +950,17 @@ ECHO     werkt hier niet).
 ECHO     Voer 'npo-radio' in voor een opsomming van alle NPO radiozenders.
 ECHO     Voer 'npo-gids' in voor een opsomming van alle tv-programma's die op een bepaalde datum op
 ECHO     NPO1, NPO2 en NPO3 zijn geweest.
-ECHO     Voer 'npo-programma' in om te zoeken naar een tv-programma. Wat uiteindelijk volgt is een
-ECHO     opsomming van de laatste 20 afleveringen van het gekozen tv-programma.
+ECHO     Voer 'zoek-npo', 'zoek-rtl', of 'zoek-kijk' in om te zoeken naar een tv-programma van
+ECHO     desbetreffende website. Wat uiteindelijk volgt is een opsomming van de laatste 20
+ECHO     afleveringen van het gekozen tv-programma.
 ECHO.
 ECHO     Dan volgt een opsomming van beschikbare formaten en wordt er gevraagd een keuze te maken.
 ECHO     E‚n formaat, tussen blokhaken, is altijd voorgeselecteerd om de hoogste resolutie/bitrate.
 ECHO     Voor dit formaat kun je gewoon op ENTER drukken. Formaten die beginnen met 'hls' zijn
-ECHO     dynamische videostreams en eindigen op 'm3u8'. Formaten die beginnen met 'pg' zijn
 ECHO.
 PAUSE
 ECHO.
+ECHO     dynamische videostreams en eindigen op 'm3u8'. Formaten die beginnen met 'pg' zijn
 ECHO     progressieve videostreams en eindigen op 'mp4/m4v'.
 ECHO     Deze stap wordt overgeslagen als er maar ‚‚n formaat beschikbaar is.
 ECHO.
