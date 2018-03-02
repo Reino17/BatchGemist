@@ -2276,61 +2276,59 @@ IF NOT "%url: =%"=="%url%" (
 	    ]^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:cartoonnetwork.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-f ^"concat(
-	      'http://cdnapi.kaltura.com/api_v3/index.php?service^=multirequest^&format^=1^&1:service^=session^&1:action^=startWidgetSession^&1:widgetId^=_'^,
-	      //@data-partner-id^,
-	      '^&2:ks^={1:result:ks}^&2:service^=baseentry^&2:action^=get^&2:entryId^='^,
-	      //@data-video-id^,
-	      '^&3:ks^={1:result:ks}^&3:service^=flavorAsset^&3:action^=getByEntryId^&3:entryId^='^,
-	      //@data-video-id
+	-e ^"name:^=concat^(
+	      'Cartoon Network: '^,
+	      //h1[@class^='cnLogo-tagline']^,
+	      replace^(
+	        //meta[@property^='uploadDate']/@content^,
+	        '^(\d+^)-^(\d+^)-^(\d+^)'^,
+	        ' ^($3$2$1^)'
+	      ^)
 	    ^)^"
-	--xquery ^"name:^=$json(2^)/concat(
-	            'Cartoon Network - '^,
-	            name^,
-	            replace(
-	              createdAt * dayTimeDuration('PT1S'^) + date('1970-01-01'^)^,
-	              '(\d+^)-(\d+^)-(\d+^)'^,
-	              ' ($3$2$1^)'
-	            ^)
-	          ^)^,
-	          json:^=[
-	            $json(3^)(^)/{
-	              'format':if (isOriginal^='true'^) then
-	                'mp4-source'
-	              else 
-	                concat(
-	                  fileExt^,
-	                  '-'^,
-	                  bitrate
+	-f ^"//meta[@property^='embedUrl']/@content^"
+	--xquery ^"json^(
+	            //script/extract^(
+	              .^,
+	              'Data ^= ^(.+^)^;'^,
+	              1
+	            ^)[.]
+	          ^)/entryResult/^(
+	            t:^=.//duration^,
+	            duration:^=$t * dayTimeDuration^('PT1S'^) + time^('00:00:00'^)^,
+	            formats:^=[
+	              let $a:^=extract^(
+	                .//downloadUrl^,
+	                '^(.+/^)'^,
+	                1
+	              ^) return
+	              ^(.//flavorAssets^)^(^)/{
+	                'format':'mp4-'^|^|position^(^)^,
+	                'extension':fileExt^,
+	                'resolution':concat^(
+	                  width^,
+	                  'x'^,
+	                  height
 	                ^)^,
-	              'url':x:request(
-	                {
-	                  'data':concat(
-	                    substring-before(
-	                      $json(2^)/downloadUrl^,
-	                      'raw'
-	                    ^)^,
-	                    'playManifest/entryId/'^,
-	                    $json(2^)/id^,
-	                    '/flavorId/'^,
-	                    id^,
-	                    '/format/url/protocol/http/a.'^,
-	                    fileExt
-	                  ^)^,
-	                  'method':'HEAD'^,
-	                  'error-handling':'4xx^=accept'
-	                }
-	              ^)/(
-	                if (contains(headers[1]^,'404'^)^) then
-	                  (^)
-	                else
-	                  url
-	              ^)
-	            }[url]
-	          ]^,
-	          let $a:^=for $x in $json(^)/format order by $x return $x return (
-	            formats:^=join($a^,'^, '^)^,
-	            best:^=$a[last(^)]
+	                'vbitrate':bitrate^|^|'k'^,
+	                'url':x:request^(
+	                  {
+	                    'data':$a^|^|flavorParamsId^,
+	                    'method':'HEAD'^,
+	                    'error-handling':'4xx^=accept'
+	                  }
+	                ^)/^(
+	                  if ^(
+	                    contains^(
+	                      headers[1]^,
+	                      '404'
+	                    ^)
+	                  ^) then
+	                    ^(^)
+	                  else
+	                    url
+	                ^)
+	              }[url]
+	            ]
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:24kitchen.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% -H "Cookie: AcceptCookies=1" --user-agent "%user-agent%" "%url%"

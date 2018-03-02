@@ -684,73 +684,6 @@ best := 3815
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/81962742f028bf76946fb9ea8f3dc7c7819964bd]
-
-xidel-0.9.6.exe -s --color=never "http://www.cartoonnetwork.nl/videos/intro-lied" -f "concat('http://cdnapi.kaltura.com/api_v3/index.php?service=multirequest&format=1&1:service=session&1:action=startWidgetSession&1:widgetId=_',//@data-partner-id,'&2:ks={1:result:ks}&2:service=baseentry&2:action=get&2:entryId=',//@data-video-id,'&3:ks={1:result:ks}&3:service=flavorAsset&3:action=getByEntryId&3:entryId=',//@data-video-id)" --xquery "name:=$json(2)/concat('Cartoon Network - ',name,replace(createdAt * dayTimeDuration('PT1S') + date('1970-01-01'),'(\d+)-(\d+)-(\d+)',' ($3$2$1)')),json:=[$json(3)()/{'format':if (isOriginal='true') then 'mp4-source' else concat(fileExt,'-',bitrate),'url':x:request({'data':concat(substring-before($json(2)/downloadUrl,'raw'),'playManifest/entryId/',$json(2)/id,'/flavorId/',id,'/format/url/protocol/http/a.',fileExt),'method':'HEAD','error-handling':'4xx=accept'})/(if (contains(headers[1],'404')) then () else url)}[url]],let $a:=for $x in $json()/format order by $x return $x return (formats:=join($a,', '),best:=$a[last()])"
-name := Cartoon Network - OTGW - Intro Song - NL (27102015)
-json := [{"format": "mp4-source", "url": "http://cfvod.kaltura.com/pd/p/1745101/sp/174510100/serveFlavor/entryId/1_wcq8svyb/v/11/flavorId/1_vmo6w5me/name/a.mp4"}, {"format": "mp4-468", "url": "http://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_4yxhgjqf_1.mp4"}, {"format": "mp4-665", "url": "http://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_hrfcq5kv_1.mp4"}, {"format": "mp4-808", "url": "http://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_157xchqy_1.mp4"}, {"format": "mp4-1410", "url": "http://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_t1sgf7sq_1.mp4"}, {"format": "mp4-2297", "url": "http://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_y4zh6jf7_1.mp4"}, {"format": "mp4-3805", "url": "http://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_7vssax6s_1.mp4"}]
-formats := mp4-468, mp4-665, mp4-808, mp4-1410, mp4-2297, mp4-3805, mp4-source
-best := mp4-source
-
--f "concat(
-      'http://cdnapi.kaltura.com/api_v3/index.php?service=multirequest&format=1&1:service=session&1:action=startWidgetSession&1:widgetId=_',
-      //@data-partner-id,
-      '&2:ks={1:result:ks}&2:service=baseentry&2:action=get&2:entryId=',
-      //@data-video-id,
-      '&3:ks={1:result:ks}&3:service=flavorAsset&3:action=getByEntryId&3:entryId=',
-      //@data-video-id
-    )"
---xquery "name:=$json(2)/concat(
-            'Cartoon Network - ',
-            name,
-            replace(
-              createdAt * dayTimeDuration('PT1S') + date('1970-01-01'),
-              '(\d+)-(\d+)-(\d+)',
-              ' ($3$2$1)'
-            )
-          ),
-          json:=[
-            $json(3)()/{
-              'format':if (isOriginal='true') then
-                'mp4-source'
-              else 
-                concat(
-                  fileExt,
-                  '-',
-                  bitrate
-                ),
-              'url':x:request(
-                {
-                  'data':concat(
-                    substring-before(
-                      $json(2)/downloadUrl,
-                      'raw'
-                    ),
-                    'playManifest/entryId/',
-                    $json(2)/id,
-                    '/flavorId/',
-                    id,
-                    '/format/url/protocol/http/a.',
-                    fileExt
-                  ),
-                  'method':'HEAD',
-                  'error-handling':'4xx=accept'
-                }
-              )/(
-                if (contains(headers[1],'404')) then
-                  ()
-                else
-                  url
-              )
-            }[url]
-          ],
-          let $a:=for $x in $json()/format order by $x return $x return (
-            formats:=join($a,', '),
-            best:=$a[last()]
-          )"
-
-================================================================================================================================
-
 [https://github.com/Reino17/BatchGemist/commit/c6ce4400b6d335af7e9196703dfb45087e95a8e7]
 
 xidel-0.9.6.exe -s --color=never "http://vtm.be/belgiums-got-talent/monden-vallen-open-bij-de-knalprestatie-van-2sdc-crew" --xquery "let $a:=concat(//meta[@property='og:site_name']/@content,if (//meta[@itemprop='articleProgram']) then concat(' - ',//meta[@itemprop='articleProgram']/@content) else ()) return let $b:=[{'1e':{'name':replace(concat($a,' - ',//meta[@property='og:title']/@content,replace((//@datetime[1],//meta[@property='article:published_time']/@content),'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'[&quot;&apos;]',''''''),'url'://source/@src}},//script/json(extract(.,'vmmaplayer=(.+);',1)[.])/{position()+1||'e':{'name':concat($a,' - ',title,replace(videoUrl,'.+?(\d+)/(\d+)/(\d+).+',' ($3$2$1)')),'url':videoUrl}}] return if ($b()('2e')) then (json:=$b,videos:=join($json()(),', ')) else $b()('1e') ! (name:=name,v_url:=url)"
@@ -11042,3 +10975,424 @@ videos := [{"1": {"prid": "bEby5Cptj1c", "goto": "kijk"}}]
         }
       }
     ]"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/81962742f028bf76946fb9ea8f3dc7c7819964bd]
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -e "name:=concat('Cartoon Network: ',//h1[@class='cnLogo-tagline'],replace(//meta[@property='uploadDate']/@content,'(\d+)-(\d+)-(\d+)',' ($3$2$1)'))"
+name := Cartoon Network: Ben 10 - De 11e alien (27112017)
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -e "//meta[@property='embedUrl']/@content"
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/embedIframeJs/uiconf_id/40544722?iframeembed=true&entry_id=1_xsk90fyw
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -f "//meta[@property='embedUrl']/@content" -e "json(//script/extract(.,'Data = (.+);',1)[.])/entryResult"
+{
+  "meta": {
+    "mediaType": 1,
+    "conversionQuality": 5743721,
+    "sourceType": "1",
+    "searchProviderType": null,
+    "searchProviderId": null,
+    "creditUserName": null,
+    "creditUrl": null,
+    "mediaDate": null,
+    "dataUrl": "https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/url/protocol/https",
+    "flavorParamsIds": "0,487041,487051,487061,487071,487091",
+    "plays": 1743,
+    "views": 2574,
+    "lastPlayedAt": 1517983210,
+    "width": 1920,
+    "height": 1080,
+    "duration": 35,
+    "msDuration": 35000,
+    "durationType": null,
+    "id": "1_xsk90fyw",
+    "name": "DU_Ben10_11thAlien_CN",
+    "description": "Ben heeft een nieuwe alien en hij is er klaar voor om iedereen schokken uit te delen.-á",
+    "partnerId": 1745101,
+    "userId": "Alexandra.Rusitoru@turner.com",
+    "creatorId": "Alexandra.Rusitoru@turner.com",
+    "tags": "cn-878721, ben 10",
+    "adminTags": null,
+    "categories": "CNEMEA>Shows>Ben 10,CNEMEA>Netherlands",
+    "categoriesIds": "26180992,25548542",
+    "status": 2,
+    "moderationStatus": 6,
+    "moderationCount": 0,
+    "type": 1,
+    "createdAt": 1511769227,
+    "updatedAt": 1511770156,
+    "rank": 0,
+    "totalRank": 0,
+    "votes": 0,
+    "groupId": null,
+    "partnerData": null,
+    "downloadUrl": "https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/0",
+    "searchText": "_PAR_ONLY_ _1745101_ _MEDIA_TYPE_1|  DU_Ben10_11thAlien_CN cn-878721, ben 10 Ben heeft een nieuwe alien en hij is er klaar voor om iedereen schokken uit te delen.-á ",
+    "licenseType": -1,
+    "version": 0,
+    "thumbnailUrl": "https://cfvod.kaltura.com/p/1745101/sp/174510100/thumbnail/entry_id/1_xsk90fyw/version/100011",
+    "accessControlId": 1680501,
+    "startDate": null,
+    "endDate": null,
+    "referenceId": null,
+    "replacingEntryId": null,
+    "replacedEntryId": null,
+    "replacementStatus": 0,
+    "partnerSortValue": 0,
+    "conversionProfileId": 5743721,
+    "redirectEntryId": null,
+    "rootEntryId": "1_xsk90fyw",
+    "operationAttributes": [],
+    "entitledUsersEdit": "",
+    "entitledUsersPublish": "",
+    "entitledUsersView": "",
+    "capabilities": "",
+    "templateEntryId": "0_qg3jv4it",
+    "displayInSearch": 1
+  },
+  "contextData": {
+    "isSiteRestricted": false,
+    "isCountryRestricted": false,
+    "isSessionRestricted": false,
+    "isIpAddressRestricted": false,
+    "isUserAgentRestricted": false,
+    "previewLength": -1,
+    "isScheduledNow": true,
+    "isAdmin": false,
+    "streamerType": "http",
+    "mediaProtocol": "https",
+    "storageProfilesXML": null,
+    "accessControlMessages": [],
+    "accessControlActions": [],
+    "flavorAssets": [
+      {
+        "flavorParamsId": 487041,
+        "width": 640,
+        "height": 360,
+        "bitrate": 416,
+        "frameRate": 25,
+        "isOriginal": false,
+        "isWeb": true,
+        "containerFormat": "isom",
+        "videoCodecId": "avc1",
+        "status": 2,
+        "id": "1_neju0jkk",
+        "entryId": "1_xsk90fyw",
+        "partnerId": 1745101,
+        "version": "1",
+        "size": 1781,
+        "tags": "mobile,web,mbr,iphone,iphonenew",
+        "fileExt": "mp4",
+        "createdAt": 1511769310,
+        "updatedAt": 1511769359,
+        "deletedAt": null,
+        "description": "",
+        "partnerData": null,
+        "partnerDescription": null,
+        "actualSourceAssetParamsIds": null,
+        "language": "Undefined",
+        "isDefault": false
+      },
+      {
+        "flavorParamsId": 487051,
+        "width": 640,
+        "height": 360,
+        "bitrate": 567,
+        "frameRate": 25,
+        "isOriginal": false,
+        "isWeb": true,
+        "containerFormat": "isom",
+        "videoCodecId": "avc1",
+        "status": 2,
+        "id": "1_j95dsoh7",
+        "entryId": "1_xsk90fyw",
+        "partnerId": 1745101,
+        "version": "1",
+        "size": 2426,
+        "tags": "mobile,web,mbr,iphone,iphonenew",
+        "fileExt": "mp4",
+        "createdAt": 1511769312,
+        "updatedAt": 1511769360,
+        "deletedAt": null,
+        "description": "audio warnings: 2106,#Redundant bitrate.\n",
+        "partnerData": null,
+        "partnerDescription": null,
+        "actualSourceAssetParamsIds": null,
+        "language": "Undefined",
+        "isDefault": false
+      },
+      {
+        "flavorParamsId": 487061,
+        "width": 640,
+        "height": 360,
+        "bitrate": 697,
+        "frameRate": 25,
+        "isOriginal": false,
+        "isWeb": true,
+        "containerFormat": "isom",
+        "videoCodecId": "avc1",
+        "status": 2,
+        "id": "1_fc841dr0",
+        "entryId": "1_xsk90fyw",
+        "partnerId": 1745101,
+        "version": "1",
+        "size": 2979,
+        "tags": "mobile,web,mbr,ipad,ipadnew,dash",
+        "fileExt": "mp4",
+        "createdAt": 1511769312,
+        "updatedAt": 1511769360,
+        "deletedAt": null,
+        "description": "audio warnings: 2106,#Redundant bitrate.\n",
+        "partnerData": null,
+        "partnerDescription": null,
+        "actualSourceAssetParamsIds": null,
+        "language": "Undefined",
+        "isDefault": false
+      },
+      {
+        "flavorParamsId": 487071,
+        "width": 1280,
+        "height": 720,
+        "bitrate": 1079,
+        "frameRate": 25,
+        "isOriginal": false,
+        "isWeb": true,
+        "containerFormat": "isom",
+        "videoCodecId": "avc1",
+        "status": 2,
+        "id": "1_qz67vbde",
+        "entryId": "1_xsk90fyw",
+        "partnerId": 1745101,
+        "version": "1",
+        "size": 4618,
+        "tags": "mobile,web,mbr,ipad,ipadnew,dash",
+        "fileExt": "mp4",
+        "createdAt": 1511769312,
+        "updatedAt": 1511769354,
+        "deletedAt": null,
+        "description": "",
+        "partnerData": null,
+        "partnerDescription": null,
+        "actualSourceAssetParamsIds": null,
+        "language": "Undefined",
+        "isDefault": false
+      },
+      {
+        "flavorParamsId": 487091,
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 1925,
+        "frameRate": 25,
+        "isOriginal": false,
+        "isWeb": true,
+        "containerFormat": "isom",
+        "videoCodecId": "avc1",
+        "status": 2,
+        "id": "1_ls6ty5b8",
+        "entryId": "1_xsk90fyw",
+        "partnerId": 1745101,
+        "version": "1",
+        "size": 8232,
+        "tags": "web,mbr,dash",
+        "fileExt": "mp4",
+        "createdAt": 1511769312,
+        "updatedAt": 1511769359,
+        "deletedAt": null,
+        "description": "video warnings: 2107,2087,4000#The target flavor bitrate (2087) does not comply with the requested bitrate (4000).; 2106,#Redundant bitrate.\naudio warnings: 2106,#Redundant bitrate.\n",
+        "partnerData": null,
+        "partnerDescription": null,
+        "actualSourceAssetParamsIds": null,
+        "language": "Undefined",
+        "isDefault": false
+      },
+      {
+        "flavorParamsId": 0,
+        "width": 1920,
+        "height": 1080,
+        "bitrate": 4341,
+        "frameRate": 25,
+        "isOriginal": true,
+        "isWeb": true,
+        "containerFormat": "mp42",
+        "videoCodecId": "avc1",
+        "status": 2,
+        "id": "1_txori5kv",
+        "entryId": "1_xsk90fyw",
+        "partnerId": 1745101,
+        "version": "11",
+        "size": 18534,
+        "tags": "source,web",
+        "fileExt": "mp4",
+        "createdAt": 1511769231,
+        "updatedAt": 1511769309,
+        "deletedAt": null,
+        "description": "",
+        "partnerData": null,
+        "partnerDescription": null,
+        "actualSourceAssetParamsIds": null,
+        "language": "English",
+        "isDefault": false
+      }
+    ],
+    "messages": [],
+    "actions": [],
+    "msDuration": 35000,
+    "pluginData": []
+  },
+  "entryMeta": {
+    "Feed": "nl",
+    "Show": "Ben 10",
+    "Visible": "true",
+    "Active": "true",
+    "Highlighted": "false",
+    "Sponsored": "false",
+    "Title": "De 11e alien",
+    "ShortTitle": "De 11e alien",
+    "BrowserTitle": "Ben 10 | De 11e alien | Cartoon Network",
+    "Keywords": "Ben 10, Ben, Omnitrix, nieuwe alien, Shock Rock, 11e alien",
+    "SeoDescription": "Ben heeft een nieuwe alien en hij is er klaar voor om iedereen schokken uit te delen.-á",
+    "ClientType": "ALL",
+    "UseDRM": "false"
+  },
+  "entryCuePoints": {
+    "objects": [],
+    "totalCount": 0
+  }
+}
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -f "//meta[@property='embedUrl']/@content" -e "json(//script/extract(.,'Data = (.+);',1)[.])/entryResult/(t:=.//duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'))"
+t := 35
+duration := 00:00:35
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -f "//meta[@property='embedUrl']/@content" -e "json(//script/extract(.,'Data = (.+);',1)[.])/entryResult//downloadUrl"
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/0
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -f "//meta[@property='embedUrl']/@content" --xquery "json(//script/extract(.,'Data = (.+);',1)[.])/entryResult/(let $a:=extract(.//downloadUrl,'(.+/)',1) return (.//flavorAssets)()/($a||flavorParamsId))"
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/487041
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/487051
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/487061
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/487071
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/487091
+https://cdnapisec.kaltura.com/p/1745101/sp/174510100/playManifest/entryId/1_xsk90fyw/format/download/protocol/https/flavorParamIds/0
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -f "//meta[@property='embedUrl']/@content" --xquery "json(//script/extract(.,'Data = (.+);',1)[.])/entryResult/[let $a:=extract(.//downloadUrl,'(.+/)',1) return (.//flavorAssets)()/{'format':'mp4-'||position(),'extension':fileExt,'resolution':concat(width,'x',height),'bitrate':vbitrate||'k','url':x:request({'data':$a||flavorParamsId,'method':'HEAD','error-handling':'4xx=accept'})/(if (contains(headers[1],'404')) then () else url)}[url]]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "416k",
+    "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_neju0jkk_1.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "567k",
+    "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_j95dsoh7_1.mp4"
+  },
+  {
+    "format": "mp4-3",
+    "extension": "mp4",
+    "resolution": "640x360",
+    "vbitrate": "697k",
+    "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_fc841dr0_1.mp4"
+  },
+  {
+    "format": "mp4-4",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "vbitrate": "1079k",
+    "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_qz67vbde_1.mp4"
+  },
+  {
+    "format": "mp4-5",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "vbitrate": "1925k",
+    "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_ls6ty5b8_1.mp4"
+  },
+  {
+    "format": "mp4-6",
+    "extension": "mp4",
+    "resolution": "1920x1080",
+    "vbitrate": "4341k",
+    "url": "https://cnemeavod.cdn.turner.com/pd/p/1745101/sp/174510100/serveFlavor/entryId/1_xsk90fyw/v/11/ev/6/flavorId/1_txori5kv/fileName/DU_Ben10_11thAlien_CN_(Source).mp4/name/a.mp4"
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien" -e "name:=concat('Cartoon Network: ',//h1[@class='cnLogo-tagline'],replace(//meta[@property='uploadDate']/@content,'(\d+)-(\d+)-(\d+)',' ($3$2$1)'))" -f "//meta[@property='embedUrl']/@content" --xquery "json(//script/extract(.,'Data = (.+);',1)[.])/entryResult/(t:=.//duration,duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),formats:=[let $a:=extract(.//downloadUrl,'(.+/)',1) return (.//flavorAssets)()/{'format':'mp4-'||position(),'extension':fileExt,'resolution':concat(width,'x',height),'vbitrate':bitrate||'k','url':x:request({'data':$a||flavorParamsId,'method':'HEAD','error-handling':'4xx=accept'})/(if (contains(headers[1],'404')) then () else url)}[url]])"
+name := Cartoon Network: Ben 10 - De 11e alien (27112017)
+t := 35
+duration := 00:00:35
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "416k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_neju0jkk_1.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "640x360", "vbitrate": "567k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_j95dsoh7_1.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "697k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_fc841dr0_1.mp4"}, {"format": "mp4-4", "extension": "mp4", "resolution": "1280x720", "vbitrate": "1079k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_qz67vbde_1.mp4"}, {"format": "mp4-5", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "1925k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20171127/1745/1_xsk90fyw_1_ls6ty5b8_1.mp4"}, {"format": "mp4-6", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "4341k", "url": "https://cnemeavod.cdn.turner.com/pd/p/1745101/sp/174510100/serveFlavor/entryId/1_xsk90fyw/v/11/ev/6/flavorId/1_txori5kv/fileName/DU_Ben10_11thAlien_CN_(Source).mp4/name/a.mp4"}]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "http://www.cartoonnetwork.nl/videos/intro-lied" -e "[...]"
+name := Cartoon Network: Achter de Tuinmuur - Intro-lied (27102015)
+t := 48
+duration := 00:00:48
+formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vbitrate": "468k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_4yxhgjqf_1.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "640x360", "vbitrate": "665k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_hrfcq5kv_1.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "640x360", "vbitrate": "808k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_157xchqy_1.mp4"}, {"format": "mp4-4", "extension": "mp4", "resolution": "1280x720", "vbitrate": "1410k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_t1sgf7sq_1.mp4"}, {"format": "mp4-5", "extension": "mp4", "resolution": "1280x720", "vbitrate": "2297k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_y4zh6jf7_1.mp4"}, {"format": "mp4-6", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "3805k", "url": "https://ht.cdn.turner.com/tbseurope/big/CN3.0/20151027/1745/1_wcq8svyb_1_7vssax6s_1.mp4"}, {"format": "mp4-7", "extension": "mp4", "resolution": "1920x1080", "vbitrate": "15257k", "url": "https://cnemeavod.cdn.turner.com/pd/p/1745101/sp/174510100/serveFlavor/entryId/1_wcq8svyb/v/11/flavorId/1_vmo6w5me/fileName/OTGW_-_Intro_Song_-_NL_(Source).mp4/name/a.mp4"}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+-e "name:=concat(
+      'Cartoon Network: ',
+      //h1[@class='cnLogo-tagline'],
+      replace(
+        //meta[@property='uploadDate']/@content,
+        '(\d+)-(\d+)-(\d+)',
+        ' ($3$2$1)'
+      )
+    )"
+-f "//meta[@property='embedUrl']/@content"
+--xquery "json(
+            //script/extract(
+              .,
+              'Data = (.+);',
+              1
+            )[.]
+          )/entryResult/(
+            t:=.//duration,
+            duration:=$t * dayTimeDuration('PT1S') + time('00:00:00'),
+            formats:=[
+              let $a:=extract(
+                .//downloadUrl,
+                '(.+/)',
+                1
+              ) return
+              (.//flavorAssets)()/{
+                'format':'mp4-'||position(),
+                'extension':fileExt,
+                'resolution':concat(
+                  width,
+                  'x',
+                  height
+                ),
+                'vbitrate':bitrate||'k',
+                'url':x:request(
+                  {
+                    'data':$a||flavorParamsId,
+                    'method':'HEAD',
+                    'error-handling':'4xx=accept'
+                  }
+                )/(
+                  if (
+                    contains(
+                      headers[1],
+                      '404'
+                    )
+                  ) then
+                    ()
+                  else
+                    url
+                )
+              }[url]
+            ]
+          )"
