@@ -10048,7 +10048,7 @@ ECHO <json hier boven> | xidel-0.9.7.5706-openssl.exe -s --color=never - --xquer
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/083bf32db142154c20dc4d85b14c8bb89cde6d0b]
 
 Voer een zoekterm in voor een Kijk-programma en maak van de resultaten een json met de titel en het serie-id:
 
