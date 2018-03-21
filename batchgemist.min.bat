@@ -635,7 +635,7 @@ REM ============================================================================
 SETLOCAL
 ECHO.
 IF DEFINED duration (
-	ECHO Naam:       %name:''='%
+	FOR /F "delims=" %%A IN ('ECHO %name% ^| %xidel% - -e "replace($raw,'['']+','''')"') DO ECHO Naam:       %%A
 	ECHO Tijdsduur:  %duration% ^(%t%%duration:~8,4%s^)
 	IF DEFINED ss (
 		ECHO Begin:      %start% ^(%ss%s^)
@@ -643,7 +643,7 @@ IF DEFINED duration (
 	)
 	IF DEFINED expire ECHO Gratis tot: %expire%
 ) ELSE (
-	ECHO Naam: %name:''='%
+	FOR /F "delims=" %%A IN ('ECHO %name% ^| %xidel% - -e "replace($raw,'['']+','''')"') DO ECHO Naam: %%A
 )
 
 FOR /F "delims=" %%A IN ('^"%xidel% -e "let $a:=[{'text':'Audio/video-url weergeven.','goto':'Render'},{'text':'Audio/video downloaden.','goto':'Download'},{'text':'Audio/video openen met MPC-HC/BE.','goto':'Play'},{'text':'Audio/video openen met FFmpeg en streamen naar MPC-HC/BE.','goto':'PlayXP'}] return select:=if (file:exists('%ffmpeg:"=%')) then if (file:exists('%mpc:"=%')) then $a else [$a(1),$a(2)] else if (file:exists('%mpc:"=%')) then [$a(1),$a(3)] else [$a(1)]" --output-format^=cmd^"') DO %%A
@@ -778,7 +778,7 @@ FOR /F "tokens=1 delims=?" %%A IN ("%v_url%") DO (
 	IF /I "%%~xA"==".asf"  SET ext=.wmv
 )
 
-FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(normalize-space('%name%'),':','-'),'[<>/\\|?*]','')" --output-encoding^=oem^"') DO SET "name=%%A"
+FOR /F "delims=" %%A IN ('^"%xidel% -e "replace(replace(replace(normalize-space('%name%'),':','-'),'['']+',''''),'[<>/\\|?*]','')" --output-encoding^=oem^"') DO SET "name=%%A"
 ECHO.
 ECHO Bestandsnaam: %name%%ext%
 SET /P "rename=Wijzigen? [j/N] "
