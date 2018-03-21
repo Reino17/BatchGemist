@@ -4419,7 +4419,7 @@ FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% - -e "count($json())"') DO (
 		        ''''''^,^
 		        ''''^
 		      ^)^
-		    ^)^"
+		    ^)^" --stdin-encoding^=oem
 		ECHO.
 		SET /P "video=Kies gewenste video: [1] "
 		IF NOT DEFINED video SET "video=1"
@@ -4429,7 +4429,7 @@ FOR /F "delims=" %%A IN ('ECHO %videos% ^| %xidel% --extract-exclude^=obj -
 --xquery ^"obj:^=$json^(^)^('%video%'^)^,
           $obj^(^) ! eval^(
             x'{.}:^=$obj/{.}'
-          ^)^" --output-encoding^=oem --output-format^=cmd') DO %%A
+          ^)^" --stdin-encoding^=oem --output-encoding^=oem --output-format^=cmd') DO %%A
 
 IF DEFINED goto (
 	GOTO %goto%
