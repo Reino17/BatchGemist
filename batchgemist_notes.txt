@@ -10979,7 +10979,7 @@ videos := [{"1": {"prid": "bEby5Cptj1c", "goto": "kijk"}}]
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/81962742f028bf76946fb9ea8f3dc7c7819964bd]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/40d795e7fb0804ec7f1ccab1ccbb0a8889dbaa2e]
 
 http://www.cartoonnetwork.nl/videos/ben-10-de-11e-alien
 
@@ -11394,5 +11394,497 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vb
                     url
                 )
               }[url]
+            ]
+          )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+https://www.omropfryslan.nl/live/omrop-fryslan-tv
+
+https://www.omropfryslan.nl/geoip/7759
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/live/omrop-fryslan-tv" -e "json(//script/extract(.,'settings, (.+)\);',1)[.])/videojs"
+{
+  "videoplayer7759": {
+    "playlist": "/geoip/7759",
+    "autoplay": true,
+    "social": "https://www.omropfryslan.nl/jwembed?nid=7759"
+  }
+}
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/live/omrop-fryslan-tv" -e "json(//script/extract(.,'settings, (.+)\);',1)[.])/videojs/json(doc(.//playlist))"
+[
+  {
+    "sources": [
+      {
+        "src": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/manifest.mpd",
+        "type": "application/dash+xml"
+      },
+      {
+        "src": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/playlist.m3u8",
+        "type": "application/vnd.apple.mpegURL"
+      }
+    ],
+    "poster": "/data/files/omrop-fryslan-tv-plaatje-1920x1080-v2.jpg"
+  }
+]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/live/omrop-fryslan-tv" -f "json(//script/extract(.,'settings, (.+)\);',1)[.])/videojs/json(doc(.//playlist))/(.//sources)()[ends-with(src,'m3u8')]/src" -e "$raw"
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-STREAM-INF:BANDWIDTH=400000		# Geen resoluties gespecificeerd...
+chunklist_w134686039_b400000.m3u8
+#EXT-X-STREAM-INF:BANDWIDTH=800000
+chunklist_w134686039_b800000.m3u8
+#EXT-X-STREAM-INF:BANDWIDTH=1200000
+chunklist_w134686039_b1200000.m3u8
+#EXT-X-STREAM-INF:BANDWIDTH=2000000
+chunklist_w134686039_b2000000.m3u8
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/live/omrop-fryslan-tv" --xquery "json(//script/extract(.,'settings, (.+)\);',1)[.])/videojs/json(doc(.//playlist))/(let $a:=('480x270','640x360','960x540','1280x720'),$b:=(.//sources)()[ends-with(src,'m3u8')]/src return [{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b},for $x at $i in tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) return {'format':'hls-'||$i,'extension':'m3u8','resolution':$a[$i],'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}])"
+[
+  {
+    "format": "hls-0",
+    "extension": "m3u8",
+    "resolution": "manifest",
+    "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/playlist.m3u8"
+  },
+  {
+    "format": "hls-1",
+    "extension": "m3u8",
+    "resolution": "480x270",
+    "vbitrate": "400k",
+    "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1628853418_b400000.m3u8"
+  },
+  {
+    "format": "hls-2",
+    "extension": "m3u8",
+    "resolution": "640x360",
+    "vbitrate": "800k",
+    "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1628853418_b800000.m3u8"
+  },
+  {
+    "format": "hls-3",
+    "extension": "m3u8",
+    "resolution": "960x540",
+    "vbitrate": "1200k",
+    "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1628853418_b1200000.m3u8"
+  },
+  {
+    "format": "hls-4",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "vbitrate": "2000k",
+    "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1628853418_b2000000.m3u8"
+  }
+]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/live/omrop-fryslan-tv" --xquery "name:=concat('Omrop Fryslân',//meta[@itemprop='name']/@content ! (if (contains(.,'Omrop Fryslân')) then () else ' - '||replace(.,' TV$','')),replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)')),json(//script/extract(.,'settings, (.+)\);',1)[.])/videojs/json(doc(.//playlist))/(let $a:=('480x270','640x360','960x540','1280x720'),$b:=(.//sources)()[ends-with(src,'m3u8')]/src return formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b},for $x at $i in tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) return {'format':'hls-'||$i,'extension':'m3u8','resolution':$a[$i],'bitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}])"
+name := Omrop Fryslân: Livestream (11032018)
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/playlist.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "480x270", "bitrate": "400k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w734851705_b400000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "640x360", "bitrate": "800k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w734851705_b800000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "960x540", "bitrate": "1200k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w734851705_b1200000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "bitrate": "2000k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w734851705_b2000000.m3u8"}]
+
+https://www.omropfryslan.nl/live/klipkar-tv
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/live/klipkar-tv" --xquery "[...]"
+name := Omrop Fryslân - Klipkar: Livestream (11032018)
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream01.smil/playlist.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "480x270", "bitrate": "400k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream01.smil/chunklist_w223703828_b400000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "640x360", "bitrate": "800k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream01.smil/chunklist_w223703828_b800000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "960x540", "bitrate": "1200k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream01.smil/chunklist_w223703828_b1200000.m3u8"}]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+https://www.omropfryslan.nl/utstjoering/fryslan-hjoed-fan-17-maart-2018-1800
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/utstjoering/fryslan-hjoed-fan-17-maart-2018-1800" --xquery "for $x in (replace(//video/@src,'HQ','LQ'),//video/@src) return $x"
+https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4
+https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180317_FRYSLANHJOED_2018-03-17_1.mp4
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/utstjoering/fryslan-hjoed-fan-17-maart-2018-1800" --xquery "[for $x at $i in (replace(//video/@src,'HQ','LQ'),//video/@src) return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($i=1) then '480x272' else '1280x720','url':$x}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "resolution": "480x272",
+    "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "resolution": "1280x720",
+    "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"
+  }
+]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/utstjoering/fryslan-hjoed-fan-17-maart-2018-1800" --xquery "[//video/{position():{'name':concat('Omrop Fryslân: ',//div[@class='node-content-wrapper']//h3,replace(//meta[@property='article:published_time']/@content,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':let $a:=(replace(@src,'HQ','LQ'),@src) for $x at $i in $a return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($i=1) then '480x272' else '1280x720','url':$x}}}]"
+[
+  {
+    "1": {
+      "name": "Omrop Fryslân: Fryslân Hjoed (17032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "480x272",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "1280x720",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"
+        }
+      ]
+    }
+  }
+]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/utstjoering/fryslan-hjoed-fan-17-maart-2018-1800" --xquery "[//video/{position():{'name':concat('Omrop Fryslân: ',replace(//div[@class='node-content-wrapper']//h3,'[&quot;&apos;]',''''''),replace(//meta[@property='article:published_time']/@content,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':let $a:=(replace(@src,'HQ','LQ'),@src) return [for $x at $i in $a return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($i=1) then '480x272' else '1280x720','url':$x},for $x at $i in $a for $y at $j in (if ($i=1) then tail(tokenize(unparsed-text($x||'/manifest.m3u8'),'#EXT-X-STREAM-INF:')) else tokenize(unparsed-text($x||'/manifest.m3u8'),'#EXT-X-STREAM-INF:')[2]) order by extract($y,'BANDWIDTH=(\d+)',1) count $j return {'format':'hls-'||$j,'extension':'m3u8','resolution':extract($y,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':round(extract($y,'video=(\d+)',1) div 1000) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($y,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':concat($x,'/',extract($y,'(.+m3u8)',1))}]}}]"
+[
+  {
+    "1": {
+      "name": "Omrop Fryslân: Fryslân Hjoed (17032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "480x272",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "1280x720",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"
+        },
+        {
+          "format": "hls-1",
+          "extension": "m3u8",
+          "resolution": "audiospoor",
+          "vbitrate": "",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4/180317_FRYSLANHJOED_2018-03-17_1-audio=128000.m3u8"
+        },
+        {
+          "format": "hls-2",
+          "extension": "m3u8",
+          "resolution": "480x272",
+          "vbitrate": "v:1998k",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4/180317_FRYSLANHJOED_2018-03-17_1-audio=128000-video=1998487.m3u8"
+        },
+        {
+          "format": "hls-3",
+          "extension": "m3u8",
+          "resolution": "1280x720",
+          "vbitrate": "v:5998k",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180317_FRYSLANHJOED_2018-03-17_1.mp4/180317_FRYSLANHJOED_2018-03-17_1-audio=128000-video=5997510.m3u8"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+https://www.omropfryslan.nl/nijs/796631-miho-takagi-kampioen-ireen-wust-twadde-de-jong-fjirde
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/nijs/796631-miho-takagi-kampioen-ireen-wust-twadde-de-jong-fjirde" --xquery "let $date:=replace(//meta[@property='article:published_time']/@content,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return [//div[ends-with(@class,'media-field')]/{position():{'name':concat('Omrop Fryslân: ',replace(if (./div[@class='vjs-title']) then ./div[@class='vjs-title'] else //div[@class='node-content-wrapper']//h3,'[&quot;&apos;]',''''''),$date),'formats':let $a:=(replace(./video/@src,'HQ','LQ'),./video/@src) return [for $x at $i in $a return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($i=1) then '480x272' else '1280x720','url':$x},for $x at $i in $a for $y at $j in (if ($i=1) then tail(tokenize(unparsed-text($x||'/manifest.m3u8'),'#EXT-X-STREAM-INF:')) else tokenize(unparsed-text($x||'/manifest.m3u8'),'#EXT-X-STREAM-INF:')[2]) order by extract($y,'BANDWIDTH=(\d+)',1) count $j return {'format':'hls-'||$j,'extension':'m3u8','resolution':extract($y,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':round(extract($y,'video=(\d+)',1) div 1000) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($y,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':concat($x,'/',extract($y,'(.+m3u8)',1))}]}}]"
+[
+  {
+    "1": {
+      "name": "Omrop Fryslân: Antoinette de Jong (10032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "480x272",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_ANTOINETTE100318.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "1280x720",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_ANTOINETTE100318.mp4"
+        },
+        {
+          "format": "hls-1",
+          "extension": "m3u8",
+          "resolution": "audiospoor",
+          "vbitrate": "",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_ANTOINETTE100318.mp4/180310_ANTOINETTE100318-audio=128000.m3u8"
+        },
+        {
+          "format": "hls-2",
+          "extension": "m3u8",
+          "resolution": "480x272",
+          "vbitrate": "v:1499k",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_ANTOINETTE100318.mp4/180310_ANTOINETTE100318-audio=128000-video=1499497.m3u8"
+        },
+        {
+          "format": "hls-3",
+          "extension": "m3u8",
+          "resolution": "1280x720",
+          "vbitrate": "v:4502k",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_ANTOINETTE100318.mp4/180310_ANTOINETTE100318-audio=128000-video=4501911.m3u8"
+        }
+      ]
+    }
+  },
+  {
+    "2": {
+      "name": "Omrop Fryslân: Ireen Wüst (10032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "480x272",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_IREEN100318.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "1280x720",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_IREEN100318.mp4"
+        },
+        {
+          "format": "hls-1",
+          "extension": "m3u8",
+          "resolution": "audiospoor",
+          "vbitrate": "",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_IREEN100318.mp4/180310_IREEN100318-audio=128000.m3u8"
+        },
+        {
+          "format": "hls-2",
+          "extension": "m3u8",
+          "resolution": "480x272",
+          "vbitrate": "v:1497k",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_IREEN100318.mp4/180310_IREEN100318-audio=128000-video=1496584.m3u8"
+        },
+        {
+          "format": "hls-3",
+          "extension": "m3u8",
+          "resolution": "1280x720",
+          "vbitrate": "v:4503k",
+          "abitrate": "a:128k",
+          "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_IREEN100318.mp4/180310_IREEN100318-audio=128000-video=4502989.m3u8"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Alles in één query:
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/live/omrop-fryslan-tv" --xquery "if (contains($url,'/live/')) then (name:=concat('Omrop Fryslân',//meta[@itemprop='name']/@content ! (if (contains(.,'Omrop Fryslân')) then () else ' - '||replace(.,' TV$','')),replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)')),json(//script/extract(.,'settings, (.+)\);',1)[.])/videojs/json(doc(.//playlist))/(let $a:=('480x270','640x360','960x540','1280x720'),$b:=(.//sources)()[ends-with(src,'m3u8')]/src return formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$b},for $x at $i in tail(tokenize(unparsed-text($b),'#EXT-X-STREAM-INF:')) return {'format':'hls-'||$i,'extension':'m3u8','resolution':$a[$i],'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$b)||extract($x,'(.+m3u8)',1)}])) else (let $date:=replace(//meta[@property='article:published_time']/@content,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return videos:=[//div[ends-with(@class,'media-field')]/{position():{'name':concat('Omrop Fryslân: ',replace(if (./div[@class='vjs-title']) then ./div[@class='vjs-title'] else //div[@class='node-content-wrapper']//h3,'[&quot;&apos;]',''''''),$date),'formats':let $a:=(replace(./video/@src,'HQ','LQ'),./video/@src) return [for $x at $i in $a return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($i=1) then '480x272' else '1280x720','url':$x},for $x at $i in $a for $y at $j in (if ($i=1) then tail(tokenize(unparsed-text($x||'/manifest.m3u8'),'#EXT-X-STREAM-INF:')) else tokenize(unparsed-text($x||'/manifest.m3u8'),'#EXT-X-STREAM-INF:')[2]) order by extract($y,'BANDWIDTH=(\d+)',1) count $j return {'format':'hls-'||$j,'extension':'m3u8','resolution':extract($y,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':round(extract($y,'video=(\d+)',1) div 1000) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($y,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':concat($x,'/',extract($y,'(.+m3u8)',1))}]}}])"
+name := Omrop Fryslân: Livestream (19032018)
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/playlist.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "480x270", "vbitrate": "400k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1642734265_b400000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "640x360", "vbitrate": "800k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1642734265_b800000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "960x540", "vbitrate": "1200k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1642734265_b1200000.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "2000k", "url": "https://live.wowza.kpnstreaming.nl/omropfryslanlive/OFstream04.smil/chunklist_w1642734265_b2000000.m3u8"}]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/utstjoering/fryslan-hjoed-fan-17-maart-2018-1800" --xquery "[...]"
+videos := [{"1": {"name": "Omrop Fryslân: Fryslân Hjoed (17032018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "480x272", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "1280x720", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180317_FRYSLANHJOED_2018-03-17_1.mp4"}, {"format": "hls-1", "extension": "m3u8", "resolution": "audiospoor", "vbitrate": "", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4/180317_FRYSLANHJOED_2018-03-17_1-audio=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x272", "vbitrate": "v:1998k", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180317_FRYSLANHJOED_2018-03-17_1.mp4/180317_FRYSLANHJOED_2018-03-17_1-audio=128000-video=1998487.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:5998k", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180317_FRYSLANHJOED_2018-03-17_1.mp4/180317_FRYSLANHJOED_2018-03-17_1-audio=128000-video=5997510.m3u8"}]}}]
+
+xidel-0.9.7.6044-openssl.exe -s --color=never "https://www.omropfryslan.nl/nijs/796631-miho-takagi-kampioen-ireen-wust-twadde-de-jong-fjirde" --xquery "[...]"
+videos := [{"1": {"name": "Omrop Fryslân: Antoinette de Jong (10032018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "480x272", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_ANTOINETTE100318.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "1280x720", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_ANTOINETTE100318.mp4"}, {"format": "hls-1", "extension": "m3u8", "resolution": "audiospoor", "vbitrate": "", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_ANTOINETTE100318.mp4/180310_ANTOINETTE100318-audio=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x272", "vbitrate": "v:1499k", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_ANTOINETTE100318.mp4/180310_ANTOINETTE100318-audio=128000-video=1499497.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:4502k", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_ANTOINETTE100318.mp4/180310_ANTOINETTE100318-audio=128000-video=4501911.m3u8"}]}}, {"2": {"name": "Omrop Fryslân: Ireen Wüst (10032018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "480x272", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_IREEN100318.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "1280x720", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_IREEN100318.mp4"}, {"format": "hls-1", "extension": "m3u8", "resolution": "audiospoor", "vbitrate": "", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_IREEN100318.mp4/180310_IREEN100318-audio=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "480x272", "vbitrate": "v:1497k", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/LQ/180310_IREEN100318.mp4/180310_IREEN100318-audio=128000-video=1496584.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "v:4503k", "abitrate": "a:128k", "url": "https://omropfryslanvod.download.kpnstreaming.nl/video/2013/HQ/180310_IREEN100318.mp4/180310_IREEN100318-audio=128000-video=4502989.m3u8"}]}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "if (
+            contains(
+              $url,
+              '/live/'
+            )
+          ) then (
+            name:=concat(
+              'Omrop Fryslân',
+              //meta[@itemprop='name']/@content ! (
+                if (
+                  contains(
+                    .,
+                    'Omrop Fryslân'
+                  )
+                ) then
+                  ()
+                else
+                  ' - '||replace(
+                    .,
+                    ' TV$',
+                    ''
+                  )
+              ),
+              replace(
+                '%date%',
+                '.+?(\d+)-(\d+)-(\d+)',
+                ': Livestream ($1$2$3)'
+              )
+            ),
+            json(
+              //script/extract(
+                .,
+                'settings, (.+)\);',
+                1
+              )[.]
+            )/videojs/json(
+              doc(.//playlist)
+            )/(
+              let $a:=(
+                '480x270',
+                '640x360',
+                '960x540',
+                '1280x720'
+              ),
+              $b:=(.//sources)()[
+                ends-with(
+                  src,
+                  'm3u8'
+                )
+              ]/src
+              return
+              formats:=[
+                {
+                  'format':'hls-0',
+                  'extension':'m3u8',
+                  'resolution':'manifest',
+                  'url':$b
+                },
+                for $x at $i in tail(
+                  tokenize(
+                    unparsed-text($b),
+                    '#EXT-X-STREAM-INF:'
+                  )
+                ) return {
+                  'format':'hls-'||$i,
+                  'extension':'m3u8',
+                  'resolution':$a[$i],
+                  'vbitrate':extract(
+                    $x,
+                    'BANDWIDTH=(\d+)\d{3}',
+                    1
+                  )||'k',
+                  'url':resolve-uri(
+                    '.',
+                    $b
+                  )||extract(
+                    $x,
+                    '(.+m3u8)',
+                    1
+                  )
+                }
+              ]
+            )
+          ) else (
+            let $date:=replace(
+              //meta[@property='article:published_time']/@content,
+              '(\d+)-(\d+)-(\d+).+',
+              ' ($3$2$1)'
+            ) return
+            videos:=[
+              //div[
+                ends-with(
+                  @class,
+                  'media-field'
+                )
+              ]/{
+                position():{
+                  'name':concat(
+                    'Omrop Fryslân: ',
+                    replace(
+                      if (./div[@class='vjs-title']) then
+                        ./div[@class='vjs-title']
+                      else
+                        //div[@class='node-content-wrapper']//h3,
+                      '[&quot;&apos;]',
+                      ''''''
+                    ),
+                    $date
+                  ),
+                  'formats':let $a:=(
+                    replace(
+                      ./video/@src,
+                      'HQ',
+                      'LQ'
+                    ),
+                    ./video/@src
+                  ) return [
+                    for $x at $i in $a return {
+                      'format':'mp4-'||$i,
+                      'extension':'mp4',
+                      'resolution':if ($i=1) then
+                        '480x272'
+                      else
+                        '1280x720',
+                      'url':$x
+                    },
+                    for $x at $i in $a
+                    for $y at $j in (
+                      if ($i=1) then
+                        tail(
+                          tokenize(
+                            unparsed-text($x||'/manifest.m3u8'),
+                            '#EXT-X-STREAM-INF:'
+                          )
+                        )
+                      else
+                        tokenize(
+                          unparsed-text($x||'/manifest.m3u8'),
+                          '#EXT-X-STREAM-INF:'
+                        )[2]
+                    ) order by extract(
+                      $y,
+                      'BANDWIDTH=(\d+)',
+                      1
+                    ) count $j return {
+                      'format':'hls-'||$j,
+                      'extension':'m3u8',
+                      'resolution':extract(
+                        $y,
+                        'RESOLUTION=([\dx]+)',
+                        1
+                      ) ! (
+                        if (.) then
+                          .
+                        else
+                          'audiospoor'
+                      ),
+                      'vbitrate':round(
+                        extract(
+                          $y,
+                          'video=(\d+)',
+                          1
+                        ) div 1000
+                      ) ! (
+                        if (.) then
+                          concat(
+                            'v:',
+                            .,
+                            'k'
+                          )
+                        else
+                          ''
+                      ),
+                      'abitrate':replace(
+                        $y,
+                        '.+audio.+?(\d+)\d{3}.+',
+                        'a:$1k',
+                        's'
+                      ),
+                      'url':concat(
+                        $x,
+                        '/',
+                        extract(
+                          $y,
+                          '(.+m3u8)',
+                          1
+                        )
+                      )
+                    }
+                  ]
+                }
+              }
             ]
           )"
