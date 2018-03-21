@@ -236,27 +236,27 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPO
 ) ELSE IF NOT "%url:npo.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"prid:^=extract(
+	-e ^"prid:^=extract^(
 	      '%url%'^,
-	      '.+/([\w_]+^)'^,
+	      '.+/^([\w_]+^)'^,
 	      1
 	    ^)^,
-	    date:^=replace(
+	    date:^=replace^(
 	      '%url%'^,
-	      '.+?(\d+^)-(\d+^)-(\d+^).+'^,
+	      '.+?^(\d+^)-^(\d+^)-^(\d+^).+'^,
 	      '$1$2$3'
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO NPO
 ) ELSE IF NOT "%url:gemi.st=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"prid:^=extract(
+	-e ^"prid:^=extract^(
 	      '%url%'^,
-	      '.+/([\w_]+^)'^,
+	      '.+/^([\w_]+^)'^,
 	      1
 	    ^)^,
-	    date:^=replace(
+	    date:^=replace^(
 	      '%url%'^,
-	      '.+?(\d+^)-(\d+^)-(\d+^).+'^,
+	      '.+?^(\d+^)-^(\d+^)-^(\d+^).+'^,
 	      '$1$2$3'
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -302,10 +302,10 @@ IF NOT "%url: =%"=="%url%" (
 	    ]^" --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:2doc.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	-e ^"prid:^=(//@data-media-id^)[1]^,
-	    date:^=replace(
-	      (//@datetime^)[1]^,
-	      '(\d+^)-(\d+^)-(\d+^)'^,
+	-e ^"prid:^=^(//@data-media-id^)[1]^,
+	    date:^=replace^(
+	      ^(//@datetime^)[1]^,
+	      '^(\d+^)-^(\d+^)-^(\d+^)'^,
 	      '$3$2$1'
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -323,9 +323,9 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:schooltv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	-e ^"prid:^=//div/@data-mid^,
-	    date:^=replace(
+	    date:^=replace^(
 	      //dd[span[@property^='datePublished']]^,
-	      '(\d+^)-(\d+^)-(\d+^)'^,
+	      '^(\d+^)-^(\d+^)-^(\d+^)'^,
 	      '$1$2$3'
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -471,25 +471,25 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO NPO
 ) ELSE IF NOT "%url:static.rtl.nl/embed=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"prid:^=extract(
+	-e ^"prid:^=extract^(
 	      '%url%'^,
-	      'uuid=([\w-]+^)'^,
+	      'uuid=^([\w-]+^)'^,
 	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtlxl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"prid:^=extract(
+	-e ^"prid:^=extract^(
 	      '%url%'^,
-	      'video/([\w-]+^)'^,
+	      'video/^([\w-]+^)'^,
 	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
 ) ELSE IF NOT "%url:rtl.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"prid:^=extract(
+	-e ^"prid:^=extract^(
 	      '%url%'^,
-	      'video/([\w-]+^)'^,
+	      'video/^([\w-]+^)'^,
 	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO rtlXL
@@ -511,17 +511,17 @@ IF NOT "%url: =%"=="%url%" (
 	GOTO rtlXL
 ) ELSE IF NOT "%url:kijk.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"prid:^=extract(
+	-e ^"prid:^=extract^(
 	      '%url%'^,
-	      '(?:video^|videos^)/(\w+^)'^,
+	      '^(?:video^|videos^)/^(\w+^)'^,
 	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO Kijk
 ) ELSE IF NOT "%url:sbs6.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
-	-e ^"prid:^=extract(
+	-e ^"prid:^=extract^(
 	      '%url%'^,
-	      'videos/(\w+^)'^,
+	      'videos/^(\w+^)'^,
 	      1
 	    ^)^" --output-format^=cmd^"') DO %%A
 	GOTO Kijk
@@ -4560,10 +4560,10 @@ FOR /F "delims=" %%A IN ('^"%xidel%
       }
     ] return
     select:^=if ^(
-      file:exists^('%ffmpeg:^"^=%'^)
+      file:exists^('%ffmpeg:"=%'^)
     ^) then
       if ^(
-        file:exists^('%mpc:^"^=%'^)
+        file:exists^('%mpc:"=%'^)
       ^) then
         $a
       else [
@@ -4571,7 +4571,7 @@ FOR /F "delims=" %%A IN ('^"%xidel%
         $a^(2^)
       ]
     else if ^(
-      file:exists^('%mpc:^"^=%'^)
+      file:exists^('%mpc:"=%'^)
     ^) then [
       $a^(1^)^,
       $a^(3^)
@@ -4583,7 +4583,7 @@ FOR /F "delims=" %%A IN ('ECHO %select% ^| %xidel% - -e "count($json())"') DO (
 )
 
 ECHO.
-ECHO %select% | %xidel% -
+ECHO %select% | %xidel% - ^
 --xquery ^"for $x at $i in $json^(^) return^
           concat^(^
             '  '^,^
