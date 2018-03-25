@@ -618,12 +618,12 @@ IF NOT "%url: =%"=="%url%" (
 	            ^) return
 	            videos:^=[
 	              //div[
-	                ends-with^(
+	                contains^(
 	                  @class^,
-	                  'media-field'
+	                  'field-video-kpnid'
 	                ^)
 	              ]/{
-	                position^(^):{
+	                position^(^):let $a:^=doc^(./video/@src^|^|'/manifest.mpd'^)//@mediaPresentationDuration return {
 	                  'name':concat^(
 	                    'Omrop Fryslƒn: '^,
 	                    replace^(
@@ -636,6 +636,15 @@ IF NOT "%url: =%"=="%url%" (
 	                    ^)^,
 	                    $date
 	                  ^)^,
+	                  'duration':format-time^(
+	                    duration^($a^) + duration^('PT0.5S'^) + time^('00:00:00'^)^,
+	                    '[H01]:[m01]:[s01]'
+	                  ^)^,
+	                  't':hours-from-duration^($a^)*3600+
+	                    minutes-from-duration^($a^)*60+
+	                    round^(
+	                      seconds-from-duration^($a^)
+	                    ^)^,
 	                  'formats':let $a:^=^(
 	                    replace^(
 	                      ./video/@src^,
@@ -687,7 +696,7 @@ IF NOT "%url: =%"=="%url%" (
 	                      'vbitrate':round^(
 	                        extract^(
 	                          $y^,
-	                          'video^=^(\d+^)'^,
+	                          '^(?:video^|video_.+?^)^=^(\d+^)'^,
 	                          1
 	                        ^) div 1000
 	                      ^) ! ^(
@@ -700,11 +709,16 @@ IF NOT "%url: =%"=="%url%" (
 	                        else
 	                          ''
 	                      ^)^,
-	                      'abitrate':replace^(
-	                        $y^,
-	                        '.+audio.+?^(\d+^)\d{3}.+'^,
-	                        'a:$1k'^,
-	                        's'
+	                      'abitrate':concat^(
+	                        'a:'^,
+	                        round^(
+	                          extract^(
+	                            $y^,
+	                            '^(?:audio^|audio_.+?^)^=^(\d+^)'^,
+	                            1
+	                          ^) div 1000
+	                        ^)^,
+	                        'k'
 	                      ^)^,
 	                      'url':concat^(
 	                        $x^,
