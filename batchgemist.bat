@@ -3447,6 +3447,7 @@ IF DEFINED formats (
 	ECHO Video nog niet, of niet meer beschikbaar.
 	ECHO.
 	ECHO.
+	ENDLOCAL
 	GOTO Input
 )
 
@@ -3615,6 +3616,7 @@ IF DEFINED formats (
 	ECHO Video nog niet, of niet meer beschikbaar.
 	ECHO.
 	ECHO.
+	ENDLOCAL
 	GOTO Input
 )
 
@@ -3863,6 +3865,7 @@ IF DEFINED formats (
 	ECHO Video nog niet, of niet meer beschikbaar.
 	ECHO.
 	ECHO.
+	ENDLOCAL
 	GOTO Input
 )
 
@@ -3903,6 +3906,7 @@ IF DEFINED formats (
 	ECHO Video nog niet, of niet meer beschikbaar.
 	ECHO.
 	ECHO.
+	ENDLOCAL
 	GOTO Input
 )
 

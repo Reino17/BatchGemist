@@ -11400,7 +11400,7 @@ formats := [{"format": "mp4-1", "extension": "mp4", "resolution": "640x360", "vb
 ================================================================================================================================
 
 [https://github.com/Reino17/BatchGemist/commit/781c0f6b852eca08b953b21691ab6030e7e4e6cc]
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/b60e7944ebb7a03d5b40ef2669b0eac2d03c3483]
 
 https://www.omropfryslan.nl/live/omrop-fryslan-tv
 
