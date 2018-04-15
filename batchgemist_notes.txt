@@ -11977,7 +11977,7 @@ videos := [{"1": {"name": "Omrop Fryslân: Antoinette de Jong (10032018)", "durat
 
 ================================================================================================================================
 
-[https://github.com/Reino17/BatchGemist/commit/]
+[https://github.com/Reino17/BatchGemist/commit/e4804c3b4a8b037bd09803b8c2d7fba2a8ba58a6]
 
 https://www.rtvnoord.nl/livetv
 
@@ -12347,3 +12347,180 @@ videos := [{"1": {"name": "RTV Noord: Kijk terug: De memorabele zege van Donar o
               }
             ]
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+http://www.rtvdrenthe.nl/tv
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/tv" -f "//@data-media" -e "$raw"
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-STREAM-INF:BANDWIDTH=1789158,CODECS="avc1.77.31,mp4a.40.2",RESOLUTION=1280x720
+chunklist_w539936670.m3u8
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/tv" -f "//@data-media" --xquery "[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$url},for $x at $i in tail(tokenize(unparsed-text($url),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$url)||extract($x,'(.+m3u8)',1)}]"
+[
+  {
+    "format": "hls-0",
+    "extension": "m3u8",
+    "resolution": "manifest",
+    "url": "http://stream.rtvdrenthe.nl/tv/:tvstream1/playlist.m3u8"
+  },
+  {
+    "format": "hls-1",
+    "extension": "m3u8",
+    "resolution": "1280x720",
+    "vbitrate": "1767k",
+    "url": "http://stream.rtvdrenthe.nl/tv/:tvstream1/chunklist_w2105482351.m3u8"
+  }
+]
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/tv" -f "//@data-media" --xquery "name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Drenthe: Livestream ($1$2$3)'),formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$url},for $x at $i in tail(tokenize(unparsed-text($url),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',$url)||extract($x,'(.+m3u8)',1)}]"
+name := RTV Drenthe: Livestream (09042018)
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "http://stream.rtvdrenthe.nl/tv/:tvstream1/playlist.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "1821k", "url": "http://stream.rtvdrenthe.nl/tv/:tvstream1/chunklist_w2080071114.m3u8"}]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+http://www.rtvdrenthe.nl/tv/programma/10/Drenthe-Nu/aflevering/32453
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/tv/programma/10/Drenthe-Nu/aflevering/32453" -e "name:=concat('RTV Drenthe: ',//div[@class='media-details']/h3,replace(//@data-media,'.+?(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),formats:=[{'format':'mp4-1','extension':'mp4','url'://@data-media}]"
+name := RTV Drenthe: Drenthe Nu (09042018)
+formats := [{"format": "mp4-1", "extension": "mp4", "url": "https://av.rtvdrenthe.nl/media/drnl20180409-hhuitz.mp4"}]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+http://www.rtvdrenthe.nl/nieuws/104086/Veel-ongelukken-en-glijpartijen-in-Drenthe
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/nieuws/104086/Veel-ongelukken-en-glijpartijen-in-Drenthe" -e "[//div[@data-button]/{position():{'name':concat('RTV Drenthe: ',@title,replace(//@data-media,'.+?(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),'formats':[{'format':'mp4-1','extension':'mp4','url':@data-media}]}}]"
+[
+  {
+    "1": {
+      "name": "RTV Drenthe: Beelden van Persbureau Meter (06012016)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "url": "http://av.rtvdrenthe.nl/media/nws20160106-ongelukzuidwolde_item_0002.mp4"
+        }
+      ]
+    }
+  },
+  {
+    "2": {
+      "name": "RTV Drenthe: Beelden vanaf de A37 (06012016)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "url": "http://av.rtvdrenthe.nl/media/nws20160106-ongelukken_item_0002.mp4"
+        }
+      ]
+    }
+  },
+  {
+    "3": {
+      "name": "RTV Drenthe: Vanmorgen vroeg raakten meerdere vrachtwagens van de weg (beelden: Persbureau Meter) (06012016)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "url": "http://av.rtvdrenthe.nl/media/nws20160106-ongelukkenvroeg_item_0002.mp4"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Alles in één query:
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/tv" --xquery "if (//div[@data-id='Tv']) then (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Drenthe: Livestream ($1$2$3)'),formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url'://@data-media},for $x at $i in tail(tokenize(unparsed-text(//@data-media),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':extract($x,'BANDWIDTH=(\d+)\d{3}',1)||'k','url':resolve-uri('.',//@data-media)||extract($x,'(.+m3u8)',1)}]) else videos:=[//div[@data-button]/{position():{'name':concat('RTV Drenthe: ',replace((//div[@class='media-details']/h3,@title),'[&quot;&apos;]',''''''),replace(@data-media,'.+?(\d{4})(\d{2})(\d{2}).+',' ($3$2$1)')),'formats':[{'format':'mp4-1','extension':'mp4','url':@data-media}]}}]"
+name := RTV Drenthe: Livestream (09042018)
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "http://stream.rtvdrenthe.nl/tv/:tvstream1/playlist.m3u8"}, {"format": "hls-1", "extension": "m3u8", "resolution": "1280x720", "vbitrate": "1790k", "url": "http://www.rtvdrenthe.nl/chunklist_w839554167.m3u8"}]
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/tv/programma/10/Drenthe-Nu/aflevering/32453" --xquery "[...]"
+videos := [{"1": {"name": "RTV Drenthe: Drenthe Nu (09042018)", "formats": [{"format": "mp4-1", "extension": "mp4", "url": "https://av.rtvdrenthe.nl/media/drnl20180409-hhuitz.mp4"}]}}]
+
+xidel-0.9.8-openssl.exe -s "http://www.rtvdrenthe.nl/nieuws/104086/Veel-ongelukken-en-glijpartijen-in-Drenthe" --xquery "[...]"
+videos := [{"1": {"name": "RTV Drenthe: Beelden van Persbureau Meter (06012016)", "formats": [{"format": "mp4-1", "extension": "mp4", "url": "http://av.rtvdrenthe.nl/media/nws20160106-ongelukzuidwolde_item_0002.mp4"}]}}, {"2": {"name": "RTV Drenthe: Beelden vanaf de A37 (06012016)", "formats": [{"format": "mp4-1", "extension": "mp4", "url": "http://av.rtvdrenthe.nl/media/nws20160106-ongelukken_item_0002.mp4"}]}}, {"3": {"name": "RTV Drenthe: Vanmorgen vroeg raakten meerdere vrachtwagens van de weg (beelden: Persbureau Meter) (06012016)", "formats": [{"format": "mp4-1", "extension": "mp4", "url": "http://av.rtvdrenthe.nl/media/nws20160106-ongelukkenvroeg_item_0002.mp4"}]}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "if (//div[@data-id='Tv']) then (
+            name:=replace(
+              '%date%',
+              '.+?(\d+)-(\d+)-(\d+)',
+              'RTV Drenthe: Livestream ($1$2$3)'
+            ),
+            formats:=[
+              {
+                'format':'hls-0',
+                'extension':'m3u8',
+                'resolution':'manifest',
+                'url'://@data-media
+              },
+              for $x at $i in tail(
+                tokenize(
+                  unparsed-text(//@data-media),
+                  '#EXT-X-STREAM-INF:'
+                )
+              ) order by extract(
+                $x,
+                'BANDWIDTH=(\d+)',
+                1
+              ) count $i return {
+                'format':'hls-'||$i,
+                'extension':'m3u8',
+                'resolution':extract(
+                  $x,
+                  'RESOLUTION=([\dx]+)',
+                  1
+                ),
+                'vbitrate':extract(
+                  $x,
+                  'BANDWIDTH=(\d+)\d{3}',
+                  1
+                )||'k',
+                'url':resolve-uri(
+                  '.',
+                  //@data-media
+                )||extract(
+                  $x,
+                  '(.+m3u8)',
+                  1
+                )
+              }
+            ]
+          ) else
+            videos:=[
+              //div[@data-button]/{
+                position():{
+                  'name':concat(
+                    'RTV Drenthe: ',
+                    replace(
+                      (
+                        //div[@class='media-details']/h3,
+                        @title
+                      ),
+                      '[&quot;&apos;]',
+                      ''''''
+                    ),
+                    replace(
+                      @data-media,
+                      '.+?(\d{4})(\d{2})(\d{2}).+',
+                      ' ($3$2$1)'
+                    )
+                  ),
+                  'formats':[
+                    {
+                      'format':'mp4-1',
+                      'extension':'mp4',
+                      'url':@data-media
+                    }
+                  ]
+                }
+              }
+            ]"
