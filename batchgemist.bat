@@ -737,93 +737,153 @@ IF NOT "%url: =%"=="%url%" (
 	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvnoord.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
-	--xquery ^"if (contains($url^,'livetv'^)^) then (
-	            name:^=replace(
+	--xquery ^"if ^(
+	            contains^(
+	              $url^,
+	              'livetv'
+	            ^)
+	          ^) then ^(
+	            name:^=replace^(
 	              '%date%'^,
-	              '.+?(\d+^)-(\d+^)-(\d+^)'^,
-	              'RTV Noord - Livestream ($1$2$3^)'
+	              '.+?^(\d+^)-^(\d+^)-^(\d+^)'^,
+	              'RTV Noord: Livestream ^($1$2$3^)'
 	            ^)^,
-	            let $a:^=doc(
-	              doc(
-	                doc(
-	                  //iframe/@src
-	                ^)//@src
-	              ^)/extract(.^,'\^"playlist\^": \^"(.+^^^)\^"^,'^,1^)
-	            ^)//@file return
-	            json:^=[
+	            let $a:^=doc^(//iframe/@src^)/x:request^(
 	              {
-	                'format':'meta'^,
+	                'url':replace^(
+	                  //script/extract^(
+	                    .^,
+	                    'url: \^"^(.+^)\^"'^,
+	                    1
+	                  ^)[.]^,
+	                  'jsonp'^,
+	                  'json'
+	                ^)^,
+	                'error-handling':'4xx^=accept'
+	              }
+	            ^)[
+	              contains^(
+	                headers[1]^,
+	                '200'
+	              ^)
+	            ]/json^(doc^) return
+	            formats:^=[
+	              {
+	                'format':'hls-0'^,
+	                'extension':'m3u8'^,
+	                'resolution':'manifest'^,
 	                'url':$a
 	              }^,
-	              tail(
-	                tokenize(
-	                  unparsed-text($a^)^,
+	              for $x at $i in tail^(
+	                tokenize^(
+	                  extract^(
+	                    unparsed-text^($a^)^,
+	                    '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
+	                    1^,'ms'
+	                  ^)^,
 	                  '#EXT-X-STREAM-INF:'
 	                ^)
-	              ^) ! {
-	                'format':string(
-	                  extract(
-	                    .^,'BANDWIDTH^=(\d+^)'^,1
-	                  ^) idiv 1000
+	              ^) order by extract^(
+	                $x^,
+	                'BANDWIDTH^=^(\d+^)'^,
+	                1
+	              ^) count $i return {
+	                'format':'hls-'^|^|$i^,
+	                'extension':'m3u8'^,
+	                'resolution':extract^(
+	                  $x^,
+	                  'RESOLUTION^=^([\dx]+^)'^,
+	                  1
+	                ^) ! ^(
+	                  if ^(.^) then
+	                    .
+	                  else
+	                    'audiospoor'
 	                ^)^,
-	                'url':concat(
-	                  resolve-uri('.'^,$a^)^,
-	                  extract(
-	                    .^,'(.+m3u8^)'^,1
-	                  ^)
+	                'vbitrate':extract^(
+	                  $x^,
+	                  'video^=^(\d+^)\d{3}'^,
+	                  1
+	                ^) ! ^(
+	                  if ^(.^) then
+	                    concat^(
+	                      'v:'^,
+	                      .^,
+	                      'k'
+	                    ^)
+	                  else
+	                    ''
+	                ^)^,
+	                'abitrate':replace^(
+	                  $x^,
+	                  '.+audio.+?^(\d+^)\d{3}.+'^,
+	                  'a:$1k'^,
+	                  's'
+	                ^)^,
+	                'url':resolve-uri^(
+	                  '.'^,
+	                  $a
+	                ^)^|^|extract^(
+	                  $x^,
+	                  '^(.+m3u8^)'^,
+	                  1
 	                ^)
 	              }
-	            ]^,
-	            formats:^=join($json(^)/format^,'^, '^)^,
-	            best:^=$json(^)[last(^)]/format
-	          ^) else
-	            let $a:^=replace(
+	            ]
+	          ^) else ^(
+	            let $a:^=replace^(
 	              //@datetime^,
-	              '(\d+^)-(\d+^)-(\d+^).+'^,
-	              ' ($3$2$1^)'
-	            ^)
-	            let $b:^=//div[@data-button^='player-still-overlay icon-play'] return
-	            if (count($b^)^=1^) then (
-	              name:^=if (//meta[@property^='og:type']/@content^='video:episode'^) then
-	                concat(
-	                  'RTV Noord - '^,
-	                  //div[@class^='media-details']/h3^,
-	                  replace(
-	                    //@data-media^,
-	                    '.+?/(\d+^).{3}(\d{2}^)(\d{2}^).+'^,
-	                    ' ($3$2$1^)'
-	                  ^)
-	                ^)
-	              else
-	                concat(
-	                  'RTV Noord - '^,
-	                  replace(
-	                    $b/@title^,
-	                    '[^&quot^;^&apos^;]'^,
-	                    ''''''
-	                  ^)^,
-	                  $a
-	                ^)^,
-	                v_url:^=$b/@data-media
-	            ^) else (
-	              json:^=[
-	                $b ! {
-	                  position(^)^|^|'e':{
-	                    'name':concat(
-	                      'RTV Noord - '^,
-	                      replace(
+	              '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+	              ' ^($3$2$1^)'
+	            ^) return
+	            videos:^=[
+	              //div[@data-media]/{
+	                position^(^):{
+	                  'name':if ^(//meta[@property^='og:type']/@content^='video:episode'^) then
+	                    concat^(
+	                      'RTV Noord: '^,
+	                      //div[@class^='media-details']/h3^,
+	                      replace^(
+	                        //@data-media^,
+	                        '.+?/^(\d+^).{3}^(\d{2}^)^(\d{2}^).+'^,
+	                        ' ^($3$2$1^)'
+	                      ^)
+	                    ^)
+	                  else
+	                    concat^(
+	                      'RTV Noord: '^,
+	                      replace^(
 	                        @title^,
 	                        '[^&quot^;^&apos^;]'^,
 	                        ''''''
 	                      ^)^,
 	                      $a
 	                    ^)^,
-	                    'url':@data-media
-	                  }
+	                  'formats':[
+	                    for $x at $i in ^(
+	                      'LQ'^,
+	                      'HQ'^,
+	                      'XHQ'
+	                    ^) return {
+	                      'format':'mp4-'^|^|$i^,
+	                      'extension':'mp4'^,
+	                      'resolution':if ^($x^='LQ'^) then
+	                        '360x202'
+	                      else if ^($x^='HQ'^) then
+	                        '720x404'
+	                      else
+	                        '1920x1080'^,
+	                      'url':replace^(
+	                        //@data-media^,
+	                        'XHQ'^,
+	                        $x
+	                      ^)
+	                    }
+	                  ]
 	                }
-	              ]^,
-	              videos:^=join($json(^)(^)^,'^, '^)
-	            ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	              }
+	            ]
+	          ^)^" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:www.rtvdrenthe.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%"
 	--xquery ^"let $a:^=//meta[@property^='og:type']/@content

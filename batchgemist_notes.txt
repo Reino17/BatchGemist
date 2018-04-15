@@ -11974,3 +11974,376 @@ videos := [{"1": {"name": "Omrop Fryslân: Antoinette de Jong (10032018)", "durat
               }
             ]
           )"
+
+================================================================================================================================
+
+[https://github.com/Reino17/BatchGemist/commit/]
+
+https://www.rtvnoord.nl/livetv
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/livetv" -e "doc(//iframe/@src)//script/extract(.,'url: \"(.+)\"',1)[.]"
+https://livestreams.omroep.nl/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord.m3u8?protection=url&type=jsonp&callback=?
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/livetv" -e "doc(//iframe/@src)/x:request({'url':replace(//script/extract(.,'url: \"(.+)\"',1)[.],'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json(doc)"
+https://pedgewarea25a.video.kpnstreaming.nl/session/4f22dfb8-3365-11e8-8063-9cb65498b840/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord.m3u8?token=8ea9baf89926ec4e68541604c3981529_1522423484_1522423484
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/livetv" --xquery "let $a:=doc(//iframe/@src)/x:request({'url':replace(//script/extract(.,'url: \"(.+)\"',1)[.],'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json(doc) return [{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)}]"
+[
+  {
+    "format": "hls-0",
+    "extension": "m3u8",
+    "resolution": "manifest",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/2c8f8e18-3367-11e8-aeec-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord.m3u8?token=b2566223fae895789e2fc246e9b3a0af_1522424285_1522424285"
+  },
+  {
+    "format": "hls-1",
+    "extension": "m3u8",
+    "resolution": "audiospoor",
+    "vbitrate": "",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/2c8f8e18-3367-11e8-aeec-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000.m3u8"
+  },
+  {
+    "format": "hls-2",
+    "extension": "m3u8",
+    "resolution": "426x240",
+    "vbitrate": "v:400k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/2c8f8e18-3367-11e8-aeec-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=400000.m3u8"
+  },
+  {
+    "format": "hls-3",
+    "extension": "m3u8",
+    "resolution": "854x480",
+    "vbitrate": "v:899k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/2c8f8e18-3367-11e8-aeec-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=899968.m3u8"
+  },
+  {
+    "format": "hls-4",
+    "extension": "m3u8",
+    "resolution": "1920x1080",
+    "vbitrate": "v:4000k",
+    "abitrate": "a:128k",
+    "url": "https://pedgewarea25b.video.kpnstreaming.nl/session/2c8f8e18-3367-11e8-aeec-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=4000000.m3u8"
+  }
+]
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/livetv" --xquery "name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Noord: Livestream ($1$2$3)'),let $a:=doc(//iframe/@src)/x:request({'url':replace(//script/extract(.,'url: \"(.+)\"',1)[.],'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json(doc) return formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)}]"
+name := RTV Noord: Livestream (29032018)
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://pedgewarer25a.video.kpnstreaming.nl/session/02e713ce-3367-11e8-9692-9cb65498b840/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord.m3u8?token=4fc3d3a66761b597e678d3b73f12a3fe_1522424215_1522424215"}, {"format": "hls-1", "extension": "m3u8", "resolution": "audiospoor", "vbitrate": "", "abitrate": "a:128k", "url": "https://pedgewarer25a.video.kpnstreaming.nl/session/02e713ce-3367-11e8-9692-9cb65498b840/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "426x240", "vbitrate": "v:400k", "abitrate": "a:128k", "url": "https://pedgewarer25a.video.kpnstreaming.nl/session/02e713ce-3367-11e8-9692-9cb65498b840/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=400000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "854x480", "vbitrate": "v:899k", "abitrate": "a:128k", "url": "https://pedgewarer25a.video.kpnstreaming.nl/session/02e713ce-3367-11e8-9692-9cb65498b840/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=899968.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:4000k", "abitrate": "a:128k", "url": "https://pedgewarer25a.video.kpnstreaming.nl/session/02e713ce-3367-11e8-9692-9cb65498b840/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=4000000.m3u8"}]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+https://www.rtvnoord.nl/tv/programma/10010/Noord-Vandaag/aflevering/15783
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/tv/programma/10010/Noord-Vandaag/aflevering/15783" -e "for $x in ('LQ','HQ','XHQ') return replace(//@data-media,'XHQ',$x)"
+https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_LQ.mp4
+https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_HQ.mp4
+https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_XHQ.mp4
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/tv/programma/10010/Noord-Vandaag/aflevering/15783" --xquery "[for $x at $i in ('LQ','HQ','XHQ') return {'format':'mp4-'||$i,'extension':'mp4','url':replace(//@data-media,'XHQ',$x)}]"
+[
+  {
+    "format": "mp4-1",
+    "extension": "mp4",
+    "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_LQ.mp4"
+  },
+  {
+    "format": "mp4-2",
+    "extension": "mp4",
+    "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_HQ.mp4"
+  },
+  {
+    "format": "mp4-3",
+    "extension": "mp4",
+    "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_XHQ.mp4"
+  }
+]
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/tv/programma/10010/Noord-Vandaag/aflevering/15783" --xquery "[//div[@data-media]/{position():{'name':concat('RTV Noord: ',//div[@class='media-details']/h3,replace(//@data-media,'.+?/(\d+).{3}(\d{2})(\d{2}).+',' ($3$2$1)')),'formats':[for $x at $i in ('LQ','HQ','XHQ') return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($x='LQ') then '360x202' else if ($x='HQ') then '720x404' else '1920x1080','url':replace(//@data-media,'XHQ',$x)}]}}]"
+[
+  {
+    "1": {
+      "name": "RTV Noord: Noord Vandaag (28032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "360x202",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_LQ.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "720x404",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_HQ.mp4"
+        },
+        {
+          "format": "mp4-3",
+          "extension": "mp4",
+          "resolution": "1920x1080",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_XHQ.mp4"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+https://www.rtvnoord.nl/nieuws/192181/Een-halve-eeuw-bowlen-in-Groningen-Ik-was-wel-een-van-de-toppers
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/nieuws/192181/Een-halve-eeuw-bowlen-in-Groningen-Ik-was-wel-een-van-de-toppers" --xquery "let $a:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return [//div[@data-media]/{position():{'name':if (//meta[@property='og:type']/@content='video:episode') then concat('RTV Noord: ',//div[@class='media-details']/h3,replace(//@data-media,'.+?/(\d+).{3}(\d{2})(\d{2}).+',' ($3$2$1)')) else concat('RTV Noord: ',replace(@title,'[&quot;&apos;]',''''''),$a),'formats':[for $x at $i in ('LQ','HQ','XHQ') return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($x='LQ') then '360x202' else if ($x='HQ') then '720x404' else '1920x1080','url':replace(//@data-media,'XHQ',$x)}]}}]"
+[
+  {
+    "1": {
+      "name": "RTV Noord: 50 jaar bowlen in Groningen: ''Het was gewoon een heel mooie tijd'' (29032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "360x202",
+          "url": "https://content.omroep.nl/rtvnoord/video/9999/999920/BC_BOWLING-50_LQ.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "720x404",
+          "url": "https://content.omroep.nl/rtvnoord/video/9999/999920/BC_BOWLING-50_HQ.mp4"
+        },
+        {
+          "format": "mp4-3",
+          "extension": "mp4",
+          "resolution": "1920x1080",
+          "url": "https://content.omroep.nl/rtvnoord/video/9999/999920/BC_BOWLING-50_XHQ.mp4"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+https://www.rtvnoord.nl/nieuws/192134/Subliem-Donar-door-naar-halve-finale-Europe-Cup
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/nieuws/192134/Subliem-Donar-door-naar-halve-finale-Europe-Cup" --xquery "let $a:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return [//div[@data-media]/{position():{'name':if (//meta[@property='og:type']/@content='video:episode') then concat('RTV Noord: ',//div[@class='media-details']/h3,replace(//@data-media,'.+?/(\d+).{3}(\d{2})(\d{2}).+',' ($3$2$1)')) else concat('RTV Noord: ',replace(@title,'[&quot;&apos;]',''''''),$a),'formats':[for $x at $i in ('LQ','HQ','XHQ') return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($x='LQ') then '360x202' else if ($x='HQ') then '720x404' else '1920x1080','url':replace(//@data-media,'XHQ',$x)}]}}]"
+[
+  {
+    "1": {
+      "name": "RTV Noord: Kijk terug: De memorabele zege van Donar op Mornar Bar (28032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "360x202",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_LQ.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "720x404",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_HQ.mp4"
+        },
+        {
+          "format": "mp4-3",
+          "extension": "mp4",
+          "resolution": "1920x1080",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_XHQ.mp4"
+        }
+      ]
+    }
+  },
+  {
+    "2": {
+      "name": "RTV Noord: Donar geniet na: ''Super blij met deze wedstrijd, super blij!'' (28032018)",
+      "formats": [
+        {
+          "format": "mp4-1",
+          "extension": "mp4",
+          "resolution": "360x202",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_LQ.mp4"
+        },
+        {
+          "format": "mp4-2",
+          "extension": "mp4",
+          "resolution": "720x404",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_HQ.mp4"
+        },
+        {
+          "format": "mp4-3",
+          "extension": "mp4",
+          "resolution": "1920x1080",
+          "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_XHQ.mp4"
+        }
+      ]
+    }
+  }
+]
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Alles in één query:
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/livetv" --xquery "if (contains($url,'livetv')) then (name:=replace('%date%','.+?(\d+)-(\d+)-(\d+)','RTV Noord: Livestream ($1$2$3)'),let $a:=doc(//iframe/@src)/x:request({'url':replace(//script/extract(.,'url: \"(.+)\"',1)[.],'jsonp','json'),'error-handling':'4xx=accept'})[contains(headers[1],'200')]/json(doc) return formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)}]) else (let $a:=replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)') return videos:=[//div[@data-media]/{position():{'name':if (//meta[@property='og:type']/@content='video:episode') then concat('RTV Noord: ',//div[@class='media-details']/h3,replace(//@data-media,'.+?/(\d+).{3}(\d{2})(\d{2}).+',' ($3$2$1)')) else concat('RTV Noord: ',replace(@title,'[&quot;&apos;]',''''''),$a),'formats':[for $x at $i in ('LQ','HQ','XHQ') return {'format':'mp4-'||$i,'extension':'mp4','resolution':if ($x='LQ') then '360x202' else if ($x='HQ') then '720x404' else '1920x1080','url':replace(//@data-media,'XHQ',$x)}]}}])"
+name := RTV Noord: Livestream (02042018)
+formats := [{"format": "hls-0", "extension": "m3u8", "resolution": "manifest", "url": "https://pedgewarea25a.video.kpnstreaming.nl/session/b6cf31f0-3600-11e8-89ac-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord.m3u8?token=ca9a8db1c0c2c8f64f51cddd76f58d22_1522710132_1522710132"}, {"format": "hls-1", "extension": "m3u8", "resolution": "audiospoor", "vbitrate": "", "abitrate": "a:128k", "url": "https://pedgewarea25a.video.kpnstreaming.nl/session/b6cf31f0-3600-11e8-89ac-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000.m3u8"}, {"format": "hls-2", "extension": "m3u8", "resolution": "426x240", "vbitrate": "v:400k", "abitrate": "a:128k", "url": "https://pedgewarea25a.video.kpnstreaming.nl/session/b6cf31f0-3600-11e8-89ac-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=400000.m3u8"}, {"format": "hls-3", "extension": "m3u8", "resolution": "854x480", "vbitrate": "v:899k", "abitrate": "a:128k", "url": "https://pedgewarea25a.video.kpnstreaming.nl/session/b6cf31f0-3600-11e8-89ac-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=899968.m3u8"}, {"format": "hls-4", "extension": "m3u8", "resolution": "1920x1080", "vbitrate": "v:4000k", "abitrate": "a:128k", "url": "https://pedgewarea25a.video.kpnstreaming.nl/session/b6cf31f0-3600-11e8-89ac-1458d041afa8/fqimjj/b2b/live/npo/live/npo/regionaal/rtvnoord/rtvnoord.isml/rtvnoord-audio_1=128000-video=4000000.m3u8"}]
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/tv/programma/10010/Noord-Vandaag/aflevering/15783" --xquery "[...]"
+videos := [{"1": {"name": "RTV Noord: Noord Vandaag (28032018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "360x202", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_LQ.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "720x404", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_HQ.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "1920x1080", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_NVREC_XHQ.mp4"}]}}]
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/nieuws/192181/Een-halve-eeuw-bowlen-in-Groningen-Ik-was-wel-een-van-de-toppers" --xquery "[...]"
+videos := [{"1": {"name": "RTV Noord: 50 jaar bowlen in Groningen: ''Het was gewoon een heel mooie tijd'' (29032018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "360x202", "url": "https://content.omroep.nl/rtvnoord/video/9999/999920/BC_BOWLING-50_LQ.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "720x404", "url": "https://content.omroep.nl/rtvnoord/video/9999/999920/BC_BOWLING-50_HQ.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "1920x1080", "url": "https://content.omroep.nl/rtvnoord/video/9999/999920/BC_BOWLING-50_XHQ.mp4"}]}}]
+
+xidel-0.9.7.6123-openssl.exe -s "https://www.rtvnoord.nl/nieuws/192134/Subliem-Donar-door-naar-halve-finale-Europe-Cup" --xquery "[...]"
+videos := [{"1": {"name": "RTV Noord: Kijk terug: De memorabele zege van Donar op Mornar Bar (28032018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "360x202", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_LQ.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "720x404", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_HQ.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "1920x1080", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_XHQ.mp4"}]}}, {"2": {"name": "RTV Noord: Donar geniet na: ''Super blij met deze wedstrijd, super blij!'' (28032018)", "formats": [{"format": "mp4-1", "extension": "mp4", "resolution": "360x202", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_LQ.mp4"}, {"format": "mp4-2", "extension": "mp4", "resolution": "720x404", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_HQ.mp4"}, {"format": "mp4-3", "extension": "mp4", "resolution": "1920x1080", "url": "https://content.omroep.nl/rtvnoord/video/2018/180328/180328_DONAR_SAMENVATTING_XHQ.mp4"}]}}]
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+--xquery "if (
+            contains(
+              $url,
+              'livetv'
+            )
+          ) then (
+            name:=replace(
+              '%date%',
+              '.+?(\d+)-(\d+)-(\d+)',
+              'RTV Noord: Livestream ($1$2$3)'
+            ),
+            let $a:=doc(//iframe/@src)/x:request(
+              {
+                'url':replace(
+                  //script/extract(
+                    .,
+                    'url: \"(.+)\"',
+                    1
+                  )[.],
+                  'jsonp',
+                  'json'
+                ),
+                'error-handling':'4xx=accept'
+              }
+            )[
+              contains(
+                headers[1],
+                '200'
+              )
+            ]/json(doc) return
+            formats:=[
+              {
+                'format':'hls-0',
+                'extension':'m3u8',
+                'resolution':'manifest',
+                'url':$a
+              },
+              for $x at $i in tail(
+                tokenize(
+                  extract(
+                    unparsed-text($a),
+                    '(#EXT-X-STREAM-INF.+m3u8$)',
+                    1,'ms'
+                  ),
+                  '#EXT-X-STREAM-INF:'
+                )
+              ) order by extract(
+                $x,
+                'BANDWIDTH=(\d+)',
+                1
+              ) count $i return {
+                'format':'hls-'||$i,
+                'extension':'m3u8',
+                'resolution':extract(
+                  $x,
+                  'RESOLUTION=([\dx]+)',
+                  1
+                ) ! (
+                  if (.) then
+                    .
+                  else
+                    'audiospoor'
+                ),
+                'vbitrate':extract(
+                  $x,
+                  'video=(\d+)\d{3}',
+                  1
+                ) ! (
+                  if (.) then
+                    concat(
+                      'v:',
+                      .,
+                      'k'
+                    )
+                  else
+                    ''
+                ),
+                'abitrate':replace(
+                  $x,
+                  '.+audio.+?(\d+)\d{3}.+',
+                  'a:$1k',
+                  's'
+                ),
+                'url':resolve-uri(
+                  '.',
+                  $a
+                )||extract(
+                  $x,
+                  '(.+m3u8)',
+                  1
+                )
+              }
+            ]
+          ) else (
+            let $a:=replace(
+              //@datetime,
+              '(\d+)-(\d+)-(\d+).+',
+              ' ($3$2$1)'
+            ) return
+            videos:=[
+              //div[@data-media]/{
+                position():{
+                  'name':if (//meta[@property='og:type']/@content='video:episode') then
+                    concat(
+                      'RTV Noord: ',
+                      //div[@class='media-details']/h3,
+                      replace(
+                        //@data-media,
+                        '.+?/(\d+).{3}(\d{2})(\d{2}).+',
+                        ' ($3$2$1)'
+                      )
+                    )
+                  else
+                    concat(
+                      'RTV Noord: ',
+                      replace(
+                        @title,
+                        '[&quot;&apos;]',
+                        ''''''
+                      ),
+                      $a
+                    ),
+                  'formats':[
+                    for $x at $i in (
+                      'LQ',
+                      'HQ',
+                      'XHQ'
+                    ) return {
+                      'format':'mp4-'||$i,
+                      'extension':'mp4',
+                      'resolution':if ($x='LQ') then
+                        '360x202'
+                      else if ($x='HQ') then
+                        '720x404'
+                      else
+                        '1920x1080',
+                      'url':replace(
+                        //@data-media,
+                        'XHQ',
+                        $x
+                      )
+                    }
+                  ]
+                }
+              }
+            ]
+          )"
