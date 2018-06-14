@@ -231,10 +231,10 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF "%url%"=="zoek-kijk" (
 	SET url=Kijk
 	GOTO ZoekProg
-) ELSE IF NOT "%url:npo.nl/live=%"=="%url%" (
+) ELSE IF NOT "%url:npostart.nl/live=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% --user-agent "%user-agent%" "%url%" -e "prid:=//@media-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
-) ELSE IF NOT "%url:npo.nl=%"=="%url%" (
+) ELSE IF NOT "%url:npostart.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel%
 	-e ^"prid:^=extract^(
 	      '%url%'^,
@@ -3398,8 +3398,8 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://e.omroep.nl/metadata/%prid%"
                     '200'
                   ^)
                 ]/^(
-                  if ^(doc^) then
-                    json^(doc^)
+                  if ^(json instance of string^) then
+                    json
                   else
                     json/url
                 ^) return ^(
@@ -4152,7 +4152,7 @@ IF NOT DEFINED date2 (
 )
 
 ECHO.
-%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv" ^
+%xidel% "https://www.npostart.nl/gids?date=%date2%&type=tv" ^
 --xquery ^"let $json:=[^
                 for $x in //div[^
                   @id=(^
@@ -4212,7 +4212,7 @@ IF NOT DEFINED id (
 	ENDLOCAL
 	GOTO Input
 )
-FOR /F "delims=" %%A IN ('^"%xidel% "https://www.npo.nl/gids?date=%date2%&type=tv"
+FOR /F "delims=" %%A IN ('^"%xidel% "https://www.npostart.nl/gids?date=%date2%&type=tv"
 --xquery ^"let $json:^=[
             for $x in //div[
               @id^=^(
@@ -4263,7 +4263,7 @@ FOR /F "delims=" %%A IN ('^"%xidel%
     if ^($a^) then
       if ^('%url%'^='npo'^) then
         doc^(
-          'https://www.npo.nl/zoeken?term^='^|^|$a
+          'https://www.npostart.nl/zoeken?term^='^|^|$a
         ^)/^(
           if ^(//div[@class^='no-results']^) then
             no_res:^='1'
@@ -4370,7 +4370,7 @@ FOR /F "delims=" %%A IN ('ECHO %s_json% ^| %xidel% -
         x:request^(
           {
             'data':concat^(
-              'https://www.npo.nl/media/series/'^,
+              'https://www.npostart.nl/media/series/'^,
               $json^(%id%^)/sid^,
               '/episodes?page^=1^&tilemapping^=dedicated^&tiletype^=asset^&pageType^=franchise'
             ^)^,
