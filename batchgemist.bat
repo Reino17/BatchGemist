@@ -3740,70 +3740,102 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
               ^(^)^,
             let $a:^=doc^(
                   'http:'^|^|embed_video_url
-                ^)[//@data-video-id]/x:request^(
-                  {
-                    'headers':
-                      'Accept: application/json^;pk^='^|^|
-                      extract^(
-                        unparsed-text^(
-                          //script[
-                            contains^(
-                              @src^,
-                              //@data-account
-                            ^)
-                          ]/@src
+                ^)/^(
+                  if ^(//@data-video-id^) then
+                    x:request^(
+                      {
+                        'headers':'Accept: application/json^;pk^='^|^|extract^(
+                          unparsed-text^(
+                            //script[
+                              contains^(
+                                @src^,
+                                //@data-account
+                              ^)
+                            ]/@src
+                          ^)^,
+                          'policyKey:\^"^(.+?^)\^"'^,
+                          1
                         ^)^,
-                        'policyKey:\^"^(.+?^)\^"'^,
+                        'url':concat^(
+                          'https://edge.api.brightcove.com/playback/v1/accounts/'^,
+                          //@data-account^,
+                          '/videos/'^,
+                          //@data-video-id
+                        ^)^,
+                        'error-handling':'xxx^=accept'
+                      }
+                    ^)/json[sources]
+                  else
+                    json^(
+                      extract^(
+                        .^,
+                        'playerOptionsObj ^= ^(.+^)^;'^,
                         1
-                      ^)^,
-                    'url':concat^(
-                      'https://edge.api.brightcove.com/playback/v1/accounts/'^,
-                      //@data-account^,
-                      '/videos/'^,
-                      //@data-video-id
-                    ^)^,
-                    'error-handling':'xxx^=accept'
-                  }
-                ^)/json[not^(.//error_code^)]^,
-                $b:^=json^(embed_api_url^)[videoId]
-            return ^(
-              if ^($a^) then
-                $a/^(
-                  name:^=if ^(.//sbs_videotype^='vod'^) then
-                    concat^(
-                      if ^(.//sbs_station^='veronicatv'^) then
-                        'Veronica'
-                      else
-                        upper-case^(.//sbs_station^)^,
-                      ': '^,
-                      name^,
-                      if ^(
-                        string-length^(
-                          .//sbs_episode
-                        ^)^<^=7
-                      ^) then
-                        ' '^|^|.//sbs_episode
-                      else
-                        ^(^)^,
-                      replace^(
-                        .//sko_dt^,
-                        '^(\d{4}^)^(\d{2}^)^(\d{2}^)'^,
-                        ' ^($3$2$1^)'
                       ^)
                     ^)
-                  else
-                    concat^(
-                      .//sbs_program^,
+                ^)^,
+                $b:^=x:request^(
+                  {
+                    'url':embed_api_url^,
+                    'error-handling':'4xx^=accept'
+                  }
+                ^)/json[videoId]
+            return ^(
+              if ^($a^) then
+                if ^($a//dataLayer^) then
+                  $a//dataLayer/^(
+                    name:^=concat^(
+                      if ^(media_owner^='veronicatv'^) then
+                        'Veronica'
+                      else
+                        upper-case^(media_owner^)^,
                       ': '^,
-                      name^,
+                      media_program_name^,
                       replace^(
-                        published_at^,
+                        media_datepublished^,
                         '^(\d+^)-^(\d+^)-^(\d+^).+'^,
                         ' ^($3$2$1^)'
                       ^)
                     ^)^,
-                  t:^=round^(duration div 1000^)
-                ^)
+                    t:^=media_duration
+                  ^)
+                else
+                  $a/^(
+                    name:^=if ^(.//sbs_videotype^='vod'^) then
+                      concat^(
+                        if ^(.//sbs_station^='veronicatv'^) then
+                          'Veronica'
+                        else
+                          upper-case^(.//sbs_station^)^,
+                        ': '^,
+                        name^,
+                        if ^(
+                          string-length^(
+                            .//sbs_episode
+                          ^)^<^=7
+                        ^) then
+                          ' '^|^|.//sbs_episode
+                        else
+                          ^(^)^,
+                        replace^(
+                          .//sko_dt^,
+                          '^(\d{4}^)^(\d{2}^)^(\d{2}^)'^,
+                          ' ^($3$2$1^)'
+                        ^)
+                      ^)
+                    else
+                      concat^(
+                        .//sbs_program^,
+                        ': '^,
+                        name^,
+                        replace^(
+                          published_at^,
+                          '^(\d+^)-^(\d+^)-^(\d+^).+'^,
+                          ' ^($3$2$1^)'
+                        ^)
+                      ^)^,
+                    t:^=round^(duration div 1000^)
+                  ^)
               else
                 $b/^(
                   name:^=concat^(
@@ -3832,61 +3864,131 @@ FOR /F "delims=" %%A IN ('^"%xidel% "http://api.kijk.nl/v1/default/entitlement/%
                   ^(^)
               ^)^,
               formats:^=[
-                for $x at $i in $a/^(sources^)^(^)[stream_name] order by $x/size count $i return
-                $x/{
-                  'format':'pg-'^|^|$i^,
-                  'extension':'mp4'^,
-                  'resolution':concat^(
-                    width^,
-                    'x'^,
-                    height
-                  ^)^,
-                  'vbitrate':round^(
-                    avg_bitrate div 1000
-                  ^)^|^|'k'^,
-                  'url':replace^(
-                    stream_name^,
-                    'mp4:'^,
-                    'http://stv.cdn.sbsnet.nl/'
-                  ^)
-                }^,
-                let $c:^=$a/^(sources^)^(^)[size^=0]/src return ^(
-                  {
-                    'format':'hls-0'^,
-                    'extension':'m3u8'^,
-                    'resolution':'manifest'^,
-                    'url':$c
-                  }[url]^,
-                  tail^(
-                    tokenize^(
-                      unparsed-text^($c^)^,
-                      '#EXT-X-STREAM-INF:'
-                    ^)
-                  ^) ! {
-                    'format':'hls-'^|^|position^(^)^,
-                    'extension':'m3u8'^,
-                    'resolution':extract^(
-                      .^,
-                      'RESOLUTION^=^([\dx]+^)'^,
-                      1
+                if ^($a/sources^) then ^(
+                  for $x at $i in $a/^(sources^)^(^)[stream_name] order by $x/size count $i return
+                  $x/{
+                    'format':'pg-'^|^|$i^,
+                    'extension':'mp4'^,
+                    'resolution':concat^(
+                      width^,
+                      'x'^,
+                      height
                     ^)^,
                     'vbitrate':round^(
-                      extract^(
-                        .^,
-                        'BANDWIDTH^=^(\d+^)'^,
-                        1
-                      ^) div 1000
+                      avg_bitrate div 1000
                     ^)^|^|'k'^,
-                    'url':resolve-uri^(
-                      '.'^,
-                      $c
-                    ^)^|^|extract^(
-                      .^,
-                      '^(.+m3u8^)'^,
-                      1
+                    'url':replace^(
+                      stream_name^,
+                      'mp4:'^,
+                      'http://stv.cdn.sbsnet.nl/'
                     ^)
-                  }
-                ^)^,
+                  }^,
+                  let $c:^=$a/^(sources^)^(^)[size^=0]/src return ^(
+                    {
+                      'format':'hls-0'^,
+                      'extension':'m3u8'^,
+                      'resolution':'manifest'^,
+                      'url':$c
+                    }[url]^,
+                    tail^(
+                      tokenize^(
+                        unparsed-text^($c^)^,
+                        '#EXT-X-STREAM-INF:'
+                      ^)
+                    ^) ! {
+                      'format':'hls-'^|^|position^(^)^,
+                      'extension':'m3u8'^,
+                      'resolution':extract^(
+                        .^,
+                        'RESOLUTION^=^([\dx]+^)'^,
+                        1
+                      ^)^,
+                      'vbitrate':round^(
+                        extract^(
+                          .^,
+                          'BANDWIDTH^=^(\d+^)'^,
+                          1
+                        ^) div 1000
+                      ^)^|^|'k'^,
+                      'url':resolve-uri^(
+                        '.'^,
+                        $c
+                      ^)^|^|extract^(
+                        .^,
+                        '^(.+m3u8^)'^,
+                        1
+                      ^)
+                    }
+                  ^)
+                ^) else
+                  let $c:^=$a/^(.//sources^)^(^)[
+                    ends-with^(
+                      file^,
+                      'm3u8'
+                    ^)
+                  ]/file return ^(
+                    {
+                      'format':'hls-0'^,
+                      'extension':'m3u8'^,
+                      'resolution':'manifest'^,
+                      'url':$c
+                    }^,
+                    for $x at $i in tail^(
+                      tokenize^(
+                        extract^(
+                          unparsed-text^($c^)^,
+                          '^(#EXT-X-STREAM-INF.+m3u8$^)'^,
+                          1^,'ms'
+                        ^)^,
+                        '#EXT-X-STREAM-INF:'
+                      ^)
+                    ^) order by extract^(
+                      $x^,
+                      'BANDWIDTH^=^(\d+^)'^,
+                      1
+                    ^) count $i return {
+                      'format':'hls-'^|^|$i^,
+                      'extension':'m3u8'^,
+                      'resolution':extract^(
+                        $x^,
+                        'RESOLUTION^=^([\dx]+^)'^,
+                        1
+                      ^) ! ^(
+                        if ^(.^) then
+                          .
+                        else
+                          'audiospoor'
+                      ^)^,
+                      'vbitrate':extract^(
+                        $x^,
+                        'video^=^(\d+^)\d{3}'^,
+                        1
+                      ^) ! ^(
+                        if ^(.^) then
+                          concat^(
+                            'v:'^,
+                            .^,
+                            'k'
+                          ^)
+                        else
+                          ''
+                      ^)^,
+                      'abitrate':replace^(
+                        $x^,
+                        '.+audio.+?^(\d+^)\d{3}.+'^,
+                        'a:$1k'^,
+                        's'
+                      ^)^,
+                      'url':resolve-uri^(
+                        '.'^,
+                        $c
+                      ^)^|^|extract^(
+                        $x^,
+                        '^(.+m3u8^)'^,
+                        1
+                      ^)
+                    }
+                  ^)^,
                 $b/^(
                   {
                     'format':'hls-0_hd'^,
