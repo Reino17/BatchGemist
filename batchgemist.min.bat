@@ -248,10 +248,10 @@ IF NOT "%url: =%"=="%url%" (
 ) ELSE IF NOT "%url:willemwever.kro-ncrv.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=//@data-video-id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
-) ELSE IF NOT "%url:nos.nl/livestream=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "name:=//h1||replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)'),let $a:=//video/x:request({'post':serialize-json({'stream':string(@data-stream)}),'url':@data-path})/json/json(substring-before(url,'p&amp;callback')) return formats:=[{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)}]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
 ) ELSE IF NOT "%url:nos.nl=%"=="%url%" (
-	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "videos:=[(if (//div[@class='video-play']) then //div[@class='video-play']/a/doc(@href) else .)/{position():{'name':concat('NOS: ',replace(//h1,'[&quot;&apos;]',''''''),replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),'formats':for $x at $i in //source order by extract($x/@data-label,'(\d+)p',1) count $i return {'format':'mp4-'||$i,'extension':'mp4','url':if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src}}}]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	IF NOT "%url:artikel=%"=="%url%" (
+		FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "videos:=[//div[@class='block_video block_largecenter']/{position():{'name':replace(.//div[@class='caption_content']/text(),'[&quot;&apos;]',''''''),'url':resolve-uri(.//@href),'goto':'NOS'}}]" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+	) ELSE GOTO NOS
 ) ELSE IF NOT "%url:eenvandaag.avrotros.nl=%"=="%url%" (
 	FOR /F "delims=" %%A IN ('^"%xidel% "%url%" -e "prid:=json(//@data-at-player)/video_id" --output-format^=cmd^"') DO %%A
 	GOTO NPO
@@ -379,6 +379,22 @@ IF DEFINED formats (
 ) ELSE (
 	ECHO.
 	ECHO Video nog niet, of niet meer beschikbaar.
+	ECHO.
+	ECHO.
+	ENDLOCAL
+	GOTO Input
+)
+
+REM ================================================================================================
+
+:NOS
+FOR /F "delims=" %%A IN ('^"%xidel% "%url%" --xquery "name:=concat('NOS: ',replace(//h1[ends-with(@class,'__title')],'[&quot;&apos;]',''''''),if (.//video/@data-type='livestream') then replace('%date%','.+?(\d+)-(\d+)-(\d+)',': Livestream ($1$2$3)') else replace(//@datetime,'(\d+)-(\d+)-(\d+).+',' ($3$2$1)')),formats:=//video/(if (@data-type='livestream') then let $a:=x:request({'url'://video/@data-stream,'method':'HEAD'})/url return [{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(extract(unparsed-text($a),'(#EXT-X-STREAM-INF.+m3u8$)',1,'ms'),'#EXT-X-STREAM-INF:')) order by extract($x,'BANDWIDTH=(\d+)',1) count $i return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1) ! (if (.) then . else 'audiospoor'),'vbitrate':extract($x,'video=(\d+)\d{3}',1) ! (if (.) then concat('v:',.,'k') else ''),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)}] else if (@data-adaptive='true') then let $a:=x:request({'url':source/@src,'method':'HEAD'})/url return [{'format':'hls-0','extension':'m3u8','resolution':'manifest','url':$a},for $x at $i in tail(tokenize(unparsed-text($a),'#EXT-X-STREAM-INF:')) return {'format':'hls-'||$i,'extension':'m3u8','resolution':extract($x,'RESOLUTION=([\dx]+)',1),'vbitrate':concat('v:',extract($x,'video.+?(\d+)\d{3}',1),'k'),'abitrate':replace($x,'.+audio.+?(\d+)\d{3}.+','a:$1k','s'),'url':resolve-uri('.',$a)||extract($x,'(.+m3u8)',1)}] else [for $x at $i in source order by extract($x/@data-label,'(\d+)p',1) count $i return {'format':'mp4-'||$i,'extension':'mp4','url':if (contains($x/@src,'ipv4-api')) then x:request({'data':$x/@src,'method':'HEAD'})/url else $x/@src}])" --output-encoding^=oem --output-format^=cmd^"') DO %%A
+
+IF DEFINED formats (
+	GOTO Formats
+) ELSE (
+	ECHO.
+	ECHO Video niet ^(meer^) beschikbaar.
 	ECHO.
 	ECHO.
 	ENDLOCAL
